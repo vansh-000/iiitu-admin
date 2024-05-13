@@ -15,6 +15,7 @@ import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Gallery from './pages/Gallery';
+import Curriculum from './pages/Curriculum';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -48,6 +49,15 @@ function App() {
             <>
               <PageTitle title="Gallery | IIITU - Admin" />
               <Gallery />
+            </>
+          }
+        />
+        <Route
+          path="/curriculum"
+          element={
+            <>
+              <PageTitle title="Curriculum | IIITU - Admin" />
+              <Curriculum />
             </>
           }
         />

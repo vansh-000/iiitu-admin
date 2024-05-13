@@ -17,6 +17,8 @@ import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Tender from "./pages/Tender/Tender";
 import TenderEdits from './pages/Tender/TenderEdits'
+import AddRecruitments from './pages/Recruitments/AddRecruitments';
+import RecruitmentEdits from './pages/Recruitments/EditRecruitment';
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -156,6 +158,22 @@ function App() {
           <>
           <PageTitle title='Tender | Tender Edits and Delete'/>
           <TenderEdits/>
+          </>
+        }/>
+        <Route
+        path="/admin/recruitmentAdd"
+        element={
+          <>
+          <PageTitle title='Recruitment | Recruitment ADD'/>
+          <AddRecruitments/>
+          </>
+        }/>
+        <Route
+        path='/admin/recruitmentEdits'
+        element={
+          <>
+          <PageTitle title='Recruitment | Recruitment Edit and Delete'/>
+          <RecruitmentEdits/>
           </>
         }/>
       </Routes>

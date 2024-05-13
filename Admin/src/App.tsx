@@ -15,7 +15,8 @@ import Settings from './pages/Settings';
 import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
-
+import Tender from "./pages/Tender/Tender";
+import TenderEdits from './pages/Tender/TenderEdits'
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -141,6 +142,22 @@ function App() {
             </>
           }
         />
+        <Route
+        path="admin/tenderAdd"
+        element={
+          <>
+          <PageTitle title='Tender | Tender Add'/>
+          <Tender/>
+          </>
+        }/>
+        <Route
+        path="admin/tenderEdits"
+        element={
+          <>
+          <PageTitle title='Tender | Tender Edits and Delete'/>
+          <TenderEdits/>
+          </>
+        }/>
       </Routes>
     </>
   );

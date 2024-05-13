@@ -16,6 +16,10 @@ import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Gallery from './pages/Gallery';
 import Curriculum from './pages/Curriculum';
+import Tender from './pages/Tender/Tender';
+import TenderEdits from './pages/Tender/TenderEdits';
+import AddRecruitments from './pages/Recruitments/AddRecruitments';
+import RecruitmentEdits from './pages/Recruitments/EditRecruitment';
 
 function App() {
   const [loading, setLoading] = useState(true);

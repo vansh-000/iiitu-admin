@@ -22,6 +22,9 @@ import Tender from './pages/Tender/Tender';
 import TenderEdits from './pages/Tender/TenderEdits';
 import AddRecruitments from './pages/Recruitments/AddRecruitments';
 import RecruitmentEdits from './pages/Recruitments/EditRecruitment';
+import FacultyAdd from './pages/Faculty/FacultyAdd';
+import FacultyEdit from './pages/Faculty/FacultyEdit';
+import FacultyAllEdit from './pages/Faculty/FacultyAllEdit';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -176,37 +179,68 @@ function App() {
           }
         />
         <Route
-        path="admin/tenderAdd"
-        element={
-          <>
-          <PageTitle title='Tender | Tender Add'/>
-          <Tender/>
-          </>
-        }/>
+          path="admin/tenderAdd"
+          element={
+            <>
+              <PageTitle title="Tender | Tender Add" />
+              <Tender />
+            </>
+          }
+        />
         <Route
-        path="admin/tenderEdits"
-        element={
-          <>
-          <PageTitle title='Tender | Tender Edits and Delete'/>
-          <TenderEdits/>
-          </>
-        }/>
+          path="admin/tenderEdits"
+          element={
+            <>
+              <PageTitle title="Tender | Tender Edits and Delete" />
+              <TenderEdits />
+            </>
+          }
+        />
         <Route
-        path="/admin/recruitmentAdd"
-        element={
-          <>
-          <PageTitle title='Recruitment | Recruitment ADD'/>
-          <AddRecruitments/>
-          </>
-        }/>
+          path="/admin/recruitmentAdd"
+          element={
+            <>
+              <PageTitle title="Recruitment | Recruitment ADD" />
+              <AddRecruitments />
+            </>
+          }
+        />
         <Route
-        path='/admin/recruitmentEdits'
-        element={
-          <>
-          <PageTitle title='Recruitment | Recruitment Edit and Delete'/>
-          <RecruitmentEdits/>
-          </>
-        }/>
+          path="/admin/recruitmentEdits"
+          element={
+            <>
+              <PageTitle title="Recruitment | Recruitment Edit and Delete" />
+              <RecruitmentEdits />
+            </>
+          }
+        />
+        <Route
+          path="/admin/facultyAdd"
+          element={
+            <>
+              <PageTitle title="Faculty | Faculty Add" />
+              <FacultyAdd />
+            </>
+          }
+        />
+        <Route
+          path="/admin/facultyModify"
+          element={
+            <>
+              <PageTitle title="Faculty | Faculty Edit" />
+              <FacultyEdit />
+            </>
+          }
+        />
+        <Route
+          path="/Faculty/Edits/:id"
+          element={
+            <>
+              <PageTitle title="Faculty | Faculty Edits" />
+              <FacultyAllEdit />
+            </>
+          }
+        />
       </Routes>
     </>
   );

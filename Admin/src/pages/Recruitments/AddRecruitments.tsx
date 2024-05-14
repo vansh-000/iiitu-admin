@@ -2,6 +2,8 @@ import React, { FormEvent } from "react";
 import axios from "axios";
 import { API } from "../../utils/apiURL";
 import DatePickerOne from "../../components/Forms/DatePicker/DatePickerOne";
+import DefaultLayout from "../../layout/DefaultLayout";
+import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 const AddRecruitments = () => {
     const startDateRef = React.useRef<HTMLInputElement>(null);
     const endDateRef = React.useRef<HTMLInputElement>(null);
@@ -42,6 +44,8 @@ const AddRecruitments = () => {
     
   
     return (
+      <DefaultLayout>
+    <Breadcrumb pageName="Add Recruitment" />
       <form onSubmit={handleSubmit}>
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
          
@@ -110,7 +114,7 @@ const AddRecruitments = () => {
    
       </form>
   
-  
+      </DefaultLayout>
         
     );
 }

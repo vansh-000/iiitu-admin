@@ -15,6 +15,8 @@ import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Gallery from './pages/Gallery';
+import News from './pages/News';
+import Events from './pages/Events';
 import Curriculum from './pages/Curriculum';
 import Tender from './pages/Tender/Tender';
 import TenderEdits from './pages/Tender/TenderEdits';
@@ -63,6 +65,24 @@ function App() {
             <>
               <PageTitle title="Curriculum | IIITU - Admin" />
               <Curriculum />
+            </>
+          }
+        />
+        <Route
+          path="/news"
+          element={
+            <>
+              <PageTitle title="News | IIITU - Admin" />
+              <News />
+            </>
+          }
+        />
+        <Route
+          path="/events"
+          element={
+            <>
+              <PageTitle title="Events | IIITU - Admin" />
+              <Events />
             </>
           }
         />

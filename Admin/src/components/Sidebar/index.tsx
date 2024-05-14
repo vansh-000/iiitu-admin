@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import { FaBookOpen } from "react-icons/fa";
-import { IoMdPhotos } from "react-icons/io";
-import { GiTeacher } from "react-icons/gi";
-interface SidebarProps {
+import { FaRegNewspaper } from "react-icons/fa6";
+import { MdEmojiEvents } from "react-icons/md";
+import { IoMdPhotos } from "react-icons/io";interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
 }
@@ -223,6 +223,30 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 >
                   <FaBookOpen />
                   Curriculum
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/news"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('news') &&
+                    'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <FaRegNewspaper/>
+                  News
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/events"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('events') &&
+                    'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <MdEmojiEvents/>
+                  Events
                 </NavLink>
               </li>
               {/* <!-- Menu Item Calendar --> */}

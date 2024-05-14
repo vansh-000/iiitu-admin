@@ -22,6 +22,7 @@ import Tender from './pages/Tender/Tender';
 import TenderEdits from './pages/Tender/TenderEdits';
 import AddRecruitments from './pages/Recruitments/AddRecruitments';
 import RecruitmentEdits from './pages/Recruitments/EditRecruitment';
+import Admissions from './pages/Admissions';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -82,6 +83,15 @@ function App() {
             <>
               <PageTitle title="Events | IIITU - Admin" />
               <Events />
+            </>
+          }
+        />
+        <Route
+          path="/admissions"
+          element={
+            <>
+              <PageTitle title="Admissions | IIITU - Admin" />
+              <Admissions />
             </>
           }
         />

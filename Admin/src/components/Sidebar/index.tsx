@@ -4,7 +4,9 @@ import SidebarLinkGroup from './SidebarLinkGroup';
 import { FaBookOpen } from "react-icons/fa";
 import { FaRegNewspaper } from "react-icons/fa6";
 import { MdEmojiEvents } from "react-icons/md";
-import { IoMdPhotos } from "react-icons/io";interface SidebarProps {
+import { GiTeacher } from "react-icons/gi";
+import { IoMdPhotos } from "react-icons/io";
+interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
 }

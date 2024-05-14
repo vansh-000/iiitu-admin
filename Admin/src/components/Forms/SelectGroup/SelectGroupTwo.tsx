@@ -11,7 +11,7 @@ const SelectGroupTwo: React.FC = () => {
   return (
     <div>
       <label className="mb-3 block text-black dark:text-white">
-        Select Country
+        Select Department
       </label>
 
       <div className="relative z-20 bg-white dark:bg-form-input">

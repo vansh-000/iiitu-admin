@@ -4,6 +4,8 @@ import toast from 'react-hot-toast';
 import SelectGroupTwo from '../../components/Forms/SelectGroup/SelectGroupTwo';
 import MultiSelect from '../../components/Forms/MultiSelect';
 import { API } from '../../utils/apiURl';
+import DefaultLayout from '../../layout/DefaultLayout';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 
 function FacultyAdd() {
   const refName = useRef('');
@@ -26,8 +28,8 @@ function FacultyAdd() {
       // Parsing and appending education data
       const educationLines = refEducation.current.value.split('#');
       const educationData = educationLines.map((line) => {
-        const [dateRange, description] = line.split(':');
-        const [startYear, endYear] = dateRange.split('-');
+        const [dateRange, description] = line.split(':',2);
+        const [startYear, endYear] = dateRange.split('-',2);
         return {
           dateOfStart: startYear,
           dateOfEnd: endYear,
@@ -92,6 +94,8 @@ function FacultyAdd() {
 
   return (
     <>
+    <DefaultLayout>
+    <Breadcrumb pageName="Faculty Registration" />
       <h2>Faculty Registration</h2>
       <form onSubmit={handleOnSubmit}>
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -386,7 +390,7 @@ className="w-1/2 cursor-pointer rounded-lg border-[1.5px] border-stroke bg-trans
             />
           </div>
         </div>
-      </form>
+      </form></DefaultLayout>
     </>
   );
 }

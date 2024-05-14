@@ -33,8 +33,8 @@ const TEditCard = ({ tender, fetchData, index }) => {
         try {
             const startDate = startDateRefs.current?.value || editedData.startDate;
             const endDate = endDateRefs.current?.value || editedData.endDate;
-            const TenderDoc=refTenderDoc.current?.files[0]||editedData.TenderDoc;
-            const annexure=refAnnexure.current?.files[0]||editedData.annexure;
+            const TenderDoc=refTenderDoc.current?.files[0];
+            const annexure=refAnnexure.current?.files[0];
             const response=await axios.put(`${API}/tender/${editedData._id}`, {
                 service:refDesc.current?.value,
                 TenderDoc:TenderDoc,

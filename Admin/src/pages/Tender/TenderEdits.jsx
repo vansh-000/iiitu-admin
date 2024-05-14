@@ -1,6 +1,9 @@
 import TenderEditCard from "./TenderEditCard"
-import { API } from "../../utils/apiURL";import axios from "axios";
+import { API } from "../../utils/apiURl";
+import axios from "axios";
 import { useEffect, useState } from "react";
+import DefaultLayout from "../../layout/DefaultLayout";
+import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 const TenderEdits=()=>{
     const [data, setData]=useState([]);
     const fetchTender = async () => {
@@ -21,11 +24,14 @@ const TenderEdits=()=>{
         fetchTender();
     },[])
     return (
+      <DefaultLayout>
+        <Breadcrumb pageName="Edit Tender"/>
         <div className="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-9">
         <div className="flex flex-col gap-7.5">
         <TenderEditCard data={data} fetchData={fetchTender}/>
         </div>
         </div>
+        </DefaultLayout>
     )
 }
 export default TenderEdits;

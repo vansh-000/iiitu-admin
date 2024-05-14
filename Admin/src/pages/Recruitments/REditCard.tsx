@@ -35,7 +35,7 @@ const REditCard = ({ recruitment, fetchData, index }) => {
       const startDate = startDateRefs.current?.value || editedData.startDate;
       const endDate = endDateRefs.current?.value || editedData.endDate;
       const RecruitmentDoc =
-        refRecruitmentDoc.current?.files[0] || editedData.RecruitmentDoc;
+        refRecruitmentDoc.current?.files[0] ;
 
       const response = await axios.put(
         `${API}/recuitment/${editedData._id}`,

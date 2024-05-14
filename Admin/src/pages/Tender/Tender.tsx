@@ -2,6 +2,8 @@ import React, { FormEvent } from "react";
 import axios from "axios";
 import { API } from "../../utils/apiURL";
 import DatePickerOne from "../../components/Forms/DatePicker/DatePickerOne";
+import DefaultLayout from "../../layout/DefaultLayout";
+import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 
 function Tender() : JSX.Element{
   const startDateRef = React.useRef<HTMLInputElement>(null);
@@ -40,6 +42,8 @@ function Tender() : JSX.Element{
   
 
   return (
+    <DefaultLayout>
+      <Breadcrumb pageName="Add Tender"/>
     <form onSubmit={handleSubmit}>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
        
@@ -68,7 +72,7 @@ function Tender() : JSX.Element{
           </div>
           </div>
             
-        </div>
+       
         <div>
             <label htmlFor="tenderDoc" className="mb-3 block text-black dark:text-white">Attach Tender Doc</label>
             <input
@@ -93,9 +97,10 @@ function Tender() : JSX.Element{
           </div>
           <button type="submit" className="bg-black text-white px-4 py-2 rounded-lg mt-4 text-center">Submit</button>
       </div>
+      </div>
  
     </form>
-
+    </DefaultLayout>
 
       
   );

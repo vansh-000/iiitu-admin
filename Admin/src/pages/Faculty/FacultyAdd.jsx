@@ -51,8 +51,7 @@ function FacultyAdd() {
         profileImage:refProfileImage.current.files[0],
         Education:educationData
   
-      }
-      console.log(data); 
+      } 
       const response = await axios.post(
         `${API}/faculty/register`,
         {
@@ -80,7 +79,6 @@ function FacultyAdd() {
       );
 
       toast.success(response.data.message);
-      console.log(response.data.message);
     } catch (err) {
       console.error(err);
     }

@@ -1,7 +1,7 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
 import userSix from '../images/user/user-06.png';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { FaLinkedin } from "react-icons/fa";
 import { SiGooglescholar } from "react-icons/si";
 import TableThree from '../components/Tables/TableEducation';
@@ -11,9 +11,10 @@ const Profile = () => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Profile" />
-
       <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <NavLink to="/edit-profile">
         <button className="bg-primary text-white hover:bg-opacity-90 absolute mx-2 my-2 p-1 rounded sm:p-2 sm:mx-4 sm:my-4">Edit Profile</button>
+        </NavLink>
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           <div className="relative z-30 mx-auto h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
             <div className="relative drop-shadow-2">

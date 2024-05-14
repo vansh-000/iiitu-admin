@@ -15,7 +15,13 @@ import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Gallery from './pages/Gallery';
+import News from './pages/News';
+import Events from './pages/Events';
 import Curriculum from './pages/Curriculum';
+import Tender from './pages/Tender/Tender';
+import TenderEdits from './pages/Tender/TenderEdits';
+import AddRecruitments from './pages/Recruitments/AddRecruitments';
+import RecruitmentEdits from './pages/Recruitments/EditRecruitment';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -58,6 +64,24 @@ function App() {
             <>
               <PageTitle title="Curriculum | IIITU - Admin" />
               <Curriculum />
+            </>
+          }
+        />
+        <Route
+          path="/news"
+          element={
+            <>
+              <PageTitle title="News | IIITU - Admin" />
+              <News />
+            </>
+          }
+        />
+        <Route
+          path="/events"
+          element={
+            <>
+              <PageTitle title="Events | IIITU - Admin" />
+              <Events />
             </>
           }
         />
@@ -151,6 +175,38 @@ function App() {
             </>
           }
         />
+        <Route
+        path="admin/tenderAdd"
+        element={
+          <>
+          <PageTitle title='Tender | Tender Add'/>
+          <Tender/>
+          </>
+        }/>
+        <Route
+        path="admin/tenderEdits"
+        element={
+          <>
+          <PageTitle title='Tender | Tender Edits and Delete'/>
+          <TenderEdits/>
+          </>
+        }/>
+        <Route
+        path="/admin/recruitmentAdd"
+        element={
+          <>
+          <PageTitle title='Recruitment | Recruitment ADD'/>
+          <AddRecruitments/>
+          </>
+        }/>
+        <Route
+        path='/admin/recruitmentEdits'
+        element={
+          <>
+          <PageTitle title='Recruitment | Recruitment Edit and Delete'/>
+          <RecruitmentEdits/>
+          </>
+        }/>
       </Routes>
     </>
   );

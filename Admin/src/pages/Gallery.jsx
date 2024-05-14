@@ -8,7 +8,6 @@ import { API } from '../utils/apiURl';
 
 const Gallery = () => {
   const [data, setData] = useState();
-
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/image`);
@@ -22,7 +21,6 @@ const Gallery = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
   const [images, setImages] = useState([]);
   const titleRef = useRef();
   const descriptionRef = useRef()

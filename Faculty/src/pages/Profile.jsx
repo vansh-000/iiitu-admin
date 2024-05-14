@@ -2,23 +2,109 @@ import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
 import userSix from '../images/user/user-06.png';
 import { Link } from 'react-router-dom';
-import { FaLinkedin } from "react-icons/fa";
-import { SiGooglescholar } from "react-icons/si";
+import { FaLinkedin } from 'react-icons/fa';
+import { SiAxios, SiGooglescholar } from 'react-icons/si';
 import TableThree from '../components/Tables/TableEducation';
 import TableResearch from '../components/Tables/TableResearch';
 import TableAwards from '../components/Tables/TableAwards';
+import { API, STATIC_FILES } from '../../../Admin/src/utils/apiURl';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { useRef } from 'react';
 const Profile = () => {
+  const nevigat = useNavigate();
+  const [faculty, setFaculty] = useState({});
+  const [editable, setEditable] = useState(false);
+  const [profileImage, setProfileImage] = useState('');
+  const refProFileImg = useRef();
+  const refResume=useRef();
+  const refName=useRef();
+  const refPhone=useRef();
+  const refResearch=useRef();
+  const refResearchInterest=useRef();
+  const refEducation=useRef();
+  const refAwardAndHonours=useRef();
+  const refLinkedin=useRef();
+  const refGoogleScholar=useRef();
+  const fetchData = async () => {
+    try {
+      const userData=JSON.parse(localStorage.getItem('user'));
+      const response = await axios.get(
+        `${API}/faculty/facultyProfile/${userData.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        },
+      );
+      
+      if (response.status === 200) {
+        setFaculty(response.data);
+        console.log(response.data);
+      }
+    } catch (err) {
+      console.log('Error', err);
+      if(err.response.status===401||err.response.status===404){
+        nevigat('/auth/signin')
+      }
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const handleEdit = () => {
+    setEditable(true);
+};
+
+
+const handleSave = async () => {
+    try {
+        // const startDate = startDateRefs.current?.value || editedData.startDate;
+        // const endDate = endDateRefs.current?.value || editedData.endDate;
+        // const TenderDoc=refTenderDoc.current?.files[0];
+        // const annexure=refAnnexure.current?.files[0];
+        // const response=await axios.put(`${API}/tender/${editedData._id}`, {
+        //     service:refDesc.current?.value,
+        //     TenderDoc:TenderDoc,
+        //     startDate:startDate,
+        //     endDate:endDate,
+        //     annexure:annexure
+        // },{
+        //     headers: {
+        //       'Content-Type': 'multipart/form-data'
+        //     }
+        //   });
+        // alert(response.data.message);
+        fetchData();
+    } catch (err) {
+        console.error(err);
+    }
+    setEditable(false);
+};
+const handleProfileImageChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    setProfileImage(URL.createObjectURL(file));
+  }
+};
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Profile" />
 
       <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <button className="bg-primary text-white hover:bg-opacity-90 absolute mx-2 my-2 p-1 rounded sm:p-2 sm:mx-4 sm:my-4">Edit Profile</button>
+        <button onClick={editable ? handleSave : () => handleEdit()} className="bg-primary text-white hover:bg-opacity-90 absolute mx-2 my-2 p-1 rounded sm:p-2 sm:mx-4 sm:my-4">
+        {editable ? 'Save' : 'Edit'}
+        </button>
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           <div className="relative z-30 mx-auto h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
             <div className="relative drop-shadow-2">
-              <img src={userSix} alt="profile" />
-              <label
+            {faculty && faculty.profileImage && (<img src={profileImage||`${STATIC_FILES}/${faculty.profileImage.replace(
+        /\\/g,
+        '/',
+      )}`} alt="profile" />)}
+              {editable&&<label
                 htmlFor="profile"
                 className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
               >
@@ -43,45 +129,92 @@ const Profile = () => {
                     fill=""
                   />
                 </svg>
+               
                 <input
                   type="file"
                   name="profile"
                   id="profile"
                   className="sr-only"
+                  ref={refProFileImg}
+                  onChange={handleProfileImageChange}
                 />
-              </label>
+              </label>}
+              
             </div>
           </div>
           <div className="mt-4">
             <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-              Name
+              {faculty.name}
             </h3>
-            <p className="font-medium">School of Computing</p>
+            {/* <p className="font-medium">School of Computing</p> */}
             <div className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
-              <Link className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
+              {editable?<input
+              name="title"
+              type="text"
+              ref={refGoogleScholar}
+              placeholder="Name"
+              defaultValue={
+                faculty.socialLink && faculty.socialLink[1]
+                  ? faculty.socialLink[1].link
+                  : ''
+              }
+              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+            />:<Link className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                 <FaLinkedin className="text-2xl" />
-              </Link>
+              </Link>}
+              {editable? <input
+              name="title"
+              type="text"
+              // ref={titleRef}
+              ref={refGoogleScholar}
+              placeholder="Google Scholer Link"
+              defaultValue={
+                faculty.socialLink && faculty.socialLink[1]
+                  ? faculty.socialLink[1].link
+                  : ''
+              }
+              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+            />:
               <Link className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                 <SiGooglescholar className="text-2xl" />
-              </Link>
-              <Link className="flex flex-col items-center justify-center gap-1 text-black dark:text-white border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
-                Resume
-              </Link>
+              </Link>}
+              {editable?<input
+className="w-auto cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
+
+              type="file"
+              id="resume"
+              name="resume"
+              accept=".pdf"
+              ref={refResume}
+            //   required
+            />:<Link className="flex flex-col items-center justify-center gap-1 text-black dark:text-white border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
+            Resume
+          </Link>}
+            
             </div>
 
             <div className="mx-auto max-w-180">
               <ul className="mt-4.5 text-black dark:text-white">
                 <li>Mail: email@mail.com</li>
-                <li>Phone: 1234567890</li>
+                <li>Phone:
+                {editable?<input
+              name="title"
+              type="text"
+              // ref={titleRef}
+              ref={refPhone}
+              placeholder="Phone Number (eg.7352xxxx)"
+              defaultValue={faculty.mobile}
+              className="w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+            />: faculty.mobile}</li>
               </ul>
             </div>
-
           </div>
         </div>
       </div>
-      <TableThree />
-      <TableResearch />
-      <TableAwards />
+      {/* {console.log(faculty.Education)} */}
+      {faculty.Education&&<TableThree Education={faculty.Education} />}
+       {faculty.Research&&faculty.Research[0]&&<TableResearch Research={faculty.Research}/>}
+       {faculty.AwardAndHonours&&faculty.AwardAndHonours[0]&&<TableAwards Award={faculty.AwardAndHonours}/>}
     </DefaultLayout>
   );
 };

@@ -25,7 +25,8 @@ const packageData = [
   },
 ];
 
-const TableThree = () => {
+const TableThree = ({Education}) => {
+  console.log(Education);
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -42,16 +43,16 @@ const TableThree = () => {
             </tr>
           </thead>
           <tbody>
-            {packageData.map((packageItem, key) => (
+            {Education.map((Edu, key) => (
               <tr key={key}>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
-                    {packageItem.name}
+                    {Edu.dateOfStart}-{Edu.dateOfEnd}
                   </h5>
                 </td>
                 <td className="text-center border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    {packageItem.invoiceDate}
+                    {Edu.description}
                   </p>
                 </td>
               </tr>

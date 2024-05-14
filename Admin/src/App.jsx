@@ -20,6 +20,7 @@ import Tender from './pages/Tender/Tender';
 import TenderEdits from './pages/Tender/TenderEdits';
 import AddRecruitments from './pages/Recruitments/AddRecruitments';
 import RecruitmentEdits from './pages/Recruitments/EditRecruitment';
+import FacultyAdd from './pages/Faculty/FacultyAdd';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -185,6 +186,14 @@ function App() {
           <>
           <PageTitle title='Recruitment | Recruitment Edit and Delete'/>
           <RecruitmentEdits/>
+          </>
+        }/>
+        <Route
+        path='/admin/facultyAdd'
+        element={
+          <>
+          <PageTitle title='Faculty | Faculty Add'/>
+          <FacultyAdd/>
           </>
         }/>
       </Routes>

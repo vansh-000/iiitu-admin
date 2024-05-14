@@ -23,7 +23,7 @@ const Poster = (props) => {
                         </div>
                         <p className={styles.news}>{slide.heading.length > 20 ? `${slide.heading.substring(0, 100)}...` : slide.heading}</p>
                         <div className="flex items-center justify-center ">
-                            <button className="text-xl text-black" onClick={() => handleDelete(slide._id)}>Delete</button>
+                            <button className="text-xl text-black dark:text-white" onClick={() => handleDelete(slide._id)}>Delete</button>
                             <MdDelete className="text-[rgb(220,0,0)] text-xl" />
                         </div>
                     </div>

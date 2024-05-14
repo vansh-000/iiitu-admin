@@ -116,10 +116,10 @@ const Curriculum = () => {
         </button>
       </form>
       <div className="flex flex-col gap-10 mt-5">
-        {data?.length>0 ? (
-        <TableCurriculum data={data} handleDelete={handleDelete} />
+        {data?.length > 0 ? (
+          <TableCurriculum data={data} handleDelete={handleDelete} />
         ) : (
-            <h1 className="text-black text-2xl mt-4">No Curriculum Present!</h1>
+          <h1 className="text-black dark:text-white text-2xl mt-4">No Curriculum Present!</h1>
         )}
       </div>
     </DefaultLayout>

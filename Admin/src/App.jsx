@@ -25,6 +25,7 @@ import RecruitmentEdits from './pages/Recruitments/EditRecruitment';
 import FacultyAdd from './pages/Faculty/FacultyAdd';
 import FacultyEdit from './pages/Faculty/FacultyEdit';
 import FacultyAllEdit from './pages/Faculty/FacultyAllEdit';
+import Admissions from './pages/Admissions';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -85,6 +86,15 @@ function App() {
             <>
               <PageTitle title="Events | IIITU - Admin" />
               <Events />
+            </>
+          }
+        />
+        <Route
+          path="/admissions"
+          element={
+            <>
+              <PageTitle title="Admissions | IIITU - Admin" />
+              <Admissions />
             </>
           }
         />

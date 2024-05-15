@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
-import Logo from '../../images/logo/logo.svg';
-
+import { LuPartyPopper } from "react-icons/lu";
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -131,6 +130,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     />
                   </svg>
                   Profile
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/clubs"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('clubs') &&
+                    'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <LuPartyPopper/>
+                  Clubs
                 </NavLink>
               </li>
               <SidebarLinkGroup

@@ -125,7 +125,6 @@ const FacultyAllEdit = () => {
             oldProfileImage:faculty.profileImage,
             oldResume:faculty.resume
           }
-    //    console.log(data);
           const responsee = await axios.put(`${API}/faculty/editFiles/${idd.id}`, 
           
          data

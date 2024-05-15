@@ -104,7 +104,6 @@ const handleProfileImageChange = (e) => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Profile" />
-
       <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <button onClick={editable ? handleSave : () => handleEdit()} className="bg-primary text-white hover:bg-opacity-90 absolute mx-2 my-2 p-1 rounded sm:p-2 sm:mx-4 sm:my-4">
         {editable ? 'Save' : 'Edit'}

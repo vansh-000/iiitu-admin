@@ -12,7 +12,6 @@ const TenderEdits=()=>{
           let response = await axios.get(`${API}/tender`);
           if (response.status === 200) {
             setData(response.data);
-            console.log(response.data);
           }
         //   setFetchDone(true);
         } catch (err) {

@@ -13,6 +13,7 @@ const SignIn= () => {
   const handleOnSubmit=async(e)=>{
     const email=refEmail.current.value;
     const password=refPassword.current.value;
+    console.log(email,password);
     e.preventDefault();
     try {
       const response = await axios.post(`${API}/faculty/login`, {
@@ -27,7 +28,11 @@ const SignIn= () => {
       }
 
     } catch (error) {
+      
       console.log(error);
+      if(error.response.status===409){
+        alert("User is Not Found");
+      }
     }
   }
   return (

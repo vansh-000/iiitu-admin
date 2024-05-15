@@ -6,6 +6,7 @@ import PageTitle from './components/PageTitle';
 import Profile from './pages/Profile.jsx';
 import EditProfile from "./pages/EditProfile";
 import Clubs from "./pages/Clubs";
+import SignIn from './pages/Authentication/SignInTeach';
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -50,6 +51,14 @@ function App() {
             </>
           }
         />
+        <Route
+        path='/auth/signin'
+        element={
+          <>
+          <PageTitle title='Authentication | Faculty Login'/>
+          <SignIn/>
+          </>
+        }/>
       </Routes>
     </>
   );

@@ -13,14 +13,12 @@ const SignIn= () => {
   const handleOnSubmit=async(e)=>{
     const email=refEmail.current.value;
     const password=refPassword.current.value;
-    console.log(email,password);
     e.preventDefault();
     try {
       const response = await axios.post(`${API}/faculty/login`, {
         email: email,
         password: password
       });
-      console.log(response);
       if(response.status===200){
         localStorage.setItem('token',response.data.accessToken);
         localStorage.setItem('user',JSON.stringify(response.data.userInfo));

@@ -68,7 +68,6 @@ const Profile = () => {
       const newAward = award.filter((awa) => awa !== '');
       const newResearch = research.filter((res) => res !== '');
       const userID=JSON.parse(localStorage.getItem('user')).id;
-      // console.log(userID,newEducation,newAward,newResearch);
       const data={
         name: refName.current.value,
       
@@ -82,14 +81,12 @@ const Profile = () => {
           AwardAndHonours:newAward,
           Education: newEducation,
       }
-      console.log(data);
       const response=await axios.put(`${API}/faculty/editDetails/${userID}`,data,{
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       },
     )
-    console.log(response);
       toast.success(`${response.data.message}`)
       if (refResume.current.files[0] || refProFileImg.current.files[0]) {
         const data={

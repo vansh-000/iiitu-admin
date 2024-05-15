@@ -45,16 +45,7 @@ function App() {
     <>
       <Routes>
         <Route
-          index
-          element={
-            <>
-              <PageTitle title="Dashboard | IIITU - Admin" />
-              <ECommerce />
-            </>
-          }
-        />
-        <Route
-          path="/gallery"
+          path="/"
           element={
             <>
               <PageTitle title="Gallery | IIITU - Admin" />

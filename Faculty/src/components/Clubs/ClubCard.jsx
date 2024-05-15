@@ -26,14 +26,15 @@ const ClubsCard = (props) => {
                             </div>
                             <div className={styles.contactscont}>
                                 {slide.socialLinks && slide.socialLinks.map((link, index) => (
-                                    <a key={index} href={link.link} target="_blank" rel="noopener noreferrer">
+                                    link.link &&
+                                    (<a key={index} href={link.link} target="_blank" rel="noopener noreferrer">
                                         {link.socialMedia === 'Facebook' && <FaFacebookF />}
                                         {link.socialMedia === 'Twitter' && <FaTwitter />}
                                         {link.socialMedia === 'Instagram' && <FaInstagramSquare />}
                                         {link.socialMedia === 'LinkedIn' && <FaLinkedinIn />}
                                         {link.socialMedia === 'GitHub' && <FaGithub />}
                                         {link.socialMedia === 'Youtube' && <FaYoutube />}
-                                    </a>
+                                    </a>)
                                 ))}
                             </div>
                         </NavLink>

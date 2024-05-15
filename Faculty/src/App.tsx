@@ -7,6 +7,7 @@ import Profile from './pages/Profile.jsx';
 import EditProfile from "./pages/EditProfile";
 import Clubs from "./pages/Clubs";
 import SignIn from './pages/Authentication/SignInTeach';
+import ClubsPage from './pages/ClubsPage';
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -46,8 +47,17 @@ function App() {
           path="/clubs"
           element={
             <>
-              <PageTitle title="Clubs | Faculty Dashboard" />
+              <PageTitle title="Clubs | Clubs Dashboard" />
               <Clubs />
+            </>
+          }
+        />
+        <Route
+          path="/clubs/:name"
+          element={
+            <>
+              <PageTitle title="Clubs-Page | Clubs Dashboard" />
+              <ClubsPage />
             </>
           }
         />

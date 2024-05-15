@@ -4,9 +4,11 @@ import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import toast ,{Toaster} from 'react-hot-toast';
 import { API } from '../utils/apiURl';
-import TableClub from '../components/Tables/TableClub'
+import { useParams } from 'react-router-dom';
 const Clubs = () => {
+    const {name}=useParams();
     const [data, setData] = useState();
+    const [club, setClub] = useState();
     const [socialLinks, setSocialLinks] = useState([
         {
             socialMedia: 'Facebook',
@@ -41,16 +43,18 @@ const Clubs = () => {
     useEffect(() => {
         fetchData();
     }, []);
+    useEffect(() => {
+        const foundClub = data?.find(club => club.Name === name);
+        if (foundClub) {
+            setClub(foundClub);
+        }
+    }, [data, name]);
     const [images, setImages] = useState([]);
     const nameRef = useRef();
     const linkRef = useRef();
     const descriptionRef = useRef();
     const facultyRef = useRef();
     const presidentRef = useRef();
-    const handleFileChange = (event) => {
-        const files = Array.from(event.target.files);
-        setImages(files);
-    };
     const handleEmpty = () => {
         nameRef.current.value = '';
         linkRef.current.value = '';
@@ -101,24 +105,13 @@ const Clubs = () => {
                 formData.append(`socialLinks[${index}][socialMedia]`, item.socialMedia);
                 formData.append(`socialLinks[${index}][link]`, item.link);
             });
-            await axios.post(`${API}/clubs`, formData, {
+            await axios.put(`${API}/clubs/${club._id}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
             });
-            toast.success("New Club Created!");
+            toast.success(`${name} Club updated successfully!`);
             handleEmpty();
-            fetchData();
-        }
-        catch (err) {
-            console.log("Error:", err);
-        }
-    }
-
-    const handleDelete = async (id) => {
-        try {
-            await axios.delete(`${API}/clubs/${id}`);
-            toast.success("Club Deleted!");
             fetchData();
         }
         catch (err) {
@@ -135,7 +128,7 @@ const Clubs = () => {
     
     return (
         <DefaultLayout>
-            <Breadcrumb pageName="Clubs" />
+            <Breadcrumb pageName={`Edit ${name} Club Details`} />
             <Toaster />
             <form onSubmit={handleAdd}>
                 <div>
@@ -250,29 +243,12 @@ const Clubs = () => {
                         />
                     </div>
                 </div>
-                <div className="mt-4">
-                    <label className="mb-3 block text-black dark:text-white">
-                        Attach Logo
-                    </label>
-                    <input
-                        type="file"
-                        className="w-1/2 cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-                        multiple
-                        name="image"
-                        onChange={handleFileChange}
-                        accept="image/*"
-                        required
-                    />
-                </div>
                 <button
                     className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
                 >
-                    Add Club
+                    Update Club
                 </button>
             </form>
-            <div className="flex flex-col gap-10 mt-5">
-                <TableClub data={data} handleDelete={handleDelete} />
-            </div>
         </DefaultLayout>
     );
 };

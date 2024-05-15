@@ -2,13 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import UserOne from '../../images/user/user-01.png';
-
+import { API, STATIC_FILES } from '../../utils/apiURl';
+import { useNavigate } from 'react-router-dom';
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
-
+  const navigate=useNavigate();
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -34,7 +35,13 @@ const DropdownUser = () => {
     document.addEventListener('keydown', keyHandler);
     return () => document.removeEventListener('keydown', keyHandler);
   });
-
+  const userData=JSON.parse(localStorage.getItem('user'));
+  const handelOnClick=()=>{
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    navigate('/auth/signin');
+  }
+  console.log(userData?.department)
   return (
     <div className="relative">
       <Link
@@ -45,13 +52,15 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Faculty Name
+          {userData?.name || "No Data Available"}
           </span>
-          <span className="block text-xs">SOC</span>
+          <span className="block text-xs">{userData?.department}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          <img src={UserOne} alt="User" />
+         {userData &&<img src={`${STATIC_FILES}/${userData?.profileImg.replace(
+                      /\\/g,
+                      '/')}`} alt="User" />}
         </span>
 
         <svg
@@ -107,7 +116,7 @@ const DropdownUser = () => {
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button onClick={handelOnClick} className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
           <svg
             className="fill-current"
             width="22"

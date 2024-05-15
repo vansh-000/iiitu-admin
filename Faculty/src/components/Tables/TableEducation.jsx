@@ -1,32 +1,24 @@
-const packageData = [
-  {
-    name: 'Free package',
-    price: 0.0,
-    invoiceDate: `Doctorate of Philosophy (PhD) in Computer Engineering from NIT Kurukshetra, Haryana`,
-    status: 'Paid',
-  },
-  {
-    name: 'Standard Package',
-    price: 59.0,
-    invoiceDate: `Doctorate of Philosophy (PhD) in Computer Engineering from NIT Kurukshetra, Haryana`,
-    status: 'Paid',
-  },
-  {
-    name: 'Business Package',
-    price: 99.0,
-    invoiceDate: `Doctorate of Philosophy (PhD) in Computer Engineering from NIT Kurukshetra, Haryana`,
-    status: 'Unpaid',
-  },
-  {
-    name: 'Standard Package',
-    price: 59.0,
-    invoiceDate: `Jan 13,2023`,
-    status: 'Pending',
-  },
-];
+import React, { useState } from 'react';
 
-const TableThree = ({Education}) => {
-  console.log(Education);
+const TableThree = ({ edit,Education,setEducation }) => {
+
+  
+  // const [Education, setEducation] = useState([Education]);
+// const [edit,setEditMode]=useState(true);
+  // const toggleEditMode = () => {
+  //   setEditMode(!edit);
+  // };
+
+  const handleEdit = (index, field, value) => {
+    const updatedEducation = [...Education];
+    updatedEducation[index][field] = value;
+    setEducation(updatedEducation);
+  };
+
+  const handleAddEducation = () => {
+    setEducation([...Education, { dateOfStart: '', dateOfEnd: '', description: '' }]);
+  };
+
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -34,31 +26,55 @@ const TableThree = ({Education}) => {
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
-              <th className="py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                Year
-              </th>
-              <th className="py-4 px-4 font-medium text-center text-black dark:text-white">
-                University/College
-              </th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white xl:pl-11">Year</th>
+              <th className="py-4 px-4 font-medium text-center text-black dark:text-white">University/College</th>
             </tr>
           </thead>
           <tbody>
-            {Education.map((Edu, key) => (
-              <tr key={key}>
+            {Education.map((edu, index) => (
+              <tr key={index}>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                  <h5 className="font-medium text-black dark:text-white">
-                    {Edu.dateOfStart}-{Edu.dateOfEnd}
-                  </h5>
+                  {edit ? (
+                    <>
+                    <input
+                      type="text"
+                      value={edu.dateOfStart}
+                      placeholder='Date of Start'
+                      className="max-w-[100px] rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      onChange={(e) => handleEdit(index, 'dateOfStart', e.target.value)}
+                    />-
+                    <input
+                      type="text"
+                      value={edu.dateOfEnd}
+                      placeholder='Date of End'
+                      className="max-w-[100px] rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      onChange={(e) => handleEdit(index, 'dateOfEnd', e.target.value)}
+                    /></>
+                  ) : (
+                    <h5 className="font-medium text-black dark:text-white">{edu.dateOfStart}-{edu.dateOfEnd}</h5>
+                  )}
                 </td>
                 <td className="text-center border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p className="text-black dark:text-white">
-                    {Edu.description}
-                  </p>
+                  {edit ? (
+                    <input
+                      type="text"
+                      value={edu.description}
+                      placeholder='University'
+                      onChange={(e) => handleEdit(index, 'description', e.target.value)}
+                      className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    />
+                  ) : (
+                    <p className="text-black dark:text-white">{edu.description}</p>
+                  )}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        {edit && (
+          <button onClick={handleAddEducation}>Add Education</button>
+        )}
+        {/* <button onClick={toggleEditMode}>{edit ? 'Save' : 'Edit'}</button> */}
       </div>
     </div>
   );

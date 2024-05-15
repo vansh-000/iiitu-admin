@@ -1,31 +1,15 @@
-const packageData = [
-  {
-    name: 'Acting as a reviewer in various reputed Journals and Conferences',
-    price: 0.0,
-    invoiceDate: `Jan 13,2023`,
-    status: 'Paid',
-  },
-  {
-    name: 'The Best Paper Award in Seventh International Conference on Data Mining and Warehousing (ICDMW-2013) for the paper entitled “A Framework for Data Modeling and Querying the Dataspace Systems”',
-    price: 59.0,
-    invoiceDate: `Jan 13,2023`,
-    status: 'Paid',
-  },
-  {
-    name: 'Business Package',
-    price: 99.0,
-    invoiceDate: `Jan 13,2023`,
-    status: 'Unpaid',
-  },
-  {
-    name: 'Standard Package',
-    price: 59.0,
-    invoiceDate: `Jan 13,2023`,
-    status: 'Pending',
-  },
-];
 
-const TableAwards = ({Award}) => {
+
+const TableAwards = ({edit,Award,setAward}) => {
+  const handleEdit = (index, value) => {
+    const updatedAward = [...Award];
+    updatedAward[index] = value;
+    setAward(updatedAward);
+  };
+
+  const handleAddAward = () => {
+    setAward([...Award, ""]);
+  };
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -38,17 +22,29 @@ const TableAwards = ({Award}) => {
             </tr>
           </thead>
           <tbody>
-            {Award.map((awd, key) => (
-              <tr key={key}>
+            {Award.map((awd, index) => (
+              <tr key={index}>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
-                    {awd}
+                    {edit?(
+                       <input
+                       type="text"
+                       value={awd}
+                       placeholder='Awards and Honours'
+                       className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                       onChange={(e) => handleEdit(index, e.target.value)}
+                     />
+                    ):(awd)}
+                    
                   </h5>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        {edit && (
+          <button onClick={handleAddAward}>Add Award</button>
+        )}
       </div>
     </div>
   );

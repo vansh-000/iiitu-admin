@@ -18,14 +18,16 @@ const Profile = () => {
   const [faculty, setFaculty] = useState({});
   const [editable, setEditable] = useState(false);
   const [profileImage, setProfileImage] = useState('');
+  const [education,setEducation]=useState([]);
+  const [award,setAward]=useState([]);
+  const [research,setResearch]=useState([]);
   const refProFileImg = useRef();
   const refResume=useRef();
   const refName=useRef();
   const refPhone=useRef();
-  const refResearch=useRef();
+  // const refResearch=useRef();
   const refResearchInterest=useRef();
-  const refEducation=useRef();
-  const refAwardAndHonours=useRef();
+  // const refAwardAndHonours=useRef();
   const refLinkedin=useRef();
   const refGoogleScholar=useRef();
   const fetchData = async () => {
@@ -42,7 +44,9 @@ const Profile = () => {
       
       if (response.status === 200) {
         setFaculty(response.data);
-        console.log(response.data);
+        setEducation(response.data.Education);
+        setAward(response.data.AwardAndHonours);
+        setResearch(response.data.Research);
       }
     } catch (err) {
       console.log('Error', err);
@@ -77,7 +81,15 @@ const handleSave = async () => {
         //     }
         //   });
         // alert(response.data.message);
-        fetchData();
+
+        // console.log(education);
+        const newEducation=education.filter(edu=>(edu.description!==''));
+        const newAward=award.filter(awa=>awd!=='');
+        const newResearch=research.filter(res=>res!=='');
+
+        console.log(newEducation);
+
+        // fetchData();
     } catch (err) {
         console.error(err);
     }
@@ -195,7 +207,16 @@ className="w-auto cursor-pointer rounded-lg border-[1.5px] border-stroke bg-tran
 
             <div className="mx-auto max-w-180">
               <ul className="mt-4.5 text-black dark:text-white">
-                <li>Mail: email@mail.com</li>
+                <li>Research Intrest:
+                  {editable?<input
+              name="Resreach"
+              type="text"
+              // ref={titleRef}
+              ref={refResearchInterest}
+              placeholder="Research Intreast"
+              defaultValue={faculty.researchInterest}
+              className="w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+            />: faculty.researchInterest}</li>
                 <li>Phone:
                 {editable?<input
               name="title"
@@ -212,9 +233,9 @@ className="w-auto cursor-pointer rounded-lg border-[1.5px] border-stroke bg-tran
         </div>
       </div>
       {/* {console.log(faculty.Education)} */}
-      {faculty.Education&&<TableThree Education={faculty.Education} />}
-       {faculty.Research&&faculty.Research[0]&&<TableResearch Research={faculty.Research}/>}
-       {faculty.AwardAndHonours&&faculty.AwardAndHonours[0]&&<TableAwards Award={faculty.AwardAndHonours}/>}
+      {education&&<TableThree edit={editable} Education={education} setEducation={setEducation} />}
+       {research&&<TableResearch edit={editable} Research={research} setResearch={setResearch}/>}
+       {award&&<TableAwards edit={editable} Award={award} setAward={setAward}/>}
     </DefaultLayout>
   );
 };

@@ -28,7 +28,11 @@ const SignIn= () => {
       }
 
     } catch (error) {
+      
       console.log(error);
+      if(error.response.status===409){
+        alert("User is Not Found");
+      }
     }
   }
   return (

@@ -8,12 +8,13 @@ import SignUp from './pages/Authentication/SignUp';
 import Chart from './pages/Chart';
 import FormElements from './pages/Form/FormElements';
 import FormLayout from './pages/Form/FormLayout';
-import Profile from './pages/Profile';
+import Profile from './pages/Profile.jsx';
 import Settings from './pages/Settings';
 import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
-
+import EditProfile from "./pages/EditProfile";
+import Clubs from "./pages/Clubs";
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -35,8 +36,26 @@ function App() {
           path="/"
           element={
             <>
-              <PageTitle title="Profile | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Profile | Faculty Dashboard" />
               <Profile />
+            </>
+          }
+        />
+        <Route
+          path="/edit-profile"
+          element={
+            <>
+              <PageTitle title="Edit-Profile | Faculty Dashboard" />
+              <EditProfile />
+            </>
+          }
+        />
+        <Route
+          path="/clubs"
+          element={
+            <>
+              <PageTitle title="Clubs | Faculty Dashboard" />
+              <Clubs />
             </>
           }
         />

@@ -49,7 +49,6 @@ const Profile = () => {
       }
     } catch (err) {
       console.log('Error', err);
-     
       if (!localStorage.getItem('token') || err.response.status === 401 || err.response.status === 404) {
         nevigat('/auth/signin');
       }

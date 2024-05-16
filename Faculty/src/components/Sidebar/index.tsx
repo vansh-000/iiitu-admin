@@ -33,6 +33,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
   });
+  const userData = JSON.parse(localStorage.getItem('user'));
 
   // close if the esc key is pressed
   useEffect(() => {
@@ -65,7 +66,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         <NavLink to="/">
           <div className="flex flex-col items-center justify-center gap-5">
             <img className="w-15 h-15" src="/iiitu-logo.png" alt="Logo" />
-          <h1 className="text-4xl font-extrabold leading-none text-center tracking-tight text-gray-900 md:text-2xl lg:text-2xl dark:text-white">Faculty Name</h1>
+            <h1 className="text-4xl font-extrabold leading-none text-center tracking-tight text-gray-900 md:text-2xl lg:text-2xl dark:text-white">{userData?.name}</h1>
           </div>
         </NavLink>
 

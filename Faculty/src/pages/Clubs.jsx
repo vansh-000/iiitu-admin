@@ -5,25 +5,27 @@ import { useEffect, useRef, useState } from 'react';
 import toast ,{Toaster} from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import TableClub from '../components/Tables/TableClub'
+import { useNavigate } from 'react-router-dom';
 const Clubs = () => {
     const [data, setData] = useState();
+    const navigate = useNavigate();
     const [socialLinks, setSocialLinks] = useState([
         {
             socialMedia: 'Facebook',
             link: ''
-        },{
+        }, {
             socialMedia: 'Instagram',
             link: ''
-        },{
+        }, {
             socialMedia: 'Twitter',
             link: ''
-        },{
+        }, {
             socialMedia: 'Linkedin',
             link: ''
-        },{
+        }, {
             socialMedia: 'Github',
             link: ''
-        },{
+        }, {
             socialMedia: 'Youtube',
             link: ''
         }
@@ -39,8 +41,12 @@ const Clubs = () => {
     }
 
     useEffect(() => {
+        if (!localStorage.getItem("user")) {
+            navigate("/");
+        }
         fetchData();
     }, []);
+
     const [images, setImages] = useState([]);
     const nameRef = useRef();
     const linkRef = useRef();
@@ -57,23 +63,23 @@ const Clubs = () => {
         descriptionRef.current.value = '';
         facultyRef.current.value = '';
         presidentRef.current.value = '';
-        socialLinks.current.value=[
+        socialLinks.current.value = [
             {
                 socialMedia: 'Facebook',
                 link: ''
-            },{
+            }, {
                 socialMedia: 'Instagram',
                 link: ''
-            },{
+            }, {
                 socialMedia: 'Twitter',
                 link: ''
-            },{
+            }, {
                 socialMedia: 'Linkedin',
                 link: ''
-            },{
+            }, {
                 socialMedia: 'Github',
                 link: ''
-            },{
+            }, {
                 socialMedia: 'Youtube',
                 link: ''
             }
@@ -129,8 +135,8 @@ const Clubs = () => {
     const handleInputChange = (index, e) => {
         const { name, value } = e.target;
         const updatedSocialLinks = [...socialLinks];
-        updatedSocialLinks[index] = { ...updatedSocialLinks[index], [name]: value }; 
-        setSocialLinks(updatedSocialLinks); 
+        updatedSocialLinks[index] = { ...updatedSocialLinks[index], [name]: value };
+        setSocialLinks(updatedSocialLinks);
     };
     
     return (
@@ -159,7 +165,7 @@ const Clubs = () => {
                         name="websiteLink"
                         ref={linkRef}
                         type="text"
-                        placeholder="Website Link"  
+                        placeholder="Website Link"
                         className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
                 </div>
@@ -171,7 +177,7 @@ const Clubs = () => {
                         name="description"
                         ref={descriptionRef}
                         type="text"
-                        placeholder="Description"  
+                        placeholder="Description"
                         className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
                 </div>
@@ -184,7 +190,7 @@ const Clubs = () => {
                         ref={facultyRef}
                         required
                         type="text"
-                        placeholder="Faculty Id"  
+                        placeholder="Faculty Id"
                         className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
                 </div>
@@ -197,7 +203,7 @@ const Clubs = () => {
                         ref={presidentRef}
                         required
                         type="text"
-                        placeholder="President"  
+                        placeholder="President"
                         className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
                 </div>

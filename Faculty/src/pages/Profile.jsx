@@ -14,6 +14,9 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useRef } from 'react';
 import toast from 'react-hot-toast';
+import TablePublications from '../components/Tables/TablePublications';
+import TableJournals from '../components/Tables/TableJournals';
+import TableProjects from '../components/Tables/TableProjects';
 const Profile = () => {
   const nevigat = useNavigate();
   const [faculty, setFaculty] = useState({});
@@ -21,6 +24,9 @@ const Profile = () => {
   const [profileImage, setProfileImage] = useState('');
   const [education, setEducation] = useState([]);
   const [award, setAward] = useState([]);
+  const [publication, setPublication] = useState([]);
+  const [journal, setJournal] = useState([]);
+  const [project, setProject] = useState([]);
   const [research, setResearch] = useState([]);
   const refProFileImg = useRef();
   const refResume = useRef();
@@ -45,7 +51,10 @@ const Profile = () => {
         setFaculty(response.data);
         setEducation(response.data.Education);
         setAward(response.data.AwardAndHonours);
+        setPublication(response.data.Publications);
         setResearch(response.data.Research);
+        setJournal(response.data.Journals);
+        setProject(response.data.Projects);
       }
     } catch (err) {
       console.log('Error', err);
@@ -65,6 +74,9 @@ const Profile = () => {
     try {
       const newEducation = education.filter((edu) => edu.description !== '');
       const newAward = award.filter((awa) => awa !== '');
+      const newPublication = publication.filter((pub) => pub !== '');
+      const newJournal = journal.filter((jor) => jor !== '');
+      const newProject = project.filter((pro) => pro !== '');
       const newResearch = research.filter((res) => res !== '');
       const userID = JSON.parse(localStorage.getItem('user')).id;
       const data = {
@@ -79,6 +91,9 @@ const Profile = () => {
         Research: newResearch,
         AwardAndHonours: newAward,
         Education: newEducation,
+        Publications: newPublication,
+        Journals: newJournal,
+        Projects: newProject
       }
       const response = await axios.put(`${API}/faculty/editDetails/${userID}`, data, {
         headers: {
@@ -312,6 +327,15 @@ const Profile = () => {
       )}
       {award && (
         <TableAwards edit={editable} Award={award} setAward={setAward} />
+      )}
+      {publication && (
+        <TablePublications edit={editable} Publication={publication} setPublication={setPublication} />
+      )}
+      {journal && (
+        <TableJournals edit={editable} Journal={journal} setJournal={setJournal} />
+      )}
+      {project && (
+        <TableProjects edit={editable} Project={project} setProject={setProject} />
       )}
     </DefaultLayout>
   );

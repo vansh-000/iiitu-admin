@@ -1,16 +1,15 @@
 import React, { useRef } from 'react';
 import { Link ,useNavigate} from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import LogoDark from '../../images/logo/logo-dark.svg';
-import Logo from '../../images/logo/logo.svg';
 import DefaultLayout from '../../layout/DefaultLayout';
 import axios from "axios";
 import { API } from '../../utils/apiURl';
 import toast from 'react-hot-toast';
-const SignIn= () => {
-  const refEmail=useRef();
-  const refPassword=useRef();
-  const navigator=useNavigate();
+
+const SignIn = () => {
+  const refEmail = useRef();
+  const refPassword = useRef();
+  const navigator = useNavigate();
   const handleOnSubmit = async (e) => {
     const email = refEmail.current.value;
     const password = refPassword.current.value;
@@ -34,7 +33,7 @@ const SignIn= () => {
       else if (error.response && error.response.status === 403) {
         toast.error("Incorrect Password!");
       }
-      else if (error.response && error.response.status === 400) {
+      else if (error.response && error.response.status === 400 || 500) {
         toast.error("Internal Server Error!");
       }
     }
@@ -52,13 +51,13 @@ const SignIn= () => {
                
               </Link>
               <div className="flex flex-col items-center">
-              <img src="/iiitu-logo.png" className="w-40 h-40" />
+                <img src="/iiitu-logo.png" className="w-40 h-40" />
 
-              <p className="2xl:px-10 mt-10 text-black font-semibold dark:text-white">
-              Indian Institute of Information Technology Una
+                <p className="2xl:px-10 mt-10 text-black font-semibold dark:text-white">
+                  Indian Institute of Information Technology Una
                 </p>
                 <h1 className="text-4xl text-black font-semibold dark:text-white mt-4">Welcome to Faculty Portal!</h1>
-                </div>
+              </div>
 
             </div>
           </div>
@@ -102,7 +101,7 @@ const SignIn= () => {
                   </div>
                 </div>
 
-                <div className="mb-6">
+                <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Enter Password
                   </label>
@@ -136,6 +135,10 @@ const SignIn= () => {
                       </svg>
                     </span>
                   </div>
+                </div>
+
+                <div className="mb-7 text-end">
+                  <Link to="/forgot" className="text-primary hover:text-blue-500">Forgot your Password?</Link>
                 </div>
 
                 <div className="mb-5">

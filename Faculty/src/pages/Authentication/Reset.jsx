@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link ,useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
-import axios from "axios";
+import axios from 'axios';
 import { API } from '../../utils/apiURl';
 import toast from 'react-hot-toast';
 
 const Reset = () => {
-    const [pass, setPass] = useState('');
+    const [newPassword, setNewPassword] = useState('');
     const navigate = useNavigate();
 
     const email = localStorage.getItem("email");
@@ -15,19 +15,17 @@ const Reset = () => {
     const handleChangePassword = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${API}/faculty/resetpassword`, { email, pass });
+            const response = await axios.post(`${API}/faculty/resetpassword`, { email, newPassword });
             if (response.status === 200) {
                 toast.success("Password Changed Successfully!");
                 localStorage.removeItem("email");
                 navigate("/");
             }
-
         } catch (error) {
             if (error.response.status === 500) {
                 toast.error("Internal Server Error!");
-            }
-            else if (error.response && error.response.status === 404) {
-                toast.error("User does not found!");
+            } else if (error.response && error.response.status === 404) {
+                toast.error("User not found!");
             }
         }
     }
@@ -36,8 +34,8 @@ const Reset = () => {
         if (!email) {
             navigate("/");
         }
-    }, []);
-  
+    }, [email, navigate]);
+
     return (
         <DefaultLayout>
             <Breadcrumb pageName="Forgot Password" />
@@ -47,14 +45,13 @@ const Reset = () => {
                     <div className="hidden w-full xl:block xl:w-1/2">
                         <div className="p-10">
                             <div className="flex flex-col items-center">
-                                <img src="/iiitu-logo.png" className="w-40 h-40" />
+                                <img src="/iiitu-logo.png" className="w-40 h-40" alt="IIITU Logo" />
 
                                 <p className="2xl:px-10 mt-10 text-black font-semibold dark:text-white">
                                     Indian Institute of Information Technology Una
                                 </p>
                                 <h1 className="text-4xl text-black font-semibold dark:text-white mt-4">Welcome to Faculty Portal!</h1>
                             </div>
-
                         </div>
                     </div>
 
@@ -71,14 +68,13 @@ const Reset = () => {
                                     </label>
                                     <div className="relative">
                                         <input
-                                            type="text"
-                                            value={pass}
-                                            onChange={(e) => setPass(e.target.value)}
+                                            type="password"
+                                            value={newPassword}
+                                            onChange={(e) => setNewPassword(e.target.value)}
                                             required
                                             placeholder="Enter New Password"
                                             className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                                         />
-
                                         <span className="absolute right-4 top-4">
                                             <svg
                                                 className="fill-current"
@@ -113,7 +109,6 @@ const Reset = () => {
                                     />
                                 </div>
                             </form>
- 
                         </div>
                     </div>
                 </div>

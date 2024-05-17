@@ -36,6 +36,70 @@ const VerifyOTP = () => {
       navigate("/");
     }
   }, []);
+
+  const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+
+  useEffect(() => {
+    const savedTime = localStorage.getItem('otpSentTime');
+    const currentTime = Math.floor(Date.now() / 1000);
+    const elapsedTime = savedTime ? currentTime - parseInt(savedTime, 10) : 0;
+
+    if (elapsedTime >= 600) {
+      setIsButtonEnabled(true);
+      setTimeLeft(0);
+    } else {
+      setTimeLeft(600 - elapsedTime);
+    }
+
+    const timer = setInterval(() => {
+      setTimeLeft((prevTimeLeft) => {
+        if (prevTimeLeft <= 1) {
+          clearInterval(timer);
+          setIsButtonEnabled(true);
+          return 0;
+        }
+        return prevTimeLeft - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+  
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+  };
+
+  const handleResendOtp = async () => {
+    const email = refEmail.current.value;
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${API}/faculty/facultyByEmail`, {
+        email: email,
+      });
+      if (response.status === 200) {
+        const response2 = await axios.get(`${API}/sendOTP?email=${email}`);
+        if (response2.status === 200) {
+          localStorage.setItem('otpSentTime', Math.floor(Date.now() / 1000));
+          setTimeLeft(600);
+          setIsButtonEnabled(false);
+          toast.success("OTP sent successfully");
+        }
+        localStorage.setItem("email", email);
+        navigate("/verifyOTP");
+      }
+
+    } catch (error) {
+      if (error.response.status === 404) {
+        toast.error("User does Not Found!");
+      }
+      else if (error.response && error.response.status === 400) {
+        toast.error("Internal Server Error!");
+      }
+    }
+  };
   
   return (
     <DefaultLayout>
@@ -94,16 +158,20 @@ const VerifyOTP = () => {
                 </div>
 
                 <div className="mb-7 text-end">
-                  <Link
-                    type="button"
-                    to="/forgot"
-                    className="text-primary hover:text-blue-500"
-                    onClick={() => localStorage.removeItem("email")}
-                  >
-                    Change Email
-                  </Link>
+                  {isButtonEnabled ? (
+                    <button
+                      type="button"
+                      className="text-primary hover:text-blue-500"
+                      onClick={handleResendOtp}
+                    >
+                      Resend OTP
+                    </button>
+                  ) : (
+                    <span className="text-muted">
+                      Resend OTP in {formatTime(timeLeft)}
+                    </span>
+                  )}
                 </div>
-
                 <div className="mb-5">
                   <input
                     type="submit"

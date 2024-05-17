@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link ,useNavigate} from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
@@ -10,16 +10,15 @@ const VerifyOTP = () => {
   const [otp, setOTP] = useState('');
   const navigate = useNavigate();
 
+  const email = localStorage.getItem("email");
+
   const handleVerifyOTP = async (e) => {
-      const email = localStorage.getItem("email");
-      console.log(email);
     e.preventDefault();
     try {
       const response = await axios.get(`${API}/verifyOTP?email=${email}&otp=${otp}`);
       if (response.status === 200) {
-          toast.success("OTP Verified!");
-          localStorage.removeItem("email");
-          navigate("/changepassword");
+        toast.success("OTP Verified!");
+        navigate("/reset");
       }
 
     } catch (error) {
@@ -31,6 +30,12 @@ const VerifyOTP = () => {
       }
     }
   }
+
+  useEffect(() => {
+    if (!email) {
+      navigate("/");
+    }
+  }, []);
   
   return (
     <DefaultLayout>
@@ -58,7 +63,7 @@ const VerifyOTP = () => {
                 Verify OTP
               </h2>
 
-                               <form onSubmit={handleVerifyOTP}>
+              <form onSubmit={handleVerifyOTP}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     OTP
@@ -66,8 +71,8 @@ const VerifyOTP = () => {
                   <div className="relative">
                     <input
                       type="text"
-                          value={otp}
-                          onChange={(e)=>setOTP(e.target.value)}
+                      value={otp}
+                      onChange={(e) => setOTP(e.target.value)}
                       maxLength={6}
                       placeholder="Enter OTP"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -90,9 +95,10 @@ const VerifyOTP = () => {
 
                 <div className="mb-7 text-end">
                   <Link
-                                      type="button"
-                                      to="/forgot"
+                    type="button"
+                    to="/forgot"
                     className="text-primary hover:text-blue-500"
+                    onClick={() => localStorage.removeItem("email")}
                   >
                     Change Email
                   </Link>

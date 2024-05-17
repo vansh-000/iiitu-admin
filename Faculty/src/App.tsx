@@ -9,6 +9,7 @@ import Clubs from "./pages/Clubs.jsx";
 import SignIn from './pages/Authentication/SignInTeach.jsx';
 import Forgot from './pages/Authentication/Forgot.jsx';
 import VerifyOTP from './pages/Authentication/VerifyOTP.jsx';
+import Reset from './pages/Authentication/Reset.jsx';
 import ClubsPage from './pages/ClubsPage.jsx';
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -85,6 +86,14 @@ function App() {
           <>
           <PageTitle title='Verify OTP | Faculty Login'/>
           <VerifyOTP />
+          </>
+        }/>
+        <Route
+        path='/reset'
+        element={
+          <>
+          <PageTitle title='Reset Password | Faculty Login'/>
+          <Reset />
           </>
         }/>
       </Routes>

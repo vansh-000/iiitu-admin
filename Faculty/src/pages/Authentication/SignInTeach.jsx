@@ -33,7 +33,7 @@ const SignIn = () => {
       else if (error.response && error.response.status === 403) {
         toast.error("Incorrect Password!");
       }
-      else if (error.response && error.response.status === 400) {
+      else if (error.response && error.response.status === 400 || 500) {
         toast.error("Internal Server Error!");
       }
     }

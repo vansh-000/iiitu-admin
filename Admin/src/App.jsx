@@ -26,7 +26,9 @@ import FacultyAdd from './pages/Faculty/FacultyAdd';
 import FacultyEdit from './pages/Faculty/FacultyEdit';
 import FacultyAllEdit from './pages/Faculty/FacultyAllEdit';
 import Admissions from './pages/Admissions';
-
+import SignupAdmin from './pages/Authentication/SignupAdmin';
+import ForgotAdmin from './pages/Authentication/Forgot';
+import { ProtectedRoute } from './Protect';
 function App() {
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
@@ -38,18 +40,18 @@ function App() {
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
   }, []);
-
-  return loading ? (
+  return (loading ? (
     <Loader />
   ) : (
     <>
       <Routes>
+
         <Route
           path="/"
           element={
             <>
-              <PageTitle title="Gallery | IIITU - Admin" />
-              <Gallery />
+                <PageTitle title="Gallery | IIITU - Admin" />
+                <Gallery />
             </>
           }
         />
@@ -62,6 +64,23 @@ function App() {
             </>
           }
         />
+        <Route
+          path='/auth/signin'
+          element={
+            <>
+              <PageTitle title='Authentication | Admin Login' />
+              <SignupAdmin />
+            </>
+          } />
+          <Route
+          path='/forgot'
+          element={
+            <>
+              
+              <PageTitle title='Reset Password | Admin Login' />
+              <ForgotAdmin />
+            </>
+          } />
         <Route
           path="/news"
           element={
@@ -244,7 +263,6 @@ function App() {
         />
       </Routes>
     </>
-  );
+  ));
 }
-
 export default App;

@@ -12,6 +12,7 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+
   const location = useLocation();
   const { pathname } = location;
 

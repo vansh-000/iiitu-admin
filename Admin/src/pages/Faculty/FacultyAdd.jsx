@@ -20,6 +20,7 @@ function FacultyAdd() {
   const refProfileImage = useRef(null);
   const refAwardAndHonours = useRef('');
   const refResearch = useRef('');
+  const refPublication = useRef('');
   // const [formData, setFormData] = useState({}); // Corrected this line
 
   const handleOnSubmit = async (e) => {
@@ -46,6 +47,7 @@ function FacultyAdd() {
         researchInterest: refResearchInterest.current.value,
         socialLink:[{social:'Linkedin', link: refLinkedin.current.value }, {social:'GoogleScholar', link: refGoogleScholar.current.value }] ,
         Research:refResearch.current.value.split('#'),
+        Publications:refPublication.current.value.split('#'),
         AwardAndHonours:refAwardAndHonours.current.value.split('#'),
         resume:refResume.current.files[0],
         profileImage:refProfileImage.current.files[0],
@@ -379,6 +381,22 @@ className="w-1/2 cursor-pointer rounded-lg border-[1.5px] border-stroke bg-trans
               name="research"
               ref={refResearch}
               placeholder="research1#research2"
+              />
+              
+            <label
+              className="mb-3 block text-black dark:text-white"
+              htmlFor="research"
+            >
+              Publications:
+            </label>
+
+            <textarea className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+
+              type="text"
+              id="publication"
+              name="publication"
+              ref={refPublication}
+              placeholder="Publication1#Publication2"
             />
 
             <input

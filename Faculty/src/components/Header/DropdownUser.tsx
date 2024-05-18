@@ -39,7 +39,7 @@ const DropdownUser = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     toast.success("Successfully Logged Out!");
-    navigate('/auth/signin');
+    navigate('/signin');
   }
 
   return (
@@ -60,7 +60,7 @@ const DropdownUser = () => {
             </span>
 
             <span className="h-12 w-12 rounded-full">
-              {userData && <img src={`${STATIC_FILES}/${userData?.profileImg.replace(
+              {userData && <img className="h-12 w-12 rounded-full" src={`${STATIC_FILES}/${userData?.profileImg.replace(
                 /\\/g,
                 '/')}`} alt="User" />}
             </span>

@@ -384,7 +384,7 @@ className="w-1/2 cursor-pointer rounded-lg border-[1.5px] border-stroke bg-trans
             <input
               className="inline-flex items-center justify-center rounded-full bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
               type="submit"
-              value="Register"
+              value="Add Faculty"
             />
           </div>
         </div>

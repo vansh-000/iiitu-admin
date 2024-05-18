@@ -11,12 +11,9 @@ import Forgot from './pages/Authentication/Forgot.jsx';
 import VerifyOTP from './pages/Authentication/VerifyOTP.jsx';
 import Reset from './pages/Authentication/Reset.jsx';
 import ClubsPage from './pages/ClubsPage.jsx';
-
 function App() {
-  // const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
-
-  const userData = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -26,7 +23,9 @@ function App() {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
-  return userData ? (
+  return loading ? (
+    <Loader />
+  ) : (
     <>
       <Routes>
         <Route
@@ -99,8 +98,6 @@ function App() {
           } />
       </Routes>
     </>
-  ) : (
-    <Loader />
   );
 }
 

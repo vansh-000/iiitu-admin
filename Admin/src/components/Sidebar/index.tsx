@@ -248,7 +248,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Admin Add
+                              Add Faculty
                             </NavLink>
                           </li>
                           <li>
@@ -259,7 +259,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Admin Remove
+                              Edit Faculty
                             </NavLink>
                           </li>
                         </ul>
@@ -353,7 +353,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Admin Add
+                              Add Tender
                             </NavLink>
                           </li>
                           <li>
@@ -364,7 +364,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Admin Remove
+                              Edit Tender
                             </NavLink>
                           </li>
                         </ul>
@@ -456,7 +456,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               (isActive && '!text-white')
                             }
                           >
-                            Recruitment Add
+                            Add Recruitment
                           </NavLink>
                         </li>
                         <li>
@@ -467,7 +467,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               (isActive && '!text-white')
                             }
                           >
-                            Recruitment Edit
+                            Edit Recruitment
                           </NavLink>
                         </li>
                       </ul>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
 import Loader from './common/Loader/index.jsx';
-import PageTitle from './components/PageTitle.js';
+import PageTitle from './components/PageTitle.jsx';
 import Profile from './pages/Profile.jsx';
 import EditProfile from "./pages/EditProfile.jsx";
 import Clubs from "./pages/Clubs.jsx";
@@ -12,7 +12,7 @@ import VerifyOTP from './pages/Authentication/VerifyOTP.jsx';
 import Reset from './pages/Authentication/Reset.jsx';
 import ClubsPage from './pages/ClubsPage.jsx';
 function App() {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -65,37 +65,37 @@ function App() {
           }
         />
         <Route
-        path='/auth/signin'
-        element={
-          <>
-          <PageTitle title='Authentication | Faculty Login'/>
-          <SignIn/>
-          </>
-        }/>
+          path='/signin'
+          element={
+            <>
+              <PageTitle title='Authentication | Faculty Login' />
+              <SignIn />
+            </>
+          } />
         <Route
-        path='/forgot'
-        element={
-          <>
-          <PageTitle title='Reset Password | Faculty Login'/>
-          <Forgot />
-          </>
-        }/>
+          path='/forgot'
+          element={
+            <>
+              <PageTitle title='Reset Password | Faculty Login' />
+              <Forgot />
+            </>
+          } />
         <Route
-        path='/verifyOTP'
-        element={
-          <>
-          <PageTitle title='Verify OTP | Faculty Login'/>
-          <VerifyOTP />
-          </>
-        }/>
+          path='/verifyOTP'
+          element={
+            <>
+              <PageTitle title='Verify OTP | Faculty Login' />
+              <VerifyOTP />
+            </>
+          } />
         <Route
-        path='/reset'
-        element={
-          <>
-          <PageTitle title='Reset Password | Faculty Login'/>
-          <Reset />
-          </>
-        }/>
+          path='/reset'
+          element={
+            <>
+              <PageTitle title='Reset Password | Faculty Login' />
+              <Reset />
+            </>
+          } />
       </Routes>
     </>
   );

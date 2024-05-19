@@ -28,7 +28,8 @@ import FacultyAllEdit from './pages/Faculty/FacultyAllEdit';
 import Admissions from './pages/Admissions';
 import SignupAdmin from './pages/Authentication/SignupAdmin';
 import ForgotAdmin from './pages/Authentication/Forgot';
-import { ProtectedRoute } from './Protect';
+import Clubs from './pages/Clubs';
+import ClubsPage from './pages/ClubsPage';
 function App() {
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
@@ -52,6 +53,24 @@ function App() {
             <>
                 <PageTitle title="Gallery | IIITU - Admin" />
                 <Gallery />
+            </>
+          }
+        />
+        <Route
+          path="/clubs"
+          element={
+            <>
+              <PageTitle title="Clubs | Clubs Dashboard" />
+              <Clubs />
+            </>
+          }
+        />
+        <Route
+          path="/clubs/:name"
+          element={
+            <>
+              <PageTitle title="Clubs-Page | Clubs Dashboard" />
+              <ClubsPage />
             </>
           }
         />

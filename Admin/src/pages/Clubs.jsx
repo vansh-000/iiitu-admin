@@ -3,7 +3,7 @@ import DefaultLayout from '../layout/DefaultLayout';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import toast ,{Toaster} from 'react-hot-toast';
-import { API } from '../utils/apiURl';
+import { API } from '../../../Faculty/src/utils/apiURl';
 import TableClub from '../components/Tables/TableClub'
 import { useNavigate } from 'react-router-dom';
 const Clubs = () => {
@@ -39,14 +39,9 @@ const Clubs = () => {
             console.log(err);
         }
     }
-
-    useEffect(() => {
-        if (!localStorage.getItem("user")) {
-            navigate("/");
-        }
-        fetchData();
-    }, []);
-
+    useEffect(()=>{
+         fetchData();
+    },[])
     const [images, setImages] = useState([]);
     const nameRef = useRef();
     const linkRef = useRef();

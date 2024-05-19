@@ -34,7 +34,12 @@ const DropdownUser = () => {
     document.addEventListener('keydown', keyHandler);
     return () => document.removeEventListener('keydown', keyHandler);
   });
-  const userData=JSON.parse(localStorage.getItem('user'));
+  // const userData=JSON.parse(localStorage.getItem('user'));
+  const userData ={
+    name: "John Doe",
+    department: "Computer Science",
+    profileImg: "/images/profile.png"
+  }
   const handelOnClick=()=>{
     localStorage.removeItem('user');
     localStorage.removeItem('token');

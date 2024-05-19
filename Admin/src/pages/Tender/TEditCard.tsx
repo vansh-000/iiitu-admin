@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { STATIC_FILES, API } from '../../utils/apiURL';
+import { API, STATIC_FILES } from '../../utils/apiURl';
 import axios from 'axios';
 import DatePickerOne from '../../components/Forms/DatePicker/DatePickerOne';
 

@@ -45,7 +45,7 @@ function App() {
           }
         />
         <Route
-        path='/auth/signin'
+        path='/signin'
         element={
           <>
           <PageTitle title='Authentication | Faculty Login'/>

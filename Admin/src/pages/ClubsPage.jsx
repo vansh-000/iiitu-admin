@@ -10,6 +10,7 @@ const Clubs = () => {
     const [data, setData] = useState();
     const [club, setClub] = useState();
     const navigate = useNavigate();
+    const token=localStorage.getItem('token')
     const [socialLinks, setSocialLinks] = useState([
         {
             socialMedia: 'Facebook',
@@ -96,6 +97,7 @@ const Clubs = () => {
             });
             await axios.put(`${API}/clubs/${club._id}`, formData, {
                 headers: {
+                    "Authorization":`Bearer ${token}`,
                     "Content-Type": "multipart/form-data"
                 }
             });

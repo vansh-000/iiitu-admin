@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const Clubs = () => {
     const [data, setData] = useState();
     const navigate = useNavigate();
+    const token=localStorage.getItem('token');
     const [socialLinks, setSocialLinks] = useState([
         {
             socialMedia: 'Facebook',
@@ -104,6 +105,7 @@ const Clubs = () => {
             });
             await axios.post(`${API}/clubs`, formData, {
                 headers: {
+                    "Authorization":`Bearer ${token}`,
                     "Content-Type": "multipart/form-data"
                 }
             });
@@ -118,7 +120,11 @@ const Clubs = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`${API}/clubs/${id}`);
+            await axios.delete(`${API}/clubs/${id}`,{
+                headers:{
+                    "Authorization":`Bearer ${token}`       
+                }
+            });
             toast.success("Club Deleted!");
             fetchData();
         }

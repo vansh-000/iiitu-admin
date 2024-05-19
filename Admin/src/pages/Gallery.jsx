@@ -8,6 +8,7 @@ import { API } from '../utils/apiURl';
 
 const Gallery = () => {
   const [data, setData] = useState();
+  const token=localStorage.getItem('token');
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/image`);
@@ -17,7 +18,7 @@ const Gallery = () => {
       console.log(err);
     }
   }
-  
+  console.log(data);
   useEffect(() => {
     fetchData();
   }, []);
@@ -42,6 +43,7 @@ const Gallery = () => {
       formData.append("description", description);
       await axios.post(`${API}/image`, formData, {
         headers: {
+          "Authorization": `Bearer ${token}`,
           "Content-Type": "multipart/form-data"
         }
       });
@@ -55,7 +57,11 @@ const Gallery = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API}/image/${id}`);
+      await axios.delete(`${API}/image/${id}`,{
+        headers:{
+          "Authorization":`Bearer ${token}`
+        }
+      });
       toast.success("Image Deleted!");
       fetchData();
     }

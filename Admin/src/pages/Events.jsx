@@ -11,6 +11,7 @@ const Events = () => {
     const [data, setData] = useState();
     const [club, setclub] = useState([]);
     const [clubId, setclubId] = useState();
+    const  token=localStorage.getItem('token');
     const fetchData = async () => {
         try {
             const response = await axios.get(`${API}/event`);
@@ -75,6 +76,7 @@ const Events = () => {
             formData.append("description", description);
             await axios.post(`${API}/event`, formData, {
                 headers: {
+                    "Authorization":`Bearer ${token}`,
                     "Content-Type": "multipart/form-data"
                 }
             });
@@ -90,7 +92,11 @@ const Events = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`${API}/event/${id}`);
+            await axios.delete(`${API}/event/${id}`,{
+                headers:{
+                    "Authorization":`Bearer ${token}`
+                }
+            });
             toast.success("Event Deleted!");
             fetchData();
         }

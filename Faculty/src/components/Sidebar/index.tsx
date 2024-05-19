@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { LuPartyPopper } from "react-icons/lu";
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -33,7 +32,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
   });
-  const userData = JSON.parse(localStorage.getItem('user'));
 
   // close if the esc key is pressed
   useEffect(() => {
@@ -44,7 +42,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     document.addEventListener('keydown', keyHandler);
     return () => document.removeEventListener('keydown', keyHandler);
   });
-
+  const userData=localStorage.getItem('userInfo');
   useEffect(() => {
     localStorage.setItem('sidebar-expanded', sidebarExpanded.toString());
     if (sidebarExpanded) {
@@ -131,18 +129,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     />
                   </svg>
                   Profile
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/clubs"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('clubs') &&
-                    'bg-graydark dark:bg-meta-4'
-                  }`}
-                >
-                  <LuPartyPopper/>
-                  Clubs
                 </NavLink>
               </li>
             </ul>

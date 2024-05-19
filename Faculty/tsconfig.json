@@ -19,6 +19,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/lib.d.ts"],
+  "include": ["src", "src/lib.d.ts", "../Admin/src/components/Tables/TableClub.jsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -3,7 +3,7 @@ import DefaultLayout from '../layout/DefaultLayout';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import toast ,{Toaster} from 'react-hot-toast';
-import { API } from '../utils/apiURl';
+import { API } from '../../../Faculty/src/utils/apiURl';
 import { useNavigate, useParams } from 'react-router-dom';
 const Clubs = () => {
     const { name } = useParams();
@@ -31,24 +31,6 @@ const Clubs = () => {
             link: ''
         }
     ]);
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(`${API}/clubs`);
-            setData(response.data.data);
-        }
-        catch (err) {
-            console.log(err);
-        }
-    }
-
-    useEffect(() => {
-        fetchData();
-        console.log(localStorage.getItem("user"));
-        if (!localStorage.getItem("user")) {
-            navigate("/");
-        }
-    }, []);
-
     useEffect(() => {
         const foundClub = data?.find(club => club.Name === name);
         if (foundClub) {

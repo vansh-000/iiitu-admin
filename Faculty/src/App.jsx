@@ -5,12 +5,10 @@ import Loader from './common/Loader/index.jsx';
 import PageTitle from './components/PageTitle.jsx';
 import Profile from './pages/Profile.jsx';
 import EditProfile from "./pages/EditProfile.jsx";
-import Clubs from "./pages/Clubs.jsx";
 import SignIn from './pages/Authentication/SignInTeach.jsx';
 import Forgot from './pages/Authentication/Forgot.jsx';
 import VerifyOTP from './pages/Authentication/VerifyOTP.jsx';
 import Reset from './pages/Authentication/Reset.jsx';
-import ClubsPage from './pages/ClubsPage.jsx';
 function App() {
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
@@ -47,31 +45,13 @@ function App() {
           }
         />
         <Route
-          path="/clubs"
-          element={
-            <>
-              <PageTitle title="Clubs | Clubs Dashboard" />
-              <Clubs />
-            </>
-          }
-        />
-        <Route
-          path="/clubs/:name"
-          element={
-            <>
-              <PageTitle title="Clubs-Page | Clubs Dashboard" />
-              <ClubsPage />
-            </>
-          }
-        />
-        <Route
-          path='/signin'
-          element={
-            <>
-              <PageTitle title='Authentication | Faculty Login' />
-              <SignIn />
-            </>
-          } />
+        path='/auth/signin'
+        element={
+          <>
+          <PageTitle title='Authentication | Faculty Login'/>
+          <SignIn/>
+          </>
+        }/>
         <Route
           path='/forgot'
           element={

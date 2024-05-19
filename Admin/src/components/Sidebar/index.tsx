@@ -6,12 +6,14 @@ import { FaRegNewspaper } from "react-icons/fa6";
 import { MdEmojiEvents } from "react-icons/md";
 import { GiTeacher } from "react-icons/gi";
 import { IoMdPhotos } from "react-icons/io";
+import { LuPartyPopper } from "react-icons/lu";
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+
   const location = useLocation();
   const { pathname } = location;
 
@@ -38,7 +40,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
   });
-
+const userData={
+  name:"admin"
+}
   // close if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ keyCode }: KeyboardEvent) => {
@@ -59,6 +63,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   }, [sidebarExpanded]);
 
   return (
+    userData &&
     <aside
       ref={sidebar}
       className={`absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
@@ -138,6 +143,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 >
                   <FaRegNewspaper />
                   News
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/clubs"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('clubs') &&
+                    'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <LuPartyPopper/>
+                  Clubs
                 </NavLink>
               </li>
               <li>

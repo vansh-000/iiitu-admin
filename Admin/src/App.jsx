@@ -83,7 +83,7 @@ function App() {
           }
         />
         <Route
-          path='/auth/signin'
+          path='/signin'
           element={
             <>
               <PageTitle title='Authentication | Admin Login' />
@@ -136,33 +136,6 @@ function App() {
           }
         />
         <Route
-          path="/forms/form-elements"
-          element={
-            <>
-              <PageTitle title="Form Elements | IIITU - Admin" />
-              <FormElements />
-            </>
-          }
-        />
-        <Route
-          path="/forms/form-layout"
-          element={
-            <>
-              <PageTitle title="Form Layout | IIITU - Admin" />
-              <FormLayout />
-            </>
-          }
-        />
-        <Route
-          path="/tables"
-          element={
-            <>
-              <PageTitle title="Tables | IIITU - Admin" />
-              <Tables />
-            </>
-          }
-        />
-        <Route
           path="/settings"
           element={
             <>
@@ -172,34 +145,7 @@ function App() {
           }
         />
         <Route
-          path="/chart"
-          element={
-            <>
-              <PageTitle title="Basic Chart | IIITU - Admin" />
-              <Chart />
-            </>
-          }
-        />
-        <Route
-          path="/ui/alerts"
-          element={
-            <>
-              <PageTitle title="Alerts | IIITU - Admin" />
-              <Alerts />
-            </>
-          }
-        />
-        <Route
-          path="/ui/buttons"
-          element={
-            <>
-              <PageTitle title="Buttons | IIITU - Admin" />
-              <Buttons />
-            </>
-          }
-        />
-        <Route
-          path="/auth/signin"
+          path="/signin"
           element={
             <>
               <PageTitle title="Signin | IIITU - Admin" />
@@ -208,7 +154,7 @@ function App() {
           }
         />
         <Route
-          path="/auth/signup"
+          path="/signup"
           element={
             <>
               <PageTitle title="Signup | IIITU - Admin" />
@@ -217,7 +163,7 @@ function App() {
           }
         />
         <Route
-          path="admin/tenderAdd"
+          path="/admin/tenderAdd"
           element={
             <>
               <PageTitle title="Tender | Tender Add" />

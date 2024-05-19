@@ -265,7 +265,7 @@ const userData={
                                 (isActive && '!text-white')
                               }
                             >
-                              Admin Add
+                              Add Faculty
                             </NavLink>
                           </li>
                           <li>
@@ -276,7 +276,7 @@ const userData={
                                 (isActive && '!text-white')
                               }
                             >
-                              Admin Remove
+                              Edit Faculty
                             </NavLink>
                           </li>
                         </ul>
@@ -370,7 +370,7 @@ const userData={
                                 (isActive && '!text-white')
                               }
                             >
-                              Admin Add
+                              Add Tender
                             </NavLink>
                           </li>
                           <li>
@@ -381,7 +381,7 @@ const userData={
                                 (isActive && '!text-white')
                               }
                             >
-                              Admin Remove
+                              Edit Tender
                             </NavLink>
                           </li>
                         </ul>
@@ -473,7 +473,7 @@ const userData={
                               (isActive && '!text-white')
                             }
                           >
-                            Recruitment Add
+                            Add Recruitment
                           </NavLink>
                         </li>
                         <li>
@@ -484,7 +484,7 @@ const userData={
                               (isActive && '!text-white')
                             }
                           >
-                            Recruitment Edit
+                            Edit Recruitment
                           </NavLink>
                         </li>
                       </ul>

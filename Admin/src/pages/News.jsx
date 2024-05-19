@@ -24,11 +24,14 @@ const News = () => {
         fetchData();
     }, []);
     const [images, setImages] = useState([]);
+    const [docs, setDocs] = useState([]);
     const headingRef = useRef();
     const descriptionRef = useRef()
     const handleFileChange = (event) => {
         const files = Array.from(event.target.files);
+        const files2 = Array.from(event.target.files);
         setImages(files);
+        setDocs(files2);
     };
 
     const handleAdd = async (e) => {
@@ -40,6 +43,9 @@ const News = () => {
             images.forEach((image) => {
                 formData.append("image", image);
             });
+            docs.forEach((doc) => {
+                formData.append("doc", doc);
+            });
             formData.append("heading", heading);
             formData.append("description", description);
             await axios.post(`${API}/news`, formData, {
@@ -50,6 +56,7 @@ const News = () => {
             headingRef.current.value = '';
             descriptionRef.current.value = '';
             setImages([]);
+            setDocs([]);
             toast.success("News Uploaded!");
             fetchData();
         }
@@ -102,7 +109,7 @@ const News = () => {
 
                 <div className="mt-4">
                     <label className="mb-3 block text-black dark:text-white">
-                        Attach file
+                        Attach Image
                     </label>
                     <input
                         type="file"
@@ -111,6 +118,20 @@ const News = () => {
                         name="image"
                         onChange={handleFileChange}
                         accept="image/*"
+                        required
+                    />
+                </div>
+                <div className="mt-4">
+                    <label className="mb-3 block text-black dark:text-white">
+                        Attach Document
+                    </label>
+                    <input
+                        type="file"
+                        className="w-1/2 cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
+                        multiple
+                        name="doc"
+                        onChange={handleFileChange}
+                        accept=".pdf"
                         required
                     />
                 </div>

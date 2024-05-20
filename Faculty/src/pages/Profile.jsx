@@ -310,7 +310,6 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      {/* {console.log(faculty.Education)} */}
       {education && (
         <TableThree
           edit={editable}

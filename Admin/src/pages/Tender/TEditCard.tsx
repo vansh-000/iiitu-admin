@@ -5,7 +5,6 @@ import axios from 'axios';
 import DatePickerOne from '../../components/Forms/DatePicker/DatePickerOne';
 
 const TEditCard = ({ tender, fetchData, index }) => {
-    // console.log(tender);
     const [editable, setEditable] = useState(false);
     const [editedData, setEditedData] = useState({});
     const refDesc = useRef<HTMLInputElement>(null);

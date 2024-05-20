@@ -24,16 +24,8 @@ const SignUpAdmin = () => {
         localStorage.setItem('token', response.data.token);
         navigator("/");
       }
-    } catch (error) {
-      if (error.response.status === 409) {
-        toast.error("User does Not Found!");
-      }
-      else if (error.response && error.response.status === 403) {
-        toast.error("Incorrect Password!");
-      }
-      else if (error.response && error.response.status === 400 || 500) {
-        toast.error("Internal Server Error!");
-      }
+    } catch (err) {
+       toast.error(err.response.data.message);
     }
   };
   

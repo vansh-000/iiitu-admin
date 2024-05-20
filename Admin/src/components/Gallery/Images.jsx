@@ -9,7 +9,6 @@ const Images = (props) => {
     const handleClickImage = (index) => {
         onClick(index);
     };
-
     return (
         <div className={styles.container}>
             {data && data.map((slide, index) => (

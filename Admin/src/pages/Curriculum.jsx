@@ -6,10 +6,11 @@ import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import TableCurriculum from '../components/Tables/TableCurriculum';
+import { GiToken } from 'react-icons/gi';
 
 const Curriculum = () => {
   const [data, setData] = useState();
-
+  const token=localStorage.getItem('token');
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/courses`);
@@ -45,6 +46,7 @@ const Curriculum = () => {
       formData.append("description", branch);
       await axios.post(`${API}/courses`, formData, {
         headers: {
+          "Authorization":`Bearer ${token}`,
           "Content-Type": "multipart/form-data"
         }
       });
@@ -58,7 +60,11 @@ const Curriculum = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API}/courses/${id}`);
+      await axios.delete(`${API}/courses/${id}`,{
+        headers:{
+          "Authorization":`Bearer ${token}`
+        }
+      });
       toast.success("Curriculum Deleted!");
       fetchData();
     }

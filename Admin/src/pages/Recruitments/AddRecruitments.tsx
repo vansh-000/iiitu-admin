@@ -1,6 +1,6 @@
 import React, { FormEvent } from "react";
 import axios from "axios";
-import { API } from "../../utils/apiURL";
+import { API } from "../../utils/apiURl";
 import DatePickerOne from "../../components/Forms/DatePicker/DatePickerOne";
 import DefaultLayout from "../../layout/DefaultLayout";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";

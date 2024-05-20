@@ -5,7 +5,7 @@ import axios from 'axios';
 import DatePickerOne from '../../components/Forms/DatePicker/DatePickerOne';
 
 const REditCard = ({ recruitment, fetchData, index }) => {
-  // console.log(recruitment);
+
   const [editable, setEditable] = useState(false);
   const [editedData, setEditedData] = useState({});
   const refDesc = useRef<HTMLInputElement>(null);

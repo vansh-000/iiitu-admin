@@ -9,7 +9,7 @@ import TableNews from '../components/Tables/TableNews';
 
 const News = () => {
     const [data, setData] = useState();
-
+    const token=localStorage.getItem('token');
     const fetchData = async () => {
         try {
             const response = await axios.get(`${API}/news`);
@@ -50,6 +50,7 @@ const News = () => {
             formData.append("description", description);
             await axios.post(`${API}/news`, formData, {
                 headers: {
+                    "Authorization":`Bearer ${token}`,
                     "Content-Type": "multipart/form-data"
                 }
             });
@@ -67,7 +68,11 @@ const News = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`${API}/news/${id}`);
+            await axios.delete(`${API}/news/${id}`,{
+                headers:{
+                    "Authorization":`Bearer ${token}`
+                }
+            });
             toast.success("News Deleted!");
             fetchData();
         }

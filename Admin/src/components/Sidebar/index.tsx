@@ -7,6 +7,7 @@ import { MdEmojiEvents } from "react-icons/md";
 import { GiTeacher } from "react-icons/gi";
 import { IoMdPhotos } from "react-icons/io";
 import { LuPartyPopper } from "react-icons/lu";
+import { ImNewspaper } from "react-icons/im";
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -143,6 +144,17 @@ const userData={
                 >
                   <FaRegNewspaper />
                   News
+                </NavLink>
+                </li>
+              <li>
+                <NavLink
+                  to="/printmedia"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname==="/printmedia" &&
+                    'bg-graydark dark:bg-meta-4'
+                    }`}
+                >
+                  <ImNewspaper />
+                  Print Media
                 </NavLink>
               </li>
               <li>

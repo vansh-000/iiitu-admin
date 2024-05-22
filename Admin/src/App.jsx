@@ -5,14 +5,8 @@ import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
-import Chart from './pages/Chart';
-import FormElements from './pages/Form/FormElements';
-import FormLayout from './pages/Form/FormLayout';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
-import Tables from './pages/Tables';
-import Alerts from './pages/UiElements/Alerts';
-import Buttons from './pages/UiElements/Buttons';
 import Gallery from './pages/Gallery';
 import News from './pages/News';
 import Events from './pages/Events';
@@ -29,6 +23,7 @@ import SignupAdmin from './pages/Authentication/SignupAdmin';
 import ForgotAdmin from './pages/Authentication/Forgot';
 import Clubs from './pages/Clubs';
 import ClubsPage from './pages/ClubsPage';
+import PrintMedia from './pages/PrintMedia';
 function App() {
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
@@ -109,6 +104,15 @@ function App() {
           }
         />
         <Route
+          path="/printmedia"
+          element={
+            <>
+              <PageTitle title="Print Media | IIITU - Admin" />
+              <PrintMedia />
+            </>
+          }
+        />
+        <Route
           path="/events"
           element={
             <>
@@ -172,7 +176,7 @@ function App() {
           }
         />
         <Route
-          path="admin/tenderEdits"
+          path="/admin/tenderEdits"
           element={
             <>
               <PageTitle title="Tender | Tender Edits and Delete" />

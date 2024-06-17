@@ -1,2 +1,2 @@
-export const API = "https://iiitu-website.onrender.com/api";
-export const STATIC_FILES = "https://iiitu-website.onrender.com";
+export const API = "http://194.238.22.203/api";
+export const STATIC_FILES = "http://194.238.22.203";

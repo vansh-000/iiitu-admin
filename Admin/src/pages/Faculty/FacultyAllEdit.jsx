@@ -127,6 +127,10 @@ const FacultyAllEdit = () => {
           Research: refResearch.current.value.split('#'),
           AwardAndHonours: refAwardAndHonours.current.value.split('#'),
           Education: educationData,
+      },{
+        headers: {
+           Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
       })
 
       toast.success(`${response.data.message}`)
@@ -143,9 +147,10 @@ const FacultyAllEdit = () => {
          data
           , {
             headers: {
+               Authorization: `Bearer ${localStorage.getItem('token')}`,
               'Content-Type': 'multipart/form-data'
             }
-          });
+          },);
           toast.success(`${responsee.data.message}`)
          
       }

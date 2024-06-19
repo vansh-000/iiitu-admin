@@ -16,9 +16,10 @@ function ClubsSlides({data, handleDelete}) {
   return (
     <>
       <ClubCard
+      
         data={data}
         onClick={(currentIndex) => setIndex(currentIndex)}
-        handleDelete={handleDelete}
+        handleDelete={handleDelete} 
       />
     </>
   );

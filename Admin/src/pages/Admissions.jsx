@@ -49,7 +49,7 @@ const Admissions = () => {
     const program = programRef.current.value;
     const batch = batchRef.current.value;
     const year = yearRef.current.value;
-    const type = typeRef.current.value;
+    const type = selectedType;
     try {
       const formData = new FormData();
       doc.forEach((doc) => {
@@ -63,6 +63,7 @@ const Admissions = () => {
       formData.append("type", type);
       await axios.post(`${API}/admission`, formData, {
         headers: {
+          Authorization:`Brear ${localStorage.getItem('token')}`,
           "Content-Type": "multipart/form-data"
         }
       });
@@ -76,7 +77,11 @@ const Admissions = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API}/admission/${id}`);
+      await axios.delete(`${API}/admission/${id}`,{
+        headers:{
+          Authorization:`Brear ${localStorage.getItem('token')}`
+        }
+      });
       toast.success("Data Deleted!");
       fetchData();
     }

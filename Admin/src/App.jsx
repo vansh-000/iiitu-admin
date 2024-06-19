@@ -60,7 +60,7 @@ function App() {
           }
         />
         <Route
-          path="/clubs/:name"
+          path="/clubs/:id"
           element={
             <>
               <PageTitle title="Clubs-Page | Clubs Dashboard" />

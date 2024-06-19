@@ -110,7 +110,7 @@ const Clubs = () => {
                 }
             });
             toast.success("New Club Created!");
-            handleEmpty();
+            // handleEmpty();
             fetchData();
         }
         catch (err) {

@@ -7,7 +7,11 @@ import toast from 'react-hot-toast';
 const FacultyEditCard = ({ faculty, fetchData }) => {
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`${API}/faculty/delete/${id}`);
+      const response = await axios.delete(`${API}/faculty/delete/${id}`,{
+        headers: {
+           Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
       //   alert(response.data.message);
       toast.success("Faculty is Deleted");
       fetchData();

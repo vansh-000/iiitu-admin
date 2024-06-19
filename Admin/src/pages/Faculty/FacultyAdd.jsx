@@ -75,6 +75,7 @@ function FacultyAdd() {
         },
         {
           headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'multipart/form-data', // Assuming you're sending files, you'll need this header
           },
         },

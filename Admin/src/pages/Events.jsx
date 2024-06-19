@@ -50,26 +50,33 @@ const Events = () => {
         descriptionRef.current.value = '';
         setImages([]);
     }
+    const getClubId = (clubname) => {
+        return new Promise((resolve) => {
+            const matchingClub = club.find((club) => club.Name === clubname);
+            if (matchingClub) {
+                setclubId(matchingClub._id);
+                resolve(matchingClub._id);
+            } else {
+                setclubId("");
+                resolve("");
+            }
+        });
+    };
     const handleAdd = async (e) => {
         e.preventDefault();
         const clubname = clubRef.current.value;
-        const matchingClub = club.find(club => club.Name === clubname);
-        if (matchingClub) {
-            setclubId(matchingClub._id);
-        } else {
-            setclubId("");
-        }
         const date = dateRef.current.value;
         const name = nameRef.current.value;
         const description = descriptionRef.current.value;
         try {
+            const clubId = await getClubId(clubname);
+            if (clubId === "") {
+                return toast.error("Club Not Found!!");
+            }
             const formData = new FormData();
             images.forEach((image) => {
                 formData.append("image", image);
             });
-            if (clubId === "") {
-                return toast.error("Club Not Found!!");
-            }
             formData.append("club", clubId);
             formData.append("date", date);
             formData.append("name", name);

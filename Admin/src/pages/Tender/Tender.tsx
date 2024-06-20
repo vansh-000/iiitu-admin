@@ -4,6 +4,7 @@ import { API } from "../../utils/apiURl";
 import DatePickerOne from "../../components/Forms/DatePicker/DatePickerOne";
 import DefaultLayout from "../../layout/DefaultLayout";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
+import toast from "react-hot-toast";
 
 function Tender() : JSX.Element{
   const startDateRef = React.useRef<HTMLInputElement>(null);
@@ -31,10 +32,11 @@ function Tender() : JSX.Element{
         annexure:refAnnexure.current!.files[0],
       }, {
         headers: {
+           "Authorization":`Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'multipart/form-data'
         }
       });
-      alert(response.data.message);
+      toast.success(response.data.message);
     } catch (err) {
       console.error(err);
     }

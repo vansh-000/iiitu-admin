@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { API, STATIC_FILES } from '../../utils/apiURl';
 import axios from 'axios';
 import DatePickerOne from '../../components/Forms/DatePicker/DatePickerOne';
@@ -13,7 +13,7 @@ const TEditCard = ({ tender, fetchData, index }) => {
     const refAnnexure = useRef<HTMLInputElement>(null);
     const startDateRefs = useRef(null);
     const endDateRefs = useRef({});
-
+    const navigate=useNavigate();
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
         const day = date.getDate();
@@ -51,7 +51,10 @@ const TEditCard = ({ tender, fetchData, index }) => {
             toast.success(response.data.message);
             fetchData();
         } catch (err) {
-            console.error(err);
+            if (err.response.status === 401) {
+                return navigate('/signin');
+              }
+              toast.error(`Error: ${err}`);
         }
         setEditable(false);
     };
@@ -66,7 +69,11 @@ const TEditCard = ({ tender, fetchData, index }) => {
             toast.success(response.data.message);
             fetchData();
         } catch (err) {
-            console.error(err);
+            console.log("error",err);
+            if (err.response.status === 401) {
+                return navigate('/signin');
+              }
+              toast.error(`Error: ${err}`);
         }
     };
 

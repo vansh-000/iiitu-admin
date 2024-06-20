@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { API, STATIC_FILES } from '../../utils/apiURl';
 import axios from 'axios';
 import DefaultLayout from '../../layout/DefaultLayout';
@@ -14,6 +14,7 @@ import TableProjects from '../../components/Tables/TableProjects';
 
 const FacultyAllEdit = () => {
   const idd = useParams();
+  const navigate=useNavigate();
   const [faculty, setFaculty] = React.useState({});
   const [profileImage, setProfileImage] = React.useState('');
   const [education, setEducation] = useState([]);
@@ -30,12 +31,10 @@ const FacultyAllEdit = () => {
   const refLinkedin = React.useRef();
   const refGoogleScholar = React.useRef();
   const [profileIMG, setProfileIMG] = React.useState();
-  const [resumE, setResumE] = React.useState();
   const fetchFaculty = async () => {
     try {
       const response = await axios.get(`${API}/faculty/${idd.id}`);
       setFaculty(response.data);
-      console.log(response.data);
       setAward(response.data.AwardAndHonours);
       setEducation(response.data.Education);
       setJournal(response.data.Journals);
@@ -45,7 +44,6 @@ const FacultyAllEdit = () => {
       setProfileIMG(
         `${STATIC_FILES}/${response.data.profileImage.replace(/\\/g, '/')}`,
       );
-      setResumE(`${STATIC_FILES}/${response.data.resume.replace(/\\/g, '/')}`);
     } catch (err) {
       console.error('error in dedicated faculty', err);
     }
@@ -116,7 +114,10 @@ const FacultyAllEdit = () => {
         toast.success(`${responsee.data.message}`);
       }
     } catch (err) {
-      console.error(err);
+      if (err.response.status === 401) {
+        return navigate('/signin');
+      }
+      toast.error(`Error: ${err}`);
     }
   };
   return (
@@ -164,6 +165,7 @@ const FacultyAllEdit = () => {
                     name="profile"
                     id="profile"
                     className="sr-only"
+                    accept='image/*'
                     ref={refProFileImg}
                     onChange={handleProfileImageChange}
                   />

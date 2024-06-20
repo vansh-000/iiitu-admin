@@ -6,11 +6,12 @@ import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import TableNews from '../components/Tables/TableNews';
-import { FcCdLogo } from 'react-icons/fc';
+import { useNavigate } from 'react-router-dom';
 
 const News = () => {
   const [data, setData] = useState();
   const token = localStorage.getItem('token');
+  const navigate=useNavigate();
   const refImg = useRef();
   const refDoc = useRef();
   const fetchData = async () => {
@@ -28,12 +29,6 @@ const News = () => {
 
   const headingRef = useRef();
   const descriptionRef = useRef();
-  const handleFileChange = (event) => {
-    const files = Array.from(event.target.files);
-    const files2 = Array.from(event.target.files);
-    setImages(files);
-    setDocs(files2);
-  };
   const handleAdd = async (e) => {
     e.preventDefault();
     const heading = headingRef.current.value;
@@ -65,7 +60,10 @@ const News = () => {
         toast.success("News Uploaded!");
         fetchData();
     } catch (err) {
-        console.log("Error:", err);
+      if(err.response.status===401){
+        return navigate('/signin')
+      }
+      toast.error(`Error: ${err}`);
     }
 };
 
@@ -80,7 +78,10 @@ const News = () => {
       toast.success('News Deleted!');
       fetchData();
     } catch (err) {
-      console.log('Error:', err);
+      if(err.response.status===401){
+        return navigate('/signin')
+      }
+      toast.error(`Error: ${err}`);
     }
   };
 

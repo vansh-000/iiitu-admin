@@ -15,10 +15,15 @@ const Reset = () => {
     const handleChangePassword = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${API}/faculty/resetpassword`, { email, newPassword });
+            const response = await axios.post(`${API}/faculty/resetpassword`, { email, newPassword },{
+                headers: {
+                    Authorization:`Bearer ${localStorage.getItem('verifyToken')}`
+                }
+            });
             if (response.status === 200) {
                 toast.success("Password Changed Successfully!");
                 localStorage.removeItem("email");
+                localStorage.removeItem("verifyToken");
                 navigate("/");
             }
         } catch (error) {

@@ -16,8 +16,6 @@ const CurriculumPage = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/courses/${id}`);
-      console.log(`${API}/courses/${id}`);
-      console.log(response.data.course);
       setData(response.data.course);
 
     } catch (err) {
@@ -44,7 +42,6 @@ const CurriculumPage = () => {
         data2['OldCoursePdf']=data.coursePdf;
       }
     try {
-        console.log(data2);
      const response= await axios.put(`${API}/courses/${id}`, data2, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -54,11 +51,12 @@ const CurriculumPage = () => {
     
     if(response.status===200){
         toast.success(`Curriculum updated successfully!`);
-        console.log(response);
-        // navigate('/events');
     }
     } catch (err) {
-      console.log('Error in up:', err);
+      if(err.response.status===401){
+        return navigate('/signin')
+      }
+      toast.error(`Error: ${err}`);
     }
   };
 
@@ -92,7 +90,7 @@ const CurriculumPage = () => {
       />
       </div>
         <button className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
-          Update Curricu
+          Update Curriculum
         </button>
       </form>
     </DefaultLayout>

@@ -6,12 +6,13 @@ import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import TableAdmissions from '../components/Tables/TableAdmissions';
+import { useNavigate } from 'react-router-dom';
 
 const Admissions = () => {
   const [data, setData] = useState();
   const [selectedType, setSelectedType] = useState('');
   const [isOptionSelected, setIsOptionSelected] = useState(false);
-
+ const navigate=useNavigate();
   const changeTextColor = () => {
     setIsOptionSelected(true);
   };
@@ -36,7 +37,6 @@ const Admissions = () => {
   const programRef = useRef();
   const batchRef = useRef();
   const yearRef = useRef();
-  const typeRef = useRef();
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
     setDoc(files);
@@ -71,7 +71,10 @@ const Admissions = () => {
       fetchData();
     }
     catch (err) {
-      console.log("Error:", err);
+      if (err.response.status === 401) {
+        return navigate('/signin');
+      }
+      toast.error(`Error: ${err}`);
     }
   }
 
@@ -86,7 +89,10 @@ const Admissions = () => {
       fetchData();
     }
     catch (err) {
-      console.log("Error:", err);
+      if (err.response.status === 401) {
+        return navigate('/signin');
+      }
+      toast.error(`Error: ${err}`);
     }
   }
 

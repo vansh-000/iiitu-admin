@@ -95,7 +95,7 @@ const TableCurriculum = ({ data, handleDelete }) => {
                         className="hover:text-primary"
                       >
                         <svg
-                          class="feather feather-edit"
+                          className="feather feather-edit"
                           fill="none"
                           height="18"
                           stroke="currentColor"

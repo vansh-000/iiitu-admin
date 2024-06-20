@@ -12,6 +12,7 @@ import TableAwards from '../../components/Tables/TableAwards';
 import TablePublications from '../../components/Tables/TablePublications';
 import TableJournals from '../../components/Tables/TableJournals';
 import TableProjects from '../../components/Tables/TableProjects';
+import { useNavigate } from 'react-router-dom';
 
 function FacultyAdd() {
   const refName = useRef('');
@@ -28,6 +29,7 @@ function FacultyAdd() {
   const refGoogleScholar = useRef('');
   const refResume = useRef(null);
   const refProfileImage = useRef(null);
+  const navigate=useNavigate();
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -89,7 +91,13 @@ function FacultyAdd() {
       // console.log(data);
       toast.success(response.data.message);
     } catch (err) {
-      console.error(err);
+      if (err.response.status === 401) {
+        return navigate('/signin');
+      }
+      if(err.response.status>=410&&err.response.status<=430){
+        return toast.error(err.response.data.message);
+      }
+      toast.error(`Error: ${err}`);
     }
   };
   const [selectedDepartment, setSelectedDepartment] = useState('');
@@ -354,6 +362,7 @@ className="w-1/2 cursor-pointer rounded-lg border-[1.5px] border-stroke bg-trans
               type="file"
               id="profileImage"
               name="profileImage"
+              accept='image/*'
               ref={refProfileImage}
               required
             />

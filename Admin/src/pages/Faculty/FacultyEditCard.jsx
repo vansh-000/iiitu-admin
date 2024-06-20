@@ -1,22 +1,25 @@
 import React from 'react';
 import { API, STATIC_FILES } from '../../utils/apiURl';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
 const FacultyEditCard = ({ faculty, fetchData }) => {
+  const navigate=useNavigate();
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`${API}/faculty/delete/${id}`,{
+      await axios.delete(`${API}/faculty/delete/${id}`,{
         headers: {
            Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       });
-      //   alert(response.data.message);
       toast.success("Faculty is Deleted");
       fetchData();
     } catch (err) {
-      console.error(err);
+      if (err.response.status === 401) {
+        return navigate('/signin');
+      }
+      toast.error(`Error: ${err}`);
     }
   };
   return (

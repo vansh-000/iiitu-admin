@@ -40,7 +40,6 @@ const Clubs = () => {
   ]);
   const fetchData = async () => {
     try {
-      // console.log(id);
       const response = await axios.get(`${API}/clubs/${id}`);
       setData(response.data.data);
 
@@ -130,7 +129,10 @@ const Clubs = () => {
     //   handleEmpty();
     //   fetchData();
     } catch (err) {
-      console.log('Error in up:', err);
+      if (err.response.status === 401) {
+        return navigate('/signin');
+      }
+      toast.error(`Error: ${err}`);
     }
   };
 

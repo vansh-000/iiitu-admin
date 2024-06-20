@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { API, STATIC_FILES } from '../../utils/apiURl';
 import axios from 'axios';
 import DatePickerOne from '../../components/Forms/DatePicker/DatePickerOne';
+import toast from 'react-hot-toast';
 
 const REditCard = ({ recruitment, fetchData, index }) => {
-
   const [editable, setEditable] = useState(false);
   const [editedData, setEditedData] = useState({});
   const refDesc = useRef<HTMLInputElement>(null);
@@ -34,8 +34,7 @@ const REditCard = ({ recruitment, fetchData, index }) => {
     try {
       const startDate = startDateRefs.current?.value || editedData.startDate;
       const endDate = endDateRefs.current?.value || editedData.endDate;
-      const RecruitmentDoc =
-        refRecruitmentDoc.current?.files[0] ;
+      const RecruitmentDoc = refRecruitmentDoc.current?.files[0];
 
       const response = await axios.put(
         `${API}/recuitment/${editedData._id}`,
@@ -49,11 +48,14 @@ const REditCard = ({ recruitment, fetchData, index }) => {
         },
         {
           headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'multipart/form-data',
           },
         },
       );
-      alert(response.data.message);
+
+      
+      toast.success(response.data.message);
       fetchData();
     } catch (err) {
       console.error(err);
@@ -63,8 +65,12 @@ const REditCard = ({ recruitment, fetchData, index }) => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`${API}/recuitment/${id}`);
-      alert(response.data.message);
+      const response = await axios.delete(`${API}/recuitment/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      toast.success(response.data.message);
       fetchData();
     } catch (err) {
       console.error(err);

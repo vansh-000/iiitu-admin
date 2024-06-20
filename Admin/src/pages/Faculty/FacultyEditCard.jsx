@@ -38,6 +38,9 @@ const FacultyEditCard = ({ faculty, fetchData }) => {
             {faculty.name}
           </h5>
           <p className="text-base leading-relaxed text-body">
+            EMail:{faculty.email}
+          </p>
+          <p className="text-base leading-relaxed text-body">
             DEPARTMENT:{faculty.department}
           </p>
 

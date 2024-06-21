@@ -18,6 +18,7 @@ const VerifyOTP = () => {
       const response = await axios.get(`${API}/verifyOTP?email=${email}&otp=${otp}`);
       if (response.status === 200) {
         toast.success("OTP Verified!");
+        localStorage.setItem('Verifytoken',response.data.verifyToken);
         navigate("/reset");
       }
 

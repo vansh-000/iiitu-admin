@@ -6,18 +6,18 @@ import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import TableCurriculum from '../components/Tables/TableCurriculum';
-import { GiToken } from 'react-icons/gi';
-
+import { useNavigate } from 'react-router-dom';
 const Curriculum = () => {
   const [data, setData] = useState();
   const token=localStorage.getItem('token');
+  const navigate=useNavigate();
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/courses`);
       setData(response.data.courses);
     }
     catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
   
@@ -54,7 +54,10 @@ const Curriculum = () => {
       fetchData();
     }
     catch (err) {
-      console.log("Error:", err);
+      if(err.response.status===401){
+        return navigate('/signin')
+      }
+      toast.error(`Error: ${err}`);
     }
   }
 
@@ -69,7 +72,10 @@ const Curriculum = () => {
       fetchData();
     }
     catch (err) {
-      console.log("Error:", err);
+      if(err.response.status===401){
+        return navigate('/signin')
+      }
+      toast.error(`Error: ${err}`);
     }
   }
 

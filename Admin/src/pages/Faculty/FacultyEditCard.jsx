@@ -1,18 +1,25 @@
 import React from 'react';
 import { API, STATIC_FILES } from '../../utils/apiURl';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
 const FacultyEditCard = ({ faculty, fetchData }) => {
+  const navigate=useNavigate();
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`${API}/faculty/delete/${id}`);
-      //   alert(response.data.message);
+      await axios.delete(`${API}/faculty/delete/${id}`,{
+        headers: {
+           Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
       toast.success("Faculty is Deleted");
       fetchData();
     } catch (err) {
-      console.error(err);
+      if (err.response.status === 401) {
+        return navigate('/signin');
+      }
+      toast.error(`Error: ${err}`);
     }
   };
   return (
@@ -33,6 +40,9 @@ const FacultyEditCard = ({ faculty, fetchData }) => {
           <h5 className="mb-3 text-lg font-semibold text-black dark:text-[#34D399] ">
             {faculty.name}
           </h5>
+          <p className="text-base leading-relaxed text-body">
+            EMail:{faculty.email}
+          </p>
           <p className="text-base leading-relaxed text-body">
             DEPARTMENT:{faculty.department}
           </p>

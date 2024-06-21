@@ -6,12 +6,13 @@ import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import TableAdmissions from '../components/Tables/TableAdmissions';
+import { useNavigate } from 'react-router-dom';
 
 const Admissions = () => {
   const [data, setData] = useState();
   const [selectedType, setSelectedType] = useState('');
   const [isOptionSelected, setIsOptionSelected] = useState(false);
-
+ const navigate=useNavigate();
   const changeTextColor = () => {
     setIsOptionSelected(true);
   };
@@ -36,7 +37,6 @@ const Admissions = () => {
   const programRef = useRef();
   const batchRef = useRef();
   const yearRef = useRef();
-  const typeRef = useRef();
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
     setDoc(files);
@@ -49,7 +49,7 @@ const Admissions = () => {
     const program = programRef.current.value;
     const batch = batchRef.current.value;
     const year = yearRef.current.value;
-    const type = typeRef.current.value;
+    const type = selectedType;
     try {
       const formData = new FormData();
       doc.forEach((doc) => {
@@ -63,6 +63,7 @@ const Admissions = () => {
       formData.append("type", type);
       await axios.post(`${API}/admission`, formData, {
         headers: {
+          Authorization:`Brear ${localStorage.getItem('token')}`,
           "Content-Type": "multipart/form-data"
         }
       });
@@ -70,18 +71,28 @@ const Admissions = () => {
       fetchData();
     }
     catch (err) {
-      console.log("Error:", err);
+      if (err.response.status === 401) {
+        return navigate('/signin');
+      }
+      toast.error(`Error: ${err}`);
     }
   }
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API}/admission/${id}`);
+      await axios.delete(`${API}/admission/${id}`,{
+        headers:{
+          Authorization:`Brear ${localStorage.getItem('token')}`
+        }
+      });
       toast.success("Data Deleted!");
       fetchData();
     }
     catch (err) {
-      console.log("Error:", err);
+      if (err.response.status === 401) {
+        return navigate('/signin');
+      }
+      toast.error(`Error: ${err}`);
     }
   }
 

@@ -2,7 +2,8 @@ import "yet-another-react-lightbox/styles.css";
 import styles from "../Gallery/gallery.module.css";
 import { STATIC_FILES } from "../../utils/apiURl";
 import { MdDelete } from "react-icons/md";
-
+import { Link } from "react-router-dom";
+import { FcEditImage } from "react-icons/fc";
 const Poster = (props) => {
     const { data, onClick, handleDelete } = props;
 
@@ -26,6 +27,10 @@ const Poster = (props) => {
                             <button className="text-xl text-black dark:text-white" onClick={() => handleDelete(slide._id)}>Delete</button>
                             <MdDelete className="text-[rgb(220,0,0)] text-xl" />
                         </div>
+                        <Link to={`/events/${slide._id}`} className="flex items-center justify-center -mt-12">
+                            <button className="text-xl text-black dark:text-white">Edit</button>
+                            <FcEditImage  className="text-[rgb(0,220,114)] text-xl" />
+                        </Link>
                     </div>
                 ))}
         </div>

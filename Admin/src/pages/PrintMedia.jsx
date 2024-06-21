@@ -5,10 +5,12 @@ import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
+import { useNavigate } from 'react-router-dom';
 
 const PrintMedia = () => {
   const [data, setData] = useState();
   const token=localStorage.getItem('token');
+  const navigate=useNavigate();
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/print_media`);
@@ -50,7 +52,10 @@ const PrintMedia = () => {
       fetchData();
     }
     catch (err) {
-      console.log("Error:", err);
+      if(err.response.status===401){
+        return navigate('/signin')
+      }
+      toast.error(`Error: ${err}`);
     }
   }
 
@@ -65,7 +70,10 @@ const PrintMedia = () => {
       fetchData();
     }
     catch (err) {
-      console.log("Error:", err);
+      if(err.response.status===401){
+        return navigate('/signin')
+      }
+      toast.error(`Error: ${err}`);
     }
   }
 

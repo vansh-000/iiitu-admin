@@ -8,28 +8,29 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import TableEducation from '../../components/Tables/TableEducation';
 import TableResearch from '../../components/Tables/TableResearch';
-import TableAwards from '../../components/Tables/TableAwards';
-import TablePublications from '../../components/Tables/TablePublications';
-import TableJournals from '../../components/Tables/TableJournals';
-import TableProjects from '../../components/Tables/TableProjects';
-import { useNavigate } from 'react-router-dom';
 
 function FacultyAdd() {
   const refName = useRef('');
   const refEmail = useRef('');
-  const [education,setEducation]=useState([]);
+  const [education, setEducation] = useState([]);
   const [research,setResearch]=useState([]);
   const [award, setAward] = useState([]);
   const [publication, setPublication] = useState([]);
   const [journal, setJournal] = useState([]);
   const [project, setProject] = useState([]);
+  //   const refDepartment = useRef('');
   const refMobile = useRef('');
   const refResearchInterest = useRef('');
   const refLinkedin = useRef('');
   const refGoogleScholar = useRef('');
   const refResume = useRef(null);
+ 
   const refProfileImage = useRef(null);
-  const navigate=useNavigate();
+  const refAwardAndHonours = useRef('');
+  const refResearch = useRef('');
+  const refPublication = useRef('');
+  // const [formData, setFormData] = useState({}); // Corrected this line
+
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -43,61 +44,50 @@ function FacultyAdd() {
       if (!selectedDepartment) {
         return toast.error('Select Department');
       }
-      // console.log(newAward,newEducation,newPublication,newJournal);
-      // const data={name:refName.current.value,
-      //   email: refEmail.current.value,
-      //   department: selectedDepartment,
-      //   mobile: refMobile.current.value,
-      //   researchInterest: refResearchInterest.current.value,
-      //   socialLink:[{social:'Linkedin', link: refLinkedin.current.value }, {social:'GoogleScholar', link: refGoogleScholar.current.value }] ,
-      //   Research:refResearch.current.value.split('#'),
-      //   Publications:refPublication.current.value.split('#'),
-      //   AwardAndHonours:refAwardAndHonours.current.value.split('#'),
-      //   resume:refResume.current.files[0],
-      //   profileImage:refProfileImage.current.files[0],
-      //   Education:educationData
+      const data={name:refName.current.value,
+        email: refEmail.current.value,
+        department: selectedDepartment,
+        mobile: refMobile.current.value,
+        researchInterest: refResearchInterest.current.value,
+        socialLink:[{social:'Linkedin', link: refLinkedin.current.value }, {social:'GoogleScholar', link: refGoogleScholar.current.value }] ,
+        Research:refResearch.current.value.split('#'),
+        Publications:refPublication.current.value.split('#'),
+        AwardAndHonours:refAwardAndHonours.current.value.split('#'),
+        resume:refResume.current.files[0],
+        profileImage:refProfileImage.current.files[0],
+        Education:educationData
   
-      // } 
-      const response = await axios.post(
-        `${API}/faculty/register`,
-        {
-          name: refName.current.value,
-          email: refEmail.current.value,
-          password: '123',
-          department: selectedDepartment,
-          mobile: refMobile.current.value,
-          researchInterest: refResearchInterest.current.value,
-          socialLink: [
-            { social: 'Linkedin', link: refLinkedin.current.value },
-            { social: 'GoogleScholar', link: refGoogleScholar.current.value },
-          ],
-          resume: refResume.current.files[0],
-          profileImage: refProfileImage.current.files[0],
-          AwardAndHonours: newAward,
-          Education: newEducation,
-          Publications: newPublication,
-          Journals: newJournal,
-          Projects: newProject,
-          Research:newResearch
-          
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'multipart/form-data', // Assuming you're sending files, you'll need this header
-          },
-        },
-      );
-      // console.log(data);
-      toast.success(response.data.message);
+      } 
+      // const response = await axios.post(
+      //   `${API}/faculty/register`,
+      //   {
+      //     name: refName.current.value,
+      //     email: refEmail.current.value,
+      //     password: '123',
+      //     department: selectedDepartment,
+      //     mobile: refMobile.current.value,
+      //     researchInterest: refResearchInterest.current.value,
+      //     socialLink: [
+      //       { social: 'Linkedin', link: refLinkedin.current.value },
+      //       { social: 'GoogleScholar', link: refGoogleScholar.current.value },
+      //     ],
+      //     Research: refResearch.current.value.split('#'),
+      //     AwardAndHonours: refAwardAndHonours.current.value.split('#'),
+      //     resume: refResume.current.files[0],
+      //     profileImage: refProfileImage.current.files[0],
+      //     Education: educationData,
+      //   },
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${localStorage.getItem('token')}`,
+      //       'Content-Type': 'multipart/form-data', // Assuming you're sending files, you'll need this header
+      //     },
+      //   },
+      // );
+      console.log(data);
+      // toast.success(response.data.message);
     } catch (err) {
-      if (err.response.status === 401) {
-        return navigate('/signin');
-      }
-      if(err.response.status>=410&&err.response.status<=430){
-        return toast.error(err.response.data.message);
-      }
-      toast.error(`Error: ${err}`);
+      console.error(err);
     }
   };
   const [selectedDepartment, setSelectedDepartment] = useState('');
@@ -333,7 +323,10 @@ className="w-1/2 cursor-pointer rounded-lg border-[1.5px] border-stroke bg-trans
               ref={refResume}
               required
             />
-           
+            <TableEducation
+          Education={education}
+          setEducation={setEducation}
+        />
             {/* <label
               className="mb-3 block text-black dark:text-white"
               htmlFor="education"
@@ -362,33 +355,59 @@ className="w-1/2 cursor-pointer rounded-lg border-[1.5px] border-stroke bg-trans
               type="file"
               id="profileImage"
               name="profileImage"
-              accept='image/*'
               ref={refProfileImage}
               required
             />
 
-{education&&<TableEducation
-          Education={education}
-          setEducation={setEducation}
-        />}
+            <label
+              className="mb-3 block text-black dark:text-white"
+              htmlFor="awardAndHonours"
+            >
+              Award And Honours:
+            </label>
+
+            <textarea className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+
+              type="text"
+              id="awardAndHonours"
+              name="awardAndHonours"
+              ref={refAwardAndHonours}
+              placeholder="award1#award2#award3"
+            />
+
 {research && (
         <TableResearch
           Research={research}
           setResearch={setResearch}
         />)}
         {award && (
-        <TableAwards Award={award} setAward={setAward} />
+        <TableAwards edit={editable} Award={award} setAward={setAward} />
       )}
       {publication && (
-        <TablePublications Publication={publication} setPublication={setPublication} />
+        <TablePublications edit={editable} Publication={publication} setPublication={setPublication} />
       )}
       {journal && (
-        <TableJournals Journal={journal} setJournal={setJournal} />
+        <TableJournals edit={editable} Journal={journal} setJournal={setJournal} />
       )}
       {project && (
-        <TableProjects Project={project} setProject={setProject} />
+        <TableProjects edit={editable} Project={project} setProject={setProject} />
       )}
               
+            <label
+              className="mb-3 block text-black dark:text-white"
+              htmlFor="research"
+            >
+              Publications:
+            </label>
+
+            <textarea className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+
+              type="text"
+              id="publication"
+              name="publication"
+              ref={refPublication}
+              placeholder="Publication1#Publication2"
+            />
 
             <input
               className="inline-flex items-center justify-center rounded-full bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"

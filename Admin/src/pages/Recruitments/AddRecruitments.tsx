@@ -4,25 +4,19 @@ import { API } from "../../utils/apiURl";
 import DatePickerOne from "../../components/Forms/DatePicker/DatePickerOne";
 import DefaultLayout from "../../layout/DefaultLayout";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 const AddRecruitments = () => {
+  const navigate=useNavigate();
   const startDateRef = React.useRef<HTMLInputElement>(null);
   const endDateRef = React.useRef<HTMLInputElement>(null);
   const refDesc = React.useRef<HTMLInputElement>();
   const refAppLink = React.useRef();
   const refAppForm = React.useRef();
   const refRecruitmentDoc = React.useRef<HTMLInputElement>();
-    
-  
-  React.useEffect(() => {
-  
-    // };
-  }, []);
   
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-  
-  
-    
     try {
       const response = await axios.post(`${API}/recuitment`, {
         service: refDesc.current!.value,
@@ -33,12 +27,16 @@ const AddRecruitments = () => {
         ApplicationForm: refAppForm.current.value
       }, {
         headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'multipart/form-data'
         }
       });
-      alert(response.data.message);
+      toast.success(response.data.message);
     } catch (err) {
-      console.error(err);
+      if (err.response.status === 401) {
+        return navigate('/signin');
+      }
+      toast.error(`Error: ${err}`);
     }
   };
     

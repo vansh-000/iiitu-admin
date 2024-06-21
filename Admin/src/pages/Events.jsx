@@ -6,10 +6,12 @@ import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import TableEvent from '../components/Tables/TableEvent';
+import { useNavigate } from 'react-router-dom';
 
 const Events = () => {
     const [data, setData] = useState();
     const [club, setclub] = useState([]);
+    const navigate=useNavigate();
     const [clubId, setclubId] = useState();
     const  token=localStorage.getItem('token');
     const fetchData = async () => {
@@ -92,8 +94,10 @@ const Events = () => {
             fetchData();
         }
         catch (err) {
-            toast.error(err.response.request.statusText);
-            console.log("Error:", err);
+            if (err.response.status === 401) {
+                return navigate('/signin');
+              }
+              toast.error(`Error: ${err}`);
         }
     }
 
@@ -108,8 +112,10 @@ const Events = () => {
             fetchData();
         }
         catch (err) {
-            toast.error(err.response.request.statusText);
-            console.log("Error:", err);
+            if (err.response.status === 401) {
+                return navigate('/signin');
+              }
+              toast.error(`Error: ${err}`);
         }
     }
 

@@ -24,6 +24,8 @@ import ForgotAdmin from './pages/Authentication/Forgot';
 import Clubs from './pages/Clubs';
 import ClubsPage from './pages/ClubsPage';
 import PrintMedia from './pages/PrintMedia';
+import EventsPage from './pages/EventsPage';
+import CurriculumPage from './pages/CurriculumPage.jsx';
 function App() {
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
@@ -60,7 +62,7 @@ function App() {
           }
         />
         <Route
-          path="/clubs/:name"
+          path="/clubs/:id"
           element={
             <>
               <PageTitle title="Clubs-Page | Clubs Dashboard" />
@@ -68,12 +70,22 @@ function App() {
             </>
           }
         />
+        
         <Route
           path="/curriculum"
           element={
             <>
               <PageTitle title="Curriculum | IIITU - Admin" />
               <Curriculum />
+            </>
+          }
+        />
+        <Route
+          path="/curriculum/:id"
+          element={
+            <>
+              <PageTitle title="Events-Page | Events Dashboard" />
+              <CurriculumPage/>
             </>
           }
         />
@@ -112,12 +124,22 @@ function App() {
             </>
           }
         />
+        
         <Route
           path="/events"
           element={
             <>
               <PageTitle title="Events | IIITU - Admin" />
               <Events />
+            </>
+          }
+        />
+        <Route
+          path="/events/:id"
+          element={
+            <>
+              <PageTitle title="Events-Page | Events Dashboard" />
+              <EventsPage />
             </>
           }
         />

@@ -20,7 +20,7 @@
 }
 .news{
     width: 200px;
-    height: 160px;;
+    height: auto;;
     cursor: pointer;
 }
 .image img {

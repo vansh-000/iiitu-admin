@@ -37,7 +37,7 @@ const Clubs = () => {
             setData(response.data.data);
         }
         catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }
     useEffect(()=>{
@@ -118,7 +118,10 @@ const Clubs = () => {
             fetchData();
         }
         catch (err) {
-            console.log("Error:", err);
+            if (err.response.status === 401) {
+                return navigate('/signin');
+              }
+              toast.error(`Error: ${err}`);
         }
     }
 
@@ -133,7 +136,10 @@ const Clubs = () => {
             fetchData();
         }
         catch (err) {
-            console.log("Error:", err);
+            if (err.response.status === 401) {
+                return navigate('/signin');
+              }
+              toast.error(`Error: ${err}`);
         }
     }
 

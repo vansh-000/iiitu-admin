@@ -9,12 +9,12 @@ const ClubsCard = (props) => {
         onClick(index);
     };
     return (
-        <div className={styles.container}>
+        <div className={styles.container} >
             {data &&
                 data.map((slide) => (
-                    <div className={styles.clubbox}>
-                    <div key={slide._id} className={styles.club}>
-                        <NavLink to={`/clubs/${slide.Name}`} className={styles.supercont}>
+                    <div className={styles.clubbox} key={slide._id}>
+                    <div className={styles.club}>
+                        <NavLink to={`/clubs/${slide._id}`} className={styles.supercont}>
                             <div className={styles.cont}>
                                 <div className={styles.textcont}>
                                     <h1 className={styles.clubname}>{slide.Name}</h1>

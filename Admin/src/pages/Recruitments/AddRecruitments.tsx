@@ -18,7 +18,7 @@ const AddRecruitments = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${API}/recuitment`, {
+      const response = await axios.post(`${API}/recruitment`, {
         service: refDesc.current!.value,
         RecruitmentDoc: refRecruitmentDoc.current!.files[0],
         startDate: startDateRef.current!.value,

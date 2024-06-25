@@ -112,7 +112,6 @@ function Tender(): JSX.Element {
               </label>
               <input
                 id="annexure"
-                required="required"
                 ref={refAnnexure}
                 accept=".pdf"
                 type="file"

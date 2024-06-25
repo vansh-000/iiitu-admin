@@ -78,7 +78,7 @@ const TEditCard = ({ tender, fetchData, index }) => {
     };
 
     return (
-        <div className="flex w-full border-l-6 border-warning bg-warning bg-opacity-[15%] px-7 py-8 shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-9" key={tender._id}>
+        <div className="flex mx-2 w-full border-l-6 border-warning bg-warning bg-opacity-[15%] px-7 py-8 shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-9" key={tender._id}>
             <div className="w-full">
                 <h5 className="mb-3 text-lg font-semibold text-[#9D5425]">
                     {editable ? (

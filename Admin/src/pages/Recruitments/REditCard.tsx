@@ -38,7 +38,7 @@ const REditCard = ({ recruitment, fetchData, index }) => {
       const RecruitmentDoc = refRecruitmentDoc.current?.files[0];
 
       const response = await axios.put(
-        `${API}/recuitment/${editedData._id}`,
+        `${API}/recruitment/${editedData._id}`,
         {
           service: refDesc.current?.value,
           RecruitmentDoc: RecruitmentDoc,
@@ -67,7 +67,7 @@ const REditCard = ({ recruitment, fetchData, index }) => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`${API}/recuitment/${id}`, {
+      const response = await axios.delete(`${API}/recruitment/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -81,7 +81,7 @@ const REditCard = ({ recruitment, fetchData, index }) => {
 
   return (
     <div
-      className="flex w-full border-l-6 border-warning bg-warning bg-opacity-[15%] px-7 py-8 shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-9"
+      className="flex mx-2 w-full border-l-6 border-warning bg-warning bg-opacity-[15%] px-7 py-8 shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-9"
       key={recruitment._id}
     >
       <div className="w-full">

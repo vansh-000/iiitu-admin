@@ -30,6 +30,7 @@ const FacultyAllEdit = () => {
   const refResearchInterest = React.useRef();
   const refLinkedin = React.useRef();
   const refGoogleScholar = React.useRef();
+  const refOrcid=React.useRef();
   const [profileIMG, setProfileIMG] = React.useState();
   const fetchFaculty = async () => {
     try {
@@ -77,6 +78,7 @@ const FacultyAllEdit = () => {
           socialLink: [
             { social: 'Linkedin', link: refLinkedin.current.value },
             { social: 'GoogleScholar', link: refGoogleScholar.current.value },
+            { social: 'Orcid', link: refOrcid.current.value }
           ],
           AwardAndHonours: newAward,
           Education: newEducation,
@@ -236,6 +238,26 @@ const FacultyAllEdit = () => {
                 defaultValue={
                   faculty.socialLink && faculty.socialLink[0]
                     ? faculty.socialLink[0].link
+                    : ''
+                }
+                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+              />
+            </div>
+
+            <div>
+              <label className="mb-3 block text-black dark:text-white">
+                Orcid
+              </label>
+              <input
+                name="title"
+                type="text"
+                // ref={titleRef}
+
+                ref={refOrcid}
+                placeholder="Orcid Link"
+                defaultValue={
+                  faculty.socialLink && faculty.socialLink[2]
+                    ? faculty.socialLink[2].link
                     : ''
                 }
                 className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"

@@ -26,6 +26,7 @@ function FacultyAdd() {
   const refMobile = useRef('');
   const refResearchInterest = useRef('');
   const refLinkedin = useRef('');
+  const refOrcid=useRef('');
   const refGoogleScholar = useRef('');
   const refResume = useRef(null);
   const refProfileImage = useRef(null);
@@ -70,6 +71,7 @@ function FacultyAdd() {
           socialLink: [
             { social: 'Linkedin', link: refLinkedin.current.value },
             { social: 'GoogleScholar', link: refGoogleScholar.current.value },
+            {social:'Orcid',link:refOrcid.current.value},
           ],
           resume: refResume.current.files[0],
           profileImage: refProfileImage.current.files[0],
@@ -314,6 +316,21 @@ function FacultyAdd() {
               id="googleScholar"
               name="googleScholar"
               ref={refGoogleScholar}
+            />
+
+<label
+              className="mb-3 block text-black dark:text-white"
+              htmlFor="Orcid"
+            >
+              Orcid:
+            </label>
+
+            <input
+              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+              type="text"
+              id="Orcid"
+              name="Orcid"
+              ref={refOrcid}
             />
 
             <label

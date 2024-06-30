@@ -253,7 +253,7 @@ const Admissions = () => {
         </button>
       </form>
       <div className="flex flex-col gap-10 mt-5">
-        {data ? (
+        {data && data.length>0 ? (
           <TableAdmissions data={data} handleDelete={handleDelete} />
         ) : (
           <h1>No Data!</h1>

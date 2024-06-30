@@ -9,7 +9,7 @@ const RecruitmentEdits=()=>{
     const fetchRecruitment = async () => {
         try {
     
-          let response = await axios.get(`${API}/recuitment`);
+          let response = await axios.get(`${API}/recruitment`);
           if (response.status === 200) {
             setData(response.data);
           }

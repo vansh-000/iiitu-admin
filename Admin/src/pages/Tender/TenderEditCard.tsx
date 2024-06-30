@@ -6,9 +6,11 @@ const TenderEditsCard = ({ data ,fetchData}) => {
   
   return (
     <>
-      {data.map((tender,index) => (
+      {data.length>0 ? (data.map((tender,index) => (
         <TEditCard tender={tender} fetchData={fetchData}/>
-      ))}
+      ))) : (
+          <h1 className="text-xl">No Tenders currently</h1>
+      )}
     </>
   );
 };

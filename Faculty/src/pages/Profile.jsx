@@ -2,7 +2,7 @@ import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
 // import userSix from '../images/user/user-06.png';
 import { Link } from 'react-router-dom';
-import { FaLinkedin } from 'react-icons/fa';
+import { FaLinkedin, FaOrcid } from 'react-icons/fa';
 import { SiGooglescholar } from 'react-icons/si';
 import TableThree from '../components/Tables/TableEducation';
 import TableResearch from '../components/Tables/TableResearch';
@@ -35,6 +35,7 @@ const Profile = () => {
   const refResearchInterest = useRef();
   const refLinkedin = useRef();
   const refGoogleScholar = useRef();
+  const refOrcid=useRef();
   const fetchData = async () => {
     try {
       const userData = JSON.parse(localStorage.getItem('user'));
@@ -87,6 +88,7 @@ const Profile = () => {
         socialLink: [
           { social: 'Linkedin', link: refLinkedin.current.value },
           { social: 'GoogleScholar', link: refGoogleScholar.current.value },
+          { social: 'Orcid', link: refOrcid.current.value }
         ],
         Research: newResearch,
         AwardAndHonours: newAward,
@@ -237,7 +239,6 @@ const Profile = () => {
                 <input
                   name="title"
                   type="text"
-                  // ref={titleRef}
                   ref={refGoogleScholar}
                   placeholder="Google Scholar Link"
                   defaultValue={
@@ -251,6 +252,25 @@ const Profile = () => {
                 faculty.socialLink &&
                 <Link to={faculty.socialLink[1].link} className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                   <SiGooglescholar className="text-2xl" />
+                </Link>
+              )}
+              {editable ? (
+                <input
+                  name="title"
+                  type="text"
+                  ref={refOrcid}
+                  placeholder="Orcid Link"
+                  defaultValue={
+                    faculty.socialLink && faculty?.socialLink[2]
+                      ? faculty.socialLink[2].link
+                      : ''
+                  }
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                />
+              ) : (
+                faculty.socialLink &&
+                <Link to={faculty.socialLink[2].link} className="flex flex-col items-center justify-center gap-2 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
+                  <FaOrcid className="text-2xl" />
                 </Link>
               )}
               {editable ? (
@@ -279,7 +299,7 @@ const Profile = () => {
                     <input
                       name="Resreach"
                       type="text"
-                      // ref={titleRef}
+  
                       ref={refResearchInterest}
                       placeholder="Research Intreast"
                       defaultValue={faculty.researchInterest}
@@ -295,7 +315,7 @@ const Profile = () => {
                     <input
                       name="title"
                       type="text"
-                      // ref={titleRef}
+  
                       ref={refPhone}
                       placeholder="Phone Number (eg.7352xxxx)"
                       defaultValue={faculty.mobile}

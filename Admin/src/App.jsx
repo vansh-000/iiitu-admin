@@ -27,6 +27,7 @@ import CurriculumPage from './pages/CurriculumPage.jsx';
 import Research from './pages/Research/Research.jsx';
 import EditResearch from './pages/Research/EditResearch.jsx';
 import Forgot from './pages/Authentication/Forgot';
+import ForgotAdmin from './pages/Authentication/Forgot';
 
 function App() {
   const [loading, setLoading] = useState(true);

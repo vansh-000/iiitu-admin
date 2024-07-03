@@ -1,8 +1,6 @@
 import { useRef, useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import SelectGroupTwo from '../../components/Forms/SelectGroup/SelectGroupTwo';
-import MultiSelect from '../../components/Forms/MultiSelect';
 import { API } from '../../utils/apiURl';
 import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
@@ -85,8 +83,7 @@ function FacultyAdd() {
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'multipart/form-data', // Assuming you're sending files, you'll need this header
+            Authorization: `Bearer ${localStorage.getItem('token')}`,            'Content-Type': 'multipart/form-data', 
           },
         },
       );

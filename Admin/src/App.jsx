@@ -19,7 +19,6 @@ import FacultyEdit from './pages/Faculty/FacultyEdit';
 import FacultyAllEdit from './pages/Faculty/FacultyAllEdit';
 import Admissions from './pages/Admissions';
 import SignupAdmin from './pages/Authentication/SignupAdmin';
-import ForgotAdmin from './pages/Authentication/Forgot';
 import Clubs from './pages/Clubs';
 import ClubsPage from './pages/ClubsPage';
 import PrintMedia from './pages/PrintMedia';
@@ -27,6 +26,9 @@ import EventsPage from './pages/EventsPage';
 import CurriculumPage from './pages/CurriculumPage.jsx';
 import Research from './pages/Research/Research.jsx';
 import EditResearch from './pages/Research/EditResearch.jsx';
+import Forgot from './pages/Authentication/Forgot';
+import ForgotAdmin from './pages/Authentication/Forgot';
+
 function App() {
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();

@@ -1,43 +1,41 @@
 import React, { useRef, useState } from 'react';
-import { Link ,useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import DefaultLayout from '../../layout/DefaultLayout';
-import axios from "axios";
+import axios from 'axios';
 import { API } from '../../utils/apiURl';
 import toast from 'react-hot-toast';
+import DefaultLayoutOne from '../../layout/DefaultLayoutOne';
 
 const ForgotAdmin = () => {
   const refEmail = useRef();
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+
   const handleOnSubmit = async (e) => {
     const email = refEmail.current.value;
     e.preventDefault();
     try {
-      const response = await axios.get(`${API}/admin`, {
+      const response = await axios.post(`${API}/faculty/facultyByEmail`, {
         email: email,
       });
       if (response.status === 200) {
         const response2 = await axios.get(`${API}/sendOTP?email=${email}`);
         if (response2.status === 200) {
-          toast.success("OTP sent successfully");
+          toast.success('OTP sent successfully');
         }
-        localStorage.setItem("email", email);
-        navigate("/verifyOTP");
+        localStorage.setItem('email', email);
+        navigate('/verifyOTP');
       }
-
     } catch (error) {
       if (error.response.status === 404) {
-        toast.error("User does Not Found!");
-      }
-      else if (error.response && error.response.status === 400) {
-        toast.error("Internal Server Error!");
+        toast.error('User does Not Found!');
+      } else if (error.response && error.response.status === 400) {
+        toast.error('Internal Server Error!');
       }
     }
   };
-  
+
   return (
-    <>
+    <DefaultLayoutOne>
       <Breadcrumb pageName="Forgot Password" />
 
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -50,9 +48,10 @@ const ForgotAdmin = () => {
                 <p className="2xl:px-10 mt-10 text-black font-semibold dark:text-white">
                   Indian Institute of Information Technology Una
                 </p>
-                <h1 className="text-4xl text-black font-semibold dark:text-white mt-4">Welcome to Admin Portal!</h1>
+                <h1 className="text-4xl text-black font-semibold dark:text-white mt-4">
+                  Welcome to Faculty Portal!
+                </h1>
               </div>
-
             </div>
           </div>
 
@@ -83,14 +82,12 @@ const ForgotAdmin = () => {
                         viewBox="0 0 22 22"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                      >
-                      </svg>
+                      ></svg>
                     </span>
                   </div>
                 </div>
 
-                <div className="mb-7 text-end">
-                </div>
+                <div className="mb-7 text-end"></div>
 
                 <div className="mb-5">
                   <input
@@ -104,7 +101,7 @@ const ForgotAdmin = () => {
           </div>
         </div>
       </div>
-    </>
+    </DefaultLayoutOne>
   );
 };
 

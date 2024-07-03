@@ -20,12 +20,13 @@ import FacultyEdit from './pages/Faculty/FacultyEdit';
 import FacultyAllEdit from './pages/Faculty/FacultyAllEdit';
 import Admissions from './pages/Admissions';
 import SignupAdmin from './pages/Authentication/SignupAdmin';
-import ForgotAdmin from './pages/Authentication/Forgot';
 import Clubs from './pages/Clubs';
 import ClubsPage from './pages/ClubsPage';
 import PrintMedia from './pages/PrintMedia';
 import EventsPage from './pages/EventsPage';
 import CurriculumPage from './pages/CurriculumPage.jsx';
+import Forgot from './pages/Authentication/Forgot';
+
 function App() {
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
@@ -103,7 +104,7 @@ function App() {
             <>
               
               <PageTitle title='Reset Password | Admin Login' />
-              <ForgotAdmin />
+              <Forgot />
             </>
           } />
         <Route

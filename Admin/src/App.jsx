@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
@@ -25,6 +24,8 @@ import ClubsPage from './pages/ClubsPage';
 import PrintMedia from './pages/PrintMedia';
 import EventsPage from './pages/EventsPage';
 import CurriculumPage from './pages/CurriculumPage.jsx';
+import Research from './pages/Research/Research.jsx';
+import EditResearch from './pages/Research/EditResearch.jsx';
 import Forgot from './pages/Authentication/Forgot';
 
 function App() {
@@ -38,18 +39,17 @@ function App() {
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
   }, []);
-  return (loading ? (
+  return loading ? (
     <Loader />
   ) : (
     <>
       <Routes>
-
         <Route
           path="/"
           element={
             <>
-                <PageTitle title="Gallery | IIITU - Admin" />
-                <Gallery />
+              <PageTitle title="Gallery | IIITU - Admin" />
+              <Gallery />
             </>
           }
         />
@@ -71,7 +71,7 @@ function App() {
             </>
           }
         />
-        
+
         <Route
           path="/curriculum"
           element={
@@ -86,27 +86,28 @@ function App() {
           element={
             <>
               <PageTitle title="Events-Page | Events Dashboard" />
-              <CurriculumPage/>
+              <CurriculumPage />
             </>
           }
         />
         <Route
-          path='/signin'
+          path="/signin"
           element={
             <>
-              <PageTitle title='Authentication | Admin Login' />
+              <PageTitle title="Authentication | Admin Login" />
               <SignupAdmin />
             </>
-          } />
-          <Route
-          path='/forgot'
+          }
+        />
+        <Route
+          path="/forgot"
           element={
             <>
-              
-              <PageTitle title='Reset Password | Admin Login' />
-              <Forgot />
+              <PageTitle title="Reset Password | Admin Login" />
+              <ForgotAdmin />
             </>
-          } />
+          }
+        />
         <Route
           path="/news"
           element={
@@ -125,7 +126,7 @@ function App() {
             </>
           }
         />
-        
+
         <Route
           path="/events"
           element={
@@ -252,8 +253,26 @@ function App() {
             </>
           }
         />
+        <Route
+          path="/admin/ResearchAdd"
+          element={
+            <>
+              <PageTitle title="Research | Research Add" />
+              <Research />
+            </>
+          }
+        />
+         <Route
+          path="/admin/ResearchEdit"
+          element={
+            <>
+              <PageTitle title="Research | Research Edit and Delete" />
+              <EditResearch />
+            </>
+          }
+        />
       </Routes>
     </>
-  ));
+  );
 }
 export default App;

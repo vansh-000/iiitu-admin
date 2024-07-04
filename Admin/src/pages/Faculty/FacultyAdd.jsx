@@ -345,7 +345,6 @@ className="w-1/2 cursor-pointer rounded-lg border-[1.5px] border-stroke bg-trans
               name="resume"
               accept=".pdf"
               ref={refResume}
-              required
             />
            
             {/* <label

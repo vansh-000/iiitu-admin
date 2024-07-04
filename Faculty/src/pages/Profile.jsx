@@ -40,7 +40,7 @@ const Profile = () => {
     try {
       const userData = JSON.parse(localStorage.getItem('user'));
       const response = await axios.get(
-        `${API}/faculty/facultyProfile/${userData.id}`,
+        `${API}/faculty/facultyProfile/${userData?.id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,

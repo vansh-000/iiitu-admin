@@ -7,6 +7,7 @@ import { API } from '../../utils/apiURl';
 import toast from 'react-hot-toast';
 
 const VerifyOTP = () => {
+  const [loading, setLoading] = useState(false);
   const [otp, setOTP] = useState('');
   const navigate = useNavigate();
 
@@ -14,20 +15,23 @@ const VerifyOTP = () => {
 
   const handleVerifyOTP = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.get(`${API}/verifyOTP?email=${email}&otp=${otp}`);
       if (response.status === 200) {
         toast.success("OTP Verified!");
-        localStorage.setItem('verifyToken',response.data.verifyToken);
+        localStorage.setItem('verifyToken', response.data.verifyToken);
         navigate("/reset");
       }
 
     } catch (error) {
       if (error.response.status === 500) {
         toast.error("Internal Server Error!");
+        setLoading(false);
       }
       else if (error.response && error.response.status === 400) {
         toast.error("Invalid OTP!");
+        setLoading(false);
       }
     }
   }
@@ -116,9 +120,10 @@ const VerifyOTP = () => {
                 <p className="2xl:px-10 mt-10 text-black font-semibold dark:text-white">
                   Indian Institute of Information Technology Una
                 </p>
-                <h1 className="text-4xl text-black font-semibold dark:text-white mt-4">Welcome to Faculty Portal!</h1>
+                <h1 className="text-4xl text-black font-semibold dark:text-white mt-4">
+                  Welcome to Faculty Portal!
+                </h1>
               </div>
-
             </div>
           </div>
 
@@ -174,14 +179,18 @@ const VerifyOTP = () => {
                   )}
                 </div>
                 <div className="mb-5">
-                  <input
+                  <button
                     type="submit"
-                    value="Verify OTP"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                  />
+                    className="w-full h-16 cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                  >
+                    {loading ? (
+                      <div className="inline-block h-7 w-7 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                    ) : (
+                      <span>Verify OTP</span>
+                    )}
+                  </button>
                 </div>
               </form>
- 
             </div>
           </div>
         </div>

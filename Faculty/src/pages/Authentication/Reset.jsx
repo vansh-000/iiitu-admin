@@ -7,6 +7,7 @@ import { API } from '../../utils/apiURl';
 import toast from 'react-hot-toast';
 
 const Reset = () => {
+    const [loading, setLoading] = useState(false);
     const [newPassword, setNewPassword] = useState('');
     const navigate = useNavigate();
 
@@ -14,10 +15,11 @@ const Reset = () => {
 
     const handleChangePassword = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
-            const response = await axios.post(`${API}/faculty/resetpassword`, { email, newPassword },{
+            const response = await axios.post(`${API}/faculty/resetpassword`, { email, newPassword }, {
                 headers: {
-                    Authorization:`Bearer ${localStorage.getItem('verifyToken')}`
+                    Authorization: `Bearer ${localStorage.getItem('verifyToken')}`
                 }
             });
             if (response.status === 200) {
@@ -29,8 +31,10 @@ const Reset = () => {
         } catch (error) {
             if (error.response.status === 500) {
                 toast.error("Internal Server Error!");
+                setLoading(false);
             } else if (error.response && error.response.status === 404) {
                 toast.error("User not found!");
+                setLoading(false);
             }
         }
     }
@@ -50,12 +54,18 @@ const Reset = () => {
                     <div className="hidden w-full xl:block xl:w-1/2">
                         <div className="p-10">
                             <div className="flex flex-col items-center">
-                                <img src="/iiitu-logo.png" className="w-40 h-40" alt="IIITU Logo" />
+                                <img
+                                    src="/iiitu-logo.png"
+                                    className="w-40 h-40"
+                                    alt="IIITU Logo"
+                                />
 
                                 <p className="2xl:px-10 mt-10 text-black font-semibold dark:text-white">
                                     Indian Institute of Information Technology Una
                                 </p>
-                                <h1 className="text-4xl text-black font-semibold dark:text-white mt-4">Welcome to Faculty Portal!</h1>
+                                <h1 className="text-4xl text-black font-semibold dark:text-white mt-4">
+                                    Welcome to Faculty Portal!
+                                </h1>
                             </div>
                         </div>
                     </div>
@@ -100,18 +110,23 @@ const Reset = () => {
                                         type="button"
                                         to="/forgot"
                                         className="text-primary hover:text-blue-500"
-                                        onClick={() => localStorage.removeItem("email")}
+                                        onClick={() => localStorage.removeItem('email')}
                                     >
                                         Change Email
                                     </Link>
                                 </div>
 
                                 <div className="mb-5">
-                                    <input
+                                    <button
                                         type="submit"
-                                        value="Change Password"
-                                        className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                                    />
+                                        className="w-full h-16 cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                                    >
+                                        {loading ? (
+                                            <div className="inline-block h-7 w-7 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                                        ) : (
+                                            <span>Change Password</span>
+                                        )}
+                                    </button>
                                 </div>
                             </form>
                         </div>

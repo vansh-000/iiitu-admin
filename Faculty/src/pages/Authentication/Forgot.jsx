@@ -7,12 +7,15 @@ import { API } from '../../utils/apiURl';
 import toast from 'react-hot-toast';
 
 const Forgot = () => {
+  const [loading, setLoading] = useState(false);
+
   const refEmail = useRef();
   const navigate = useNavigate();
 
   const handleOnSubmit = async (e) => {
     const email = refEmail.current.value;
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.post(`${API}/faculty/facultyByEmail`, {
         email: email,
@@ -29,9 +32,11 @@ const Forgot = () => {
     } catch (error) {
       if (error.response.status === 404) {
         toast.error("User does Not Found!");
+        setLoading(false);
       }
       else if (error.response && error.response.status === 400) {
         toast.error("Internal Server Error!");
+        setLoading(false);
       }
     }
   };
@@ -50,9 +55,10 @@ const Forgot = () => {
                 <p className="2xl:px-10 mt-10 text-black font-semibold dark:text-white">
                   Indian Institute of Information Technology Una
                 </p>
-                <h1 className="text-4xl text-black font-semibold dark:text-white mt-4">Welcome to Faculty Portal!</h1>
+                <h1 className="text-4xl text-black font-semibold dark:text-white mt-4">
+                  Welcome to Faculty Portal!
+                </h1>
               </div>
-
             </div>
           </div>
 
@@ -83,21 +89,24 @@ const Forgot = () => {
                         viewBox="0 0 22 22"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                      >
-                      </svg>
+                      ></svg>
                     </span>
                   </div>
                 </div>
 
-                <div className="mb-7 text-end">
-                </div>
+                <div className="mb-7 text-end"></div>
 
                 <div className="mb-5">
-                  <input
+                  <button
                     type="submit"
-                    value="Send OTP"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                  />
+                    className="w-full h-16 cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                  >
+                    {loading ? (
+                      <div className="inline-block h-7 w-7 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                    ) : (
+                      <span>Send OTP</span>
+                    )}
+                  </button>
                 </div>
               </form>
             </div>

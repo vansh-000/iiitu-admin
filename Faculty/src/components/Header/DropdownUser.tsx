@@ -39,7 +39,7 @@ const DropdownUser = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     toast.success("Successfully Logged Out!");
-    navigate('/signin');
+    navigate('/');
   }
 
   return (

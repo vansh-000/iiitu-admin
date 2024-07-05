@@ -340,7 +340,7 @@ const SignUp: React.FC = () => {
                 <div className="mt-6 text-center">
                   <p>
                     Already have an account?{' '}
-                    <Link to="/signin" className="text-primary">
+                    <Link to="/" className="text-primary">
                       Sign in
                     </Link>
                   </p>

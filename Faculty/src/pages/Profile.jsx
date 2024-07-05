@@ -231,7 +231,7 @@ const Profile = () => {
                 />
               ) : (
                 faculty.socialLink &&
-                <Link to={faculty.socialLink[0].link} className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
+                <Link to={faculty.socialLink[0]?.link} className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                   <FaLinkedin className="text-2xl" />
                 </Link>
               )}
@@ -250,7 +250,7 @@ const Profile = () => {
                 />
               ) : (
                 faculty.socialLink &&
-                <Link to={faculty.socialLink[1].link} className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
+                <Link to={faculty.socialLink[1]?.link} className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                   <SiGooglescholar className="text-2xl" />
                 </Link>
               )}
@@ -269,7 +269,7 @@ const Profile = () => {
                 />
               ) : (
                 faculty.socialLink &&
-                <Link to={faculty.socialLink[2].link} className="flex flex-col items-center justify-center gap-2 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
+                <Link to={faculty.socialLink[2]?.link} className="flex flex-col items-center justify-center gap-2 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                   <FaOrcid className="text-2xl" />
                 </Link>
               )}

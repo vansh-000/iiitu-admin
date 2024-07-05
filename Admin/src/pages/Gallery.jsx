@@ -11,6 +11,7 @@ const Gallery = () => {
   const [data, setData] = useState();
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
+  
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/image`);
@@ -19,9 +20,11 @@ const Gallery = () => {
       toast.error(err);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
+
   const [images, setImages] = useState([]);
   const titleRef = useRef();
   const descriptionRef = useRef();

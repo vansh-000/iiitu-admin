@@ -1,15 +1,15 @@
 import REditCard from "./REditCard";
 
 
-const RecruitmentEditCard = ({ data ,fetchData}) => {
+const RecruitmentEditCard = ({ data, fetchData }) => {
 
   
   return (
     <>
-      {data.length>0 ? (data.map((recruitment,index) => (
-        <REditCard recruitment={recruitment} fetchData={fetchData}/>
+      {data.length > 0 ? (data.map((recruitment, index) => (
+        <REditCard recruitment={recruitment} fetchData={fetchData} />
       ))) : (
-          <h1 className="text-xl">No Recruitment currently</h1>
+        <h1 className="text-xl">No Recruitment currently</h1>
       )}
     </>
   );

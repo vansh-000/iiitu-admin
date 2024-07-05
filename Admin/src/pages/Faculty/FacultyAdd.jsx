@@ -193,8 +193,9 @@ function FacultyAdd() {
                         setSelectedDepartment(e.target.value);
                         changeTextColor();
                       }}
-                      className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${isOptionSelected ? 'text-black dark:text-white' : ''
-                        }`}
+                      className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
+                        isOptionSelected ? 'text-black dark:text-white' : ''
+                      }`}
                     >
                       <option
                         value=""
@@ -209,7 +210,10 @@ function FacultyAdd() {
                       >
                         SOC
                       </option>
-                      <option value="SOBS" className="text-body dark:text-bodydark">
+                      <option
+                        value="SOBS"
+                        className="text-body dark:text-bodydark"
+                      >
                         SOBS
                       </option>
                       <option
@@ -339,14 +343,13 @@ function FacultyAdd() {
 
               <input
                 className="w-1/2 cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-
                 type="file"
                 id="resume"
                 name="resume"
                 accept=".pdf"
                 ref={refResume}
               />
-           
+
               {/* <label
               className="mb-3 block text-black dark:text-white"
               htmlFor="education"
@@ -371,29 +374,29 @@ function FacultyAdd() {
 
               <input
                 className="w-1/2 cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-
                 type="file"
                 id="profileImage"
                 name="profileImage"
-                accept='image/*'
+                accept="image/*"
                 ref={refProfileImage}
                 required
               />
 
-              {education && <TableEducation
-                Education={education}
-                setEducation={setEducation}
-              />}
-              {research && (
-                <TableResearch
-                  Research={research}
-                  setResearch={setResearch}
-                />)}
-              {award && (
-                <TableAwards Award={award} setAward={setAward} />
+              {education && (
+                <TableEducation
+                  Education={education}
+                  setEducation={setEducation}
+                />
               )}
+              {research && (
+                <TableResearch Research={research} setResearch={setResearch} />
+              )}
+              {award && <TableAwards Award={award} setAward={setAward} />}
               {publication && (
-                <TablePublications Publication={publication} setPublication={setPublication} />
+                <TablePublications
+                  Publication={publication}
+                  setPublication={setPublication}
+                />
               )}
               {journal && (
                 <TableJournals Journal={journal} setJournal={setJournal} />
@@ -401,16 +404,18 @@ function FacultyAdd() {
               {project && (
                 <TableProjects Project={project} setProject={setProject} />
               )}
-              
 
-              <input
-                className="inline-flex items-center justify-center rounded-full bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-                type="submit"
-                value="Add Faculty"
-              />
+              <div>
+                <input
+                  className="inline-flex items-center mt-4 justify-center rounded-full bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 hover:cursor-pointer"
+                  type="Submit"
+                  value="Add Faculty"
+                />
+              </div>
             </div>
           </div>
-        </form></DefaultLayout>
+        </form>
+      </DefaultLayout>
     </>
   );
 }

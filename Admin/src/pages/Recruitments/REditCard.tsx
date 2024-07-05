@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 const REditCard = ({ recruitment, fetchData, index }) => {
   const [editable, setEditable] = useState(false);
   const [editedData, setEditedData] = useState({});
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const refDesc = useRef<HTMLInputElement>(null);
   const refRecruitmentDoc = useRef<HTMLInputElement>(null);
   const refAppLink = React.useRef();

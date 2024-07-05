@@ -1,15 +1,13 @@
 import TEditCard from "./TEditCard";
 
+const TenderEditsCard = ({ data, fetchData }) => {
 
-const TenderEditsCard = ({ data ,fetchData}) => {
-
-  
   return (
     <>
-      {data.length>0 ? (data.map((tender,index) => (
-        <TEditCard tender={tender} fetchData={fetchData}/>
+      {data.length > 0 ? (data.map((tender, index) => (
+        <TEditCard tender={tender} fetchData={fetchData} key={tender._id} />
       ))) : (
-          <h1 className="text-xl">No Tenders currently</h1>
+        <h1 className="text-xl">No Tenders currently</h1>
       )}
     </>
   );

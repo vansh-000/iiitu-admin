@@ -38,7 +38,7 @@ const VerifyOTP = () => {
 
   useEffect(() => {
     if (!email) {
-      navigate("/");
+      navigate("/dashboard");
     }
   }, []);
 

@@ -27,7 +27,7 @@ function App() {
     <>
       <Routes>
         <Route
-          path="/"
+          path="/dashboard"
           element={
             <>
               <PageTitle title="Profile | Faculty Dashboard" />
@@ -35,7 +35,7 @@ function App() {
             </>
           }
         />
-        <Route
+        {/* <Route
           path="/edit-profile"
           element={
             <>
@@ -43,15 +43,15 @@ function App() {
               <EditProfile />
             </>
           }
-        />
+        /> */}
         <Route
-        path='/signin'
-        element={
-          <>
-          <PageTitle title='Authentication | Faculty Login'/>
-          <SignIn/>
-          </>
-        }/>
+          path='/signin'
+          element={
+            <>
+              <PageTitle title='Authentication | Faculty Login' />
+              <SignIn />
+            </>
+          } />
         <Route
           path='/forgot'
           element={

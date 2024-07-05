@@ -26,7 +26,7 @@ const Reset = () => {
                 toast.success("Password Changed Successfully!");
                 localStorage.removeItem("email");
                 localStorage.removeItem("verifyToken");
-                navigate("/");
+                navigate("/dashboard");
             }
         } catch (error) {
             if (error.response.status === 500) {
@@ -41,7 +41,7 @@ const Reset = () => {
 
     useEffect(() => {
         if (!email) {
-            navigate("/");
+            navigate("/dashboard");
         }
     }, [email, navigate]);
 

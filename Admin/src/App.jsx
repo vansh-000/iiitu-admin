@@ -164,7 +164,7 @@ function App() {
             </>
           }
         />
-        <Route
+        {/* <Route
           path="/settings"
           element={
             <>
@@ -172,17 +172,8 @@ function App() {
               <Settings />
             </>
           }
-        />
-        <Route
-          path="/signin"
-          element={
-            <>
-              <PageTitle title="Signin | IIITU - Admin" />
-              <SignIn />
-            </>
-          }
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/signup"
           element={
             <>
@@ -190,9 +181,9 @@ function App() {
               <SignUp />
             </>
           }
-        />
+        /> */}
         <Route
-          path="/admin/tenderAdd"
+          path="/tender/add"
           element={
             <>
               <PageTitle title="Tender | Tender Add" />
@@ -201,7 +192,7 @@ function App() {
           }
         />
         <Route
-          path="/admin/tenderEdits"
+          path="/tender/edit"
           element={
             <>
               <PageTitle title="Tender | Tender Edits and Delete" />
@@ -210,7 +201,7 @@ function App() {
           }
         />
         <Route
-          path="/admin/recruitmentAdd"
+          path="/recruitment/add"
           element={
             <>
               <PageTitle title="Recruitment | Recruitment ADD" />
@@ -219,7 +210,7 @@ function App() {
           }
         />
         <Route
-          path="/admin/recruitmentEdits"
+          path="/recruitment/edit"
           element={
             <>
               <PageTitle title="Recruitment | Recruitment Edit and Delete" />
@@ -228,7 +219,7 @@ function App() {
           }
         />
         <Route
-          path="/admin/facultyAdd"
+          path="/faculty/add"
           element={
             <>
               <PageTitle title="Faculty | Faculty Add" />
@@ -237,7 +228,7 @@ function App() {
           }
         />
         <Route
-          path="/admin/facultyModify"
+          path="/faculty/edit"
           element={
             <>
               <PageTitle title="Faculty | Faculty Edit" />
@@ -246,7 +237,7 @@ function App() {
           }
         />
         <Route
-          path="/Faculty/Edits/:id"
+          path="/faculty/edit/:id"
           element={
             <>
               <PageTitle title="Faculty | Faculty Edits" />
@@ -255,7 +246,7 @@ function App() {
           }
         />
         <Route
-          path="/admin/ResearchAdd"
+          path="/research/add"
           element={
             <>
               <PageTitle title="Research | Research Add" />
@@ -263,8 +254,8 @@ function App() {
             </>
           }
         />
-         <Route
-          path="/admin/ResearchEdit"
+        <Route
+          path="/research/edit"
           element={
             <>
               <PageTitle title="Research | Research Edit and Delete" />
@@ -276,4 +267,5 @@ function App() {
     </>
   );
 }
+
 export default App;

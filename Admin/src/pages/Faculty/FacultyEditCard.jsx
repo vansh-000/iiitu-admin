@@ -41,14 +41,14 @@ const FacultyEditCard = ({ faculty, fetchData }) => {
             {faculty.name}
           </h5>
           <p className="text-base leading-relaxed text-body">
-            EMail:{faculty.email}
+            Email: {faculty.email}
           </p>
           <p className="text-base leading-relaxed text-body">
-            DEPARTMENT:{faculty.department}
+            Department: {faculty.department}
           </p>
 
           <Link
-            to={`/Faculty/Edits/${faculty._id}`}
+            to={`/faculty/edit/${faculty._id}`}
             className="inline-flex mt-1 items-center mr-2 justify-center rounded-md bg-danger py-2 px-2 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
           >
             Edit

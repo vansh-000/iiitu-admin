@@ -5,8 +5,11 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import axios from "axios";
 import { API } from '../../utils/apiURl';
 import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 const SignIn = () => {
+  const [loading, setLoading] = useState(false);
+
   const refEmail = useRef();
   const refPassword = useRef();
   const navigator = useNavigate();
@@ -14,6 +17,7 @@ const SignIn = () => {
     const email = refEmail.current.value;
     const password = refPassword.current.value;
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.post(`${API}/faculty/login`, {
         email: email,
@@ -23,18 +27,23 @@ const SignIn = () => {
         toast.success("Successfully Logged In!")
         localStorage.setItem('token', response.data.accessToken);
         localStorage.setItem('user', JSON.stringify(response.data.userInfo));
-        navigator("/");
+        navigator("/dashboard");
       }
 
     } catch (error) {
       if (error.response.status === 409) {
         toast.error("User does Not Found!");
+        setLoading(false);
       }
       else if (error.response && error.response.status === 403) {
         toast.error("Incorrect Password!");
+        setLoading(false);
+
       }
       else if (error.response && error.response.status === 400 || 500) {
         toast.error("Internal Server Error!");
+        setLoading(false);
+
       }
     }
   };
@@ -47,18 +56,17 @@ const SignIn = () => {
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="p-10">
-              <Link className="mb-5.5 inline-block" to="/">
-               
-              </Link>
+              <Link className="mb-5.5 inline-block" to="/"></Link>
               <div className="flex flex-col items-center">
                 <img src="/iiitu-logo.png" className="w-40 h-40" />
 
                 <p className="2xl:px-10 mt-10 text-black font-semibold dark:text-white">
                   Indian Institute of Information Technology Una
                 </p>
-                <h1 className="text-4xl text-black font-semibold dark:text-white mt-4">Welcome to Faculty Portal!</h1>
+                <h1 className="text-4xl text-black font-semibold dark:text-white mt-4">
+                  Welcome to Faculty Portal!
+                </h1>
               </div>
-
             </div>
           </div>
 
@@ -79,6 +87,7 @@ const SignIn = () => {
                       placeholder="Enter your email"
                       ref={refEmail}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      required
                     />
 
                     <span className="absolute right-4 top-4">
@@ -111,6 +120,7 @@ const SignIn = () => {
                       ref={refPassword}
                       placeholder="Enter your Password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      required
                     />
 
                     <span className="absolute right-4 top-4">
@@ -138,15 +148,25 @@ const SignIn = () => {
                 </div>
 
                 <div className="mb-7 text-end">
-                  <Link to="/forgot" className="text-primary hover:text-blue-500">Forgot your Password?</Link>
+                  <Link
+                    to="/forgot"
+                    className="text-primary hover:text-blue-500"
+                  >
+                    Forgot your Password?
+                  </Link>
                 </div>
 
                 <div className="mb-5">
-                  <input
+                  <button
                     type="submit"
-                    value="Sign In"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                  />
+                    className="w-full h-16 cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                  >
+                    {loading ? (
+                      <div className="inline-block h-7 w-7 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                    ) : (
+                      <span>Sign In</span>
+                    )}
+                  </button>
                 </div>
               </form>
             </div>

@@ -5,44 +5,45 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { API } from '../utils/apiURl';
 import { jwtDecode } from 'jwt-decode';
+
 const EditProfile = () => {
-    const deptRef = useRef();
-    const mobileRef = useRef();
-    const researchRef = useRef();
-    const token=localStorage.getItem("token");
-    var decode=null;
-    if(token){
-        decode=jwtDecode(token);
-    }
-    const id=decode?.id;
-    const handleEmpty=()=>{
-        deptRef.current.value='';
-        mobileRef.current.value='';
-        researchRef.current.value='';
-    }
-    const handleUpdate=async (e)=>{
-        e.preventDefault();
-        const department = deptRef.current.value;
-        const mobile = mobileRef.current.value;
-        const research = researchRef.current.value;
-        try{
-            const formData = new FormData();
-            formData.append("department", department);
-            formData.append("mobile", mobile);
-            formData.append("researchInterest", research);
-            const res=await axios.post(`${API}/editDetails/${id}`,formData,{
-                headers:{
-                    "Content-Type":"multipart/form-data"
-                }
-            });
-            handleEmpty();
-            toast.success("Profile Updated!");
+  const deptRef = useRef();
+  const mobileRef = useRef();
+  const researchRef = useRef();
+  const token = localStorage.getItem("token");
+  var decode = null;
+  if (token) {
+    decode = jwtDecode(token);
+  }
+  const id = decode?.id;
+  const handleEmpty = () => {
+    deptRef.current.value = '';
+    mobileRef.current.value = '';
+    researchRef.current.value = '';
+  }
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    const department = deptRef.current.value;
+    const mobile = mobileRef.current.value;
+    const research = researchRef.current.value;
+    try {
+      const formData = new FormData();
+      formData.append("department", department);
+      formData.append("mobile", mobile);
+      formData.append("researchInterest", research);
+      const res = await axios.post(`${API}/editDetails/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
         }
-        catch(err){
-            toast.error(err.message);
-            console.log("Error:",err);
-        }
+      });
+      handleEmpty();
+      toast.success("Profile Updated!");
     }
+    catch (err) {
+      toast.error(err.message);
+      console.log("Error:", err);
+    }
+  }
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Edit Profile" />

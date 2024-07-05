@@ -14,7 +14,7 @@ import TableProjects from '../../components/Tables/TableProjects';
 
 const FacultyAllEdit = () => {
   const idd = useParams();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [faculty, setFaculty] = React.useState({});
   const [profileImage, setProfileImage] = React.useState('');
   const [education, setEducation] = useState([]);
@@ -30,7 +30,7 @@ const FacultyAllEdit = () => {
   const refResearchInterest = React.useRef();
   const refLinkedin = React.useRef();
   const refGoogleScholar = React.useRef();
-  const refOrcid=React.useRef();
+  const refOrcid = React.useRef();
   const [profileIMG, setProfileIMG] = React.useState();
   const fetchFaculty = async () => {
     try {
@@ -189,7 +189,7 @@ const FacultyAllEdit = () => {
                 name="resume"
                 accept=".pdf"
                 ref={refResume}
-                //   required
+              //   required
               />
             </div>
             <div>
@@ -318,7 +318,7 @@ const FacultyAllEdit = () => {
             )}
             <div>
               <input
-                className="inline-flex items-center justify-center rounded-full bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+                className="inline-flex items-center mt-4 justify-center rounded-full bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 hover:cursor-pointer"
                 type="Submit"
                 value="Save"
               />

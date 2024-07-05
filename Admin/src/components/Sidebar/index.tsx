@@ -8,6 +8,7 @@ import { GiArchiveResearch, GiTeacher } from 'react-icons/gi';
 import { IoMdPhotos } from 'react-icons/io';
 import { LuPartyPopper } from 'react-icons/lu';
 import { ImNewspaper } from 'react-icons/im';
+import { jwtDecode } from 'jwt-decode';
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -16,7 +17,8 @@ interface SidebarProps {
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const location = useLocation();
   const { pathname } = location;
-
+  const token=localStorage.getItem('token');
+  const {Allow}=jwtDecode(token);
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
 
@@ -115,7 +117,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </h3>
 
               <ul className="mb-6 flex flex-col gap-1.5">
-                <li>
+                {Allow[0]&&<li>
                   <NavLink
                     to="/"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -125,8 +127,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <IoMdPhotos />
                     Gallery
                   </NavLink>
-                </li>
-                <li>
+                </li>}
+                {Allow[1]&&<li>
                   <NavLink
                     to="/curriculum"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -137,8 +139,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <FaBookOpen />
                     Curriculum
                   </NavLink>
-                </li>
-                <li>
+                </li>}
+                {Allow[2]&&<li>
                   <NavLink
                     to="/news"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -148,8 +150,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <FaRegNewspaper />
                     News
                   </NavLink>
-                </li>
-                <li>
+                </li>}
+                {Allow[3]&&<li>
                   <NavLink
                     to="/printmedia"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -159,8 +161,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <ImNewspaper />
                     Print Media
                   </NavLink>
-                </li>
-                <li>
+                </li>}
+                {Allow[4]&&<li>
                   <NavLink
                     to="/clubs"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -170,8 +172,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <LuPartyPopper />
                     Clubs
                   </NavLink>
-                </li>
-                <li>
+                </li>}
+                {Allow[5]&&<li>
                   <NavLink
                     to="/events"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -182,8 +184,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <MdEmojiEvents />
                     Events
                   </NavLink>
-                </li>
-                <li>
+                </li>}
+                {Allow[6]&&
+                  <li>
                   <NavLink
                     to="/admissions"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -194,7 +197,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <MdEmojiEvents />
                     Admissions
                   </NavLink>
-                </li>
+                </li>}
                 {/* <!-- Menu Item Calendar --> */}
 
                 {/* <!-- Menu Item Profile --> */}
@@ -229,7 +232,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 {/* <!-- Menu Item Profile --> */}
 
                 {/* <!-- Menu Item Forms --> */}
-                <SidebarLinkGroup
+                {Allow[7]&&
+                  <SidebarLinkGroup
                   activeCondition={
                     pathname === '/admin' || pathname.includes('admin')
                   }
@@ -306,10 +310,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </React.Fragment>
                     );
                   }}
-                </SidebarLinkGroup>
+                </SidebarLinkGroup>}
                 {/* <!-- Menu Item Forms --> */}
 
-                <SidebarLinkGroup activeCondition={pathname.includes('tender')}>
+                {Allow[8]&&<SidebarLinkGroup activeCondition={pathname.includes('tender')}>
                   {(handleClick, open) => {
                     return (
                       <React.Fragment>
@@ -409,8 +413,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </React.Fragment>
                     );
                   }}
-                </SidebarLinkGroup>
-                <SidebarLinkGroup
+                </SidebarLinkGroup>}
+                {Allow[9]&&<SidebarLinkGroup
                   activeCondition={pathname.includes('research')}
                 >
                   {(handleClick, open) => {
@@ -484,8 +488,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </React.Fragment>
                     );
                   }}
-                </SidebarLinkGroup>
-                <SidebarLinkGroup
+                </SidebarLinkGroup>}
+                {Allow[10]&&<SidebarLinkGroup
                   activeCondition={pathname.includes('recruitment')}
                 >
                   {(handleClick, open) => {
@@ -587,7 +591,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </React.Fragment>
                     );
                   }}
-                </SidebarLinkGroup>
+                </SidebarLinkGroup>}
               </ul>
             </div>
           </nav>

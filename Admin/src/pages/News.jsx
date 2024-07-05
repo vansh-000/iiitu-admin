@@ -7,11 +7,16 @@ import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import TableNews from '../components/Tables/TableNews';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 const News = () => {
   const [data, setData] = useState();
   const token = localStorage.getItem('token');
   const navigate=useNavigate();
+  const {Allow}=jwtDecode(token);
+  if(!Allow[2]){
+    navigate('/printmedia');
+  }
   const refImg = useRef();
   const refDoc = useRef();
   const fetchData = async () => {

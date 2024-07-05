@@ -4,6 +4,8 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import axios from 'axios';
 import { API } from '../../utils/apiURl';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 function Research() {
   const refTitle = useRef();
@@ -12,6 +14,12 @@ function Research() {
   const refUniversityImage = useRef();
   const refFile = useRef();
   const refUniversityLink = useRef();
+  const navigate=useNavigate();
+  const token=localStorage.getItem('token');
+  const {Allow}=jwtDecode(token);
+  if(!Allow[9]){
+    navigate('/recruitment/edit');
+  }
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -35,7 +43,13 @@ function Research() {
         toast.success(response.data.message);
      }
     } catch (err) {
-      console.error(err);
+      if (err.response.status === 401) {
+        return navigate('/signin');
+      }
+      if(err.response.status>=410&&err.response.status<=430){
+        return toast.error(err.response.data.message);
+      }
+      toast.error(`Error: ${err}`);
     }
   };
   const [selectedType, setSelectedType] = useState('');

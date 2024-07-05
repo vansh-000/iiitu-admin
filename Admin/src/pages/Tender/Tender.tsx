@@ -6,6 +6,7 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 function Tender(): JSX.Element {
   const startDateRef = React.useRef<HTMLInputElement>(null);
@@ -14,6 +15,11 @@ function Tender(): JSX.Element {
   const refTenderDoc = React.useRef<HTMLInputElement>();
   const refAnnexure = React.useRef<HTMLInputElement>();
   const navigate = useNavigate();
+  const token=localStorage.getItem('token');
+  const {Allow}=jwtDecode(token);
+  if(!Allow[8]){
+    navigate('/research/add');
+  }
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
@@ -28,7 +34,7 @@ function Tender(): JSX.Element {
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data',
           },
         },

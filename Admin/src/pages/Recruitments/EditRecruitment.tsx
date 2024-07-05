@@ -4,7 +4,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import DefaultLayout from "../../layout/DefaultLayout";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 const RecruitmentEdits = () => {
+  const navigate = useNavigate();
+  const token=localStorage.getItem('token');
+  const {Allow}=jwtDecode(token);
+  if(!Allow[10]){
+    navigate('/profile');
+  }
   const [data, setData] = useState([]);
   const fetchRecruitment = async () => {
     try {

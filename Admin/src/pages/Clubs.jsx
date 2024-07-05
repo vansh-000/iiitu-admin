@@ -6,10 +6,15 @@ import toast ,{Toaster} from 'react-hot-toast';
 import { API } from '../../../Faculty/src/utils/apiURl';
 import TableClub from '../components/Tables/TableClub'
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 const Clubs = () => {
     const [data, setData] = useState();
     const navigate = useNavigate();
     const token=localStorage.getItem('token');
+    const {Allow}=jwtDecode(token);
+  if(!Allow[4]){
+    navigate('/events');
+  }
     const [socialLinks, setSocialLinks] = useState([
         {
             socialMedia: 'Facebook',

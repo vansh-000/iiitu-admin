@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import TableEvent from '../components/Tables/TableEvent';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 const Events = () => {
     const [data, setData] = useState();
@@ -14,6 +15,7 @@ const Events = () => {
     const navigate=useNavigate();
     const [clubId, setclubId] = useState();
     const  token=localStorage.getItem('token');
+  
     const fetchData = async () => {
         try {
             const response = await axios.get(`${API}/event`);

@@ -13,6 +13,7 @@ const EventsPage = () => {
   const refImage = useRef();
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
+  
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();

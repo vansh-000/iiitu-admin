@@ -1,6 +1,6 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
-import React, { useRef ,useState,useEffect} from 'react';
+import React, { useRef } from 'react';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { API } from '../utils/apiURl';

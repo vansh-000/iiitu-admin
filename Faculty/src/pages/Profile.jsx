@@ -35,7 +35,7 @@ const Profile = () => {
   const refResearchInterest = useRef();
   const refLinkedin = useRef();
   const refGoogleScholar = useRef();
-  const refOrcid=useRef();
+  const refOrcid = useRef();
   const fetchData = async () => {
     try {
       const userData = JSON.parse(localStorage.getItem('user'));
@@ -209,13 +209,13 @@ const Profile = () => {
                   ref={refName}
                   defaultValue={faculty.name}
                   placeholder="Enter Name"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  className="w-[90%] mx-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
               ) : (
                 faculty.name
               )}
             </h3>
-            <div className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
+            <div className={`mx-auto mt-4.5 mb-5.5 flex ${editable ? "flex-col w-[85%] sm:w-[50%] px-4" : "flex-row w-fit"} gap-2 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]`}>
               {editable ? (
                 <input
                   name="title"
@@ -274,18 +274,21 @@ const Profile = () => {
                 </Link>
               )}
               {editable ? (
-                <input
-                  className="w-auto cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-                  type="file"
-                  id="resume"
-                  name="resume"
-                  accept=".pdf"
-                  ref={refResume}
-                
-                />
+                <>
+                  <label className="mt-2 text-start">Resume</label>
+                  <input
+                    className="w-auto cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
+                    type="file"
+                    id="resume"
+                    name="resume"
+                    accept=".pdf"
+                    placeholder='Resume'
+                    ref={refResume}
+                  />
+                </>
               ) : (
-                  faculty.resume &&
-                <Link to={`${STATIC_FILES}/${faculty.resume?.replace(/\\/g, '/')}`} className="flex flex-col items-center justify-center gap-1 text-black dark:text-white border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
+                faculty.resume &&
+                <Link to={`${STATIC_FILES}/${faculty.resume?.replace(/\\/g, '/')}`} className="flex flex-col items-center justify-center gap-1 text-black dark:text-white border-stroke px-4 dark:border-strokedark xsm:flex-row">
                   Resume
                 </Link>
               )}

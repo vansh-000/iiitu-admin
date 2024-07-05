@@ -72,7 +72,7 @@ const TableThree = ({ edit,Education,setEducation }) => {
           </tbody>
         </table>
         {edit && (
-          <button onClick={handleAddEducation}>Add Education</button>
+          <button className="mt-2" onClick={handleAddEducation}>Add Education</button>
         )}
         {/* <button onClick={toggleEditMode}>{edit ? 'Save' : 'Edit'}</button> */}
       </div>

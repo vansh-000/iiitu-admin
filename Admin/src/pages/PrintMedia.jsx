@@ -6,11 +6,16 @@ import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 const PrintMedia = () => {
   const [data, setData] = useState();
   const token=localStorage.getItem('token');
   const navigate=useNavigate();
+  const {Allow}=jwtDecode(token);
+  useEffect(()=>{if(!Allow?.[3]){
+    navigate('/clubs');
+  }},[])
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/print_media`);

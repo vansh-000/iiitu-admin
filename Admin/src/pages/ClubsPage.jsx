@@ -3,8 +3,8 @@ import DefaultLayout from '../layout/DefaultLayout';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { API } from '../../../Faculty/src/utils/apiURl';
 import { useNavigate, useParams } from 'react-router-dom';
+import { API } from '../utils/apiURl';
 const Clubs = () => {
   const { id } = useParams();
   const [data, setData] = useState();

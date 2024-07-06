@@ -4,9 +4,17 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { API } from '../../utils/apiURl';
 import FacultyCardProvider from './FacultyCardProvider';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 const FacultyEdit = () => {
   const [data, setData] = React.useState([]);
+  const navigate=useNavigate();
+  const token=localStorage.getItem('token');
+  const {Allow}=jwtDecode(token);
+  useEffect(()=>{if(!Allow?.[7]){
+    navigate('/tender/add');
+  }},[]);
   const fetchFaculty = async () => {
     try {
       let response = await axios.get(`${API}/faculty/allData`);

@@ -35,10 +35,12 @@ const Profile = () => {
   const refResearchInterest = useRef();
   const refLinkedin = useRef();
   const refGoogleScholar = useRef();
-  const refOrcid=useRef();
+  const refOrcid = useRef();
+  const userData = JSON.parse(localStorage.getItem('user'));
+  const ClubName=localStorage.getItem('ClubName');
   const fetchData = async () => {
     try {
-      const userData = JSON.parse(localStorage.getItem('user'));
+      
       const response = await axios.get(
         `${API}/faculty/facultyProfile/${userData?.id}`,
         {
@@ -59,13 +61,30 @@ const Profile = () => {
       }
     } catch (err) {
       console.log('Error', err);
-      if (!localStorage.getItem('token') || err.response.status === 401 || err.response.status === 404) {
+      if (
+        !localStorage.getItem('token') ||
+        err.response.status === 401 ||
+        err.response.status === 404
+      ) {
         nevigat('/signin');
       }
     }
   };
+  const fetchClub = async () => {
+    try {
+        const response = await axios.get(`${API}/clubs/faculty/${userData?.id}`);
+        localStorage.setItem('ClubName',response.data.data._id);
+    }
+    catch (err) {
+      if(err.response.status===404){
+        localStorage.removeItem('ClubName');
+      }
+        console.log(err);
+    }
+}
   useEffect(() => {
     fetchData();
+    fetchClub();
   }, []);
   const handleEdit = () => {
     setEditable(true);
@@ -82,45 +101,49 @@ const Profile = () => {
       const userID = JSON.parse(localStorage.getItem('user')).id;
       const data = {
         name: refName.current.value,
-      
+
         mobile: refPhone.current.value,
         researchInterest: refResearchInterest.current.value,
         socialLink: [
           { social: 'Linkedin', link: refLinkedin.current.value },
           { social: 'GoogleScholar', link: refGoogleScholar.current.value },
-          { social: 'Orcid', link: refOrcid.current.value }
+          { social: 'Orcid', link: refOrcid.current.value },
         ],
         Research: newResearch,
         AwardAndHonours: newAward,
         Education: newEducation,
         Publications: newPublication,
         Journals: newJournal,
-        Projects: newProject
-      }
-      const response = await axios.put(`${API}/faculty/editDetails/${userID}`, data, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Projects: newProject,
+      };
+      const response = await axios.put(
+        `${API}/faculty/editDetails/${userID}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
         },
-      },
-      )
-      toast.success(`${response.data.message}`)
+      );
+      toast.success(`${response.data.message}`);
       if (refResume.current.files[0] || refProFileImg.current.files[0]) {
         const data = {
           profileImage: refProFileImg.current.files[0],
           resume: refResume.current.files[0],
           oldProfileImage: faculty.profileImage,
-          oldResume: faculty.resume
-        }
-        const responsee = await axios.put(`${API}/faculty/editFiles/${userID}`,
-          data
-          , {
+          oldResume: faculty.resume,
+        };
+        const responsee = await axios.put(
+          `${API}/faculty/editFiles/${userID}`,
+          data,
+          {
             headers: {
               'Content-Type': 'multipart/form-data',
-              Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-          });
-        toast.success(`${responsee.data.message}`)
-         
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          },
+        );
+        toast.success(`${responsee.data.message}`);
       }
       fetchData();
     } catch (err) {
@@ -134,6 +157,9 @@ const Profile = () => {
       setProfileImage(URL.createObjectURL(file));
     }
   };
+  const handleClubEvents=()=>{
+    nevigat('/events');
+  }
 
   return (
     <DefaultLayout>
@@ -145,6 +171,7 @@ const Profile = () => {
         >
           {editable ? 'Save' : 'Edit'}
         </button>
+
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           <div className="relative z-30 mx-auto h-30 w-full max-w-30 rounded-full p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
             <div className="relative drop-shadow-2">
@@ -201,6 +228,9 @@ const Profile = () => {
             </div>
           </div>
           <div className="mt-14">
+            {ClubName&&<button onClick={handleClubEvents} className="cursor-pointer mb-4 bg-gray-800 px-3 py-2 bg-green-600 rounded-md text-white tracking-wider shadow-xl animate-bounce hover:animate-none">
+              Club Events
+            </button>}
             <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
               {editable ? (
                 <input
@@ -215,6 +245,25 @@ const Profile = () => {
                 faculty.name
               )}
             </h3>
+            {editable ? (
+              <input
+                className="w-auto cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
+                type="file"
+                id="resume"
+                name="resume"
+                accept=".pdf"
+                ref={refResume}
+              />
+            ) : (
+              faculty.resume && (
+                <Link
+                  to={`${STATIC_FILES}/${faculty.resume?.replace(/\\/g, '/')}`}
+                  className="flex flex-col items-center justify-center gap-1 text-black dark:text-white border-r  px-4 dark:border-stroke border-strokedark xsm:flex-row"
+                >
+                  Resume
+                </Link>
+              )
+            )}
             <div className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
               {editable ? (
                 <input
@@ -230,10 +279,14 @@ const Profile = () => {
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
               ) : (
-                faculty.socialLink &&
-                <Link to={faculty.socialLink[0].link} className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
-                  <FaLinkedin className="text-2xl" />
-                </Link>
+                faculty.socialLink && (
+                  <Link
+                    to={faculty.socialLink[0]?.link}
+                    className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row"
+                  >
+                    <FaLinkedin className="text-2xl" />
+                  </Link>
+                )
               )}
               {editable ? (
                 <input
@@ -249,10 +302,14 @@ const Profile = () => {
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
               ) : (
-                faculty.socialLink &&
-                <Link to={faculty.socialLink[1].link} className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
-                  <SiGooglescholar className="text-2xl" />
-                </Link>
+                faculty.socialLink && (
+                  <Link
+                    to={faculty.socialLink[1]?.link}
+                    className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row"
+                  >
+                    <SiGooglescholar className="text-2xl" />
+                  </Link>
+                )
               )}
               {editable ? (
                 <input
@@ -268,26 +325,14 @@ const Profile = () => {
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
               ) : (
-                faculty.socialLink &&
-                <Link to={faculty.socialLink[2].link} className="flex flex-col items-center justify-center gap-2 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
-                  <FaOrcid className="text-2xl" />
-                </Link>
-              )}
-              {editable ? (
-                <input
-                  className="w-auto cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-                  type="file"
-                  id="resume"
-                  name="resume"
-                  accept=".pdf"
-                  ref={refResume}
-                
-                />
-              ) : (
-                  faculty.resume &&
-                <Link to={`${STATIC_FILES}/${faculty.resume?.replace(/\\/g, '/')}`} className="flex flex-col items-center justify-center gap-1 text-black dark:text-white border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
-                  Resume
-                </Link>
+                faculty.socialLink && (
+                  <Link
+                    to={faculty?.socialLink[2]?.link}
+                    className="flex flex-col items-center justify-center gap-2 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row"
+                  >
+                    <FaOrcid className="text-2xl" />
+                  </Link>
+                )
               )}
             </div>
 
@@ -299,7 +344,6 @@ const Profile = () => {
                     <input
                       name="Resreach"
                       type="text"
-  
                       ref={refResearchInterest}
                       placeholder="Research Intreast"
                       defaultValue={faculty.researchInterest}
@@ -315,7 +359,6 @@ const Profile = () => {
                     <input
                       name="title"
                       type="text"
-  
                       ref={refPhone}
                       placeholder="Phone Number (eg.7352xxxx)"
                       defaultValue={faculty.mobile}
@@ -348,13 +391,25 @@ const Profile = () => {
         <TableAwards edit={editable} Award={award} setAward={setAward} />
       )}
       {publication && (
-        <TablePublications edit={editable} Publication={publication} setPublication={setPublication} />
+        <TablePublications
+          edit={editable}
+          Publication={publication}
+          setPublication={setPublication}
+        />
       )}
       {journal && (
-        <TableJournals edit={editable} Journal={journal} setJournal={setJournal} />
+        <TableJournals
+          edit={editable}
+          Journal={journal}
+          setJournal={setJournal}
+        />
       )}
       {project && (
-        <TableProjects edit={editable} Project={project} setProject={setProject} />
+        <TableProjects
+          edit={editable}
+          Project={project}
+          setProject={setProject}
+        />
       )}
     </DefaultLayout>
   );

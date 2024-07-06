@@ -7,10 +7,17 @@ import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import TableCurriculum from '../components/Tables/TableCurriculum';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 const Curriculum = () => {
   const [data, setData] = useState();
   const token=localStorage.getItem('token');
   const navigate=useNavigate();
+  const {Allow}=jwtDecode(token);
+  // console.log(Allow`);
+  useEffect(()=>{
+  if(!Allow?.[1]){
+    navigate('/news');
+  }},[])
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/courses`);

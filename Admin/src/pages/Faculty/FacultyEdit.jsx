@@ -12,9 +12,9 @@ const FacultyEdit = () => {
   const navigate=useNavigate();
   const token=localStorage.getItem('token');
   const {Allow}=jwtDecode(token);
-  if(!Allow[7]){
+  useEffect(()=>{if(!Allow?.[7]){
     navigate('/tender/add');
-  }
+  }},[]);
   const fetchFaculty = async () => {
     try {
       let response = await axios.get(`${API}/faculty/allData`);

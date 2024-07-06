@@ -1,11 +1,14 @@
-import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
-import DefaultLayout from '../layout/DefaultLayout';
+// import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
+// import DefaultLayout from '../layout/DefaultLayout';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+// import { API } from '../../../Faculty/src/utils/apiURl';
 import { useNavigate, useParams } from 'react-router-dom';
-import DatePickerOne from '../components/Forms/DatePicker/DatePickerOne';
-import { API } from '../utils/apiURl';
+import DefaultLayout from '../../../layout/DefaultLayout';
+import Breadcrumb from '../../../components/Breadcrumbs/Breadcrumb';
+import DatePickerOne from '../../../components/Forms/DatePicker/DatePickerOne';
+import { API } from '../../../utils/apiURl';
 
 const EventsPage = () => {
   const { id } = useParams();

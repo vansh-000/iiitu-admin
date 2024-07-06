@@ -117,7 +117,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </h3>
 
               <ul className="mb-6 flex flex-col gap-1.5">
-                {Allow[0]&&<li>
+                {Allow?.[0]&&<li>
                   <NavLink
                     to="/"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -128,7 +128,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     Gallery
                   </NavLink>
                 </li>}
-                {Allow[1]&&<li>
+                {Allow?.[1]&&<li>
                   <NavLink
                     to="/curriculum"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -140,7 +140,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     Curriculum
                   </NavLink>
                 </li>}
-                {Allow[2]&&<li>
+                {Allow?.[2]&&<li>
                   <NavLink
                     to="/news"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -151,7 +151,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     News
                   </NavLink>
                 </li>}
-                {Allow[3]&&<li>
+                {Allow?.[3]&&<li>
                   <NavLink
                     to="/printmedia"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -162,7 +162,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     Print Media
                   </NavLink>
                 </li>}
-                {Allow[4]&&<li>
+                {Allow?.[4]&&<li>
                   <NavLink
                     to="/clubs"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -173,7 +173,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     Clubs
                   </NavLink>
                 </li>}
-                {Allow[5]&&<li>
+                {Allow?.[5]&&<li>
                   <NavLink
                     to="/events"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -185,7 +185,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     Events
                   </NavLink>
                 </li>}
-                {Allow[6]&&
+                {Allow?.[6]&&
                   <li>
                   <NavLink
                     to="/admissions"
@@ -232,7 +232,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 {/* <!-- Menu Item Profile --> */}
 
                 {/* <!-- Menu Item Forms --> */}
-                {Allow[7]&&
+                {Allow?.[7]&&
                   <SidebarLinkGroup
                   activeCondition={
                     pathname === '/admin' || pathname.includes('admin')
@@ -313,7 +313,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </SidebarLinkGroup>}
                 {/* <!-- Menu Item Forms --> */}
 
-                {Allow[8]&&<SidebarLinkGroup activeCondition={pathname.includes('tender')}>
+                {Allow?.[8]&&<SidebarLinkGroup activeCondition={pathname.includes('tender')}>
                   {(handleClick, open) => {
                     return (
                       <React.Fragment>
@@ -414,7 +414,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     );
                   }}
                 </SidebarLinkGroup>}
-                {Allow[9]&&<SidebarLinkGroup
+                {Allow?.[9]&&<SidebarLinkGroup
                   activeCondition={pathname.includes('research')}
                 >
                   {(handleClick, open) => {
@@ -489,7 +489,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     );
                   }}
                 </SidebarLinkGroup>}
-                {Allow[10]&&<SidebarLinkGroup
+                {Allow?.[10]&&<SidebarLinkGroup
                   activeCondition={pathname.includes('recruitment')}
                 >
                   {(handleClick, open) => {

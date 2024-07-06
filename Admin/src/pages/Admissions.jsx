@@ -16,9 +16,10 @@ const Admissions = () => {
  const navigate=useNavigate();
  const token=localStorage.getItem('token');
  const {Allow}=jwtDecode(token);
-    if(!Allow[6]){
-      navigate('/faculty/add');
-    }
+ useEffect(()=>{if(!Allow?.[6]){
+  navigate('/faculty/add');
+}},[]);
+    
   const changeTextColor = () => {
     setIsOptionSelected(true);
   };

@@ -12,6 +12,7 @@ import TableJournals from '../../components/Tables/TableJournals';
 import TableProjects from '../../components/Tables/TableProjects';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import { useEffect } from 'react';
 
 function FacultyAdd() {
   const refName = useRef('');
@@ -32,9 +33,10 @@ function FacultyAdd() {
   const navigate=useNavigate();
   const token=localStorage.getItem('token');
   const {Allow}=jwtDecode(token);
-  if(!Allow[7]){
-    navigate('/tender/add');
-  }
+useEffect(()=>{if(!Allow?.[7]){
+  navigate('/tender/add');
+}},[]);
+
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {

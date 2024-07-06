@@ -10,9 +10,9 @@ const EditResearch = () => {
   const navigate=useNavigate();
   const token=localStorage.getItem('token');
   const {Allow}=jwtDecode(token);
-  if(!Allow[9]){
+  useEffect(()=>{if(!Allow?.[9]){
     navigate('/recruitment/edit');
-  }
+  }},[]);
   const [data, setData] = useState([]);
   const fetchResearch = async () => {
     try {

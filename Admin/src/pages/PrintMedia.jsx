@@ -13,9 +13,9 @@ const PrintMedia = () => {
   const token=localStorage.getItem('token');
   const navigate=useNavigate();
   const {Allow}=jwtDecode(token);
-  if(!Allow[3]){
+  useEffect(()=>{if(!Allow?.[3]){
     navigate('/clubs');
-  }
+  }},[])
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/print_media`);

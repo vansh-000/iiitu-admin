@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useEffect } from 'react';
 import axios from 'axios';
 import { API } from '../../utils/apiURl';
 import DatePickerOne from '../../components/Forms/DatePicker/DatePickerOne';
@@ -17,9 +17,13 @@ function Tender(): JSX.Element {
   const navigate = useNavigate();
   const token=localStorage.getItem('token');
   const {Allow}=jwtDecode(token);
-  if(!Allow[8]){
-    navigate('/research/add');
-  }
+  useEffect(()=>{
+    if(!Allow?.[8]){
+      navigate('/research/add');
+    }
+  },[])
+ 
+ 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {

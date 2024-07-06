@@ -10,9 +10,9 @@ const RecruitmentEdits = () => {
   const navigate = useNavigate();
   const token=localStorage.getItem('token');
   const {Allow}=jwtDecode(token);
-  if(!Allow[10]){
+  useEffect(()=>{if(!Allow?.[10]){
     navigate('/profile');
-  }
+  }},[]);
   const [data, setData] = useState([]);
   const fetchRecruitment = async () => {
     try {

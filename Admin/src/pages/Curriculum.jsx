@@ -13,9 +13,11 @@ const Curriculum = () => {
   const token=localStorage.getItem('token');
   const navigate=useNavigate();
   const {Allow}=jwtDecode(token);
-  if(!Allow[1]){
+  // console.log(Allow`);
+  useEffect(()=>{
+  if(!Allow?.[1]){
     navigate('/news');
-  }
+  }},[])
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/courses`);

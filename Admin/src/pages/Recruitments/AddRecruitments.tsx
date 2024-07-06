@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useEffect } from 'react';
 import axios from 'axios';
 import { API } from '../../utils/apiURl';
 import DatePickerOne from '../../components/Forms/DatePicker/DatePickerOne';
@@ -11,9 +11,11 @@ const AddRecruitments = () => {
   const navigate = useNavigate();
   const token=localStorage.getItem('token');
   const {Allow}=jwtDecode(token);
-  if(!Allow[10]){
-    navigate('/profile');
-  }
+  useEffect(()=>{
+    if(!Allow?.[10]){
+      navigate('/profile');
+    }
+  },[]);
   const startDateRef = React.useRef<HTMLInputElement>(null);
   const endDateRef = React.useRef<HTMLInputElement>(null);
   const refDesc = React.useRef<HTMLInputElement>();

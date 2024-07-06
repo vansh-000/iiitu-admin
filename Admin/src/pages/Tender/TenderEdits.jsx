@@ -10,9 +10,9 @@ const TenderEdits = () => {
   const navigate=useNavigate();
   const token=localStorage.getItem('token');
   const {Allow}=jwtDecode(token);
-  if(!Allow[8]){
+  useEffect(()=>{if(!Allow?.[8]){
     navigate('/research/add');
-  }
+  }},[]);
   const [data, setData] = useState([]);
   const fetchTender = async () => {
     try {

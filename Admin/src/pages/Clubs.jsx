@@ -12,9 +12,10 @@ const Clubs = () => {
     const navigate = useNavigate();
     const token=localStorage.getItem('token');
     const {Allow}=jwtDecode(token);
-  if(!Allow[4]){
-    navigate('/events');
-  }
+    useEffect(()=>{if(!Allow?.[4]){
+      navigate('/events');
+    }},[]);
+  
     const [socialLinks, setSocialLinks] = useState([
         {
             socialMedia: 'Facebook',

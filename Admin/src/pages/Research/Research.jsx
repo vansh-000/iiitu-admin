@@ -6,6 +6,7 @@ import { API } from '../../utils/apiURl';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import { useEffect } from 'react';
 
 function Research() {
   const refTitle = useRef();
@@ -17,9 +18,12 @@ function Research() {
   const navigate=useNavigate();
   const token=localStorage.getItem('token');
   const {Allow}=jwtDecode(token);
-  if(!Allow[9]){
-    navigate('/recruitment/edit');
-  }
+  useEffect(()=>{
+    if(!Allow?.[9]){
+      navigate('/recruitment/edit');
+    }
+  },[]);
+ 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {

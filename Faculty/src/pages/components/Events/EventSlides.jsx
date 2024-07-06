@@ -11,17 +11,18 @@ import {
 import 'yet-another-react-lightbox/plugins/captions.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import Poster from './Poster';
-import { STATIC_FILES } from '../../utils/apiURl';
+import { STATIC_FILES } from '../../../utils/apiURl';
+// import { STATIC_FILES } from '../../utils/apiURl';
 
-function NewsSlides({data, handleDelete}) {
+function EventSlides({data, handleDelete}) {
   const [index, setIndex] = useState(-1);
 
-  const modifiedNews = data?.map(d => ({
+  const modifiedEvents = data?.map(d => ({
     ...d,
-    src: `${STATIC_FILES}/${d?.image?.replace(/\\/g, '/')}` 
+    src: `${STATIC_FILES}/${d?.image?.replace(/\\/g, '/')}` // Append uploads/server/ to the image path
   }));
 
-  modifiedNews?.forEach(d => {
+  modifiedEvents?.forEach(d => {
     delete d.d;
   });
   return (
@@ -41,10 +42,10 @@ function NewsSlides({data, handleDelete}) {
         index={index}
         open={index >= 0}
         close={() => setIndex(-1)}
-        slides={modifiedNews}
+        slides={modifiedEvents}
       />
     </>
   );
 }
 
-export default NewsSlides;
+export default EventSlides;

@@ -3,10 +3,10 @@ import DefaultLayout from '../layout/DefaultLayout';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import toast ,{Toaster} from 'react-hot-toast';
-import { API } from '../../../Faculty/src/utils/apiURl';
 import TableClub from '../components/Tables/TableClub'
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import { API } from '../utils/apiURl';
 const Clubs = () => {
     const [data, setData] = useState();
     const navigate = useNavigate();

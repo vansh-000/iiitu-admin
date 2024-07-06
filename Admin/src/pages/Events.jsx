@@ -1,5 +1,4 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
-import TableGallery from '../components/Tables/TableGallery';
 import DefaultLayout from '../layout/DefaultLayout';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';

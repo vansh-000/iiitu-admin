@@ -9,12 +9,12 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 const Gallery = () => {
   const [data, setData] = useState();
+    const navigate = useNavigate();
   const token = localStorage.getItem('token');
   if(!token){
     navigate('/signin');
   }
   const { Allow } = jwtDecode(token);
-  const navigate = useNavigate();
   useEffect(() => {
     if (!Allow?.[0]) {
       navigate('/curriculum');

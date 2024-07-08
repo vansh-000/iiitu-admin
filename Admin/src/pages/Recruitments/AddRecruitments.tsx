@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useEffect } from 'react';
 import axios from 'axios';
 import { API } from '../../utils/apiURl';
 import DatePickerOne from '../../components/Forms/DatePicker/DatePickerOne';
@@ -6,8 +6,16 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { jwtDecode } from 'jwt-decode';
 const AddRecruitments = () => {
   const navigate = useNavigate();
+  const token=localStorage.getItem('token');
+  const {Allow}=jwtDecode(token);
+  useEffect(()=>{
+    if(!Allow?.[10]){
+      navigate('/profile');
+    }
+  },[]);
   const startDateRef = React.useRef<HTMLInputElement>(null);
   const endDateRef = React.useRef<HTMLInputElement>(null);
   const refDesc = React.useRef<HTMLInputElement>();

@@ -11,6 +11,8 @@ import TablePublications from '../../components/Tables/TablePublications';
 import TableJournals from '../../components/Tables/TableJournals';
 import TableProjects from '../../components/Tables/TableProjects';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import { useEffect } from 'react';
 
 function FacultyAdd() {
   const refName = useRef('');
@@ -29,6 +31,12 @@ function FacultyAdd() {
   const refResume = useRef(null);
   const refProfileImage = useRef(null);
   const navigate=useNavigate();
+  const token=localStorage.getItem('token');
+  const {Allow}=jwtDecode(token);
+useEffect(()=>{if(!Allow?.[7]){
+  navigate('/tender/add');
+}},[]);
+
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -83,7 +91,7 @@ function FacultyAdd() {
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data', 
           },
         },

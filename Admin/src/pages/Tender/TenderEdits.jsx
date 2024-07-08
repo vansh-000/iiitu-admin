@@ -4,7 +4,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import DefaultLayout from "../../layout/DefaultLayout";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 const TenderEdits = () => {
+  const navigate=useNavigate();
+  const token=localStorage.getItem('token');
+  const {Allow}=jwtDecode(token);
+  useEffect(()=>{if(!Allow?.[8]){
+    navigate('/research/add');
+  }},[]);
   const [data, setData] = useState([]);
   const fetchTender = async () => {
     try {

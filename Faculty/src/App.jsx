@@ -9,6 +9,8 @@ import SignIn from './pages/Authentication/SignInTeach.jsx';
 import Forgot from './pages/Authentication/Forgot.jsx';
 import VerifyOTP from './pages/Authentication/VerifyOTP.jsx';
 import Reset from './pages/Authentication/Reset.jsx';
+import Events from './pages/components/Events/Events.jsx';
+import EventsPage from './pages/components/Events/EventsPage.jsx';
 function App() {
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
@@ -41,6 +43,24 @@ function App() {
             <>
               <PageTitle title="Profile | Faculty Dashboard" />
               <Profile />
+            </>
+          }
+        />
+     <Route
+          path="/events/:id"
+          element={
+            <>
+              <PageTitle title="Events-Page | Events Dashboard" />
+              <EventsPage/>
+            </>
+          }
+        />
+        <Route
+          path="/events"
+          element={
+            <>
+              <PageTitle title="Events | Events Dashboard" />
+              <Events />
             </>
           }
         />

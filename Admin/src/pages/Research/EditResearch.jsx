@@ -4,7 +4,15 @@ import { useEffect, useState } from "react";
 import DefaultLayout from "../../layout/DefaultLayout";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import ResearchCardProvider from "./ResearchCardProvider";
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 const EditResearch = () => {
+  const navigate=useNavigate();
+  const token=localStorage.getItem('token');
+  const {Allow}=jwtDecode(token);
+  useEffect(()=>{if(!Allow?.[9]){
+    navigate('/recruitment/edit');
+  }},[]);
   const [data, setData] = useState([]);
   const fetchResearch = async () => {
     try {

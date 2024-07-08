@@ -20,6 +20,7 @@
     "headlessui": "^0.0.0",
     "jsvectormap": "^1.5.3",
     "jwt-decode": "^4.0.0",
+    "lightbox.js-react": "^1.0.9",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
@@ -27,7 +28,8 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.12.0",
     "react-router-dom": "^6.14.2",
-    "sort-by": "^0.0.2"
+    "sort-by": "^0.0.2",
+    "yet-another-react-lightbox": "^3.21.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.17",

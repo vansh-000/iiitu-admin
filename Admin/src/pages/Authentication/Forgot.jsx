@@ -14,14 +14,15 @@ const ForgotAdmin = () => {
     const email = refEmail.current.value;
     e.preventDefault();
     try {
-      const response = await axios.post(`${API}/faculty/facultyByEmail`, {
+      const response = await axios.post(`${API}/admin/adminByEmail`, {
         email: email,
       });
       if (response.status === 200) {
-        const response2 = await axios.get(`${API}/sendOTP?email=${email}`);
+        const response2 = await axios.get(`${API}/sendOTPAdmin?email=${email}`);
         if (response2.status === 200) {
           toast.success('OTP sent successfully');
         }
+        console.log(email);
         localStorage.setItem('email', email);
         navigate('/verifyOTP');
       }
@@ -49,7 +50,7 @@ const ForgotAdmin = () => {
                   Indian Institute of Information Technology Una
                 </p>
                 <h1 className="text-4xl text-black font-semibold dark:text-white mt-4">
-                  Welcome to Faculty Portal!
+                  Welcome to Admin Portal!
                 </h1>
               </div>
             </div>

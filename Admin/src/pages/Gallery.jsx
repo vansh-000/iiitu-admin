@@ -6,12 +6,20 @@ import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import { useNavigate } from 'react-router-dom';
-
+import { jwtDecode } from 'jwt-decode';
 const Gallery = () => {
   const [data, setData] = useState();
   const token = localStorage.getItem('token');
+  if(!token){
+    navigate('/signin');
+  }
+  const { Allow } = jwtDecode(token);
   const navigate = useNavigate();
-  
+  useEffect(() => {
+    if (!Allow?.[0]) {
+      navigate('/curriculum');
+    }
+  }, []);
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/image`);

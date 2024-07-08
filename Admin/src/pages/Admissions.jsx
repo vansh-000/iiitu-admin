@@ -7,12 +7,19 @@ import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import TableAdmissions from '../components/Tables/TableAdmissions';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 const Admissions = () => {
   const [data, setData] = useState();
   const [selectedType, setSelectedType] = useState('');
   const [isOptionSelected, setIsOptionSelected] = useState(false);
  const navigate=useNavigate();
+ const token=localStorage.getItem('token');
+ const {Allow}=jwtDecode(token);
+ useEffect(()=>{if(!Allow?.[6]){
+  navigate('/faculty/add');
+}},[]);
+    
   const changeTextColor = () => {
     setIsOptionSelected(true);
   };
@@ -63,7 +70,7 @@ const Admissions = () => {
       formData.append("type", type);
       await axios.post(`${API}/admission`, formData, {
         headers: {
-          Authorization:`Brear ${localStorage.getItem('token')}`,
+          Authorization:`Brear ${token}`,
           "Content-Type": "multipart/form-data"
         }
       });
@@ -82,7 +89,7 @@ const Admissions = () => {
     try {
       await axios.delete(`${API}/admission/${id}`,{
         headers:{
-          Authorization:`Brear ${localStorage.getItem('token')}`
+          Authorization:`Brear ${token}`
         }
       });
       toast.success("Data Deleted!");

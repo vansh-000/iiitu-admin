@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
-import SignIn from './pages/Authentication/SignIn';
-import SignUp from './pages/Authentication/SignUp';
+// import SignIn from './pages/Authentication/SignIn';
+// import SignUp from './pages/Authentication/SignUp';
 import Profile from './pages/Profile';
-import Settings from './pages/Settings';
+// import Settings from './pages/Settings';
 import Gallery from './pages/Gallery';
 import News from './pages/News';
 import Events from './pages/Events';
@@ -26,8 +26,10 @@ import EventsPage from './pages/EventsPage';
 import CurriculumPage from './pages/CurriculumPage.jsx';
 import Research from './pages/Research/Research.jsx';
 import EditResearch from './pages/Research/EditResearch.jsx';
-import Forgot from './pages/Authentication/Forgot';
+// import Forgot from './pages/Authentication/Forgot';
 import ForgotAdmin from './pages/Authentication/Forgot';
+import VerifyOTP from './pages/Authentication/VerifyOTP.jsx';
+import Reset from './pages/Authentication/Reset.jsx';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -263,6 +265,22 @@ function App() {
             </>
           }
         />
+        <Route
+          path='/verifyOTP'
+          element={
+            <>
+              <PageTitle title='Verify OTP | Faculty Login' />
+              <VerifyOTP />
+            </>
+          } />
+        <Route
+          path='/reset'
+          element={
+            <>
+              <PageTitle title='Reset Password | Faculty Login' />
+              <Reset/>
+            </>
+          } />
       </Routes>
     </>
   );

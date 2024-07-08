@@ -7,11 +7,17 @@ import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import TableNews from '../components/Tables/TableNews';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import TableNews2 from '../components/Tables/TableNews2';
 
 const News = () => {
   const [data, setData] = useState();
   const token = localStorage.getItem('token');
   const navigate=useNavigate();
+  const {Allow}=jwtDecode(token);
+  useEffect(()=>{if(!Allow?.[2]){
+    navigate('/printmedia');
+  }},[]);
   const refImg = useRef();
   const refDoc = useRef();
   const fetchData = async () => {
@@ -146,7 +152,7 @@ const News = () => {
         </button>
       </form>
       <div className="flex flex-col gap-10 mt-5">
-        <TableNews data={data} handleDelete={handleDelete} />
+        <TableNews2 data={data} handleDelete={handleDelete} />
       </div>
     </DefaultLayout>
   );

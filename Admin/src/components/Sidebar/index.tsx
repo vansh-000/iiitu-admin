@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import { FaBookOpen } from 'react-icons/fa';
 import { FaRegNewspaper } from 'react-icons/fa6';
@@ -18,6 +18,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const location = useLocation();
   const { pathname } = location;
   const token=localStorage.getItem('token');
+  const navigate=useNavigate();
+  if(!token){
+    return navigate('/singin');
+  }
   const {Allow}=jwtDecode(token);
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);

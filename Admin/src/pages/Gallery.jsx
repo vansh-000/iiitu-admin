@@ -7,17 +7,15 @@ import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+
 const Gallery = () => {
   const [data, setData] = useState();
-    const navigate = useNavigate();
-  const token = localStorage.getItem('token');
   const navigate = useNavigate();
-  
-  
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
-    if(!token){
-      return navigate('/signin');  
+    if (!token) {
+      return navigate('/signin');
     }
     const { Allow } = jwtDecode(token);
     if (!Allow?.[0]) {

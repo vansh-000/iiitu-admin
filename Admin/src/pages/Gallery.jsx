@@ -11,11 +11,15 @@ const Gallery = () => {
   const [data, setData] = useState();
     const navigate = useNavigate();
   const token = localStorage.getItem('token');
-  if(!token){
-    navigate('/signin');
-  }
-  const { Allow } = jwtDecode(token);
+  const navigate = useNavigate();
+  
+  
+
   useEffect(() => {
+    if(!token){
+      return navigate('/signin');  
+    }
+    const { Allow } = jwtDecode(token);
     if (!Allow?.[0]) {
       navigate('/curriculum');
     }

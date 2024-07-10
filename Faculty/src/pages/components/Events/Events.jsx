@@ -81,7 +81,7 @@ const Events = () => {
         }
         catch (err) {
             if (err.response?.status === 401) {
-                return navigate('/signin');
+                return navigate('/');
               }
               toast.error(`Error: ${err}`);
         }
@@ -99,7 +99,7 @@ const Events = () => {
         }
         catch (err) {
             if (err.response.status === 401) {
-                return navigate('/signin');
+                return navigate('/');
               }
               toast.error(`Error: ${err}`);
         }

@@ -52,7 +52,7 @@ const Header = (props: {
           } */}
           {/* <!-- Hamburger Toggle BTN --> */}
 
-          <Link className="block flex-shrink-0 lg:hidden" to="/">
+          <Link className="block flex-shrink-0 lg:hidden" to="/dashboard">
             <img className="w-10" src="/iiitu-logo.png" alt="Logo" />
           </Link>
         </div>

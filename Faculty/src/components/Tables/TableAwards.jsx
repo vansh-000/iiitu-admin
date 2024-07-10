@@ -41,7 +41,7 @@ const TableAwards = ({ edit, Award, setAward }) => {
           </tbody>
         </table>
         {edit && (
-          <button onClick={handleAddAward}>Add Award</button>
+          <button className="mt-2" onClick={handleAddAward}>Add Award</button>
         )}
       </div>
     </div>

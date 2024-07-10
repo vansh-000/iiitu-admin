@@ -24,16 +24,17 @@ const TableJournals = ({edit,Journal,setJournal}) => {
               <tr key={index}>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
-                    {edit?(
-                       <input
-                       type="text"
-                       value={jor}
-                       placeholder='Journal'
-                       className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                       onChange={(e) => handleEdit(index, e.target.value)}
-                     />
-                    ):(jor)}
-                    
+                    {edit ? (
+                      <input
+                        type="text"
+                        value={jor}
+                        placeholder="Journal"
+                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                        onChange={(e) => handleEdit(index, e.target.value)}
+                      />
+                    ) : (
+                      jor
+                    )}
                   </h5>
                 </td>
               </tr>
@@ -41,7 +42,9 @@ const TableJournals = ({edit,Journal,setJournal}) => {
           </tbody>
         </table>
         {edit && (
-          <button onClick={handleAddJournal}>Add Journal</button>
+          <button className="mt-2" onClick={handleAddJournal}>
+            Add Journal
+          </button>
         )}
       </div>
     </div>

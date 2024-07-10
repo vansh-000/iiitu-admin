@@ -45,7 +45,7 @@ const TableResearch = ({ edit, Research, setResearch }) => {
           </tbody>
         </table>
         {edit && (
-          <button onClick={handleAddResearch}>Add Research</button>
+          <button className="mt-2" onClick={handleAddResearch}>Add Research</button>
         )}
       </div>
     </div>

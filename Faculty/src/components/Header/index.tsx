@@ -13,7 +13,7 @@ const Header = (props: {
       <div className="flex flex-grow items-center justify-between lg:justify-end px-4 py-4 shadow-2 md:px-6 2xl:px-11">
         <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
           {/* <!-- Hamburger Toggle BTN --> */}
-          {userData &&
+          {/* {userData &&
             <button
               aria-controls="sidebar"
               onClick={(e) => {
@@ -49,10 +49,10 @@ const Header = (props: {
                 </span>
               </span>
             </button>
-          }
+          } */}
           {/* <!-- Hamburger Toggle BTN --> */}
 
-          <Link className="block flex-shrink-0 lg:hidden" to="/">
+          <Link className="block flex-shrink-0 lg:hidden" to="/dashboard">
             <img className="w-10" src="/iiitu-logo.png" alt="Logo" />
           </Link>
         </div>

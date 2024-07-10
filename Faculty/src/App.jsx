@@ -29,6 +29,15 @@ function App() {
     <>
       <Routes>
         <Route
+          path="/"
+          element={
+            <>
+              <PageTitle title="Authentication | Faculty Login" />
+              <SignIn />
+            </>
+          }
+        />
+        <Route
           path="/dashboard"
           element={
             <>
@@ -65,37 +74,32 @@ function App() {
           }
         /> */}
         <Route
-          path='/signin'
+          path="/forgot"
           element={
             <>
-              <PageTitle title='Authentication | Faculty Login' />
-              <SignIn />
-            </>
-          } />
-        <Route
-          path='/forgot'
-          element={
-            <>
-              <PageTitle title='Reset Password | Faculty Login' />
+              <PageTitle title="Reset Password | Faculty Login" />
               <Forgot />
             </>
-          } />
+          }
+        />
         <Route
-          path='/verifyOTP'
+          path="/verifyOTP"
           element={
             <>
-              <PageTitle title='Verify OTP | Faculty Login' />
+              <PageTitle title="Verify OTP | Faculty Login" />
               <VerifyOTP />
             </>
-          } />
+          }
+        />
         <Route
-          path='/reset'
+          path="/reset"
           element={
             <>
-              <PageTitle title='Reset Password | Faculty Login' />
+              <PageTitle title="Reset Password | Faculty Login" />
               <Reset />
             </>
-          } />
+          }
+        />
       </Routes>
     </>
   );

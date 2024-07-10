@@ -28,12 +28,13 @@ const TableProjects = ({ edit, Project, setProject }) => {
                       <input
                         type="text"
                         value={pro}
-                        placeholder='Project'
+                        placeholder="Project"
                         className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         onChange={(e) => handleEdit(index, e.target.value)}
                       />
-                    ) : (pro)}
-                    
+                    ) : (
+                      pro
+                    )}
                   </h5>
                 </td>
               </tr>
@@ -41,7 +42,9 @@ const TableProjects = ({ edit, Project, setProject }) => {
           </tbody>
         </table>
         {edit && (
-          <button onClick={handleAddProject}>Add Project</button>
+          <button className="mt-2" onClick={handleAddProject}>
+            Add Project
+          </button>
         )}
       </div>
     </div>

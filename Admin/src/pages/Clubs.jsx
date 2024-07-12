@@ -11,8 +11,13 @@ const Clubs = () => {
     const [data, setData] = useState();
     const navigate = useNavigate();
     const token=localStorage.getItem('token');
-    const {Allow}=jwtDecode(token);
-    useEffect(()=>{if(!Allow?.[4]){
+    
+    useEffect(()=>{
+      if (!token) {
+        return navigate('/signin');
+      }
+      const {Allow}=jwtDecode(token);
+      if(!Allow?.[4]){
       navigate('/events');
     }},[]);
   

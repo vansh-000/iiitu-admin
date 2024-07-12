@@ -9,8 +9,11 @@ import { jwtDecode } from "jwt-decode";
 const EditResearch = () => {
   const navigate=useNavigate();
   const token=localStorage.getItem('token');
-  const {Allow}=jwtDecode(token);
-  useEffect(()=>{if(!Allow?.[9]){
+  useEffect(()=>{
+    if(!token){
+      return navigate('/signin');}
+    const {Allow}=jwtDecode(token);
+    if(!Allow?.[9]){
     navigate('/recruitment/edit');
   }},[]);
   const [data, setData] = useState([]);

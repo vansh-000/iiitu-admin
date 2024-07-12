@@ -12,8 +12,12 @@ const PrintMedia = () => {
   const [data, setData] = useState();
   const token=localStorage.getItem('token');
   const navigate=useNavigate();
-  const {Allow}=jwtDecode(token);
-  useEffect(()=>{if(!Allow?.[3]){
+  useEffect(()=>{
+    if (!token) {
+      navigate('/signin');
+    }
+    const {Allow}=jwtDecode(token);
+    if(!Allow?.[3]){
     navigate('/clubs');
   }},[])
   const fetchData = async () => {

@@ -13,11 +13,16 @@ import TableNews2 from '../components/Tables/TableNews2';
 const News = () => {
   const [data, setData] = useState();
   const token = localStorage.getItem('token');
-  const navigate=useNavigate();
-  const {Allow}=jwtDecode(token);
-  useEffect(()=>{if(!Allow?.[2]){
-    navigate('/printmedia');
-  }},[]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!token) {
+      return navigate('/signin');
+    }
+    const { Allow } = jwtDecode(token);
+    if (!Allow?.[2]) {
+      navigate('/printmedia');
+    }
+  }, []);
   const refImg = useRef();
   const refDoc = useRef();
   const fetchData = async () => {
@@ -41,38 +46,37 @@ const News = () => {
     const description = descriptionRef.current.value;
 
     try {
-        if (!refDoc.current?.files[0] && !refImg.current?.files[0]) {
-            return toast.error("Please add at least an image or document");
-        }
+      if (!refDoc.current?.files[0] && !refImg.current?.files[0]) {
+        return toast.error('Please add at least an image or document');
+      }
 
-        let formData = new FormData();
-        formData.append("heading", heading);
-        formData.append("description", description);
+      let formData = new FormData();
+      formData.append('heading', heading);
+      formData.append('description', description);
 
-        if (refDoc.current?.files[0]) {
-            formData.append("doc", refDoc.current.files[0]);
-        }
-        if (refImg.current?.files[0]) {
-            formData.append("image", refImg.current.files[0]);
-        }
+      if (refDoc.current?.files[0]) {
+        formData.append('doc', refDoc.current.files[0]);
+      }
+      if (refImg.current?.files[0]) {
+        formData.append('image', refImg.current.files[0]);
+      }
 
-        await axios.post(`${API}/news`, formData, {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "multipart/form-data"
-            }
-        });
+      await axios.post(`${API}/news`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
-        toast.success("News Uploaded!");
-        fetchData();
+      toast.success('News Uploaded!');
+      fetchData();
     } catch (err) {
-      if(err.response.status===401){
-        return navigate('/signin')
+      if (err.response.status === 401) {
+        return navigate('/signin');
       }
       toast.error(`Error: ${err}`);
     }
-};
-
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -84,8 +88,8 @@ const News = () => {
       toast.success('News Deleted!');
       fetchData();
     } catch (err) {
-      if(err.response.status===401){
-        return navigate('/signin')
+      if (err.response.status === 401) {
+        return navigate('/signin');
       }
       toast.error(`Error: ${err}`);
     }

@@ -20,6 +20,7 @@ import TableProjects from '../components/Tables/TableProjects';
 const Profile = () => {
   const nevigat = useNavigate();
   const [faculty, setFaculty] = useState({});
+  const [clubName,setClubName]=useState();
   const [editable, setEditable] = useState(false);
   const [profileImage, setProfileImage] = useState('');
   const [education, setEducation] = useState([]);
@@ -73,6 +74,7 @@ const Profile = () => {
   const fetchClub = async () => {
     try {
         const response = await axios.get(`${API}/clubs/faculty/${userData?.id}`);
+        setClubName(response.data.data.Name);
         localStorage.setItem('ClubName',response.data.data._id);
     }
     catch (err) {
@@ -229,7 +231,7 @@ const Profile = () => {
           </div>
           <div className="mt-14">
             {ClubName&&<button onClick={handleClubEvents} className="cursor-pointer mb-4 bg-gray-800 px-3 py-2 bg-green-600 rounded-md text-white tracking-wider shadow-xl animate-bounce hover:animate-none">
-              Club Events
+              {clubName} Events
             </button>}
             <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
               {editable ? (

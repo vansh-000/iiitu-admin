@@ -12,9 +12,11 @@ const Curriculum = () => {
   const [data, setData] = useState();
   const token=localStorage.getItem('token');
   const navigate=useNavigate();
-  const {Allow}=jwtDecode(token);
-  // console.log(Allow`);
   useEffect(()=>{
+    if (!token) {
+      return navigate('/signin');
+    }
+    const {Allow}=jwtDecode(token);
   if(!Allow?.[1]){
     navigate('/news');
   }},[])

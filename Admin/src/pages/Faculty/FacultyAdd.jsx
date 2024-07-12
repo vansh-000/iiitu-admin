@@ -32,8 +32,11 @@ function FacultyAdd() {
   const refProfileImage = useRef(null);
   const navigate=useNavigate();
   const token=localStorage.getItem('token');
+useEffect(()=>{
+  if(!token){
+    return navigate('/signin');}
   const {Allow}=jwtDecode(token);
-useEffect(()=>{if(!Allow?.[7]){
+  if(!Allow?.[7]){
   navigate('/tender/add');
 }},[]);
 

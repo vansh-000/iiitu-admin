@@ -15,8 +15,13 @@ const Admissions = () => {
   const [isOptionSelected, setIsOptionSelected] = useState(false);
  const navigate=useNavigate();
  const token=localStorage.getItem('token');
- const {Allow}=jwtDecode(token);
- useEffect(()=>{if(!Allow?.[6]){
+ 
+ useEffect(()=>{
+  if(!token){
+    return navigate('/signin');
+  }
+  const {Allow}=jwtDecode(token);
+  if(!Allow?.[6]){
   navigate('/faculty/add');
 }},[]);
     

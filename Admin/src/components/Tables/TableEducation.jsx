@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 const TableEducation = ({ Education,setEducation }) => {
-    console.log(Education);
   const handleEdit = (index, field, value) => {
     const updatedEducation = [...Education];
     updatedEducation[index][field] = value;

@@ -17,8 +17,10 @@ function Research() {
   const refUniversityLink = useRef();
   const navigate=useNavigate();
   const token=localStorage.getItem('token');
-  const {Allow}=jwtDecode(token);
   useEffect(()=>{
+    if(!token){
+      return navigate('/signin');}
+    const {Allow}=jwtDecode(token);
     if(!Allow?.[9]){
       navigate('/recruitment/edit');
     }

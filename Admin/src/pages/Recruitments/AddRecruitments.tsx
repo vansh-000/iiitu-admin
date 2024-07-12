@@ -10,8 +10,11 @@ import { jwtDecode } from 'jwt-decode';
 const AddRecruitments = () => {
   const navigate = useNavigate();
   const token=localStorage.getItem('token');
-  const {Allow}=jwtDecode(token);
+  
   useEffect(()=>{
+    if(!token){
+      return navigate("/signin");}
+    const {Allow}=jwtDecode(token);
     if(!Allow?.[10]){
       navigate('/profile');
     }

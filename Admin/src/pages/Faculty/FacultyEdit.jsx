@@ -11,8 +11,11 @@ const FacultyEdit = () => {
   const [data, setData] = React.useState([]);
   const navigate=useNavigate();
   const token=localStorage.getItem('token');
-  const {Allow}=jwtDecode(token);
-  useEffect(()=>{if(!Allow?.[7]){
+  useEffect(()=>{
+    if(!token){
+      return navigate('/signin');}
+    const {Allow}=jwtDecode(token);
+    if(!Allow?.[7]){
     navigate('/tender/add');
   }},[]);
   const fetchFaculty = async () => {

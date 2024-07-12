@@ -16,8 +16,11 @@ function Tender(): JSX.Element {
   const refAnnexure = React.useRef<HTMLInputElement>();
   const navigate = useNavigate();
   const token=localStorage.getItem('token');
-  const {Allow}=jwtDecode(token);
   useEffect(()=>{
+    if(!token){
+      return navigate('/signin');
+    }
+    const {Allow}=jwtDecode(token);
     if(!Allow?.[8]){
       navigate('/research/add');
     }

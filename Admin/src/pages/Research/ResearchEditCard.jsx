@@ -1,11 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { API, STATIC_FILES } from '../../utils/apiURl';
+import { API } from '../../utils/apiURl';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
 const ResearchEditCard = ({ research, fetchData, index }) => {
-    console.log(research.type);
     const [editable, setEditable] = useState(false);
     const [editedData, setEditedData] = useState({});
     const [selectedType, setSelectedType] = useState(research.type);
@@ -206,12 +205,7 @@ const ResearchEditCard = ({ research, fetchData, index }) => {
           </>
         ) : (
           <Link
-            to={
-              `${STATIC_FILES}/${research.file.replace(
-                /\\/g,
-                '/',
-              )}` || research.file
-            }
+            to={research.file}
             className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
           >
             File
@@ -238,12 +232,7 @@ const ResearchEditCard = ({ research, fetchData, index }) => {
           </>
         ) : (
           <img
-            src={
-              `${STATIC_FILES}/${research.universityImage.replace(
-                /\\/g,
-                '/',
-              )}` || research.universityImage
-            }
+            src={research.universityImage }
             alt={research.universityImage}
             className="h-[25%] w-[25%] inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
           />

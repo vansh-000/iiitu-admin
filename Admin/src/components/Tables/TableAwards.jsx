@@ -5,7 +5,8 @@ const TableAwards = ({ Award, setAward }) => {
     setAward(updatedAward);
   };
 
-  const handleAddAward = () => {
+  const handleAddAward = (e) => {
+    e.preventDefault();
     setAward([...Award, ""]);
   };
   return (

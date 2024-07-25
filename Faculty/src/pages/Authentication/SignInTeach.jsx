@@ -6,8 +6,23 @@ import axios from "axios";
 import { API } from '../../utils/apiURl';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-
+import { useEffect } from 'react';
+import {jwtDecode} from "jwt-decode"
 const SignIn = () => {
+  useEffect(()=>{
+    const token=localStorage.getItem('token');
+    if(!token){
+      return;
+    }
+    const {exp} = jwtDecode(token);
+    const time=Date.now();
+    if(time>=exp){
+      localStorage.removeItem('token');
+      localStorage.removeItem('user')}
+      else{
+        navigator('/dashboard');
+      }
+  })
   const [loading, setLoading] = useState(false);
 
   const refEmail = useRef();

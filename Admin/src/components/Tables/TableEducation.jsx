@@ -7,7 +7,8 @@ const TableEducation = ({ Education,setEducation }) => {
     setEducation(updatedEducation);
   };
 
-  const handleAddEducation = () => {
+  const handleAddEducation = (e) => {
+    e.preventDefault();
     setEducation([...Education, { dateOfStart: '', dateOfEnd: '', description: '' }]);
   };
 
@@ -58,7 +59,7 @@ const TableEducation = ({ Education,setEducation }) => {
           </tbody>
         </table>
         
-          <button onClick={handleAddEducation}>Add Education</button>
+          <button onClick={handleAddEducation} >Add Education</button>
        
         {/* <button onClick={toggleEditMode}>{edit ? 'Save' : 'Edit'}</button> */}
       </div>

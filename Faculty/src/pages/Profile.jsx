@@ -179,13 +179,7 @@ const Profile = () => {
             <div className="relative drop-shadow-2">
               {faculty && faculty.profileImage && (
                 <img
-                  src={
-                    profileImage ||
-                    `${STATIC_FILES}/${faculty.profileImage.replace(
-                      /\\/g,
-                      '/',
-                    )}`
-                  }
+                  src={faculty.profileImage}
                   className="w-[200px]"
                   alt="profile"
                 />
@@ -259,7 +253,7 @@ const Profile = () => {
             ) : (
               faculty.resume && (
                 <Link
-                  to={`${STATIC_FILES}/${faculty.resume?.replace(/\\/g, '/')}`}
+                  to={faculty.resume}
                   className="flex flex-col items-center justify-center gap-1 text-black dark:text-white border-r  px-4 dark:border-stroke border-strokedark xsm:flex-row"
                 >
                   Resume

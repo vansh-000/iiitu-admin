@@ -37,10 +37,7 @@ function TableNews2({data, handleDelete}) {
                       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                         <div className="flex items-center space-x-3.5">
                           {item?.image&&<Link
-                            to={`${STATIC_FILES}/${item.image?.replace(
-                              /\\/g,
-                              '/',
-                            )}`}
+                            to={item.image}
                             className="hover:text-primary"
                           >
                             <svg
@@ -62,10 +59,7 @@ function TableNews2({data, handleDelete}) {
                             </svg>
                           </Link>}
                           {item?.doc&&<Link
-                            to={`${STATIC_FILES}/${item.doc?.replace(
-                              /\\/g,
-                              '/',
-                            )}`}
+                            to={item.doc}
                             className="hover:text-primary"
                           >
                             <BsFiletypeDoc/>

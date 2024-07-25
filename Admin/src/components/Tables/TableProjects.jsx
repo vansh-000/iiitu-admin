@@ -5,7 +5,8 @@ const TableProjects = ({ Project, setProject }) => {
     setProject(updatedProject);
   };
 
-  const handleAddProject = () => {
+  const handleAddProject = (e) => {
+    e.preventDefault();
     setProject([...Project, ""]);
   };
   return (

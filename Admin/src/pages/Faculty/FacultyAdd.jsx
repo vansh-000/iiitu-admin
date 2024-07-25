@@ -123,7 +123,7 @@ useEffect(()=>{
       <DefaultLayout>
         <Breadcrumb pageName="Faculty Registration" />
         <h2>Faculty Registration</h2>
-        <form onSubmit={handleOnSubmit}>
+        <form onSubmit={(e)=>handleOnSubmit(e)}>
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="flex flex-col gap-5.5 p-6.5">
               <div>

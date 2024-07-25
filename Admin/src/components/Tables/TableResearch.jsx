@@ -7,7 +7,8 @@ const TableResearch = ({Research, setResearch }) => {
     setResearch(updatedResearch);
   };
 
-  const handleAddResearch = () => {
+  const handleAddResearch = (e) => {
+    e.preventDefault();
     setResearch([...Research, ""]);
   };
 

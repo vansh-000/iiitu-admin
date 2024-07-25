@@ -5,7 +5,7 @@ import axios from 'axios';
 import DatePickerOne from '../../components/Forms/DatePicker/DatePickerOne';
 import toast from 'react-hot-toast';
 
-const REditCard = ({ recruitment, fetchData, index }) => {
+const REditCard = ({ recruitment, fetchData  }) => {
   const [editable, setEditable] = useState(false);
   const [editedData, setEditedData] = useState({});
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const REditCard = ({ recruitment, fetchData, index }) => {
     return `${formattedDay}-${formattedMonth}-${year}`;
   };
 
-  const handleEdit = (recruitment, index) => {
+  const handleEdit = (recruitment) => {
     setEditedData(recruitment);
     setEditable(true);
   };
@@ -178,12 +178,7 @@ const REditCard = ({ recruitment, fetchData, index }) => {
           </>
         ) : (
           <Link
-            to={
-              `${STATIC_FILES}/${recruitment.RecruitmentDoc.replace(
-                /\\/g,
-                '/',
-              )}` || recruitment.RecruitmentDoc
-            }
+            to={ recruitment.RecruitmentDoc }
             className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
           >
             Recruitment Doc
@@ -192,7 +187,7 @@ const REditCard = ({ recruitment, fetchData, index }) => {
 
         <button
           className="inline-flex items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-          onClick={editable ? handleSave : () => handleEdit(recruitment, index)}
+          onClick={editable ? handleSave : () => handleEdit(recruitment)}
         >
           {editable ? 'Save' : 'Edit'}
         </button>

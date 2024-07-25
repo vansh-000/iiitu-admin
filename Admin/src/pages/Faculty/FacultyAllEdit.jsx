@@ -42,9 +42,7 @@ const FacultyAllEdit = () => {
       setProject(response.data.Projects);
       setPublication(response.data.Publications);
       setResearch(response.data.Research);
-      setProfileIMG(
-        `${STATIC_FILES}/${response.data.profileImage.replace(/\\/g, '/')}`,
-      );
+      setProfileIMG(response.data.profileImage);
     } catch (err) {
       console.error('error in dedicated faculty', err);
     }

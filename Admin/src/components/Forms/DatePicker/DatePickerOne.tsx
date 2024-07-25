@@ -28,6 +28,7 @@ const DatePickerOne: React.FC<DatePickerProps> = ({ refDate }) => {
           className="form-datepicker w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
           placeholder="mm/dd/yyyy"
           data-class="flatpickr-right"
+          required="required"
           ref={refDate}
           
         />

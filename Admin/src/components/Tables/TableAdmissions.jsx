@@ -50,7 +50,7 @@ const TableAdmissions = ({ data, handleDelete }) => {
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
-                    <Link to={`${STATIC_FILES}/${item.doc?.replace(/\\/g, '/')}`} className="hover:text-primary">
+                    <Link to={item.doc} className="hover:text-primary">
                       <svg
                         className="fill-current"
                         width="18"

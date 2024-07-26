@@ -121,6 +121,7 @@ const Admissions = () => {
             name="title"
             type="text"
             ref={titleRef}
+            required="required"
             placeholder="Title"
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
@@ -132,6 +133,7 @@ const Admissions = () => {
           <input
             name="description"
             ref={descriptionRef}
+            required="required"
             type="text"
             placeholder="Description"
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -145,6 +147,7 @@ const Admissions = () => {
             name="program"
             ref={programRef}
             type="text"
+            required="required"
             placeholder="Program (e.g. UG, PG, PHD)"
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
@@ -157,6 +160,7 @@ const Admissions = () => {
             name="batch"
             ref={batchRef}
             type="text"
+            required="required"
             placeholder="Batch (e.g. 2022-26)"
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
@@ -168,6 +172,7 @@ const Admissions = () => {
           <input
             name="year"
             ref={yearRef}
+            required="required"
             type="text"
             placeholder="Year (e.g. 2024)"
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -182,6 +187,7 @@ const Admissions = () => {
             <div className="relative z-20 bg-white dark:bg-form-input">
               <select
                 value={selectedType}
+                required="required"
                 onChange={(e) => {
                   setSelectedType(e.target.value);
                   changeTextColor();
@@ -250,12 +256,13 @@ const Admissions = () => {
           </label>
           <input
             type="file"
+            required="required"
             className="w-1/2 cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
             multiple
             name="doc"
             onChange={handleFileChange}
             accept=".pdf"
-            required
+     
           />
         </div>
         <button

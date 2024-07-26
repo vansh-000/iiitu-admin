@@ -15,10 +15,10 @@ import { STATIC_FILES } from '../../utils/apiURl';
 
 function GallerySlides({images, handleDelete}) {
   const [index, setIndex] = useState(-1);
-
+console.log(images);
   const modifiedImages = images.map(image => ({
     ...image,
-    src: `${STATIC_FILES}/${image.image?.replace(/\\/g, '/')}` // Append uploads/server/ to the image path
+    src: image.image 
   }));
 
   modifiedImages.forEach(image => {

@@ -5,7 +5,8 @@ const TablePublications = ({Publication,setPublication}) => {
     setPublication(updatedPublication);
   };
 
-  const handleAddPublication = () => {
+  const handleAddPublication = (e) => {
+    e.preventDefault();
     setPublication([...Publication, ""]);
   };
   return (

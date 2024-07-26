@@ -20,7 +20,7 @@ const Poster = (props) => {
                             onClick={() => handleClickImage(index)}
                             className={styles.image}
                         >
-                            <img src={`${STATIC_FILES}/${slide.image?.replace(/\\/g, '/')}`} alt="" />
+                            <img src={slide.image} alt="" />
                         </div>
                         <p className={styles.event}>{slide.name}</p>
                         <div className="flex items-center justify-center -mt-12">

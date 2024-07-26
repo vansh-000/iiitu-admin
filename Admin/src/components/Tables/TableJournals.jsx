@@ -5,7 +5,8 @@ const TableJournals = ({ Journal, setJournal }) => {
     setJournal(updatedJournal);
   };
 
-  const handleAddJournal = () => {
+  const handleAddJournal = (e) => {
+    e.preventDefault();
     setJournal([...Journal, '']);
   };
   return (

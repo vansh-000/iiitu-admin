@@ -4,10 +4,8 @@ import { MdDelete } from "react-icons/md";
 import {NavLink} from "react-router-dom";
 import { FaFacebookF, FaTwitter, FaInstagramSquare, FaLinkedinIn, FaGithub, FaYoutube } from "react-icons/fa";
 const ClubsCard = (props) => {
-    const { data, onClick, handleDelete } = props;
-    const handleClickImage = (index) => {
-        onClick(index);
-    };
+    const { data, handleDelete } = props;
+    
     return (
         <div className={styles.container} >
             {data &&
@@ -21,7 +19,7 @@ const ClubsCard = (props) => {
                                     <p>{slide.Description.length>70?slide.Description.substr(0,70)+"...":slide.Description}</p>
                                 </div>
                                 <div className={styles.imgcont}>
-                                    <img className={styles.img} src={`${STATIC_FILES}/${slide?.Logo?.replace(/\\/g, '/')}`} alt={`${slide.Name} Image`} />
+                                    <img className={styles.img} src={slide?.Logo} alt={`${slide.Name} Image`} />
                                 </div>
                             </div>
                             <div className={styles.contactscont}>

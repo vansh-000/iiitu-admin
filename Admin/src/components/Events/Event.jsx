@@ -18,7 +18,7 @@ function EventSlides({data, handleDelete}) {
 
   const modifiedEvents = data?.map(d => ({
     ...d,
-    src: `${STATIC_FILES}/${d?.image?.replace(/\\/g, '/')}` // Append uploads/server/ to the image path
+    src: d?.image
   }));
 
   modifiedEvents?.forEach(d => {

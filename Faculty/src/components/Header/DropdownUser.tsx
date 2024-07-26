@@ -60,9 +60,7 @@ const DropdownUser = () => {
             </span>
 
             <span className="h-12 w-12 rounded-full">
-              {userData && <img className="h-12 w-12 rounded-full" src={`${STATIC_FILES}/${userData?.profileImg.replace(
-                /\\/g,
-                '/')}`} alt="User" />}
+              {userData && <img className="h-12 w-12 rounded-full" src={userData?.profileImg} alt="User" />}
             </span>
 
             <svg

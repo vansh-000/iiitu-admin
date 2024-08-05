@@ -1,3 +1,5 @@
+import { IoMdAddCircleOutline } from 'react-icons/io';
+
 const TableAwards = ({ edit, Award, setAward }) => {
   const handleEdit = (index, value) => {
     const updatedAward = [...Award];
@@ -6,7 +8,7 @@ const TableAwards = ({ edit, Award, setAward }) => {
   };
 
   const handleAddAward = () => {
-    setAward([...Award, ""]);
+    setAward([...Award, '']);
   };
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -28,12 +30,13 @@ const TableAwards = ({ edit, Award, setAward }) => {
                       <input
                         type="text"
                         value={awd}
-                        placeholder='Awards and Honours'
+                        placeholder="Awards and Honours"
                         className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         onChange={(e) => handleEdit(index, e.target.value)}
                       />
-                    ) : (awd)}
-                    
+                    ) : (
+                      awd
+                    )}
                   </h5>
                 </td>
               </tr>
@@ -41,7 +44,12 @@ const TableAwards = ({ edit, Award, setAward }) => {
           </tbody>
         </table>
         {edit && (
-          <button className="mt-2" onClick={handleAddAward}>Add Award</button>
+          <button
+            className="mt-2 flex flex-row items-center gap-1 bg-primary text-white rounded-md px-4 py-2"
+            onClick={handleAddAward}
+          >
+            Add Award <IoMdAddCircleOutline />
+          </button>
         )}
       </div>
     </div>

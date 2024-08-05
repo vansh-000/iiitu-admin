@@ -12,18 +12,21 @@ const Events = () => {
   const [data, setData] = useState();
   const [club, setclub] = useState([]);
   const [selectedClub, setSelectedClub] = useState('');
+  const [selectedDepartment, setSelectedDepartment] = useState('');
   const [isOptionSelected, setIsOptionSelected] = useState(false);
+  const [isLatest, setIsLatest] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
-    useEffect(()=>{
-      if (!token) {
-        return navigate('/signin');
-      }
-      const {Allow}=jwtDecode(token);
-      if(!Allow?.[5]){
-        navigate('/admissions')
-    }},[])
-    
+  useEffect(() => {
+    if (!token) {
+      return navigate('/signin');
+    }
+    const { Allow } = jwtDecode(token);
+    if (!Allow?.[5]) {
+      navigate('/admissions');
+    }
+  }, []);
+
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/event`);
@@ -47,22 +50,25 @@ const Events = () => {
   }, []);
   const [images, setImages] = useState([]);
   const descriptionRef = useRef();
-  const dateRef = useRef();
+  const startDateRef = useRef();
+  const endDateRef = useRef();
   const nameRef = useRef();
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
     setImages(files);
   };
   const handleEmpty = () => {
-    dateRef.current.value = '';
+    startDateRef.current.value = '';
+    endDateRef.current.value = '';
     nameRef.current.value = '';
     descriptionRef.current.value = '';
     setImages([]);
   };
-  
+
   const handleAdd = async (e) => {
     e.preventDefault();
-    const date = dateRef.current.value;
+    const startDate = startDateRef.current.value;
+    const endDate = endDateRef.current.value;
     const name = nameRef.current.value;
     const description = descriptionRef.current.value;
     try {
@@ -71,9 +77,12 @@ const Events = () => {
         formData.append('image', image);
       });
       formData.append('club', selectedClub);
-      formData.append('date', date);
+      formData.append('department', selectedDepartment);
+      formData.append('startDate', startDate);
+      formData.append('endDate', endDate);
       formData.append('name', name);
       formData.append('description', description);
+      formData.append('isLatest', String(isLatest));
       await axios.post(`${API}/event`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -108,7 +117,8 @@ const Events = () => {
       }
       toast.error(`Error: ${err}`);
     }
-  };const changeTextColor = () => {
+  };
+  const changeTextColor = () => {
     setIsOptionSelected(true);
   };
 
@@ -116,62 +126,108 @@ const Events = () => {
     <DefaultLayout>
       <Breadcrumb pageName="Events" />
       <form onSubmit={handleAdd}>
-          <div>
-            <label className="mb-3 block text-black dark:text-white">
-              Select Club
-            </label>
+        <div>
+          <label className="mb-3 block text-black dark:text-white">
+            Organizer
+          </label>
 
-            <div className="relative z-20 bg-white dark:bg-form-input">
-              <select
-                value={selectedClub}
-                required="required"
-                onChange={(e) => {
-                  setSelectedClub(e.target.value);
-                  changeTextColor();
-                }}
-                className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-8 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${isOptionSelected ? 'text-black dark:text-white' : ''
-                  }`}
+          <div className="relative z-20 bg-white dark:bg-form-input">
+            <select
+              value={selectedDepartment}
+              required
+              onChange={(e) => {
+                setSelectedDepartment(e.target.value);
+                changeTextColor();
+              }}
+              className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-8 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
+                isOptionSelected ? 'text-black dark:text-white' : ''
+              }`}
+            >
+              <option value="" className="text-body dark:text-bodydark">
+                Select Organizer
+              </option>
+              <option value="college" className="text-body dark:text-bodydark">
+                Institute
+              </option>
+              <option value="club" className="text-body dark:text-bodydark">
+                Club
+              </option>
+            </select>
+
+            <span className="absolute top-1/2 right-4 z-10 -translate-y-1/2">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <option
-                  value=""
-                  disabled
-                  className="text-body dark:text-bodydark"
-                >
-                  Select Club
-                </option>
-                {club&&club.map((club,index) => (
-                  <option key={index} value={`${club._id}`}
-                     className="text-body dark:text-bodydark"
+                <g opacity="0.8">
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
+                    fill="#637381"
+                  ></path>
+                </g>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <div className="mt-4">
+          <label className="mb-3 block text-black dark:text-white">
+            Select Club (If organizer is club)
+          </label>
+
+          <div className="relative z-20 bg-white dark:bg-form-input">
+            <select
+              value={selectedClub}
+              onChange={(e) => {
+                setSelectedClub(e.target.value);
+                changeTextColor();
+              }}
+              className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-8 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
+                isOptionSelected ? 'text-black dark:text-white' : ''
+              }`}
+            >
+              <option value="" className="text-body dark:text-bodydark">
+                Select Club
+              </option>
+              {club &&
+                club.map((club, index) => (
+                  <option
+                    key={index}
+                    value={`${club._id}`}
+                    className="text-body dark:text-bodydark"
                   >
                     {club.Name}
-                    </option>))
-                }
-              
-              </select>
+                  </option>
+                ))}
+            </select>
 
-              <span className="absolute top-1/2 right-4 z-10 -translate-y-1/2">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g opacity="0.8">
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
-                      fill="#637381"
-                    ></path>
-                  </g>
-                </svg>
-              </span>
-            </div>
+            <span className="absolute top-1/2 right-4 z-10 -translate-y-1/2">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g opacity="0.8">
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
+                    fill="#637381"
+                  ></path>
+                </g>
+              </svg>
+            </span>
           </div>
-     
-      
-        <div>
+        </div>
+
+        <div className="mt-4">
           <label className="mb-3 block text-black dark:text-white">
             Event Name
           </label>
@@ -185,10 +241,25 @@ const Events = () => {
           />
         </div>
         <div className="mt-4">
-          <label className="mb-3 block text-black dark:text-white">Date</label>
+          <label className="mb-3 block text-black dark:text-white">
+            Start Date
+          </label>
           <input
-            name="date"
-            ref={dateRef}
+            name="startDate"
+            ref={startDateRef}
+            type="date"
+            placeholder="Date"
+            required
+            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+          />
+        </div>
+        <div className="mt-4">
+          <label className="mb-3 block text-black dark:text-white">
+            End Date
+          </label>
+          <input
+            name="endDate"
+            ref={endDateRef}
             type="date"
             placeholder="Date"
             required
@@ -222,6 +293,18 @@ const Events = () => {
             accept="image/*"
             required
           />
+        </div>
+
+        <div className="mt-4">
+          <label className="mb-3 block text-black dark:text-white flex flex-row items-center gap-1">
+            Is Latest:
+            <input
+              className="size-4"
+              type="checkbox"
+              checked={isLatest}
+              onChange={(e) => setIsLatest(e.target.checked)}
+            />
+          </label>
         </div>
         <button className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
           Add Event

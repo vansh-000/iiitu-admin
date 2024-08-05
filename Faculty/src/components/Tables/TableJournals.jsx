@@ -1,4 +1,6 @@
-const TableJournals = ({edit,Journal,setJournal}) => {
+import { IoMdAddCircleOutline } from 'react-icons/io';
+
+const TableJournals = ({ edit, Journal, setJournal }) => {
   const handleEdit = (index, value) => {
     const updatedJournal = [...Journal];
     updatedJournal[index] = value;
@@ -6,7 +8,7 @@ const TableJournals = ({edit,Journal,setJournal}) => {
   };
 
   const handleAddJournal = () => {
-    setJournal([...Journal, ""]);
+    setJournal([...Journal, '']);
   };
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -42,8 +44,11 @@ const TableJournals = ({edit,Journal,setJournal}) => {
           </tbody>
         </table>
         {edit && (
-          <button className="mt-2" onClick={handleAddJournal}>
-            Add Journal
+          <button
+            className="mt-2 flex flex-row items-center gap-1 bg-primary text-white rounded-md px-4 py-2"
+            onClick={handleAddJournal}
+          >
+            Add Journal <IoMdAddCircleOutline />
           </button>
         )}
       </div>

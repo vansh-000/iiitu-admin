@@ -1,6 +1,5 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
-// import userSix from '../images/user/user-06.png';
 import { Link } from 'react-router-dom';
 import { FaLinkedin, FaOrcid } from 'react-icons/fa';
 import { SiGooglescholar } from 'react-icons/si';
@@ -17,10 +16,11 @@ import toast from 'react-hot-toast';
 import TablePublications from '../components/Tables/TablePublications';
 import TableJournals from '../components/Tables/TableJournals';
 import TableProjects from '../components/Tables/TableProjects';
+
 const Profile = () => {
   const nevigat = useNavigate();
   const [faculty, setFaculty] = useState({});
-  const [clubName,setClubName]=useState();
+  const [clubName, setClubName] = useState();
   const [editable, setEditable] = useState(false);
   const [profileImage, setProfileImage] = useState('');
   const [education, setEducation] = useState([]);
@@ -38,10 +38,9 @@ const Profile = () => {
   const refGoogleScholar = useRef();
   const refOrcid = useRef();
   const userData = JSON.parse(localStorage.getItem('user'));
-  const ClubName=localStorage.getItem('ClubName');
+  const ClubName = localStorage.getItem('ClubName');
   const fetchData = async () => {
     try {
-      
       const response = await axios.get(
         `${API}/faculty/facultyProfile/${userData?.id}`,
         {
@@ -73,17 +72,16 @@ const Profile = () => {
   };
   const fetchClub = async () => {
     try {
-        const response = await axios.get(`${API}/clubs/faculty/${userData?.id}`);
-        setClubName(response.data.data.Name);
-        localStorage.setItem('ClubName',response.data.data._id);
-    }
-    catch (err) {
-      if(err.response.status===404){
+      const response = await axios.get(`${API}/clubs/faculty/${userData?.id}`);
+      setClubName(response.data.data.Name);
+      localStorage.setItem('ClubName', response.data.data._id);
+    } catch (err) {
+      if (err.response.status === 404) {
         localStorage.removeItem('ClubName');
       }
-        console.log(err);
+      console.log(err);
     }
-}
+  };
   useEffect(() => {
     fetchData();
     fetchClub();
@@ -159,9 +157,9 @@ const Profile = () => {
       setProfileImage(URL.createObjectURL(file));
     }
   };
-  const handleClubEvents=()=>{
+  const handleClubEvents = () => {
     nevigat('/events');
-  }
+  };
 
   return (
     <DefaultLayout>
@@ -223,10 +221,15 @@ const Profile = () => {
               )}
             </div>
           </div>
-          <div className="mt-14">
-            {ClubName&&<button onClick={handleClubEvents} className="cursor-pointer mb-4 bg-gray-800 px-3 py-2 bg-green-600 rounded-md text-white tracking-wider shadow-xl animate-bounce hover:animate-none">
-              {clubName} Events
-            </button>}
+          <div className="mt-14 flex flex-col items-center">
+            {ClubName && (
+              <button
+                onClick={handleClubEvents}
+                className="cursor-pointer mb-4 bg-gray-800 px-3 py-2 bg-green-600 rounded-md text-white tracking-wider shadow-xl animate-bounce hover:animate-none"
+              >
+                {clubName} Events
+              </button>
+            )}
             <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
               {editable ? (
                 <input
@@ -242,25 +245,30 @@ const Profile = () => {
               )}
             </h3>
             {editable ? (
-              <input
-                className="w-auto cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-                type="file"
-                id="resume"
-                name="resume"
-                accept=".pdf"
-                ref={refResume}
-              />
+              <div>
+                <label className="block text-black dark:text-white text-start text-[1rem] mt-2 mb-1">
+                  Resume
+                </label>
+                <input
+                  className="w-auto cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
+                  type="file"
+                  id="resume"
+                  name="resume"
+                  accept=".pdf"
+                  ref={refResume}
+                />
+              </div>
             ) : (
               faculty.resume && (
                 <Link
                   to={faculty.resume}
-                  className="flex flex-col items-center justify-center gap-1 text-black dark:text-white border-r  px-4 dark:border-stroke border-strokedark xsm:flex-row"
+                  className="w-fit flex flex-col items-center justify-center gap-1 text-[1.1rem] text-black dark:text-white px-4 dark:border-stroke border-strokedark xsm:flex-row"
                 >
                   Resume
                 </Link>
               )
             )}
-            <div className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
+            <div className="mx-auto mt-4.5 mb-5.5 grid max-w-[300px] sm:max-w-[500px] grid-cols-3 gap-2 rounded-md border border-stroke p-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
               {editable ? (
                 <input
                   name="title"
@@ -334,7 +342,7 @@ const Profile = () => {
 
             <div className="mx-auto max-w-180">
               <ul className="mt-4.5 text-black dark:text-white">
-                <li>
+                <li className="text-[1.1rem]">
                   Research Intrest:
                   {editable ? (
                     <input
@@ -349,7 +357,7 @@ const Profile = () => {
                     faculty.researchInterest
                   )}
                 </li>
-                <li>
+                <li className="text-[1.1rem]">
                   Phone:
                   {editable ? (
                     <input

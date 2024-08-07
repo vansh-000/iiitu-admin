@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+import { IoMdAddCircleOutline } from 'react-icons/io';
 
 const TableResearch = ({ edit, Research, setResearch }) => {
   const handleEdit = (index, value) => {
@@ -8,7 +9,7 @@ const TableResearch = ({ edit, Research, setResearch }) => {
   };
 
   const handleAddResearch = () => {
-    setResearch([...Research, ""]);
+    setResearch([...Research, '']);
   };
 
   return (
@@ -31,7 +32,7 @@ const TableResearch = ({ edit, Research, setResearch }) => {
                       <input
                         type="text"
                         value={rech}
-                        placeholder='Research'
+                        placeholder="Research"
                         className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         onChange={(e) => handleEdit(index, e.target.value)}
                       />
@@ -45,7 +46,12 @@ const TableResearch = ({ edit, Research, setResearch }) => {
           </tbody>
         </table>
         {edit && (
-          <button className="mt-2" onClick={handleAddResearch}>Add Research</button>
+          <button
+            className="mt-2 flex flex-row items-center gap-1 bg-primary text-white rounded-md px-4 py-2"
+            onClick={handleAddResearch}
+          >
+            Add Research <IoMdAddCircleOutline />
+          </button>
         )}
       </div>
     </div>

@@ -1,3 +1,5 @@
+import { IoMdAddCircleOutline } from 'react-icons/io';
+
 const TableProjects = ({ edit, Project, setProject }) => {
   const handleEdit = (index, value) => {
     const updatedProject = [...Project];
@@ -6,7 +8,7 @@ const TableProjects = ({ edit, Project, setProject }) => {
   };
 
   const handleAddProject = () => {
-    setProject([...Project, ""]);
+    setProject([...Project, '']);
   };
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -42,8 +44,11 @@ const TableProjects = ({ edit, Project, setProject }) => {
           </tbody>
         </table>
         {edit && (
-          <button className="mt-2" onClick={handleAddProject}>
-            Add Project
+          <button
+            className="mt-2 flex flex-row items-center gap-1 bg-primary text-white rounded-md px-4 py-2"
+            onClick={handleAddProject}
+          >
+            Add Project <IoMdAddCircleOutline />
           </button>
         )}
       </div>

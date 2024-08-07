@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
-import { Link ,useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
-import axios from "axios";
+import axios from 'axios';
 import { API } from '../../utils/apiURl';
 import toast from 'react-hot-toast';
 
@@ -17,18 +17,24 @@ const SignUpAdmin = () => {
     try {
       const response = await axios.post(`${API}/admin/login`, {
         email: email,
-        password: password
+        password: password,
       });
       if (response.status === 200) {
-        toast.success("Successfully Logged In!")
+        toast.success('Successfully Logged In!');
         localStorage.setItem('token', response.data.token);
-        navigator("/");
+        navigator('/');
       }
-    } catch (err) {
-       toast.error(err);
+    } catch (error) {
+      if (error.response.status === 409) {
+        toast.error('User does Not Found!');
+      } else if (error.response && error.response.status === 401) {
+        toast.error('Incorrect Password!');
+      } else if ((error.response && error.response.status === 400) || 500) {
+        toast.error('Internal Server Error!');
+      }
     }
   };
-  
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Sign In" />
@@ -37,18 +43,17 @@ const SignUpAdmin = () => {
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="p-10">
-              <Link className="mb-5.5 inline-block" to="/">
-               
-              </Link>
+              <Link className="mb-5.5 inline-block" to="/"></Link>
               <div className="flex flex-col items-center">
                 <img src="/iiitu-logo.png" className="w-40 h-40" />
 
                 <p className="2xl:px-10 mt-10 text-black font-semibold dark:text-white">
                   Indian Institute of Information Technology Una
                 </p>
-                <h1 className="text-4xl text-black font-semibold dark:text-white mt-4">Welcome to Admin Portal!</h1>
+                <h1 className="text-4xl text-black font-semibold dark:text-white mt-4">
+                  Welcome to Admin Portal!
+                </h1>
               </div>
-
             </div>
           </div>
 
@@ -128,7 +133,12 @@ const SignUpAdmin = () => {
                 </div>
 
                 <div className="mb-7 text-end">
-                  <Link to="/forgot" className="text-primary hover:text-blue-500">Forgot your Password?</Link>
+                  <Link
+                    to="/forgot"
+                    className="text-primary hover:text-blue-500"
+                  >
+                    Forgot your Password?
+                  </Link>
                 </div>
 
                 <div className="mb-5">

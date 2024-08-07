@@ -77,7 +77,7 @@ function Tender(): JSX.Element {
                 className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
               />
             </div>
-            <div className="flex justify-between">
+            <div className="flex gap-20">
               <div className="w-fit">
                 <label
                   htmlFor="description"

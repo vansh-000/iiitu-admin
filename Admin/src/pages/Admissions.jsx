@@ -12,19 +12,22 @@ import { jwtDecode } from 'jwt-decode';
 const Admissions = () => {
   const [data, setData] = useState();
   const [selectedType, setSelectedType] = useState('');
+  const [isLatest, setIsLatest] = useState(false);
+  const [isEditLatest, setIsEditLatest] = useState(false);
   const [isOptionSelected, setIsOptionSelected] = useState(false);
- const navigate=useNavigate();
- const token=localStorage.getItem('token');
- 
- useEffect(()=>{
-  if(!token){
-    return navigate('/signin');
-  }
-  const {Allow}=jwtDecode(token);
-  if(!Allow?.[6]){
-  navigate('/faculty/add');
-}},[]);
-    
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    if (!token) {
+      return navigate('/signin');
+    }
+    const { Allow } = jwtDecode(token);
+    if (!Allow?.[6]) {
+      navigate('/faculty/add');
+    }
+  }, []);
+
   const changeTextColor = () => {
     setIsOptionSelected(true);
   };
@@ -33,12 +36,11 @@ const Admissions = () => {
     try {
       const response = await axios.get(`${API}/admission`);
       setData(response.data);
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err);
     }
-  }
-  
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -65,58 +67,73 @@ const Admissions = () => {
     try {
       const formData = new FormData();
       doc.forEach((doc) => {
-        formData.append("doc", doc);
+        formData.append('doc', doc);
       });
-      formData.append("title", title);
-      formData.append("description", description);
-      formData.append("program", program);
-      formData.append("batch", batch);
-      formData.append("year", year);
-      formData.append("type", type);
+      formData.append('title', title);
+      formData.append('description', description);
+      formData.append('program', program);
+      formData.append('batch', batch);
+      formData.append('year', year);
+      formData.append('type', type);
+      formData.append('isLatest', isLatest);
       await axios.post(`${API}/admission`, formData, {
         headers: {
-          Authorization:`Brear ${token}`,
-          "Content-Type": "multipart/form-data"
-        }
+          Authorization: `Brear ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
       });
-      toast.success("Data Uploaded!");
+      toast.success('Data Uploaded!');
       fetchData();
-    }
-    catch (err) {
+    } catch (err) {
       if (err.response.status === 401) {
         return navigate('/signin');
       }
       toast.error(`Error: ${err}`);
     }
-  }
+  };
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API}/admission/${id}`,{
-        headers:{
-          Authorization:`Brear ${token}`
-        }
+      await axios.delete(`${API}/admission/${id}`, {
+        headers: {
+          Authorization: `Brear ${token}`,
+        },
       });
-      toast.success("Data Deleted!");
+      toast.success('Data Deleted!');
       fetchData();
-    }
-    catch (err) {
+    } catch (err) {
       if (err.response.status === 401) {
         return navigate('/signin');
       }
       toast.error(`Error: ${err}`);
     }
-  }
+  };
 
+  const handleLatest = async (id) => {
+    try {
+      const formData = new FormData();
+      formData.append('isLatest', isEditLatest);
+      await axios.put(`${API}/admission/${id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success('Data Updated!');
+      fetchData();
+    } catch (err) {
+      if (err.response.status === 401) {
+        return navigate('/signin');
+      }
+      toast.error(`Error: ${err}`);
+    }
+  };
 
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Admissions" />
       <form onSubmit={handleAdd}>
         <div>
-          <label className="mb-3 block text-black dark:text-white">
-            Title
-          </label>
+          <label className="mb-3 block text-black dark:text-white">Title</label>
           <input
             name="title"
             type="text"
@@ -126,7 +143,7 @@ const Admissions = () => {
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
         </div>
-        <div className='mt-4'>
+        <div className="mt-4">
           <label className="mb-3 block text-black dark:text-white">
             Description
           </label>
@@ -139,7 +156,7 @@ const Admissions = () => {
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
         </div>
-        <div className='mt-4'>
+        <div className="mt-4">
           <label className="mb-3 block text-black dark:text-white">
             Program
           </label>
@@ -152,10 +169,8 @@ const Admissions = () => {
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
         </div>
-        <div className='mt-4'>
-          <label className="mb-3 block text-black dark:text-white">
-            Batch
-          </label>
+        <div className="mt-4">
+          <label className="mb-3 block text-black dark:text-white">Batch</label>
           <input
             name="batch"
             ref={batchRef}
@@ -165,10 +180,8 @@ const Admissions = () => {
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
         </div>
-        <div className='mt-4'>
-          <label className="mb-3 block text-black dark:text-white">
-            Year
-          </label>
+        <div className="mt-4">
+          <label className="mb-3 block text-black dark:text-white">Year</label>
           <input
             name="year"
             ref={yearRef}
@@ -181,7 +194,7 @@ const Admissions = () => {
         <div className="flex flex-col gap-5.5 p-6.5">
           <div>
             <label className="mb-3 block text-black dark:text-white">
-              Select Department
+              Select Section
             </label>
 
             <div className="relative z-20 bg-white dark:bg-form-input">
@@ -192,8 +205,9 @@ const Admissions = () => {
                   setSelectedType(e.target.value);
                   changeTextColor();
                 }}
-                className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-8 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${isOptionSelected ? 'text-black dark:text-white' : ''
-                  }`}
+                className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-8 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
+                  isOptionSelected ? 'text-black dark:text-white' : ''
+                }`}
               >
                 <option
                   value=""
@@ -202,16 +216,10 @@ const Admissions = () => {
                 >
                   Select Department
                 </option>
-                <option
-                  value="JOSAA"
-                  className="text-body dark:text-bodydark"
-                >
+                <option value="JOSAA" className="text-body dark:text-bodydark">
                   JOSAA/CSAB
                 </option>
-                <option
-                  value="DASA"
-                  className="text-body dark:text-bodydark"
-                >
+                <option value="DASA" className="text-body dark:text-bodydark">
                   DASA
                 </option>
                 <option
@@ -262,18 +270,34 @@ const Admissions = () => {
             name="doc"
             onChange={handleFileChange}
             accept=".pdf"
-     
           />
         </div>
-        <button
-          className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-        >
+
+        <div className="mt-4">
+          <label className="mb-3 block text-black dark:text-white flex flex-row items-center gap-1">
+            Is Latest:
+            <input
+              className="size-4"
+              type="checkbox"
+              checked={isLatest}
+              onChange={(e) => setIsLatest(e.target.checked)}
+            />
+          </label>
+        </div>
+
+        <button className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
           Add Admission Notification
         </button>
       </form>
       <div className="flex flex-col gap-10 mt-5">
-        {data && data.length>0 ? (
-          <TableAdmissions data={data} handleDelete={handleDelete} />
+        {data && data.length > 0 ? (
+          <TableAdmissions
+            data={data}
+            handleDelete={handleDelete}
+            handleLatest={handleLatest}
+            isLatest={isEditLatest}
+            setIsLatest={setIsEditLatest}
+          />
         ) : (
           <h1>No Data!</h1>
         )}

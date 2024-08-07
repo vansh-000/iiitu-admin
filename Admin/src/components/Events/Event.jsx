@@ -13,15 +13,15 @@ import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import Poster from './Poster';
 import { STATIC_FILES } from '../../utils/apiURl';
 
-function EventSlides({data, handleDelete}) {
+function EventSlides({ data, handleDelete }) {
   const [index, setIndex] = useState(-1);
 
-  const modifiedEvents = data?.map(d => ({
+  const modifiedEvents = data?.map((d) => ({
     ...d,
-    src: d?.image
+    src: d?.image,
   }));
 
-  modifiedEvents?.forEach(d => {
+  modifiedEvents?.forEach((d) => {
     delete d.d;
   });
   return (

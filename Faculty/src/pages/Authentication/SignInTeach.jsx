@@ -1,28 +1,28 @@
 import React, { useRef } from 'react';
-import { Link ,useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
-import axios from "axios";
+import axios from 'axios';
 import { API } from '../../utils/apiURl';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import {jwtDecode} from "jwt-decode"
+import { jwtDecode } from 'jwt-decode';
 const SignIn = () => {
-  useEffect(()=>{
-    const token=localStorage.getItem('token');
-    if(!token){
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
       return;
     }
-    const {exp} = jwtDecode(token);
-    const time=Date.now();
-    if(time>=exp){
+    const { exp } = jwtDecode(token);
+    const time = Date.now();
+    if (time >= exp) {
       localStorage.removeItem('token');
-      localStorage.removeItem('user')}
-      else{
-        navigator('/dashboard');
-      }
-  })
+      localStorage.removeItem('user');
+    } else {
+      navigator('/dashboard');
+    }
+  });
   const [loading, setLoading] = useState(false);
 
   const refEmail = useRef();
@@ -36,33 +36,28 @@ const SignIn = () => {
     try {
       const response = await axios.post(`${API}/faculty/login`, {
         email: email,
-        password: password
+        password: password,
       });
       if (response.status === 200) {
-        toast.success("Successfully Logged In!")
+        toast.success('Successfully Logged In!');
         localStorage.setItem('token', response.data.accessToken);
         localStorage.setItem('user', JSON.stringify(response.data.userInfo));
-        navigator("/dashboard");
+        navigator('/dashboard');
       }
-
     } catch (error) {
       if (error.response.status === 409) {
-        toast.error("User does Not Found!");
+        toast.error('User does Not Found!');
         setLoading(false);
-      }
-      else if (error.response && error.response.status === 403) {
-        toast.error("Incorrect Password!");
+      } else if (error.response && error.response.status === 403) {
+        toast.error('Incorrect Password!');
         setLoading(false);
-
-      }
-      else if (error.response && error.response.status === 400 || 500) {
-        toast.error("Internal Server Error!");
+      } else if ((error.response && error.response.status === 400) || 500) {
+        toast.error('Internal Server Error!');
         setLoading(false);
-
       }
     }
   };
-  
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Sign In" />

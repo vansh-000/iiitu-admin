@@ -1,17 +1,16 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
-import TableGallery from '../components/Tables/TableGallery';
 import DefaultLayout from '../layout/DefaultLayout';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
-import TableNews from '../components/Tables/TableNews';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import TableNews2 from '../components/Tables/TableNews2';
 
 const News = () => {
   const [data, setData] = useState();
+  const [isLatest, setIsLatest] = useState(false);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
   useEffect(() => {
@@ -40,10 +39,14 @@ const News = () => {
 
   const headingRef = useRef();
   const descriptionRef = useRef();
+  const startDateRef = useRef();
+  const endDateRef = useRef();
   const handleAdd = async (e) => {
     e.preventDefault();
     const heading = headingRef.current.value;
     const description = descriptionRef.current.value;
+    const startDate = startDateRef.current.value;
+    const endDate = endDateRef.current.value;
 
     try {
       if (!refDoc.current?.files[0] && !refImg.current?.files[0]) {
@@ -53,6 +56,9 @@ const News = () => {
       let formData = new FormData();
       formData.append('heading', heading);
       formData.append('description', description);
+      formData.append('startDate', startDate);
+      formData.append('endDate', endDate);
+      formData.append('isLatest', isLatest);
 
       if (refDoc.current?.files[0]) {
         formData.append('doc', refDoc.current.files[0]);
@@ -150,6 +156,43 @@ const News = () => {
             ref={refDoc}
             accept=".pdf"
           />
+        </div>
+        <div className="mt-4">
+          <label className="mb-3 block text-black dark:text-white">
+            Start Date
+          </label>
+          <input
+            name="startDate"
+            ref={startDateRef}
+            type="date"
+            placeholder="Start Date"
+            required
+            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+          />
+        </div>
+        <div className="mt-4">
+          <label className="mb-3 block text-black dark:text-white">
+            End Date
+          </label>
+          <input
+            name="endDate"
+            ref={endDateRef}
+            type="date"
+            placeholder="End Date"
+            required
+            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+          />
+        </div>
+        <div className="mt-4">
+          <label className="mb-3 block text-black dark:text-white flex flex-row items-center gap-1">
+            Is Latest:
+            <input
+              className="size-4"
+              type="checkbox"
+              checked={isLatest}
+              onChange={(e) => setIsLatest(e.target.checked)}
+            />
+          </label>
         </div>
         <button className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
           Add News

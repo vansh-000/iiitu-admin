@@ -10,10 +10,11 @@ import { API } from '../utils/apiURl';
 const EventsPage = () => {
   const { id } = useParams();
   const [data, setData] = useState();
+  const [isLatest, setIsLatest] = useState(false);
   const refImage = useRef();
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
-  
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
@@ -26,7 +27,9 @@ const EventsPage = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/event/${id}`);
+      console.log(response.data);
       setData(response.data.event);
+      setIsLatest(response.data.event.isLatest);
     } catch (err) {
       console.error('error in edit event', err);
     }
@@ -35,19 +38,23 @@ const EventsPage = () => {
     fetchData();
   }, []);
   const nameRef = useRef();
-  const dateRef = useRef();
+  const startDateRef = useRef();
+  const endDateRef = useRef();
   const descriptionRef = useRef();
   const handleAdd = async (e) => {
     e.preventDefault();
     const name = nameRef.current.value;
     const description = descriptionRef.current.value;
-    const date = dateRef.current.value || data.date;
+    const startDate = startDateRef.current.value || data.startDate;
+    const endDate = endDateRef.current.value || data.endDate;
     const data2 = {
       name: name,
-      date: date,
+      startDate: startDate,
+      endDate: endDate,
       description: description,
       image: refImage.current?.files[0],
       OldImage: null,
+      isLatest: isLatest,
     };
     if (refImage.current?.files[0]) {
       data2['OldImage'] = data.image;
@@ -71,11 +78,17 @@ const EventsPage = () => {
       toast.error(`Error: ${err}`);
     }
   };
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName={`Edit Events Details`} />
       <Toaster />
       <form onSubmit={handleAdd}>
+        <div className="mt-4">
+          <label className="mb-3 block text-black dark:text-white">
+            Organizer: {data?.department}
+          </label>
+        </div>
         <div>
           <label className="mb-3 block text-black dark:text-white">Name</label>
           {data && data.name && (
@@ -106,13 +119,24 @@ const EventsPage = () => {
           />
         </div>
         <div className="mt-4">
-          {data && data.name && (
+          {data && data.startDate && (
             <>
               <label className="mb-3 block text-black dark:text-white">
-                Date {formatDate(data.date)}
+                Start Date: {formatDate(data.startDate)}
               </label>
 
-              <DatePickerOne refDate={dateRef} />
+              <DatePickerOne refDate={startDateRef} />
+            </>
+          )}
+        </div>
+        <div className="mt-4">
+          {data && data.endDate && (
+            <>
+              <label className="mb-3 block text-black dark:text-white">
+                End Date: {formatDate(data.endDate)}
+              </label>
+
+              <DatePickerOne refDate={endDateRef} />
             </>
           )}
         </div>
@@ -130,6 +154,17 @@ const EventsPage = () => {
               className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
             />
           )}
+        </div>
+        <div className="mt-4">
+          <label className="mb-3 block text-black dark:text-white flex flex-row items-center gap-1">
+            Is Latest:
+            <input
+              className="size-4"
+              type="checkbox"
+              checked={isLatest}
+              onChange={(e) => setIsLatest(e.target.checked)}
+            />
+          </label>
         </div>
         <button className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
           Update event

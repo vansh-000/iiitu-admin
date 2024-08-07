@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
 import axios from 'axios';
 import { API } from '../../utils/apiURl';
 import toast from 'react-hot-toast';
+import { jwtDecode } from 'jwt-decode';
 
 const SignUpAdmin = () => {
   const refEmail = useRef();
@@ -34,6 +35,16 @@ const SignUpAdmin = () => {
       }
     }
   };
+  useEffect(()=>{
+    const token=localStorage.getItem('token');
+    if(token){
+      const {exp}=jwtDecode(token);
+      if(exp*1000>Date.now()){
+        localStorage.removeItem('token');
+        navigator('/')
+      }
+    }
+  })
 
   return (
     <DefaultLayout>

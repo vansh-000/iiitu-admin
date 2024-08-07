@@ -13,7 +13,6 @@ const VerifyOTP = () => {
   const navigate = useNavigate();
 
   const email = localStorage.getItem("email");
-console.log(email);
   const handleVerifyOTP = async (e) => {
     e.preventDefault();
     setLoading(true);

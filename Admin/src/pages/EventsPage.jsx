@@ -4,8 +4,8 @@ import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
-import DatePickerOne from '../components/Forms/DatePicker/DatePickerOne';
 import { API } from '../utils/apiURl';
+import DatePickerOneUnReq from '../components/Forms/DatePicker/DatePickerOneUnReq';
 
 const EventsPage = () => {
   const { id } = useParams();
@@ -27,7 +27,6 @@ const EventsPage = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/event/${id}`);
-      console.log(response.data);
       setData(response.data.event);
       setIsLatest(response.data.event.isLatest);
     } catch (err) {
@@ -125,7 +124,7 @@ const EventsPage = () => {
                 Start Date: {formatDate(data.startDate)}
               </label>
 
-              <DatePickerOne refDate={startDateRef} />
+              <DatePickerOneUnReq refDate={startDateRef} />
             </>
           )}
         </div>
@@ -135,8 +134,7 @@ const EventsPage = () => {
               <label className="mb-3 block text-black dark:text-white">
                 End Date: {formatDate(data.endDate)}
               </label>
-
-              <DatePickerOne refDate={endDateRef} />
+              <DatePickerOneUnReq refDate={endDateRef} />
             </>
           )}
         </div>

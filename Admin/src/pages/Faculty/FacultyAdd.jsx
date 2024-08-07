@@ -99,7 +99,7 @@ useEffect(()=>{
           },
         },
       );
-      // console.log(data);
+
       toast.success(response.data.message);
     } catch (err) {
       if (err.response.status === 401) {

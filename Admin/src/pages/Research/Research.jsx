@@ -38,7 +38,7 @@ function Research() {
         image: refUniversityImage.current.files[0],
         file: refFile.current.files[0],
       };
-      console.log(data);
+
       const response = await axios.post(`${API}/research`, data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

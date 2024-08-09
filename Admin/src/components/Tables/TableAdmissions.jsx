@@ -53,14 +53,15 @@ const TableAdmissions = ({
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">
                       <div>
-                        <label className="block text-black dark:text-white flex flex-row items-center gap-1">
+                        <label className="text-black dark:text-white flex flex-row items-center gap-1">
                           <input
                             className="size-4"
                             type="checkbox"
                             checked={item.isLatest}
                             onChange={(e) => {
+                              e.preventDefault();
                               handleLatest(item._id);
-                              setIsLatest(e.target.checked);
+                              setIsLatest(!item.isLatest);
                             }}
                           />
                         </label>

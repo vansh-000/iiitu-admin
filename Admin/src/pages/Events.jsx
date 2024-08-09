@@ -39,7 +39,6 @@ const Events = () => {
     try {
       const response = await axios.get(`${API}/clubs`);
       setclub(response.data.data);
-      console.log(response.data.data);
     } catch (err) {
       console.log(err);
     }

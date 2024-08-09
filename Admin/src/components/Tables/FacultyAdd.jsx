@@ -84,7 +84,6 @@ function FacultyAdd() {
       //     },
       //   },
       // );
-      console.log(data);
       // toast.success(response.data.message);
     } catch (err) {
       console.error(err);

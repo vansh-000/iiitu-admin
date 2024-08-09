@@ -11,7 +11,6 @@ import {
 import 'yet-another-react-lightbox/plugins/captions.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import Poster from './Poster';
-import { STATIC_FILES } from '../../utils/apiURl';
 
 function EventSlides({ data, handleDelete }) {
   const [index, setIndex] = useState(-1);

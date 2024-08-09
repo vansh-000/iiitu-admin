@@ -22,7 +22,6 @@ const ForgotAdmin = () => {
         if (response2.status === 200) {
           toast.success('OTP sent successfully');
         }
-        console.log(email);
         localStorage.setItem('email', email);
         navigate('/verifyOTP');
       }

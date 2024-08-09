@@ -137,7 +137,6 @@ const Clubs = () => {
   const handleInputChange = (index, e) => {
     const { name, value } = e.target;
     const updatedSocialLinks = [...socialLinks];
-    console.log(name,value)
     updatedSocialLinks[index] = { ...updatedSocialLinks[index], ['link']: value };
     setSocialLinks(updatedSocialLinks);
   };

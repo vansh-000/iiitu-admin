@@ -17,8 +17,8 @@ import { useEffect } from 'react';
 function FacultyAdd() {
   const refName = useRef('');
   const refEmail = useRef('');
-  const [education,setEducation]=useState([]);
-  const [research,setResearch]=useState([]);
+  const [education, setEducation] = useState([]);
+  const [research, setResearch] = useState([]);
   const [award, setAward] = useState([]);
   const [publication, setPublication] = useState([]);
   const [journal, setJournal] = useState([]);
@@ -26,19 +26,21 @@ function FacultyAdd() {
   const refMobile = useRef('');
   const refResearchInterest = useRef('');
   const refLinkedin = useRef('');
-  const refOrcid=useRef('');
+  const refOrcid = useRef('');
   const refGoogleScholar = useRef('');
   const refResume = useRef(null);
   const refProfileImage = useRef(null);
-  const navigate=useNavigate();
-  const token=localStorage.getItem('token');
-useEffect(()=>{
-  if(!token){
-    return navigate('/signin');}
-  const {Allow}=jwtDecode(token);
-  if(!Allow?.[7]){
-  navigate('/tender/add');
-}},[]);
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    if (!token) {
+      return navigate('/signin');
+    }
+    const { Allow } = jwtDecode(token);
+    if (!Allow?.[7]) {
+      navigate('/tender/add');
+    }
+  }, []);
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -66,8 +68,8 @@ useEffect(()=>{
       //   resume:refResume.current.files[0],
       //   profileImage:refProfileImage.current.files[0],
       //   Education:educationData
-  
-      // } 
+
+      // }
       const response = await axios.post(
         `${API}/faculty/register`,
         {
@@ -80,7 +82,7 @@ useEffect(()=>{
           socialLink: [
             { social: 'Linkedin', link: refLinkedin.current.value },
             { social: 'GoogleScholar', link: refGoogleScholar.current.value },
-            {social:'Orcid',link:refOrcid.current.value},
+            { social: 'Orcid', link: refOrcid.current.value },
           ],
           resume: refResume.current.files[0],
           profileImage: refProfileImage.current.files[0],
@@ -89,13 +91,12 @@ useEffect(()=>{
           Publications: newPublication,
           Journals: newJournal,
           Projects: newProject,
-          Research:newResearch
-          
+          Research: newResearch,
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data', 
+            'Content-Type': 'multipart/form-data',
           },
         },
       );
@@ -105,7 +106,7 @@ useEffect(()=>{
       if (err.response.status === 401) {
         return navigate('/signin');
       }
-      if(err.response.status>=410&&err.response.status<=430){
+      if (err.response.status >= 410 && err.response.status <= 430) {
         return toast.error(err.response.data.message);
       }
       toast.error(`Error: ${err}`);
@@ -123,7 +124,7 @@ useEffect(()=>{
       <DefaultLayout>
         <Breadcrumb pageName="Faculty Registration" />
         <h2>Faculty Registration</h2>
-        <form onSubmit={(e)=>handleOnSubmit(e)}>
+        <form onSubmit={(e) => handleOnSubmit(e)}>
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="flex flex-col gap-5.5 p-6.5">
               <div>

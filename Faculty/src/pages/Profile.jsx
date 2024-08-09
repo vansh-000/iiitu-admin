@@ -14,7 +14,6 @@ import axios from 'axios';
 import { useRef } from 'react';
 import toast from 'react-hot-toast';
 import TablePublications from '../components/Tables/TablePublications';
-import TableJournals from '../components/Tables/TableJournals';
 import TableProjects from '../components/Tables/TableProjects';
 
 const Profile = () => {
@@ -356,7 +355,7 @@ const Profile = () => {
                   )}
                 </li>
                 <li className="text-[1.1rem]">
-                  Phone:
+                  Phone: +91
                   {editable ? (
                     <input
                       name="title"
@@ -397,13 +396,6 @@ const Profile = () => {
           edit={editable}
           Publication={publication}
           setPublication={setPublication}
-        />
-      )}
-      {journal && (
-        <TableJournals
-          edit={editable}
-          Journal={journal}
-          setJournal={setJournal}
         />
       )}
       {project && (

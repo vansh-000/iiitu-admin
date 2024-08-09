@@ -1,6 +1,15 @@
-import React from 'react'
+import React from 'react';
 
-function Journal({refAuthors,refDate,refIndexing,refPage,refPublisher,refTitle,refUrl,refVol}) {
+function Journal({
+  refAuthors,
+  refDate,
+  refIndexing,
+  refPage,
+  refPublisher,
+  refTitle,
+  refUrl,
+  refVol,
+}) {
   return (
     <div className="p-4 md:p-5 space-y-4 transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
                 <label className="mb-3 contents text-black dark:text-white">
@@ -87,4 +96,4 @@ function Journal({refAuthors,refDate,refIndexing,refPage,refPublisher,refTitle,r
   )
 }
 
-export default Journal
+export default Journal;

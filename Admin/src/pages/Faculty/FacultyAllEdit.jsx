@@ -76,7 +76,7 @@ const FacultyAllEdit = () => {
           socialLink: [
             { social: 'Linkedin', link: refLinkedin.current.value },
             { social: 'GoogleScholar', link: refGoogleScholar.current.value },
-            { social: 'Orcid', link: refOrcid.current.value }
+            { social: 'Orcid', link: refOrcid.current.value },
           ],
           AwardAndHonours: newAward,
           Education: newEducation,
@@ -165,7 +165,7 @@ const FacultyAllEdit = () => {
                     name="profile"
                     id="profile"
                     className="sr-only"
-                    accept='image/*'
+                    accept="image/*"
                     ref={refProFileImg}
                     onChange={handleProfileImageChange}
                   />
@@ -187,7 +187,7 @@ const FacultyAllEdit = () => {
                 name="resume"
                 accept=".pdf"
                 ref={refResume}
-              //   required
+                //   required
               />
             </div>
             <div>

@@ -4,11 +4,11 @@ import { IoMdAddCircleOutline } from 'react-icons/io';
 import Journal from '../../pages/components/PublicationType/Journal';
 import Conference from '../../pages/components/PublicationType/Conference';
 import Chapter from '../../pages/components/PublicationType/Chapter';
-import Patient from '../../pages/components/PublicationType/Patient';
 import Book from '../../pages/components/PublicationType/Book';
 import { API } from '../../utils/apiURl';
-import axios from 'axios'
-const TYPE = ['Journal', 'Conference', 'Book', 'Chapter', 'Patient'];
+import axios from 'axios';
+import Patent from '../../pages/components/PublicationType/Patent';
+const TYPE = ['Journal', 'Conference', 'Book', 'Chapter', 'Patent'];
 const TablePublications = ({ edit, Publication, setPublication }) => {
   const [isOpen, setIsOpen] = useState(false);
   const refTitle = useRef();
@@ -18,7 +18,7 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
   const refPage = useRef();
   const refPublisher = useRef();
   const refIndexing = useRef();
-  const refUrl=useRef();
+  const refUrl = useRef();
   const [selected, setSelected] = useState('Journal');
   const handleEdit = (index, value) => {
     const updatedPublication = [...Publication];
@@ -31,26 +31,36 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
   };
   const handleAddPublicationLink = async () => {
     try {
-      const heading = refTitle?.current?.value;;
-      const authors = refAuthors?.current?.value;;
-      const date = refDate?.current?.value;;
-      const vol = refVol?.current?.value;;
-      const page = refPage?.current?.value;;
+      const heading = refTitle?.current?.value;
+      const authors = refAuthors?.current?.value;
+      const date = refDate?.current?.value;
+      const vol = refVol?.current?.value;
+      const page = refPage?.current?.value;
       const publisher = refPublisher?.current?.value;
       const indexing = refIndexing?.current?.value;
       const url = refUrl?.current?.value;
-      const authorsFinal=authors.split(';');
-if(!heading){
- return console.log("Title is req");
-}
-      const newPublication = { type:selected,heading, authors:authorsFinal, date, vol, Pages:page, publisher, indexing, url,writer:localStorage.getItem('UserID') };
- console.log(newPublication);
- const response =await axios.post(`${API}/publication`,newPublication);
- console.log(response)
+      const authorsFinal = authors.split(';');
+      if (!heading) {
+        return console.log('Title is req');
+      }
+      const newPublication = {
+        type: selected,
+        heading,
+        authors: authorsFinal,
+        date,
+        vol,
+        Pages: page,
+        publisher,
+        indexing,
+        url,
+        writer: localStorage.getItem('UserID'),
+      };
+      console.log(newPublication);
+      const response = await axios.post(`${API}/publication`, newPublication);
+      console.log(response);
       setIsOpen(!isOpen);
     } catch (error) {
       console.error(error);
-      
     }
   };
 
@@ -90,19 +100,18 @@ if(!heading){
           </table>
           {edit && (
             <button
+              className="mt-2 flex flex-row items-center gap-1 bg-primary text-white rounded-md px-4 py-2"
               onClick={handleAddPublication}
-              className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              type="button"
             >
-              Add Publication
+              Add Publication <IoMdAddCircleOutline />
             </button>
           )}
         </div>
       </div>
       {isOpen && (
-        <div className="fixed inset-0 z-99999 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
-          <div className="relative p-4 w-full max-w-2xl max-h-full">
-            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div className="fixed inset-0 z-[99999] flex justify-center items-center w-full h-full bg-black bg-opacity-50">
+          <div className="relative p-4 w-fit max-h-[90vh]">
+            <div className="relative bg-white h-fit max-h-[90vh] overflow-y-scroll rounded-lg shadow dark:bg-gray-700">
               <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                 {/* <div className="flex flex-wrap p-1.5 w-72 rounded-lg bg-gray-200 shadow-sm text-sm"> */}
                 {TYPE.map((ty, index) => (
@@ -127,12 +136,67 @@ if(!heading){
                   </label>
                 ))}
               </div>
-              {selected==="Journal"&&<Journal refAuthors={refAuthors} refTitle={refTitle} refDate={refDate} refIndexing={refIndexing} refPage={refPage} refPublisher={refPublisher}  refUrl={refUrl} refVol={refVol}/>}
-              {selected==="Conference"&&<Conference refAuthors={refAuthors} refTitle={refTitle} refDate={refDate} refIndexing={refIndexing} refPage={refPage} refPublisher={refPublisher}  refUrl={refUrl} refVol={refVol}/>}
-              {selected==="Chapter"&&<Chapter refAuthors={refAuthors} refTitle={refTitle} refDate={refDate} refIndexing={refIndexing} refPage={refPage} refPublisher={refPublisher}  refUrl={refUrl} refVol={refVol}/>}
-              {selected==="Book"&&<Book refAuthors={refAuthors} refTitle={refTitle} refDate={refDate} refIndexing={refIndexing} refPage={refPage} refPublisher={refPublisher}  refUrl={refUrl} refVol={refVol}/>}
-              {selected==="Patient"&&<Patient refAuthors={refAuthors} refTitle={refTitle} refDate={refDate} refIndexing={refIndexing} refPage={refPage} refPublisher={refPublisher}  refUrl={refUrl} refVol={refVol}/>}
-              <div className="flex  items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+              {selected === 'Journal' && (
+                <Journal
+                  refAuthors={refAuthors}
+                  refTitle={refTitle}
+                  refDate={refDate}
+                  refIndexing={refIndexing}
+                  refPage={refPage}
+                  refPublisher={refPublisher}
+                  refUrl={refUrl}
+                  refVol={refVol}
+                />
+              )}
+              {selected === 'Conference' && (
+                <Conference
+                  refAuthors={refAuthors}
+                  refTitle={refTitle}
+                  refDate={refDate}
+                  refIndexing={refIndexing}
+                  refPage={refPage}
+                  refPublisher={refPublisher}
+                  refUrl={refUrl}
+                  refVol={refVol}
+                />
+              )}
+              {selected === 'Chapter' && (
+                <Chapter
+                  refAuthors={refAuthors}
+                  refTitle={refTitle}
+                  refDate={refDate}
+                  refIndexing={refIndexing}
+                  refPage={refPage}
+                  refPublisher={refPublisher}
+                  refUrl={refUrl}
+                  refVol={refVol}
+                />
+              )}
+              {selected === 'Book' && (
+                <Book
+                  refAuthors={refAuthors}
+                  refTitle={refTitle}
+                  refDate={refDate}
+                  refIndexing={refIndexing}
+                  refPage={refPage}
+                  refPublisher={refPublisher}
+                  refUrl={refUrl}
+                  refVol={refVol}
+                />
+              )}
+              {selected === 'Patent' && (
+                <Patent
+                  refAuthors={refAuthors}
+                  refTitle={refTitle}
+                  refDate={refDate}
+                  refIndexing={refIndexing}
+                  refPage={refPage}
+                  refPublisher={refPublisher}
+                  refUrl={refUrl}
+                  refVol={refVol}
+                />
+              )}
+              <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <button
                   onClick={handleAddPublicationLink}
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -145,7 +209,7 @@ if(!heading){
                   className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                   type="button"
                 >
-                 Cancel
+                  Cancel
                 </button>
               </div>
             </div>

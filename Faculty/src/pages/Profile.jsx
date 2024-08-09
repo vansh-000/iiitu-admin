@@ -94,7 +94,6 @@ const Profile = () => {
     try {
       const newEducation = education.filter((edu) => edu.description !== '');
       const newAward = award.filter((awa) => awa !== '');
-      const newPublication = publication.filter((pub) => pub !== '');
       const newJournal = journal.filter((jor) => jor !== '');
       const newProject = project.filter((pro) => pro !== '');
       const newResearch = research.filter((res) => res !== '');
@@ -112,7 +111,6 @@ const Profile = () => {
         Research: newResearch,
         AwardAndHonours: newAward,
         Education: newEducation,
-        Publications: newPublication,
         Journals: newJournal,
         Projects: newProject,
       };

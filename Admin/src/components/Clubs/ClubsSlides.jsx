@@ -1,13 +1,12 @@
-import { useState } from 'react';
 import ClubCard from './ClubCard';
 
-function ClubsSlides({data, handleDelete}) {
-  const modifiedEvents = data?.map(d => ({
+function ClubsSlides({ data, handleDelete }) {
+  const modifiedEvents = data?.map((d) => ({
     ...d,
     src: d.Logo,
   }));
 
-  modifiedEvents?.forEach(d => {
+  modifiedEvents?.forEach((d) => {
     delete d.d;
   });
 
@@ -16,7 +15,7 @@ function ClubsSlides({data, handleDelete}) {
       <ClubCard
         data={data}
         onClick={(currentIndex) => setIndex(currentIndex)}
-        handleDelete={handleDelete} 
+        handleDelete={handleDelete}
       />
     </>
   );

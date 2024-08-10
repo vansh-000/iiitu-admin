@@ -6,7 +6,7 @@ const ResearchCardProvider = ({ data, fetchData }) => {
       {data.length > 0 ? (
         data.map((research, index) => (
           <ResearchEditCard
-          research={research}
+            research={research}
             fetchData={fetchData}
             index={index}
           />

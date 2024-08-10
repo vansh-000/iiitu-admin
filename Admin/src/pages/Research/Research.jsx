@@ -15,17 +15,18 @@ function Research() {
   const refUniversityImage = useRef();
   const refFile = useRef();
   const refUniversityLink = useRef();
-  const navigate=useNavigate();
-  const token=localStorage.getItem('token');
-  useEffect(()=>{
-    if(!token){
-      return navigate('/signin');}
-    const {Allow}=jwtDecode(token);
-    if(!Allow?.[9]){
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    if (!token) {
+      return navigate('/signin');
+    }
+    const { Allow } = jwtDecode(token);
+    if (!Allow?.[9]) {
       navigate('/recruitment/edit');
     }
-  },[]);
- 
+  }, []);
+
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -45,14 +46,14 @@ function Research() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      if(response.status===201){
+      if (response.status === 201) {
         toast.success(response.data.message);
-     }
+      }
     } catch (err) {
       if (err.response.status === 401) {
         return navigate('/signin');
       }
-      if(err.response.status>=410&&err.response.status<=430){
+      if (err.response.status >= 410 && err.response.status <= 430) {
         return toast.error(err.response.data.message);
       }
       toast.error(`Error: ${err}`);
@@ -255,7 +256,6 @@ function Research() {
                 name="file"
                 accept=".pdf"
                 ref={refFile}
-                required
               />
               <div>
                 <input

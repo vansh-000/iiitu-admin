@@ -1,15 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-function Chapter({
-  refAuthors,
-  refDate,
-  refIndexing,
-  refPage,
-  refPublisher,
-  refTitle,
-  refUrl,
-  refVol,
-}) {
+function Patient({refAuthors,refDate,refIndexing,refPage,refTitle,refUrl,refVol}) {
   return (
     <div className="p-4 md:p-5 space-y-4 transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
     <label className="mb-3 contents text-black dark:text-white">
@@ -23,7 +14,7 @@ function Chapter({
       className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
     />
     <label className="mb-3 block text-black dark:text-white">
-      Authors(For Multiple Authors use ; to seperate):
+      Inventors(For Multiple Inventors use ; to seperate):
     
     <input
       name="title"
@@ -42,37 +33,9 @@ function Chapter({
       placeholder="eg.2021"
       className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
     /></label>
-    <label className="mb-3 block text-black dark:text-white">
-      Vol
+   
+  
     
-    <input
-      name="title"
-      type="text"
-      ref={refVol}
-      placeholder="eg.0.1,1.2,3"
-      className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-    /></label>
-    <label className="mb-3 block text-black dark:text-white">
-      Pages
-    
-    <input
-      name="title"
-      type="text"
-      ref={refPage}
-      placeholder="eg.22-33,24"
-      className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-    /></label>
-    <label className="mb-3 block text-black dark:text-white">
-    Book
-
-    
-    <input
-      name="title"
-      type="text"
-      ref={refPublisher}
-      placeholder="Name of Book"
-      className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-    /></label>
     <label className="mb-3 block text-black dark:text-white">
       Indexing
     
@@ -97,4 +60,4 @@ function Chapter({
   )
 }
 
-export default Chapter;
+export default Patient

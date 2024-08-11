@@ -110,7 +110,7 @@ function Conference({
           ))}
         </select>
 
-        {selectedIndexing === "others" && (
+        {selectedIndexing === "OTHERS" && (
           <input
             name="otherIndexing"
             type="text"

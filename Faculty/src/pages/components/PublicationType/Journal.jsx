@@ -121,7 +121,7 @@ function Journal({
           ))}
         </select>
 
-        {selectedIndexing === "others" && (
+        {selectedIndexing === "OTHERS" && (
           <input
             name="otherIndexing"
             type="text"

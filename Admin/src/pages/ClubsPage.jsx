@@ -42,6 +42,7 @@ const Clubs = () => {
     try {
       const response = await axios.get(`${API}/clubs/${id}`);
       setData(response.data.data);
+      setSocialLinks(response.data.data.socialLinks);
     } catch (err) {
       console.error('error in edit club', err);
     }

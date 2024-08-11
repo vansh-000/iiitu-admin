@@ -1,5 +1,5 @@
 import { useState } from 'react';
-const INDEXING = ["scopos", "sci/scie", "esci", "wewos", "ugc-care", "others"];
+const INDEXING = ["SCOPUS", "SCI/SCIE", "ESCI", "WEWOS", "UGC-CARE", "OTHERS"];
 
 function Chapter({
   refAuthors,
@@ -16,7 +16,7 @@ function Chapter({
   const handleIndexingChange = (e) => {
     const value = e.target.value;
     setSelectedIndexing(value);
-    if (value !== "others") {
+    if (value !== "OTHERS") {
       setIndexing(value);
     }
     else{

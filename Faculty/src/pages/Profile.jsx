@@ -6,7 +6,7 @@ import { SiGooglescholar } from 'react-icons/si';
 import TableThree from '../components/Tables/TableEducation';
 import TableResearch from '../components/Tables/TableResearch';
 import TableAwards from '../components/Tables/TableAwards';
-import { API, STATIC_FILES } from '../../../Admin/src/utils/apiURl';
+import { API} from '../utils/apiURl'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -25,7 +25,7 @@ const Profile = () => {
   const [education, setEducation] = useState([]);
   const [award, setAward] = useState([]);
   const [publication, setPublication] = useState([]);
-  const [journal, setJournal] = useState([]);
+  // const [journal, setJournal] = useState([]);
   const [project, setProject] = useState([]);
   const [research, setResearch] = useState([]);
   const refProFileImg = useRef();
@@ -48,20 +48,23 @@ const Profile = () => {
           },
         },
       );
+      console.log(response);
+      
 
       if (response.status === 200) {
         setFaculty(response.data);
+
         setEducation(response.data.Education);
         setAward(response.data.AwardAndHonours);
         setPublication(response.data.Publications);
         setResearch(response.data.Research);
-        setJournal(response.data.Journals);
+        // setJournal(response.data.Journals);
         setProject(response.data.Projects);
       }
     } catch (err) {
       console.log('Error', err);
       if (
-        !localStorage.getItem('token') ||
+        !localStorage.getItem('token')||
         err.response.status === 401 ||
         err.response.status === 404
       ) {
@@ -78,7 +81,7 @@ const Profile = () => {
       if (err.response.status === 404) {
         localStorage.removeItem('ClubName');
       }
-      console.log(err);
+      
     }
   };
   useEffect(() => {
@@ -93,7 +96,7 @@ const Profile = () => {
     try {
       const newEducation = education.filter((edu) => edu.description !== '');
       const newAward = award.filter((awa) => awa !== '');
-      const newJournal = journal.filter((jor) => jor !== '');
+      // const newJournal = journal.filter((jor) => jor !== '');
       const newProject = project.filter((pro) => pro !== '');
       const newResearch = research.filter((res) => res !== '');
       const userID = JSON.parse(localStorage.getItem('user')).id;
@@ -110,7 +113,7 @@ const Profile = () => {
         Research: newResearch,
         AwardAndHonours: newAward,
         Education: newEducation,
-        Journals: newJournal,
+        // Journals: newJournal,
         Projects: newProject,
       };
       const response = await axios.put(
@@ -172,9 +175,9 @@ const Profile = () => {
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           <div className="relative z-30 mx-auto h-30 w-full max-w-30 rounded-full p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
             <div className="relative drop-shadow-2">
-              {faculty && faculty.profileImage && (
+              {faculty && faculty?.profileImage && (
                 <img
-                  src={faculty.profileImage}
+                  src={profileImage?profileImage:faculty?.profileImage}
                   className="w-[200px]"
                   alt="profile"
                 />
@@ -210,6 +213,7 @@ const Profile = () => {
                     type="file"
                     name="profile"
                     id="profile"
+                    accept="image/*"
                     className="sr-only"
                     ref={refProFileImg}
                     onChange={handleProfileImageChange}

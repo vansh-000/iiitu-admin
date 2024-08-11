@@ -1,15 +1,33 @@
-import React from 'react';
+import { useState } from 'react';
+const INDEXING = ["scopos", "sci/scie", "esci", "wewos", "ugc-care", "others"];
 
 function Chapter({
   refAuthors,
   refDate,
-  refIndexing,
+  setIndexing,
   refPage,
   refPublisher,
   refTitle,
   refUrl,
   refVol,
 }) {
+  const [selectedIndexing, setSelectedIndexing] = useState('');
+  const [otherIndexing, setOtherIndexing] = useState('');
+  const handleIndexingChange = (e) => {
+    const value = e.target.value;
+    setSelectedIndexing(value);
+    if (value !== "others") {
+      setIndexing(value);
+    }
+    else{
+      setIndexing(()=>"")
+    }
+  };
+  const handleOtherIndexingChange = (e) => {
+    const value = e.target.value;
+    setOtherIndexing(value);
+    setIndexing(value);
+  };
   return (
     <div className="p-4 md:p-5 space-y-4 transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
     <label className="mb-3 contents text-black dark:text-white">
@@ -19,7 +37,7 @@ function Chapter({
       name="title"
       type="text"
       ref={refTitle}
-      placeholder="Title Of Project"
+      placeholder="Title"
       className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
     />
     <label className="mb-3 block text-black dark:text-white">
@@ -73,18 +91,38 @@ function Chapter({
       placeholder="Name of Book"
       className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
     /></label>
+      <label className="mb-3 block text-black dark:text-white">
+        Indexing:
+        <select
+          value={selectedIndexing}
+          onChange={handleIndexingChange}
+          className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-8 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
+            selectedIndexing ? 'text-black dark:text-white' : ''
+          }`}
+        >
+          <option value="" className="text-body dark:text-bodydark">
+            Select Indexing
+          </option>
+          {INDEXING.map((idx, index) => (
+            <option key={index} value={idx} className="text-body dark:text-bodydark">
+              {idx}
+            </option>
+          ))}
+        </select>
+
+        {selectedIndexing === "others" && (
+          <input
+            name="otherIndexing"
+            type="text"
+            value={otherIndexing}
+            onChange={handleOtherIndexingChange}
+            placeholder="Name of other indexing"
+            className="ml-2 mt-2 w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+          />
+        )}
+      </label>
     <label className="mb-3 block text-black dark:text-white">
-      Indexing
-    
-    <input
-      name="title"
-      type="text"
-      ref={refIndexing}
-      placeholder="Enter Indexing"
-      className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-    /></label>
-    <label className="mb-3 block text-black dark:text-white">
-      URL
+      DOI
     
     <input
       name="title"

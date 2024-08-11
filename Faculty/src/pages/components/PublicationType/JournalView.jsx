@@ -42,7 +42,7 @@ function JournalView({
         </h5>
       </label>
       <label className="mb-3 block text-black dark:text-white">
-        URL
+        DOI
         <h5 className="font-medium text-black dark:text-white">{data.url}</h5>
       </label>
     </div>

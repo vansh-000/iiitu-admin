@@ -1,4 +1,5 @@
-import React from 'react';
+import { useState } from 'react';
+const INDEXING = ["scopos", "sci/scie", "esci", "wewos", "ugc-care", "others"];
 
 function Patent({
   refAuthors,
@@ -16,7 +17,7 @@ function Patent({
         name="title"
         type="text"
         ref={refTitle}
-        placeholder="Title Of Project"
+        placeholder="Title"
         className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
       />
       <label className="mb-3 block text-black dark:text-white">
@@ -30,7 +31,7 @@ function Patent({
         />
       </label>
       <label className="mb-3 block text-black dark:text-white">
-        Year
+        Date Of Grant
         <input
           name="title"
           type="text"
@@ -51,7 +52,7 @@ function Patent({
         />
       </label>
       <label className="mb-3 block text-black dark:text-white">
-        URL
+        DOI
         <input
           name="title"
           type="text"

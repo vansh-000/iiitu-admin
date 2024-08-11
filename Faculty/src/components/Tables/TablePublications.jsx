@@ -31,14 +31,10 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
   const refVol = useRef();
   const refPage = useRef();
   const refPublisher = useRef();
-  const refIndexing = useRef();
+ const [indexing,setIndexing]=useState();
+ const refIndexing=useRef()
   const refUrl = useRef();
   const [selected, setSelected] = useState('Journal');
-  const handleEdit = (index, value) => {
-    const updatedPublication = [...Publication];
-    updatedPublication[index] = value;
-    setPublication(updatedPublication);
-  };
   const handleDelete=async(id)=>{
 try {
   const response =await axios.delete(`${API}/publication/${id}`,{
@@ -72,26 +68,42 @@ if(response.status===200){
       const vol = refVol?.current?.value;
       const page = refPage?.current?.value;
       const publisher = refPublisher?.current?.value;
-      const indexing = refIndexing?.current?.value;
+      // const indexing = refIndexing?.current?.value;
       const url = refUrl?.current?.value;
-      const authorsFinal=authors.split(';');
-if(!heading){
- return toast.error("Title is req");
-}
-      const newPublication = { type:selected,heading, authors:authorsFinal, date, vol, Pages:page, publisher, indexing, url,writer:id };
- const response =await axios.post(`${API}/publication`,newPublication,{
-  headers: {
-    'Content-Type': 'multipart/form-data',
-    Authorization: `Bearer ${localStorage.getItem('token')}`,
-  },
-},);
+      const authorsFinal = authors.split(';');
+      
+      if (!heading) {
+        return toast.error("Title is required");
+      }
 
-  setPublication([...Publication,response.data.Publication._id  ])
+      
+      const newPublication = {
+        type: selected,
+        heading: heading,
+        authors: authorsFinal,
+        date,
+        vol,
+        Pages: page,
+        publisher,
+        indexing:indexing,
+        url,
+        writer: id
+      };
+  
+      const response = await axios.post(`${API}/publication`, newPublication, {
+        headers: {
+          'Content-Type': 'application/json', // Use JSON content type
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      setPublication([...Publication, response.data.Publication._id]);
       setIsOpen(!isOpen);
     } catch (error) {
       console.error(error);
+      toast.error("Failed to add publication"); // Display an error message if the request fails
     }
   };
+  
 const handleViewPublication=async (id)=>{
   try {
     setIsOpenView(!isOpenView);
@@ -207,7 +219,7 @@ const handleViewPublication=async (id)=>{
                   refAuthors={refAuthors}
                   refTitle={refTitle}
                   refDate={refDate}
-                  refIndexing={refIndexing}
+                  setIndexing={setIndexing}
                   refPage={refPage}
                   refPublisher={refPublisher}
                   refUrl={refUrl}
@@ -219,7 +231,7 @@ const handleViewPublication=async (id)=>{
                   refAuthors={refAuthors}
                   refTitle={refTitle}
                   refDate={refDate}
-                  refIndexing={refIndexing}
+                  setIndexing={setIndexing}
                   refPage={refPage}
                   refPublisher={refPublisher}
                   refUrl={refUrl}
@@ -231,7 +243,7 @@ const handleViewPublication=async (id)=>{
                   refAuthors={refAuthors}
                   refTitle={refTitle}
                   refDate={refDate}
-                  refIndexing={refIndexing}
+                  setIndexing={setIndexing}
                   refPage={refPage}
                   refPublisher={refPublisher}
                   refUrl={refUrl}
@@ -243,7 +255,7 @@ const handleViewPublication=async (id)=>{
                   refAuthors={refAuthors}
                   refTitle={refTitle}
                   refDate={refDate}
-                  refIndexing={refIndexing}
+                  setIndexing={setIndexing}
                   refPage={refPage}
                   refPublisher={refPublisher}
                   refUrl={refUrl}
@@ -255,7 +267,7 @@ const handleViewPublication=async (id)=>{
                   refAuthors={refAuthors}
                   refTitle={refTitle}
                   refDate={refDate}
-                  refIndexing={refIndexing}
+                  setIndexing={setIndexing}
                   refPage={refPage}
                   refPublisher={refPublisher}
                   refUrl={refUrl}
@@ -282,6 +294,7 @@ const handleViewPublication=async (id)=>{
           </div>
         </div>
       )}
+      
     </>
   );
 };

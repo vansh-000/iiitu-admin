@@ -5,6 +5,7 @@ import Journal from '../../pages/components/PublicationType/Journal';
 import Conference from '../../pages/components/PublicationType/Conference';
 import Chapter from '../../pages/components/PublicationType/Chapter';
 import Book from '../../pages/components/PublicationType/Book';
+import Patent from '../../pages/components/PublicationType/Patent';
 import { API } from '../../utils/apiURl';
 import axios from 'axios'
 import JournalView from '../../pages/components/PublicationType/JournalView';
@@ -12,8 +13,12 @@ import ConferenceView from '../../pages/components/PublicationType/ConferenceVie
 import ChapterView from '../../pages/components/PublicationType/ChapterView';
 import BookView from '../../pages/components/PublicationType/BookView';
 import PaitentView from '../../pages/components/PublicationType/PaitentView';
-const TYPE = ['Journal', 'Conference', 'Book', 'Chapter', 'Patient'];
-const {id}=JSON.parse(localStorage.getItem('user'));
+const TYPE = ['Journal', 'Conference', 'Book', 'Chapter', 'Patent'];
+let {id} = {};
+if(localStorage.getItem('user')){
+  ({id} = JSON.parse(localStorage.getItem('user')));
+}
+
 import toast from 'react-hot-toast';
 
 const TablePublications = ({ edit, Publication, setPublication }) => {

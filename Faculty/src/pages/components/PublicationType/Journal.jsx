@@ -11,6 +11,7 @@ function Journal({
   refTitle,
   refUrl,
   refVol,
+  refOther
 }) {
   const [selectedIndexing, setSelectedIndexing] = useState('');
   const [otherIndexing, setOtherIndexing] = useState('');
@@ -35,7 +36,7 @@ function Journal({
   };
 
   return (
-    <div className="p-4 md:p-5 space-y-4 transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
+    <div className="p-4 md:p-5 space-y-4 transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary max-h-[60vh] overflow-y-scroll">
       <label className="mb-3 block text-black dark:text-white">
         Title:
         <input
@@ -65,6 +66,16 @@ function Journal({
           type="text"
           ref={refDate}
           placeholder="eg. 2021"
+          className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+        />
+      </label>
+      <label className="mb-3 block text-black dark:text-white">
+        Journal Name:
+        <input
+          name="Journal Name"
+          type="text"
+          ref={refOther}
+          placeholder="Name of Journal"
           className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
         />
       </label>

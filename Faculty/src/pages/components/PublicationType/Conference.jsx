@@ -10,6 +10,7 @@ function Conference({
   refTitle,
   refUrl,
   refVol,
+  refOther
 }) {
   const [selectedIndexing, setSelectedIndexing] = useState('');
   const [otherIndexing, setOtherIndexing] = useState('');
@@ -29,7 +30,7 @@ function Conference({
     setIndexing(value);
   };
   return (
-    <div className="p-4 md:p-5 space-y-4 transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
+    <div className="p-4 md:p-5 space-y-4 transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary max-h-[60vh] overflow-y-scroll">
     <label className="mb-3 contents text-black dark:text-white">
       Title:
     </label>
@@ -60,6 +61,16 @@ function Conference({
       placeholder="eg.2021"
       className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
     /></label>
+     <label className="mb-3 block text-black dark:text-white">
+        Publisher:
+        <input
+          name="Publisher"
+          type="text"
+          ref={refOther}
+          placeholder="Name of Publisher"
+          className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+        />
+      </label>
     <label className="mb-3 block text-black dark:text-white">
       Vol
     

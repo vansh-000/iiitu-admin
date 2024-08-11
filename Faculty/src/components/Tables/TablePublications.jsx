@@ -30,6 +30,7 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
   const refDate = useRef();
   const refVol = useRef();
   const refPage = useRef();
+  const refOther=useRef();
   const refPublisher = useRef();
  const [indexing,setIndexing]=useState();
  const refIndexing=useRef()
@@ -68,6 +69,7 @@ if(response.status===200){
       const vol = refVol?.current?.value;
       const page = refPage?.current?.value;
       const publisher = refPublisher?.current?.value;
+      const other=refOther?.current?.value;
       // const indexing = refIndexing?.current?.value;
       const url = refUrl?.current?.value;
       const authorsFinal = authors.split(';');
@@ -87,6 +89,7 @@ if(response.status===200){
         publisher,
         indexing:indexing,
         url,
+        other,
         writer: id
       };
   
@@ -168,7 +171,7 @@ const handleViewPublication=async (id)=>{
               {data?.type==="Patient"&&<PaitentView data={data}/>}
               <div className="flex  items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <button
-                  onClick={()=>handleDelete(data._id)}
+                  onClick={()=>handleDelete(data?._id)}
                   className="text-white bg-red-700 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-700 dark:hover:bg-red-900 dark:focus:ring-blue-800"
                   type="button"
                 >
@@ -224,6 +227,7 @@ const handleViewPublication=async (id)=>{
                   refPublisher={refPublisher}
                   refUrl={refUrl}
                   refVol={refVol}
+                  refOther={refOther}
                 />
               )}
               {selected === 'Conference' && (
@@ -236,6 +240,7 @@ const handleViewPublication=async (id)=>{
                   refPublisher={refPublisher}
                   refUrl={refUrl}
                   refVol={refVol}
+                  refOther={refOther}
                 />
               )}
               {selected === 'Chapter' && (
@@ -248,6 +253,7 @@ const handleViewPublication=async (id)=>{
                   refPublisher={refPublisher}
                   refUrl={refUrl}
                   refVol={refVol}
+                  refOther={refOther}
                 />
               )}
               {selected === 'Book' && (
@@ -260,6 +266,7 @@ const handleViewPublication=async (id)=>{
                   refPublisher={refPublisher}
                   refUrl={refUrl}
                   refVol={refVol}
+                  refOther={refOther}
                 />
               )}
               {selected === 'Patent' && (

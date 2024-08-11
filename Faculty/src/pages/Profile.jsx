@@ -97,7 +97,7 @@ const Profile = () => {
       const newEducation = education.filter((edu) => edu.description !== '');
       const newAward = award.filter((awa) => awa !== '');
       // const newJournal = journal.filter((jor) => jor !== '');
-      const newProject = project.filter((pro) => pro !== '');
+      const newProject = project.filter((pro) => pro.Title !== '');
       const newResearch = research.filter((res) => res !== '');
       const userID = JSON.parse(localStorage.getItem('user')).id;
       const data = {
@@ -116,6 +116,8 @@ const Profile = () => {
         // Journals: newJournal,
         Projects: newProject,
       };
+      console.log(newProject);
+      
       const response = await axios.put(
         `${API}/faculty/editDetails/${userID}`,
         data,

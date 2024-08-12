@@ -107,11 +107,13 @@ if(response.status===200){
     }
   };
   
-const handleViewPublication=async (id)=>{
+const handleViewPublication=async (pub)=>{
   try {
     setIsOpenView(!isOpenView);
-    const response=await axios.get(`${API}/publication/${id}`);
-    setData(response.data.Publications);
+    console.log(pub);
+    
+    // const response=await axios.get(`${API}/publication/${id}`);
+    setData(pub);
   } catch (err) {
     console.error(err);
   }

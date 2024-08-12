@@ -3,6 +3,7 @@ import DefaultLayout from '../layout/DefaultLayout';
 import { Link } from 'react-router-dom';
 import { FaLinkedin, FaOrcid } from 'react-icons/fa';
 import { SiGooglescholar } from 'react-icons/si';
+import { BsGlobe2 } from "react-icons/bs";
 import TableThree from '../components/Tables/TableEducation';
 import TableResearch from '../components/Tables/TableResearch';
 import TableAwards from '../components/Tables/TableAwards';
@@ -36,6 +37,7 @@ const Profile = () => {
   const refLinkedin = useRef();
   const refGoogleScholar = useRef();
   const refOrcid = useRef();
+  const refWeb=useRef();
   const userData = JSON.parse(localStorage.getItem('user'));
   const ClubName = localStorage.getItem('ClubName');
   const fetchData = async () => {
@@ -109,6 +111,7 @@ const Profile = () => {
           { social: 'Linkedin', link: refLinkedin.current.value },
           { social: 'GoogleScholar', link: refGoogleScholar.current.value },
           { social: 'Orcid', link: refOrcid.current.value },
+          { social:'Website',link: refWeb.current.value},
         ],
         Research: newResearch,
         AwardAndHonours: newAward,
@@ -271,7 +274,7 @@ const Profile = () => {
                 </Link>
               )
             )}
-            <div className="mx-auto mt-4.5 mb-5.5 grid max-w-[300px] sm:max-w-[500px] grid-cols-3 gap-2 rounded-md border border-stroke p-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
+            <div className="mx-auto mt-4.5 mb-5.5 grid max-w-[300px] sm:max-w-[500px] grid-cols-4 gap-2 rounded-md border border-stroke p-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
               {editable ? (
                 <input
                   name="title"
@@ -338,6 +341,29 @@ const Profile = () => {
                     className="flex flex-col items-center justify-center gap-2 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row"
                   >
                     <FaOrcid className="text-2xl" />
+                  </Link>
+                )
+              )}
+              {editable ? (
+                <input
+                  name="title"
+                  type="text"
+                  ref={refWeb}
+                  placeholder="Website Link"
+                  defaultValue={
+                    faculty.socialLink && faculty?.socialLink[3]
+                      ? faculty.socialLink[3].link
+                      : ''
+                  }
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                />
+              ) : (
+                faculty.socialLink && (
+                  <Link
+                    to={faculty?.socialLink[3]?.link}
+                    className="flex flex-col items-center justify-center gap-2 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row"
+                  >
+                    <BsGlobe2 className="text-2xl" />
                   </Link>
                 )
               )}

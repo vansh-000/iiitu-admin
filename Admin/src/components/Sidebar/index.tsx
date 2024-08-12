@@ -9,6 +9,7 @@ import { IoMdPhotos } from 'react-icons/io';
 import { LuPartyPopper } from 'react-icons/lu';
 import { ImNewspaper } from 'react-icons/im';
 import { jwtDecode } from 'jwt-decode';
+import { TiGroup } from "react-icons/ti";
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -596,6 +597,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     );
                   }}
                 </SidebarLinkGroup>}
+                {Allow?.[11]&&<li>
+                  <NavLink
+                    to="/minutes"
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      pathname.includes('Minutes') && 'bg-graydark dark:bg-meta-4'
+                    }`}
+                  >
+                   <TiGroup />
+                    Minutes
+                  </NavLink>
+                </li>}
               </ul>
             </div>
           </nav>

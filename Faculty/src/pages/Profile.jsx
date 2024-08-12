@@ -8,7 +8,6 @@ import TableThree from '../components/Tables/TableEducation';
 import TableResearch from '../components/Tables/TableResearch';
 import TableAwards from '../components/Tables/TableAwards';
 import { API} from '../utils/apiURl'
-import { API} from '../utils/apiURl'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -190,10 +189,10 @@ const Profile = () => {
           <div className="relative z-30 mx-auto h-30 w-full max-w-30 rounded-full p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
             <div className="relative drop-shadow-2">
               {faculty && faculty?.profileImage && (
-              {faculty && faculty?.profileImage && (
+   
                 <img
                   src={profileImage?profileImage:faculty?.profileImage}
-                  src={profileImage?profileImage:faculty?.profileImage}
+       
                   className="w-[200px]"
                   alt="profile"
                 />
@@ -230,7 +229,7 @@ const Profile = () => {
                     name="profile"
                     id="profile"
                     accept="image/*"
-                    accept="image/*"
+          
                     className="sr-only"
                     ref={refProFileImg}
                     onChange={handleProfileImageChange}

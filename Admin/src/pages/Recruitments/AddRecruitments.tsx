@@ -16,7 +16,7 @@ const AddRecruitments = () => {
       return navigate("/signin");}
     const {Allow}=jwtDecode(token);
     if(!Allow?.[10]){
-      navigate('/profile');
+      navigate('/minutes');
     }
   },[]);
   const startDateRef = React.useRef<HTMLInputElement>(null);

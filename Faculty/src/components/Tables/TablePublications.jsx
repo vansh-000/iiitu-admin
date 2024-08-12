@@ -30,15 +30,12 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
   const refDate = useRef();
   const refVol = useRef();
   const refPage = useRef();
+  const refOther=useRef();
   const refPublisher = useRef();
-  const refIndexing = useRef();
+ const [indexing,setIndexing]=useState();
+ const refIndexing=useRef()
   const refUrl = useRef();
   const [selected, setSelected] = useState('Journal');
-  const handleEdit = (index, value) => {
-    const updatedPublication = [...Publication];
-    updatedPublication[index] = value;
-    setPublication(updatedPublication);
-  };
   const handleDelete=async(id)=>{
 try {
   const response =await axios.delete(`${API}/publication/${id}`,{
@@ -72,31 +69,51 @@ if(response.status===200){
       const vol = refVol?.current?.value;
       const page = refPage?.current?.value;
       const publisher = refPublisher?.current?.value;
-      const indexing = refIndexing?.current?.value;
+      const other=refOther?.current?.value;
+      // const indexing = refIndexing?.current?.value;
       const url = refUrl?.current?.value;
-      const authorsFinal=authors.split(';');
-if(!heading){
- return toast.error("Title is req");
-}
-      const newPublication = { type:selected,heading, authors:authorsFinal, date, vol, Pages:page, publisher, indexing, url,writer:id };
- const response =await axios.post(`${API}/publication`,newPublication,{
-  headers: {
-    'Content-Type': 'multipart/form-data',
-    Authorization: `Bearer ${localStorage.getItem('token')}`,
-  },
-},);
+      const authorsFinal = authors.split(';');
+      
+      if (!heading) {
+        return toast.error("Title is required");
+      }
 
-  setPublication([...Publication,response.data.Publication._id  ])
+      
+      const newPublication = {
+        type: selected,
+        heading: heading,
+        authors: authorsFinal,
+        date,
+        vol,
+        Pages: page,
+        publisher,
+        indexing:indexing,
+        url,
+        other,
+        writer: id
+      };
+  
+      const response = await axios.post(`${API}/publication`, newPublication, {
+        headers: {
+          'Content-Type': 'application/json', // Use JSON content type
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      setPublication([...Publication, response.data.Publication._id]);
       setIsOpen(!isOpen);
     } catch (error) {
       console.error(error);
+      toast.error("Failed to add publication"); // Display an error message if the request fails
     }
   };
-const handleViewPublication=async (id)=>{
+  
+const handleViewPublication=async (pub)=>{
   try {
     setIsOpenView(!isOpenView);
-    const response=await axios.get(`${API}/publication/${id}`);
-    setData(response.data.Publications);
+    console.log(pub);
+    
+    // const response=await axios.get(`${API}/publication/${id}`);
+    setData(pub);
   } catch (err) {
     console.error(err);
   }
@@ -156,7 +173,7 @@ const handleViewPublication=async (id)=>{
               {data?.type==="Patient"&&<PaitentView data={data}/>}
               <div className="flex  items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <button
-                  onClick={()=>handleDelete(data._id)}
+                  onClick={()=>handleDelete(data?._id)}
                   className="text-white bg-red-700 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-700 dark:hover:bg-red-900 dark:focus:ring-blue-800"
                   type="button"
                 >
@@ -207,11 +224,12 @@ const handleViewPublication=async (id)=>{
                   refAuthors={refAuthors}
                   refTitle={refTitle}
                   refDate={refDate}
-                  refIndexing={refIndexing}
+                  setIndexing={setIndexing}
                   refPage={refPage}
                   refPublisher={refPublisher}
                   refUrl={refUrl}
                   refVol={refVol}
+                  refOther={refOther}
                 />
               )}
               {selected === 'Conference' && (
@@ -219,11 +237,12 @@ const handleViewPublication=async (id)=>{
                   refAuthors={refAuthors}
                   refTitle={refTitle}
                   refDate={refDate}
-                  refIndexing={refIndexing}
+                  setIndexing={setIndexing}
                   refPage={refPage}
                   refPublisher={refPublisher}
                   refUrl={refUrl}
                   refVol={refVol}
+                  refOther={refOther}
                 />
               )}
               {selected === 'Chapter' && (
@@ -231,11 +250,12 @@ const handleViewPublication=async (id)=>{
                   refAuthors={refAuthors}
                   refTitle={refTitle}
                   refDate={refDate}
-                  refIndexing={refIndexing}
+                  setIndexing={setIndexing}
                   refPage={refPage}
                   refPublisher={refPublisher}
                   refUrl={refUrl}
                   refVol={refVol}
+                  refOther={refOther}
                 />
               )}
               {selected === 'Book' && (
@@ -243,11 +263,12 @@ const handleViewPublication=async (id)=>{
                   refAuthors={refAuthors}
                   refTitle={refTitle}
                   refDate={refDate}
-                  refIndexing={refIndexing}
+                  setIndexing={setIndexing}
                   refPage={refPage}
                   refPublisher={refPublisher}
                   refUrl={refUrl}
                   refVol={refVol}
+                  refOther={refOther}
                 />
               )}
               {selected === 'Patent' && (
@@ -255,7 +276,7 @@ const handleViewPublication=async (id)=>{
                   refAuthors={refAuthors}
                   refTitle={refTitle}
                   refDate={refDate}
-                  refIndexing={refIndexing}
+                  setIndexing={setIndexing}
                   refPage={refPage}
                   refPublisher={refPublisher}
                   refUrl={refUrl}
@@ -282,6 +303,7 @@ const handleViewPublication=async (id)=>{
           </div>
         </div>
       )}
+      
     </>
   );
 };

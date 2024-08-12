@@ -16,7 +16,9 @@ const FacultyEditCard = ({ faculty, fetchData }) => {
       toast.success("Faculty is Deleted");
       fetchData();
     } catch (err) {
-      if (err.response.status === 401) {
+      console.log(err);
+      
+      if (err?.response?.status === 401) {
         return navigate('/signin');
       }
       toast.error(`Error: ${err}`);

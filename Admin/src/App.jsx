@@ -30,6 +30,7 @@ import EditResearch from './pages/Research/EditResearch.jsx';
 import ForgotAdmin from './pages/Authentication/Forgot';
 import VerifyOTP from './pages/Authentication/VerifyOTP.jsx';
 import Reset from './pages/Authentication/Reset.jsx';
+import Minutes from './pages/Minutes.jsx';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -65,6 +66,7 @@ function App() {
             </>
           }
         />
+        
         <Route
           path="/clubs/:id"
           element={
@@ -262,6 +264,15 @@ function App() {
             <>
               <PageTitle title="Research | Research Edit and Delete" />
               <EditResearch />
+            </>
+          }
+        />
+          <Route
+          path="/minutes"
+          element={
+            <>
+              <PageTitle title="Minutes | Minutes DashBoard" />
+              <Minutes />
             </>
           }
         />

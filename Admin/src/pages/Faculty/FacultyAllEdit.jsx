@@ -60,12 +60,12 @@ const FacultyAllEdit = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-      const newEducation = education.filter((edu) => edu.description !== '');
-      const newAward = award.filter((awa) => awa !== '');
-      const newPublication = publication.filter((pub) => pub !== '');
-      const newJournal = journal.filter((jor) => jor !== '');
-      const newProject = project.filter((pro) => pro !== '');
-      const newResearch = research.filter((res) => res !== '');
+            const newEducation = education.length === 0 ? [] : education.filter((edu) => edu.description !== '');
+            const newAward = award.length === 0 ? [] : award.filter((awa) => awa !== '');
+            const newPublication = publication.length === 0 ? [] : publication.filter((pub) => pub !== '');    
+            const newJournal = journal.length === 0 ? [] : journal.filter((jor) => jor !== '');
+            const newProject = project.length === 0 ? [] : project.filter((pro) => pro !== '');
+            const newResearch = research.length === 0 ? [] : research.filter((res) => res !== '');   
       const response = await axios.put(
         `${API}/faculty/editDetails/${idd.id}`,
         {
@@ -114,7 +114,9 @@ const FacultyAllEdit = () => {
         toast.success(`${responsee.data.message}`);
       }
     } catch (err) {
-      if (err.response.status === 401) {
+      console.log(err);
+      
+      if (err?.response?.status === 401) {
         return navigate('/signin');
       }
       toast.error(`Error: ${err}`);

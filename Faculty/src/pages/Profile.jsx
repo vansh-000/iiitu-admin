@@ -8,6 +8,7 @@ import TableThree from '../components/Tables/TableEducation';
 import TableResearch from '../components/Tables/TableResearch';
 import TableAwards from '../components/Tables/TableAwards';
 import { API} from '../utils/apiURl'
+import { API} from '../utils/apiURl'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -26,6 +27,7 @@ const Profile = () => {
   const [education, setEducation] = useState([]);
   const [award, setAward] = useState([]);
   const [publication, setPublication] = useState([]);
+  // const [journal, setJournal] = useState([]);
   // const [journal, setJournal] = useState([]);
   const [project, setProject] = useState([]);
   const [research, setResearch] = useState([]);
@@ -52,20 +54,25 @@ const Profile = () => {
       );
       console.log(response);
       
+      console.log(response);
+      
 
       if (response.status === 200) {
         setFaculty(response.data);
+
 
         setEducation(response.data.Education);
         setAward(response.data.AwardAndHonours);
         setPublication(response.data.Publications);
         setResearch(response.data.Research);
         // setJournal(response.data.Journals);
+        // setJournal(response.data.Journals);
         setProject(response.data.Projects);
       }
     } catch (err) {
       console.log('Error', err);
       if (
+        !localStorage.getItem('token')||
         !localStorage.getItem('token')||
         err.response.status === 401 ||
         err.response.status === 404
@@ -83,6 +90,7 @@ const Profile = () => {
       if (err.response.status === 404) {
         localStorage.removeItem('ClubName');
       }
+      
       
     }
   };
@@ -116,6 +124,7 @@ const Profile = () => {
         Research: newResearch,
         AwardAndHonours: newAward,
         Education: newEducation,
+        // Journals: newJournal,
         // Journals: newJournal,
         Projects: newProject,
       };
@@ -181,7 +190,9 @@ const Profile = () => {
           <div className="relative z-30 mx-auto h-30 w-full max-w-30 rounded-full p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
             <div className="relative drop-shadow-2">
               {faculty && faculty?.profileImage && (
+              {faculty && faculty?.profileImage && (
                 <img
+                  src={profileImage?profileImage:faculty?.profileImage}
                   src={profileImage?profileImage:faculty?.profileImage}
                   className="w-[200px]"
                   alt="profile"
@@ -218,6 +229,7 @@ const Profile = () => {
                     type="file"
                     name="profile"
                     id="profile"
+                    accept="image/*"
                     accept="image/*"
                     className="sr-only"
                     ref={refProFileImg}

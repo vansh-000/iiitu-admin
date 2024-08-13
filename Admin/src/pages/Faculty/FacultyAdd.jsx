@@ -7,8 +7,6 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import TableEducation from '../../components/Tables/TableEducation';
 import TableResearch from '../../components/Tables/TableResearch';
 import TableAwards from '../../components/Tables/TableAwards';
-import TablePublications from '../../components/Tables/TablePublications';
-import TableJournals from '../../components/Tables/TableJournals';
 import TableProjects from '../../components/Tables/TableProjects';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
@@ -21,9 +19,7 @@ function FacultyAdd() {
   const [education, setEducation] = useState([]);
   const [research, setResearch] = useState([]);
   const [award, setAward] = useState([]);
-  const [publication, setPublication] = useState([]);
-  const [journal, setJournal] = useState([]);
-  const [project, setProject] = useState([]);
+  // const [project, setProject] = useState([]);
   const refMobile = useRef('');
   const refResearchInterest = useRef('');
   const refLinkedin = useRef('');
@@ -51,7 +47,7 @@ function FacultyAdd() {
       const newAward = award.filter((awa) => awa !== '');
       // const newPublication = publication.filter((pub) => pub !== '');
       // const newJournal = journal.filter((jor) => jor !== '');
-      const newProject = project.filter((pro) => pro.Title !== '');
+
       const newResearch = research.filter((res) => res !== '');
       if (!selectedDepartment) {
         return toast.error('Select Department');
@@ -90,7 +86,7 @@ function FacultyAdd() {
           profileImage: refProfileImage.current.files[0],
           AwardAndHonours: newAward,
           Education: newEducation,
-          Projects: newProject,
+          Projects: [],
           Research: newResearch,
         },
         {
@@ -426,9 +422,9 @@ function FacultyAdd() {
               {/* {journal && (
                 <TableJournals Journal={journal} setJournal={setJournal} />
               )} */}
-              {project && (
+              {/* {project && (
                 <TableProjects Project={project} setProject={setProject} />
-              )}
+              )} */}
 
               <div>
                 <input

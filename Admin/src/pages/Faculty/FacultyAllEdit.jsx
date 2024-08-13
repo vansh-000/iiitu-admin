@@ -18,7 +18,7 @@ const FacultyAllEdit = () => {
   const [education, setEducation] = useState([]);
   const [research, setResearch] = useState([]);
   const [award, setAward] = useState([]);
-  const [project, setProject] = useState([]);
+  // const [project, setProject] = useState([]);
   const refProFileImg = React.useRef();
   const refResume = React.useRef();
   const refName = React.useRef();
@@ -59,7 +59,7 @@ const FacultyAllEdit = () => {
             const newAward = award.length === 0 ? [] : award.filter((awa) => awa !== '');
             // const newPublication = publication.length === 0 ? [] : publication.filter((pub) => pub !== '');    
             // const newJournal = journal.length === 0 ? [] : journal.filter((jor) => jor !== '');
-            const newProject = project.length === 0 ? [] : project.filter((pro) => pro.Title !== '');
+            // const newProject = project.length === 0 ? [] : project.filter((pro) => pro.Title !== '');
             const newResearch = research.length === 0 ? [] : research.filter((res) => res !== '');   
       const response = await axios.put(
         `${API}/faculty/editDetails/${idd.id}`,
@@ -76,7 +76,7 @@ const FacultyAllEdit = () => {
           ],
           AwardAndHonours: newAward,
           Education: newEducation,
-          Projects: newProject,
+          // Projects: newProject,
           Research: newResearch,
         },
         {
@@ -326,9 +326,9 @@ const FacultyAllEdit = () => {
             {journal && (
               <TableJournals Journal={journal} setJournal={setJournal} />
             )} */}
-            {project && (
+            {/* {project && (
               <TableProjects Project={project} setProject={setProject} />
-            )}
+            )} */}
             <div>
               <input
                 className="inline-flex items-center mt-4 justify-center rounded-full bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 hover:cursor-pointer"

@@ -1,94 +1,193 @@
+import { useState } from 'react';
+import { useRef } from 'react';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
-
+import ProjectAdd from '../../pages/components/Project/ProjectAdd';
+import axios from 'axios'
+import { API } from '../../utils/apiURl';
+import ProjectView from '../../pages/components/Project/ProjectView';
 const TableProjects = ({ edit, Project, setProject }) => {
-  const handleEdit = (index, field, value) => {
-    const updatedProject = [...Project];
-    updatedProject[index][field] = value;
-    setProject(updatedProject);
-  };
+  const [isOpen, setIsOpen] = useState(false);
+  const [data, setData] = useState();
+  const [isOpenView, setIsOpenView] = useState(false);
+  const refTitle = useRef();
+  const refInvestigator = useRef();
+  const refCoInvestigator = useRef();
+  const refFundingAgency = useRef();
+  const refDuration = useRef();
+  const refAmount = useRef();
+  const [status, setStatus] = useState();
+  const [type, setType] = useState();
+  // const handleEdit = (index, field, value) => {
+  //   const updatedProject = [...Project];
+  //   updatedProject[index][field] = value;
+  //   setProject(updatedProject);
+  // };
+  console.log(Project);
+  
+  const handleAddProjectLink = async () => {
+    try {
+      const invest = refInvestigator?.current?.value;
+      const coInvest = refCoInvestigator?.current?.value;
+      const investigator = invest.split(';');
+      const coInvestigator = coInvest.split(';');
 
-  const handleAddProject = () => {
-    setProject([
-      ...Project,
-      {
-        Title: '',
-        Investigators: '',
-        FundingAgency: '',
-        FundRaised: ''
-      }
-    ]);
+      const newProject = {
+        title: refTitle?.current?.value,
+        investigator: investigator,
+        coInvestigator: coInvestigator,
+        fundingAgency: refFundingAgency?.current?.value,
+        duration: refDuration?.current?.value,
+        amount: refAmount?.current?.value,
+        status: status,
+        type: type,
+        writer: JSON.parse(localStorage.getItem('user')).id,
+      };
+      const response = await axios.post(`${API}/project`, newProject, {
+        headers: {
+          'Content-Type': 'application/json', // Use JSON content type
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      console.log(response);
+      
+      setProject([...Project, response.data.Project]);
+      setIsOpen(!isOpen);
+    } catch (err) {
+      console.error(err);
+    }
   };
-  const handleDelete=(index)=>{
-    const updatedProject = Project.filter((_,ind)=>(ind!=index));
-    setProject(updatedProject);
-  }
+  const handleClose = () => {
+    setIsOpenView(!isOpenView);
+  };
+  const handleAddProject = () => {
+    setIsOpen(!isOpen);
+  };
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(`${API}/project/${id}`, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      if (response.status === 200) {
+        const updatedProject = Project.filter((pro) => pro._id !== id);
+        setProject(updatedProject);
+        setIsOpenView(!isOpenView);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const handleViewProject = (pro) => {
+    setData(pro);
+    setIsOpenView(!isOpenView);
+  };
   return (
-    <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <div className="max-w-full overflow-x-auto">
-        <table className="w-full table-auto">
-          <thead>
-            <tr className="bg-gray-2 text-left dark:bg-meta-4">
-              <th className="py-4 px-4 font-medium text-center text-black dark:text-white">
-                Projects
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {Project.map((pro, index) => (
-              <tr key={index}>
-                <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                  {edit ? (
-                    <><button className='mr-5' onClick={()=>handleDelete(index)}><RiDeleteBin5Fill className='text-red-700'/></button>
-                      <input
-                        type="text"
-                        value={pro.Title}
-                        placeholder="Project Title"
-                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        onChange={(e) => handleEdit(index, 'Title', e.target.value)}
-                      />
-                      <input
-                        type="text"
-                        value={pro.Investigators}
-                        placeholder="Investigators"
-                        className="w-full mt-2 rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        onChange={(e) => handleEdit(index, 'Investigators', e.target.value)}
-                      />
-                      <input
-                        type="text"
-                        value={pro.FundingAgency}
-                        placeholder="Funding Agency"
-                        className="w-full mt-2 rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        onChange={(e) => handleEdit(index, 'FundingAgency', e.target.value)}
-                      />
-                      <input
-                        type="text"
-                        value={pro.FundRaised}
-                        placeholder="Fund Raised"
-                        className="w-full mt-2 rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        onChange={(e) => handleEdit(index, 'FundRaised', e.target.value)}
-                      />
-                    </>
-                  ) : (
-                    <h5 className="font-medium text-black dark:text-white">
-                      {pro.Title + " " + pro.Investigators + " " + pro.FundingAgency + " " + pro.FundRaised}
-                    </h5>
-                  )}
-                </td>
+    <>
+      <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+        <div className="max-w-full overflow-x-auto">
+          <table className="w-full table-auto">
+            <thead>
+              <tr className="bg-gray-2 text-left dark:bg-meta-4">
+                <th className="py-4 px-4 font-medium text-center text-black dark:text-white">
+                  Projects
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        {edit && (
-          <button
-            className="mt-2 flex items-center gap-1 bg-primary text-white rounded-md px-4 py-2"
-            onClick={handleAddProject}
-          >
-            Add Project <IoMdAddCircleOutline />
-          </button>
-        )}
+            </thead>
+            <tbody>
+              {Project.map((pro, index) => (
+                <tr key={index}>
+                  <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+                    <button
+                      onClick={() => handleViewProject(pro)}
+                      className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      type="button"
+                    >
+                      View Project
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {edit && (
+            <button
+              className="mt-2 flex items-center gap-1 bg-primary text-white rounded-md px-4 py-2"
+              onClick={handleAddProject}
+            >
+              Add Project <IoMdAddCircleOutline />
+            </button>
+          )}
+        </div>
       </div>
-    </div>
+      {isOpenView && (
+        <div className="fixed inset-0 z-99999 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
+          <div className="relative p-4 w-full max-w-2xl max-h-full">
+            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+              <div className="flex items-center justify-center text-black text-xl text-center p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                {data?.type}
+              </div>
+
+              <ProjectView data={data} />
+
+              <div className="flex  items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                <button
+                  onClick={() => handleDelete(data?._id)}
+                  className="text-white bg-red-700 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-700 dark:hover:bg-red-900 dark:focus:ring-blue-800"
+                  type="button"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={handleClose}
+                  className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  type="button"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {isOpen && (
+        <div className="fixed inset-0 z-99999 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
+          <div className="relative p-4 w-full max-w-2xl max-h-full ">
+            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+              <ProjectAdd
+                refTitle={refTitle}
+                refInvestigator={refInvestigator}
+                refCoInvestigator={refCoInvestigator}
+                refFundingAgency={refFundingAgency}
+                refDuration={refDuration}
+                refAmount={refAmount}
+                setStatus={setStatus}
+                setType={setType}
+              />
+
+              <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary max-h-[60vh] overflow-y-scroll">
+                <button
+                  onClick={handleAddProjectLink}
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  type="button"
+                >
+                  Add
+                </button>
+                <button
+                  onClick={handleAddProject}
+                  className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-black dark:border-gray-600 dark:hover:text-black dark:hover:bg-gray-700"
+                  type="button"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

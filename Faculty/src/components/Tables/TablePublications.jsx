@@ -101,9 +101,6 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
   const handleViewPublication = async (pub) => {
     try {
       setIsOpenView(!isOpenView);
-      console.log(pub);
-
-      // const response=await axios.get(`${API}/publication/${id}`);
       setData(pub);
     } catch (err) {
       console.error(err);

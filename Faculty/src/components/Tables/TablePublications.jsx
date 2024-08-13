@@ -7,57 +7,52 @@ import Chapter from '../../pages/components/PublicationType/Chapter';
 import Book from '../../pages/components/PublicationType/Book';
 import Patent from '../../pages/components/PublicationType/Patent';
 import { API } from '../../utils/apiURl';
-import axios from 'axios'
+import axios from 'axios';
 import JournalView from '../../pages/components/PublicationType/JournalView';
 import ConferenceView from '../../pages/components/PublicationType/ConferenceView';
 import ChapterView from '../../pages/components/PublicationType/ChapterView';
 import BookView from '../../pages/components/PublicationType/BookView';
 import PaitentView from '../../pages/components/PublicationType/PaitentView';
 const TYPE = ['Journal', 'Conference', 'Book', 'Chapter', 'Patent'];
-let {id} = {};
-if(localStorage.getItem('user')){
-  ({id} = JSON.parse(localStorage.getItem('user')));
-}
 
 import toast from 'react-hot-toast';
 
 const TablePublications = ({ edit, Publication, setPublication }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [data,setData]=useState();
-  const [isOpenView,setIsOpenView]=useState(false);
+  const [data, setData] = useState();
+  const [isOpenView, setIsOpenView] = useState(false);
   const refTitle = useRef();
   const refAuthors = useRef();
-  const refDate = useRef();
+
+  const [date, setDate] = useState();
   const refVol = useRef();
   const refPage = useRef();
-  const refOther=useRef();
+  const refOther = useRef();
   const refPublisher = useRef();
- const [indexing,setIndexing]=useState();
- const refIndexing=useRef()
+  const [indexing, setIndexing] = useState();
+
   const refUrl = useRef();
   const [selected, setSelected] = useState('Journal');
-  const handleDelete=async(id)=>{
-try {
-  const response =await axios.delete(`${API}/publication/${id}`,{
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-  },);
-if(response.status===200){
-  const updatedPublication = Publication.filter((pub) => pub !== id);
-  setPublication(updatedPublication);
-  setIsOpenView(!isOpenView);
-}
-  
-} catch (err) {
-  console.error(err);
-  
-}
-  }
-  const handleClose=()=>{
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(`${API}/publication/${id}`, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      if (response.status === 200) {
+        const updatedPublication = Publication.filter((pub) => pub._id !== id);
+        setPublication(updatedPublication);
+        setIsOpenView(!isOpenView);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const handleClose = () => {
     setIsOpenView(!isOpenView);
-  }
+  };
   const handleAddPublication = () => {
     setIsOpen(!isOpen);
   };
@@ -65,20 +60,16 @@ if(response.status===200){
     try {
       const heading = refTitle?.current?.value;
       const authors = refAuthors?.current?.value;
-      const date = refDate?.current?.value;
       const vol = refVol?.current?.value;
       const page = refPage?.current?.value;
       const publisher = refPublisher?.current?.value;
-      const other=refOther?.current?.value;
-      // const indexing = refIndexing?.current?.value;
+      const other = refOther?.current?.value;
       const url = refUrl?.current?.value;
       const authorsFinal = authors.split(';');
-      
       if (!heading) {
-        return toast.error("Title is required");
+        return toast.error('Title is required');
       }
 
-      
       const newPublication = {
         type: selected,
         heading: heading,
@@ -87,37 +78,37 @@ if(response.status===200){
         vol,
         Pages: page,
         publisher,
-        indexing:indexing,
+        indexing: indexing,
         url,
         other,
-        writer: id
+        writer: JSON.parse(localStorage.getItem('user')).id,
       };
-  
+
       const response = await axios.post(`${API}/publication`, newPublication, {
         headers: {
           'Content-Type': 'application/json', // Use JSON content type
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      setPublication([...Publication, response.data.Publication._id]);
+      setPublication([...Publication, response.data.Publication]);
       setIsOpen(!isOpen);
     } catch (error) {
       console.error(error);
-      toast.error("Failed to add publication"); // Display an error message if the request fails
+      toast.error('Failed to add publication'); // Display an error message if the request fails
     }
   };
-  
-const handleViewPublication=async (pub)=>{
-  try {
-    setIsOpenView(!isOpenView);
-    console.log(pub);
-    
-    // const response=await axios.get(`${API}/publication/${id}`);
-    setData(pub);
-  } catch (err) {
-    console.error(err);
-  }
-}
+
+  const handleViewPublication = async (pub) => {
+    try {
+      setIsOpenView(!isOpenView);
+      console.log(pub);
+
+      // const response=await axios.get(`${API}/publication/${id}`);
+      setData(pub);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -135,13 +126,13 @@ const handleViewPublication=async (pub)=>{
                 <tr key={index}>
                   <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                     <h5 className="font-medium text-black dark:text-white">
-                    <button
-              onClick={()=>handleViewPublication(pub)}
-              className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              type="button"
-            >
-              View Publication
-            </button>
+                      <button
+                        onClick={() => handleViewPublication(pub)}
+                        className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        type="button"
+                      >
+                        View Publication
+                      </button>
                     </h5>
                   </td>
                 </tr>
@@ -162,18 +153,18 @@ const handleViewPublication=async (pub)=>{
         <div className="fixed inset-0 z-99999 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
           <div className="relative p-4 w-full max-w-2xl max-h-full">
             <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <div className="flex items-center justify-center text-black text-xl text-center p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-  {data?.type}
-</div>
+              <div className="flex items-center justify-center text-black text-xl text-center p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                {data?.type}
+              </div>
 
-              {data?.type==="Journal"&&<JournalView data={data}/>}
-              {data?.type==="Conference"&&<ConferenceView data={data}/>}
-              {data?.type==="Chapter"&&<ChapterView data={data}/>}
-              {data?.type==="Book"&&<BookView data={data}/>}
-              {data?.type==="Patient"&&<PaitentView data={data}/>}
+              {data?.type === 'Journal' && <JournalView data={data} />}
+              {data?.type === 'Conference' && <ConferenceView data={data} />}
+              {data?.type === 'Chapter' && <ChapterView data={data} />}
+              {data?.type === 'Book' && <BookView data={data} />}
+              {data?.type === 'Patient' && <PaitentView data={data} />}
               <div className="flex  items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <button
-                  onClick={()=>handleDelete(data?._id)}
+                  onClick={() => handleDelete(data?._id)}
                   className="text-white bg-red-700 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-700 dark:hover:bg-red-900 dark:focus:ring-blue-800"
                   type="button"
                 >
@@ -184,7 +175,7 @@ const handleViewPublication=async (pub)=>{
                   className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                   type="button"
                 >
-                 Cancel
+                  Cancel
                 </button>
               </div>
             </div>
@@ -223,7 +214,7 @@ const handleViewPublication=async (pub)=>{
                 <Journal
                   refAuthors={refAuthors}
                   refTitle={refTitle}
-                  refDate={refDate}
+                  setDate={setDate}
                   setIndexing={setIndexing}
                   refPage={refPage}
                   refPublisher={refPublisher}
@@ -236,7 +227,7 @@ const handleViewPublication=async (pub)=>{
                 <Conference
                   refAuthors={refAuthors}
                   refTitle={refTitle}
-                  refDate={refDate}
+                  setDate={setDate}
                   setIndexing={setIndexing}
                   refPage={refPage}
                   refPublisher={refPublisher}
@@ -249,7 +240,7 @@ const handleViewPublication=async (pub)=>{
                 <Chapter
                   refAuthors={refAuthors}
                   refTitle={refTitle}
-                  refDate={refDate}
+                  setDate={setDate}
                   setIndexing={setIndexing}
                   refPage={refPage}
                   refPublisher={refPublisher}
@@ -262,7 +253,7 @@ const handleViewPublication=async (pub)=>{
                 <Book
                   refAuthors={refAuthors}
                   refTitle={refTitle}
-                  refDate={refDate}
+                  setDate={setDate}
                   setIndexing={setIndexing}
                   refPage={refPage}
                   refPublisher={refPublisher}
@@ -275,7 +266,7 @@ const handleViewPublication=async (pub)=>{
                 <Patent
                   refAuthors={refAuthors}
                   refTitle={refTitle}
-                  refDate={refDate}
+                  setDate={setDate}
                   setIndexing={setIndexing}
                   refPage={refPage}
                   refPublisher={refPublisher}
@@ -303,7 +294,6 @@ const handleViewPublication=async (pub)=>{
           </div>
         </div>
       )}
-      
     </>
   );
 };

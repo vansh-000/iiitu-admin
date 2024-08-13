@@ -7,9 +7,9 @@ import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import TableMinutes from '../components/Tables/TableMinutes';
-const TYPE=["BoG", "Senate", "BWC", "FC"];
-const Minutes = () => {
+import TableCalendar from '../components/Tables/TableCalendar.jsx';
+const TYPE=["Odd","Even"];
+const Calendar = () => {
   const [data, setData] = useState();
   const [selectedType,setSelectedType]=useState("");
   const [isOptionSelected,setIsOptionSelected]=useState(false);
@@ -17,15 +17,15 @@ const Minutes = () => {
   const navigate=useNavigate();
   useEffect(()=>{
     if (!token) {
-      navigate('/signin');
+    return navigate('/signin');
     }
     const {Allow}=jwtDecode(token);
-    if(!Allow?.[11]){
-    navigate('/profile');
+    if(!Allow?.[12]){
+    return navigate('/profile');
   }},[])
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${API}/minutes`);
+      const response = await axios.get(`${API}/Calendar`);
       setData(response.data.Docs);
     }
     catch (err) {
@@ -54,33 +54,15 @@ const Minutes = () => {
       Docs.forEach((Doc) => {
         formData.append("Doc", Doc);
       });
-      formData.append("description", title);
-      formData.append("type", type);
-      await axios.post(`${API}/minutes`, formData, {
+      formData.append("title", title);
+      formData.append("semester", type);
+      await axios.post(`${API}/Calendar`, formData, {
         headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "multipart/form-data"
         }
       });
       toast.success("Docs Uploaded!");
-      fetchData();
-    }
-    catch (err) {
-      if(err.response.status===401){
-        return navigate('/signin')
-      }
-      toast.error(`Error: ${err}`);
-    }
-  }
-
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`${API}/minutes/${id}`,{
-        headers:{
-          "Authorization":`Bearer ${token}`
-        }
-      });
-      toast.success("Doc Deleted!");
       fetchData();
     }
     catch (err) {
@@ -91,10 +73,28 @@ const Minutes = () => {
     }
   }
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${API}/Calendar/${id}`,{
+        headers:{
+          "Authorization":`Bearer ${token}`
+        }
+      });
+      toast.success("Doc Deleted!");
+      fetchData();
+    }
+    catch (err) {
+      if(err.response.status===401){
+        return navigate('/signin')
+      }
+      toast.error(`Error: ${err}`);
+    }
+  }
+
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Minutes" />
+      <Breadcrumb pageName="Calendar" />
       <form onSubmit={handleAdd}>
         <div>
           <label className="mb-3 block text-black dark:text-white">
@@ -177,14 +177,14 @@ const Minutes = () => {
         <button
           className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
         >
-          Add Minutes
+          Add Calendar
         </button>
       </form>
       <div className="flex flex-col gap-10 mt-5">
-        <TableMinutes data={data} handleDelete={handleDelete} />
+        <TableCalendar data={data} handleDelete={handleDelete} />
       </div>
     </DefaultLayout>
   );
 };
 
-export default Minutes;
+export default Calendar;

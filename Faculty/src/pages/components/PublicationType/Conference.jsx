@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import DatePickerCustom from '../../../components/DatePickerCoustom';
 const INDEXING = ["SCOPUS", "SCI/SCIE", "ESCI", "WEWOS", "UGC-CARE", "OTHERS"];
 
 function Conference({
   refAuthors,
-  refDate,
+  setDate,
   setIndexing,
   refPage,
   refPublisher,
@@ -52,15 +53,16 @@ function Conference({
       className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
     /></label>
 <label className="mb-3 block text-black dark:text-white">
-      Year
+      Year:<DatePickerCustom setDate={setDate}/>
     
-    <input
+    {/* <input
       name="title"
       type="text"
       ref={refDate}
       placeholder="eg.2021"
       className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-    /></label>
+    />*/}
+    </label>
      <label className="mb-3 block text-black dark:text-white">
         Publisher:
         <input

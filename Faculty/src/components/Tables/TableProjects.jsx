@@ -1,4 +1,5 @@
 import { IoMdAddCircleOutline } from 'react-icons/io';
+import { RiDeleteBin5Fill } from 'react-icons/ri';
 
 const TableProjects = ({ edit, Project, setProject }) => {
   const handleEdit = (index, field, value) => {
@@ -18,7 +19,10 @@ const TableProjects = ({ edit, Project, setProject }) => {
       }
     ]);
   };
-
+  const handleDelete=(index)=>{
+    const updatedProject = Project.filter((_,ind)=>(ind!=index));
+    setProject(updatedProject);
+  }
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -35,7 +39,7 @@ const TableProjects = ({ edit, Project, setProject }) => {
               <tr key={index}>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   {edit ? (
-                    <>
+                    <><button className='mr-5' onClick={()=>handleDelete(index)}><RiDeleteBin5Fill className='text-red-700'/></button>
                       <input
                         type="text"
                         value={pro.Title}

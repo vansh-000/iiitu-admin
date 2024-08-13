@@ -11,7 +11,6 @@ import {
 import 'yet-another-react-lightbox/plugins/captions.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import Poster from './Poster';
-import { STATIC_FILES } from '../../../utils/apiURl';
 // import { STATIC_FILES } from '../../utils/apiURl';
 
 function EventSlides({data, handleDelete}) {
@@ -19,7 +18,7 @@ function EventSlides({data, handleDelete}) {
 
   const modifiedEvents = data?.map(d => ({
     ...d,
-    src: `${STATIC_FILES}/${d?.image?.replace(/\\/g, '/')}` // Append uploads/server/ to the image path
+    src: d?.image // Append uploads/server/ to the image path
   }));
 
   modifiedEvents?.forEach(d => {

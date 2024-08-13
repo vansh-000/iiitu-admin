@@ -27,21 +27,23 @@ const TableEducation = ({ Education,setEducation }) => {
             {Education&&Education.map((edu, index) => (
               <tr key={index}>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                   
+                   <>
                     <input
                       type="text"
                       value={edu.dateOfStart}
-                      placeholder='Date of Start'
-                      className="max-w-[100px] rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      placeholder='Start Year'
+                      className="max-w-[200px] rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       onChange={(e) => handleEdit(index, 'dateOfStart', e.target.value)}
                     />-
                     <input
                       type="text"
                       value={edu.dateOfEnd}
-                      placeholder='Date of End'
-                      className="max-w-[100px] rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      placeholder='End Year'
+                      className="max-w-[200px] rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       onChange={(e) => handleEdit(index, 'dateOfEnd', e.target.value)}
-                    />
+                    />eg.2004-2008
+                    
+                    </>
                 </td>
                 <td className="text-center border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   

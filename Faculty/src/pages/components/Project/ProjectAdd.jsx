@@ -1,42 +1,30 @@
-import React, { useState } from 'react';
-import DatePickerCustom from '../../../components/DatePickerCoustom';
-
-const INDEXING = ["SCOPUS", "SCI/SCIE", "ESCI", "WEWOS", "UGC-CARE", "OTHERS"];
-
-function Journal({
-  refAuthors,
-  setDate,
-  setIndexing,
-  refPage,
-  refPublisher,
-  refTitle,
-  refUrl,
-  refVol,
-  refOther
+import React from 'react'
+const STATUS=["Ongoing", "Completed"];
+const TYPE=["Research", "Consultancy"];
+function ProjectAdd({
+    refTitle,
+    refInvestigator,
+    refCoInvestigator,
+    refFundingAgency,
+    refDuration,
+    refAmount,
+    setStatus,
+    setType
 }) {
-  const [selectedIndexing, setSelectedIndexing] = useState('');
-  const [otherIndexing, setOtherIndexing] = useState('');
-
-  const handleIndexingChange = (e) => {
-    const value = e.target.value;
-
-    
-    setSelectedIndexing(value);
-    if (value !== "OTHERS") {
-      setIndexing(value);
-    }
-    else{
-      setIndexing(()=>"")
-    }
-  };
-
-  const handleOtherIndexingChange = (e) => {
-    const value = e.target.value;
-    setOtherIndexing(value);
-    setIndexing(value);
-  };
-
+    const [selectedStatus, setSelectedStatus] = React.useState('');
+    const [selectedType, setSelectedType] = React.useState('');
+    const handleStatusChange = (e) => {
+        const value = e.target.value;
+        setSelectedStatus(value);
+        setStatus(value);
+    };
+    const handleTypeChange = (e) => {
+        const value = e.target.value;
+        setSelectedType(value);
+        setType(value);
+    };
   return (
+    <>
     <div className="p-4 md:p-5 space-y-4 transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary max-h-[60vh] overflow-y-scroll">
       <label className="mb-3 block text-black dark:text-white">
         Title:
@@ -50,113 +38,101 @@ function Journal({
       </label>
 
       <label className="mb-3 block text-black dark:text-white">
-        Authors (For Multiple Authors use ; to separate):
+        Investigator (For Multiple Investigator use ; to separate):
         <input
-          name="authors"
+          name="Investigator"
           type="text"
-          ref={refAuthors}
+          ref={refInvestigator}
+          placeholder="eg: Rishvant; Anurag; Pundir"
+          className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+        />
+      </label>
+      <label className="mb-3 block text-black dark:text-white">
+        Co-Investigator (For Multiple Co-Investigator use ; to separate):
+        <input
+          name="Co-Investigator"
+          type="text"
+          ref={refCoInvestigator}
           placeholder="eg: Rishvant; Anurag; Pundir"
           className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
         />
       </label>
 
       <label className="mb-3 block text-black dark:text-white">
-        Year:<DatePickerCustom setDate={setDate}/>
-        {/* <input
-          name="year"
+        Funding Agency
+        <input
+          name="FundingAgency"
           type="text"
-          ref={refDate}
-          placeholder="eg. 2021"
+          ref={refFundingAgency}
+          placeholder="Enter Funding Agency"
           className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-        /> */}
+        />
       </label>
       <label className="mb-3 block text-black dark:text-white">
-        Journal Name:
+        Duration
         <input
-          name="Journal Name"
+          name="Duration"
           type="text"
-          ref={refOther}
-          placeholder="Name of Journal"
+          ref={refDuration}
+          placeholder="Enter Duration"
           className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
         />
       </label>
 
       <label className="mb-3 block text-black dark:text-white">
-        Volume:
+        Amount
         <input
-          name="volume"
+          name="amount"
           type="text"
-          ref={refVol}
-          placeholder="eg. 0.1, 1.2, 3"
+          ref={refAmount}
+          placeholder="eg.12333"
           className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
         />
       </label>
 
       <label className="mb-3 block text-black dark:text-white">
-        Pages:
-        <input
-          name="pages"
-          type="text"
-          ref={refPage}
-          placeholder="eg. 22-33, 24"
-          className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-        />
-      </label>
-
-      <label className="mb-3 block text-black dark:text-white">
-        Publisher:
-        <input
-          name="publisher"
-          type="text"
-          ref={refPublisher}
-          placeholder="Name of Publisher"
-          className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-        />
-      </label>
-
-      <label className="mb-3 block text-black dark:text-white">
-        Indexing:
+        Status
         <select
-          value={selectedIndexing}
-          onChange={handleIndexingChange}
+          value={selectedStatus}
+          onChange={handleStatusChange}
           className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-8 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
-            selectedIndexing ? 'text-black dark:text-white' : ''
+            selectedStatus ? 'text-black dark:text-white' : ''
           }`}
         >
-          <option value="" className="text-body dark:text-bodydark">
-            Select Indexing
+          <option value="" disabled className="text-body dark:text-bodydark">
+            Select Status
           </option>
-          {INDEXING.map((idx, index) => (
-            <option key={index} value={idx} className="text-body dark:text-bodydark">
-              {idx}
+          {STATUS.map((sta, index) => (
+            <option key={index} value={sta} className="text-body dark:text-bodydark">
+              {sta}
             </option>
           ))}
         </select>
-
-        {selectedIndexing === "OTHERS" && (
-          <input
-            name="otherIndexing"
-            type="text"
-            value={otherIndexing}
-            onChange={handleOtherIndexingChange}
-            placeholder="Name of other indexing"
-            className="ml-2 mt-2 w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-          />
-        )}
       </label>
 
       <label className="mb-3 block text-black dark:text-white">
-        DOI:
-        <input
-          name="url"
-          type="text"
-          ref={refUrl}
-          placeholder="eg: https://googleScholar/hkjh"
-          className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-        />
+        Type
+        <select
+          value={selectedType}
+          onChange={handleTypeChange}
+          className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-8 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
+            selectedType ? 'text-black dark:text-white' : ''
+          }`}
+        >
+          <option value="" disabled className="text-body dark:text-bodydark">
+            Select Type
+          </option>
+          {TYPE.map((typ, index) => (
+            <option key={index} value={typ} className="text-body dark:text-bodydark">
+              {typ}
+            </option>
+          ))}
+        </select>
       </label>
     </div>
-  );
+    
+    </>
+  )
 }
 
-export default Journal;
+export default ProjectAdd

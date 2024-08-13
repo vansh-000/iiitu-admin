@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IoMdAddCircleOutline } from 'react-icons/io';
-
+import { RiDeleteBin5Fill } from "react-icons/ri";
 const TableThree = ({ edit, Education, setEducation }) => {
   const handleEdit = (index, field, value) => {
     const updatedEducation = [...Education];
@@ -14,6 +14,10 @@ const TableThree = ({ edit, Education, setEducation }) => {
       { dateOfStart: '', dateOfEnd: '', description: '' },
     ]);
   };
+  const handleDelete=(index)=>{
+    const updatedEducation = Education.filter((_,ind)=>(ind!=index));
+    setEducation(updatedEducation);
+  }
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -38,6 +42,7 @@ const TableThree = ({ edit, Education, setEducation }) => {
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   {edit ? (
                     <>
+                    <button className='mr-5' onClick={()=>handleDelete(index)}><RiDeleteBin5Fill className='text-red-700'/></button>
                       <input
                         type="text"
                         value={edu.dateOfStart}
@@ -58,10 +63,10 @@ const TableThree = ({ edit, Education, setEducation }) => {
                         }
                       />
                     </>
-                  ) : (
+                  ) : (<>
                     <h5 className="font-medium text-black dark:text-white">
                       {edu.dateOfStart}-{edu.dateOfEnd}
-                    </h5>
+                    </h5></>
                   )}
                 </td>
                 <td className="text-center border-b border-[#eee] py-5 px-4 dark:border-strokedark">

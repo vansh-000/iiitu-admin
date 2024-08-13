@@ -23,9 +23,9 @@ const AddRecruitments = () => {
   const endDateRef = React.useRef<HTMLInputElement>(null);
   const refDesc = React.useRef<HTMLInputElement>();
   const refAppLink = React.useRef();
-  const refAppForm = React.useRef();
+  // const refAppForm = React.useRef();
   const refRecruitmentDoc = React.useRef<HTMLInputElement>();
-
+  const refApplicationDoc = React.useRef<HTMLInputElement>();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
@@ -37,7 +37,7 @@ const AddRecruitments = () => {
           startDate: startDateRef.current!.value,
           endDate: endDateRef.current!.value,
           ApplicationLink: refAppLink.current.value,
-          ApplicationForm: refAppForm.current.value,
+          ApplicationForm: refApplicationDoc.current!.files[0],
         },
         {
           headers: {
@@ -104,14 +104,14 @@ const AddRecruitments = () => {
                 htmlFor="description"
                 className="mb-3 block text-black dark:text-white"
               >
-                Application Form
+                Attach Application Form
               </label>
               <input
                 id="description"
-                type="text"
-                placeholder="Description of Recruitment"
-                ref={refAppForm}
-                className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
+                accept=".pdf"
+                type="file"
+                ref={refApplicationDoc}
+                className="w-fit cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
               />
             </div>
             <div>

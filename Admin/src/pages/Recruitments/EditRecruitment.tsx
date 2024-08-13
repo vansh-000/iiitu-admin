@@ -15,7 +15,7 @@ const RecruitmentEdits = () => {
       return navigate('/signin');}
     const {Allow}=jwtDecode(token);
     if(!Allow?.[10]){
-    navigate('/profile');
+    navigate('/minutes');
   }},[]);
   const [data, setData] = useState([]);
   const fetchRecruitment = async () => {

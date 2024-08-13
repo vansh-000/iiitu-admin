@@ -21,7 +21,7 @@ const Forms = () => {
     }
     const {Allow}=jwtDecode(token);
     if(!Allow?.[12]){
-    return navigate('/profile');
+    return navigate('/calendar');
   }},[])
   const fetchData = async () => {
     try {

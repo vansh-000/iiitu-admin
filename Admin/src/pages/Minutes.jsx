@@ -21,7 +21,7 @@ const Minutes = () => {
     }
     const {Allow}=jwtDecode(token);
     if(!Allow?.[11]){
-    navigate('/profile');
+    navigate('/forms');
   }},[])
   const fetchData = async () => {
     try {

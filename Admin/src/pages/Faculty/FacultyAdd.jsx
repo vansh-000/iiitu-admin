@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 function FacultyAdd() {
   const refName = useRef('');
   const refEmail = useRef('');
+  const refWebsite=useRef('');
   const [education, setEducation] = useState([]);
   const [research, setResearch] = useState([]);
   const [award, setAward] = useState([]);
@@ -48,9 +49,9 @@ function FacultyAdd() {
       // Parsing and appending education data
       const newEducation = education.filter((edu) => edu.description !== '');
       const newAward = award.filter((awa) => awa !== '');
-      const newPublication = publication.filter((pub) => pub !== '');
-      const newJournal = journal.filter((jor) => jor !== '');
-      const newProject = project.filter((pro) => pro !== '');
+      // const newPublication = publication.filter((pub) => pub !== '');
+      // const newJournal = journal.filter((jor) => jor !== '');
+      const newProject = project.filter((pro) => pro.Title !== '');
       const newResearch = research.filter((res) => res !== '');
       if (!selectedDepartment) {
         return toast.error('Select Department');
@@ -83,13 +84,12 @@ function FacultyAdd() {
             { social: 'Linkedin', link: refLinkedin.current.value },
             { social: 'GoogleScholar', link: refGoogleScholar.current.value },
             { social: 'Orcid', link: refOrcid.current.value },
+            { social:'Website',link: refWebsite.current.value}
           ],
           resume: refResume.current.files[0],
           profileImage: refProfileImage.current.files[0],
           AwardAndHonours: newAward,
           Education: newEducation,
-          Publications: newPublication,
-          Journals: newJournal,
           Projects: newProject,
           Research: newResearch,
         },
@@ -345,7 +345,20 @@ function FacultyAdd() {
                 name="Orcid"
                 ref={refOrcid}
               />
+<label
+                className="mb-3 block text-black dark:text-white"
+                htmlFor="Website"
+              >
+                Website:
+              </label>
 
+              <input
+                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                type="text"
+                id="Website"
+                name="Website"
+                ref={refWebsite}
+              />
               <label
                 className="mb-3 block text-black dark:text-white"
                 htmlFor="resume"
@@ -404,15 +417,15 @@ function FacultyAdd() {
                 <TableResearch Research={research} setResearch={setResearch} />
               )}
               {award && <TableAwards Award={award} setAward={setAward} />}
-              {publication && (
+              {/* {publication && (
                 <TablePublications
                   Publication={publication}
                   setPublication={setPublication}
                 />
-              )}
-              {journal && (
+              )} */}
+              {/* {journal && (
                 <TableJournals Journal={journal} setJournal={setJournal} />
-              )}
+              )} */}
               {project && (
                 <TableProjects Project={project} setProject={setProject} />
               )}

@@ -8,8 +8,6 @@ import toast from 'react-hot-toast';
 import TableEducation from '../../components/Tables/TableEducation';
 import TableResearch from '../../components/Tables/TableResearch';
 import TableAwards from '../../components/Tables/TableAwards';
-import TablePublications from '../../components/Tables/TablePublications';
-import TableJournals from '../../components/Tables/TableJournals';
 import TableProjects from '../../components/Tables/TableProjects';
 
 const FacultyAllEdit = () => {
@@ -20,8 +18,6 @@ const FacultyAllEdit = () => {
   const [education, setEducation] = useState([]);
   const [research, setResearch] = useState([]);
   const [award, setAward] = useState([]);
-  const [publication, setPublication] = useState([]);
-  const [journal, setJournal] = useState([]);
   const [project, setProject] = useState([]);
   const refProFileImg = React.useRef();
   const refResume = React.useRef();
@@ -31,6 +27,7 @@ const FacultyAllEdit = () => {
   const refLinkedin = React.useRef();
   const refGoogleScholar = React.useRef();
   const refOrcid = React.useRef();
+  const refWebsite=React.useRef();
   const [profileIMG, setProfileIMG] = React.useState();
   const fetchFaculty = async () => {
     try {
@@ -38,9 +35,7 @@ const FacultyAllEdit = () => {
       setFaculty(response.data);
       setAward(response.data.AwardAndHonours);
       setEducation(response.data.Education);
-      setJournal(response.data.Journals);
       setProject(response.data.Projects);
-      setPublication(response.data.Publications);
       setResearch(response.data.Research);
       setProfileIMG(response.data.profileImage);
     } catch (err) {
@@ -62,9 +57,9 @@ const FacultyAllEdit = () => {
     try {
             const newEducation = education.length === 0 ? [] : education.filter((edu) => edu.description !== '');
             const newAward = award.length === 0 ? [] : award.filter((awa) => awa !== '');
-            const newPublication = publication.length === 0 ? [] : publication.filter((pub) => pub !== '');    
-            const newJournal = journal.length === 0 ? [] : journal.filter((jor) => jor !== '');
-            const newProject = project.length === 0 ? [] : project.filter((pro) => pro !== '');
+            // const newPublication = publication.length === 0 ? [] : publication.filter((pub) => pub !== '');    
+            // const newJournal = journal.length === 0 ? [] : journal.filter((jor) => jor !== '');
+            const newProject = project.length === 0 ? [] : project.filter((pro) => pro.Title !== '');
             const newResearch = research.length === 0 ? [] : research.filter((res) => res !== '');   
       const response = await axios.put(
         `${API}/faculty/editDetails/${idd.id}`,
@@ -76,12 +71,11 @@ const FacultyAllEdit = () => {
           socialLink: [
             { social: 'Linkedin', link: refLinkedin.current.value },
             { social: 'GoogleScholar', link: refGoogleScholar.current.value },
-            { social: 'Orcid', link: refOrcid.current.value },
+            { social: 'Orcid', link: refOrcid.current.value },{ social:'Website',link: refWebsite.current.value}
+
           ],
           AwardAndHonours: newAward,
           Education: newEducation,
-          Publications: newPublication,
-          Journals: newJournal,
           Projects: newProject,
           Research: newResearch,
         },
@@ -132,7 +126,7 @@ const FacultyAllEdit = () => {
               <div className="relative drop-shadow-2">
                 {faculty && faculty.profileImage && (
                   <img
-                    src={profileImage || profileIMG}
+                    src={profileImage ?profileImage: profileIMG}
                     alt="profile"
                     className="h-full w-full rounded-tl-sm rounded-tr-sm object-cover object-center max-h-40"
                   />
@@ -263,6 +257,25 @@ const FacultyAllEdit = () => {
                 className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               />
             </div>
+            <div>
+              <label className="mb-3 block text-black dark:text-white">
+                Website
+              </label>
+              <input
+                name="title"
+                type="text"
+                // ref={titleRef}
+
+                ref={refWebsite}
+                placeholder="Website Link"
+                defaultValue={
+                  faculty.socialLink && faculty.socialLink[3]
+                    ? faculty.socialLink[3].link
+                    : ''
+                }
+                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+              />
+            </div>
 
             <div>
               <label className="mb-3 block text-black dark:text-white">
@@ -304,7 +317,7 @@ const FacultyAllEdit = () => {
               <TableResearch Research={research} setResearch={setResearch} />
             )}
             {award && <TableAwards Award={award} setAward={setAward} />}
-            {publication && (
+            {/* {publication && (
               <TablePublications
                 Publication={publication}
                 setPublication={setPublication}
@@ -312,7 +325,7 @@ const FacultyAllEdit = () => {
             )}
             {journal && (
               <TableJournals Journal={journal} setJournal={setJournal} />
-            )}
+            )} */}
             {project && (
               <TableProjects Project={project} setProject={setProject} />
             )}

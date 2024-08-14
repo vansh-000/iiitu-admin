@@ -7,7 +7,7 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import TableEducation from '../../components/Tables/TableEducation';
 import TableResearch from '../../components/Tables/TableResearch';
 import TableAwards from '../../components/Tables/TableAwards';
-import TableProjects from '../../components/Tables/TableProjects';
+// import TableProjects from '../../components/Tables/TableProjects';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { useEffect } from 'react';
@@ -24,6 +24,7 @@ function FacultyAdd() {
   const refResearchInterest = useRef('');
   const refLinkedin = useRef('');
   const refOrcid = useRef('');
+  const refDesignation=useRef('');
   const refGoogleScholar = useRef('');
   const refResume = useRef(null);
   const refProfileImage = useRef(null);
@@ -75,6 +76,7 @@ function FacultyAdd() {
           password: '123',
           department: selectedDepartment,
           mobile: refMobile.current.value,
+          designation:refDesignation.current.value,
           researchInterest: refResearchInterest.current.value,
           socialLink: [
             { social: 'Linkedin', link: refLinkedin.current.value },
@@ -86,7 +88,7 @@ function FacultyAdd() {
           profileImage: refProfileImage.current.files[0],
           AwardAndHonours: newAward,
           Education: newEducation,
-          Projects: [],
+          // Projects: [],
           Research: newResearch,
         },
         {
@@ -280,6 +282,20 @@ function FacultyAdd() {
                 id="mobile"
                 name="mobile"
                 ref={refMobile}
+              />
+              <label
+                className="mb-3 block text-black dark:text-white"
+                htmlFor="designation"
+              >
+                Designation
+              </label>
+
+              <input
+                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                type="text"
+                id="designation"
+                name="designation"
+                ref={refDesignation}
               />
 
               <label

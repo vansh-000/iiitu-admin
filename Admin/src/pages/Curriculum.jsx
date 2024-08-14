@@ -8,6 +8,7 @@ import { API } from '../utils/apiURl';
 import TableCurriculum from '../components/Tables/TableCurriculum';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+const BRANCH=["CSE","IT","ECE","DS",""]
 const Curriculum = () => {
   const [data, setData] = useState();
   const token=localStorage.getItem('token');

@@ -34,6 +34,7 @@ const Profile = () => {
   const refResume = useRef();
   const refName = useRef();
   const refPhone = useRef();
+  const refDesignation=useRef();
   const refResearchInterest = useRef();
   const refLinkedin = useRef();
   const refGoogleScholar = useRef();
@@ -112,11 +113,12 @@ const Profile = () => {
         Research: newResearch,
         AwardAndHonours: newAward,
         Education: newEducation,
+        designation:refDesignation.current.value
         // Journals: newJournal,
         // Journals: newJournal,
-        Projects: newProject,
+        // Projects: newProject,
       };
-      console.log(newProject);
+      // console.log(newProject);
 
       const response = await axios.put(
         `${API}/faculty/editDetails/${userID}`,
@@ -396,6 +398,21 @@ const Profile = () => {
                     />
                   ) : (
                     faculty.mobile
+                  )}
+                </li>
+                <li className="text-[1.1rem]">
+                  Designation
+                  {editable ? (
+                    <input
+                      name="Designation"
+                      type="text"
+                      ref={refDesignation}
+                      placeholder="Designation"
+                      defaultValue={faculty.designation}
+                      className="ml-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    />
+                  ) : (
+                    faculty?.designation
                   )}
                 </li>
               </ul>

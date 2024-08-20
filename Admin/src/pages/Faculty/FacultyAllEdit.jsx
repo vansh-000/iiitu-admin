@@ -36,7 +36,7 @@ const FacultyAllEdit = () => {
       setFaculty(response.data);
       setAward(response.data.AwardAndHonours);
       setEducation(response.data.Education);
-      setProject(response.data.Projects);
+      // setProject(response.data.Projects);
       setResearch(response.data.Research);
       setProfileIMG(response.data.profileImage);
     } catch (err) {
@@ -61,26 +61,29 @@ const FacultyAllEdit = () => {
             // const newPublication = publication.length === 0 ? [] : publication.filter((pub) => pub !== '');    
             // const newJournal = journal.length === 0 ? [] : journal.filter((jor) => jor !== '');
             // const newProject = project.length === 0 ? [] : project.filter((pro) => pro.Title !== '');
-            const newResearch = research.length === 0 ? [] : research.filter((res) => res !== '');   
+            const newResearch = research.length === 0 ? [] : research.filter((res) => res !== '');  
+            const data2={
+              name: refName.current.value,
+    
+              mobile: refPhone.current.value,
+              researchInterest: refResearchInterest.current.value,
+              designation:refDesignation.current.value,
+              socialLink: [
+                { social: 'Linkedin', link: refLinkedin.current.value },
+                { social: 'GoogleScholar', link: refGoogleScholar.current.value },
+                { social: 'Orcid', link: refOrcid.current.value },{ social:'Website',link: refWebsite.current.value}
+    
+              ],
+              AwardAndHonours: newAward,
+              Education: newEducation,
+              // Projects: newProject,
+              Research: newResearch,
+            };
+            console.log(data2);
+             
       const response = await axios.put(
         `${API}/faculty/editDetails/${idd.id}`,
-        {
-          name: refName.current.value,
-
-          mobile: refPhone.current.value,
-          researchInterest: refResearchInterest.current.value,
-          designation:refDesignation.current,
-          socialLink: [
-            { social: 'Linkedin', link: refLinkedin.current.value },
-            { social: 'GoogleScholar', link: refGoogleScholar.current.value },
-            { social: 'Orcid', link: refOrcid.current.value },{ social:'Website',link: refWebsite.current.value}
-
-          ],
-          AwardAndHonours: newAward,
-          Education: newEducation,
-          // Projects: newProject,
-          Research: newResearch,
-        },
+        data2,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,

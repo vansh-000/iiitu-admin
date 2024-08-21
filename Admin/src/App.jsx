@@ -29,6 +29,8 @@ import Reset from './pages/Authentication/Reset.jsx';
 import Minutes from './pages/Minutes.jsx';
 import Forms from './pages/Forms.jsx';
 import Calendar from './pages/Calendar.jsx';
+import Organization from './pages/Organisation.jsx';
+import OrganizationEdit from './pages/OrganizationEdit.jsx';
 
 
 function App() {
@@ -293,6 +295,23 @@ function App() {
             </>
           }
         />
+        <Route
+        path='/organisation'
+        element={
+          <>
+            <PageTitle title='Organisation | IIITU - Admin' />
+            <Organization />
+          </>
+        } />
+        <Route
+        path='/organisation/:id'
+        element={
+          <>
+            <PageTitle title='Organisation Edit | IIITU - Admin' />
+            <OrganizationEdit />
+          </>
+        } />
+
         <Route
           path='/verifyOTP'
           element={

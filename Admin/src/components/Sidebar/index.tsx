@@ -4,7 +4,7 @@ import SidebarLinkGroup from './SidebarLinkGroup';
 import { FaBookOpen } from 'react-icons/fa';
 import { FaRegNewspaper } from 'react-icons/fa6';
 import { MdEmojiEvents } from 'react-icons/md';
-import { GiArchiveResearch, GiTeacher } from 'react-icons/gi';
+import { GiArchiveResearch, GiOrganigram, GiTeacher } from 'react-icons/gi';
 import { IoMdPhotos } from 'react-icons/io';
 import { LuPartyPopper } from 'react-icons/lu';
 import { ImNewspaper } from 'react-icons/im';
@@ -604,6 +604,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     Calendar
                   </NavLink>
                 </li>}
+                {Allow?.[14]&&<li>
+                  <NavLink
+                    to="/organisation"
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      pathname.includes('organisation') && 'bg-graydark dark:bg-meta-4'
+                    }`}
+                  >
+                   <GiOrganigram />
+                    Organization
+                  </NavLink>
+                </li>}
+
               </ul>
             </div>
           </nav>

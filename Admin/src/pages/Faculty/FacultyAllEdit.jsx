@@ -18,7 +18,7 @@ const FacultyAllEdit = () => {
   const [education, setEducation] = useState([]);
   const [research, setResearch] = useState([]);
   const [award, setAward] = useState([]);
-  // const [project, setProject] = useState([]);
+  const [project, setProject] = useState([]);
   const refProFileImg = React.useRef();
   const refResume = React.useRef();
   const refName = React.useRef();
@@ -26,9 +26,9 @@ const FacultyAllEdit = () => {
   const refResearchInterest = React.useRef();
   const refLinkedin = React.useRef();
   const refGoogleScholar = React.useRef();
-  const refDesignation=React.useRef();
+  const refDesignation = React.useRef();
   const refOrcid = React.useRef();
-  const refWebsite=React.useRef();
+  const refWebsite = React.useRef();
   const [profileIMG, setProfileIMG] = React.useState();
   const fetchFaculty = async () => {
     try {
@@ -56,12 +56,17 @@ const FacultyAllEdit = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-            const newEducation = education.length === 0 ? [] : education.filter((edu) => edu.description !== '');
-            const newAward = award.length === 0 ? [] : award.filter((awa) => awa !== '');
-            // const newPublication = publication.length === 0 ? [] : publication.filter((pub) => pub !== '');    
-            // const newJournal = journal.length === 0 ? [] : journal.filter((jor) => jor !== '');
-            // const newProject = project.length === 0 ? [] : project.filter((pro) => pro.Title !== '');
-            const newResearch = research.length === 0 ? [] : research.filter((res) => res !== '');   
+      const newEducation =
+        education.length === 0
+          ? []
+          : education.filter((edu) => edu.description !== '');
+      const newAward =
+        award.length === 0 ? [] : award.filter((awa) => awa !== '');
+      // const newPublication = publication.length === 0 ? [] : publication.filter((pub) => pub !== '');
+      // const newJournal = journal.length === 0 ? [] : journal.filter((jor) => jor !== '');
+      // const newProject = project.length === 0 ? [] : project.filter((pro) => pro.Title !== '');
+      const newResearch =
+        research.length === 0 ? [] : research.filter((res) => res !== '');
       const response = await axios.put(
         `${API}/faculty/editDetails/${idd.id}`,
         {
@@ -69,12 +74,12 @@ const FacultyAllEdit = () => {
 
           mobile: refPhone.current.value,
           researchInterest: refResearchInterest.current.value,
-          designation:refDesignation.current,
+          designation: refDesignation.current,
           socialLink: [
             { social: 'Linkedin', link: refLinkedin.current.value },
             { social: 'GoogleScholar', link: refGoogleScholar.current.value },
-            { social: 'Orcid', link: refOrcid.current.value },{ social:'Website',link: refWebsite.current.value}
-
+            { social: 'Orcid', link: refOrcid.current.value },
+            { social: 'Website', link: refWebsite.current.value },
           ],
           AwardAndHonours: newAward,
           Education: newEducation,
@@ -111,7 +116,6 @@ const FacultyAllEdit = () => {
       }
     } catch (err) {
       console.log(err);
-      
       if (err?.response?.status === 401) {
         return navigate('/signin');
       }
@@ -128,7 +132,7 @@ const FacultyAllEdit = () => {
               <div className="relative drop-shadow-2">
                 {faculty && faculty.profileImage && (
                   <img
-                    src={profileImage ?profileImage: profileIMG}
+                    src={profileImage ? profileImage : profileIMG}
                     alt="profile"
                     className="h-full w-full rounded-tl-sm rounded-tr-sm object-cover object-center max-h-40"
                   />

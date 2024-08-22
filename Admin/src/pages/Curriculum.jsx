@@ -8,36 +8,36 @@ import { API } from '../utils/apiURl';
 import TableCurriculum from '../components/Tables/TableCurriculum';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-const BRANCH=["CSE","IT","ECE","DS",""]
+const BRANCH = ['CSE', 'IT', 'ECE', 'DS', ''];
 const Curriculum = () => {
   const [data, setData] = useState();
-  const token=localStorage.getItem('token');
-  const navigate=useNavigate();
-  useEffect(()=>{
+  const token = localStorage.getItem('token');
+  const navigate = useNavigate();
+  useEffect(() => {
     if (!token) {
       return navigate('/signin');
     }
-    const {Allow}=jwtDecode(token);
-  if(!Allow?.[1]){
-    navigate('/news');
-  }},[])
+    const { Allow } = jwtDecode(token);
+    if (!Allow?.[1]) {
+      navigate('/news');
+    }
+  }, []);
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/courses`);
       setData(response.data.courses);
-    }
-    catch (err) {
+    } catch (err) {
       console.error(err);
     }
-  }
-  
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
 
   const [pdf, setPdf] = useState([]);
   const batchRef = useRef();
-  const branchRef = useRef()
+  const branchRef = useRef();
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
     setPdf(files);
@@ -50,62 +50,58 @@ const Curriculum = () => {
     try {
       const formData = new FormData();
       pdf.forEach((doc) => {
-        formData.append("coursePdf", doc);
+        formData.append('coursePdf', doc);
       });
-      formData.append("title", batch);
-      formData.append("description", branch);
+      formData.append('title', batch);
+      formData.append('description', branch);
       await axios.post(`${API}/courses`, formData, {
         headers: {
-          "Authorization":`Bearer ${token}`,
-          "Content-Type": "multipart/form-data"
-        }
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
       });
-      toast.success("Curriculum Uploaded!");
+      toast.success('Curriculum Uploaded!');
       fetchData();
-    }
-    catch (err) {
-      if(err.response.status===401){
-        return navigate('/signin')
+    } catch (err) {
+      if (err.response.status === 401) {
+        return navigate('/signin');
       }
       toast.error(`Error: ${err}`);
     }
-  }
+  };
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API}/courses/${id}`,{
-        headers:{
-          "Authorization":`Bearer ${token}`
-        }
+      await axios.delete(`${API}/courses/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-      toast.success("Curriculum Deleted!");
+      toast.success('Curriculum Deleted!');
       fetchData();
-    }
-    catch (err) {
-      if(err.response.status===401){
-        return navigate('/signin')
+    } catch (err) {
+      if (err.response.status === 401) {
+        return navigate('/signin');
       }
       toast.error(`Error: ${err}`);
     }
-  }
+  };
 
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Curriculum" />
       <form onSubmit={handleAdd}>
         <div>
-          <label className="mb-3 block text-black dark:text-white">
-            Batch/Year
-          </label>
+          <label className="mb-3 block text-black dark:text-white">Batch</label>
           <input
             name="title"
             type="text"
             ref={batchRef}
-            placeholder="Batch/Year (e.g. 2022-26)"
+            placeholder="Batch (e.g. 2022-26)"
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
         </div>
-        <div className='mt-4'>
+        <div className="mt-4">
           <label className="mb-3 block text-black dark:text-white">
             Branch
           </label>
@@ -131,9 +127,7 @@ const Curriculum = () => {
             required
           />
         </div>
-        <button
-          className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-        >
+        <button className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
           Add Curriculum
         </button>
       </form>
@@ -141,7 +135,9 @@ const Curriculum = () => {
         {data?.length > 0 ? (
           <TableCurriculum data={data} handleDelete={handleDelete} />
         ) : (
-          <h1 className="text-black dark:text-white text-2xl mt-4">No Curriculum Present!</h1>
+          <h1 className="text-black dark:text-white text-2xl mt-4">
+            No Curriculum Present!
+          </h1>
         )}
       </div>
     </DefaultLayout>

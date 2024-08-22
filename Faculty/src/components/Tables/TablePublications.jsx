@@ -16,6 +16,7 @@ import PaitentView from '../../pages/components/PublicationType/PaitentView';
 const TYPE = ['Journal', 'Conference', 'Book', 'Chapter', 'Patent'];
 
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const TablePublications = ({ edit, Publication, setPublication }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,14 +24,12 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
   const [isOpenView, setIsOpenView] = useState(false);
   const refTitle = useRef();
   const refAuthors = useRef();
-
   const [date, setDate] = useState();
   const refVol = useRef();
   const refPage = useRef();
   const refOther = useRef();
   const refPublisher = useRef();
   const [indexing, setIndexing] = useState();
-
   const refUrl = useRef();
   const [selected, setSelected] = useState('Journal');
   const handleDelete = async (id) => {
@@ -158,7 +157,7 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
               {data?.type === 'Conference' && <ConferenceView data={data} />}
               {data?.type === 'Chapter' && <ChapterView data={data} />}
               {data?.type === 'Book' && <BookView data={data} />}
-              {data?.type === 'Patient' && <PaitentView data={data} />}
+              {data?.type === 'Patent' && <PaitentView data={data} />}
               <div className="flex  items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <button
                   onClick={() => handleDelete(data?._id)}
@@ -174,6 +173,12 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
                 >
                   Cancel
                 </button>
+                <Link
+                  to={`publicastion/${data?._id}`}
+                  className="py-2.5 px-5 ms-3 text-sm font-medium text-white focus:outline-none bg-blue-800 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                >
+                  Edit
+                </Link>
               </div>
             </div>
           </div>

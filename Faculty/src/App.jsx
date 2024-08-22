@@ -46,6 +46,12 @@ function App() {
             </>
           }
         />
+        <Route
+        path='/publication/:id'
+        element={<>
+          <PageTitle title="Publication-Edit | Faculty Dashboard"/>
+          </>
+        }/>
      <Route
           path="/events/:id"
           element={

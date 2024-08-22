@@ -15,12 +15,12 @@ function PaitentView({data}) {
         ))}
       </label>
    
-      <label className="mb-3 block text-black dark:text-white">
+      {/* <label className="mb-3 block text-black dark:text-white">
         Indexing
         <h5 className="font-medium text-black dark:text-white">
           {data.indexing}
         </h5>
-      </label>
+      </label> */}
       <label className="mb-3 block text-black dark:text-white">
         DOI
         <h5 className="font-medium text-black dark:text-white">{data.url}</h5>

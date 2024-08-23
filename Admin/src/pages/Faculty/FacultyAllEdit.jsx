@@ -79,7 +79,7 @@ const FacultyAllEdit = () => {
               // Projects: newProject,
               Research: newResearch,
             };
-            console.log(data2);
+            (data2);
              
       const response = await axios.put(
         `${API}/faculty/editDetails/${idd.id}`,

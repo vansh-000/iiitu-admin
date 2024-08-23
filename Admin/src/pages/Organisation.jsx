@@ -36,22 +36,25 @@ const Organization = () => {
     fetchData();
   }, []);
   const titleRef = useRef();
-  const facultyIdRef=useRef();
+  const linkRef=useRef();
   const childrenRef=useRef();
+  const refColor=useRef();
   const handleAdd = async (e) => {
     e.preventDefault();
     const title = titleRef.current.value;
-    const facultyId = facultyIdRef.current.value;
+    const link = linkRef.current.value;
     const children = childrenRef.current.value;
-    const childrenArray = children.split(',');
+    const childrenArray = children.length>0?children.split(','):[];
+
 
     try {
         const data = {"title": title,
-"faculty":facultyId,
-"children":childrenArray
+"link":link,
+"children":childrenArray,
+"color":refColor.current.value.substring(1)
         };
         
-        console.log(data);
+        // console.log(data,children);
         
         
         // Append children one by one
@@ -109,23 +112,32 @@ const Organization = () => {
         </div>
         <div className='mt-4'>
           <label className="mb-3 block text-black dark:text-white">
-            Faculty Id
+            Link
           </label>
           <input
-            name="Faculty ID"
+            name="Link"
             type="text"
-            ref={facultyIdRef}
-            placeholder="Faculty ID"
+            ref={linkRef}
+            placeholder="Link"
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
         </div>
-
+        <div className='mt-4'>
+          <label className="mb-3 flex content-center gap-x-2 text-black dark:text-white">
+            Color
+          <input
+            name="color"
+            type="color"
+            ref={refColor}
+            defaultValue="#ffffff"
+          /></label>
+        </div>
         <div className="mt-4">
           <label className="mb-3 block text-black dark:text-white">
             Children
           </label>
           <input
-            name="Faculty ID"
+            name="Children"
             type="text"
             ref={childrenRef}
             placeholder="children ID seprated with (,)"

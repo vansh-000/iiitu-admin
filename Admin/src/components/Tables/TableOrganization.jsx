@@ -2,14 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const TableOrganization = ({ data, handleDelete }) => {
-  const [openDropdowns, setOpenDropdowns] = useState({});
 
-  const toggleDropdown = (id) => {
-    setOpenDropdowns((prevState) => ({
-      ...prevState,
-      [id]: !prevState[id],
-    }));
-  };
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -27,7 +20,10 @@ const TableOrganization = ({ data, handleDelete }) => {
                 Post
               </th>
               <th className="min-w-[10px] py-4 px-4 font-medium text-black dark:text-white">
-                Faculty ID
+                Link
+              </th>
+              <th className="min-w-[10px] py-4 px-4 font-medium text-black dark:text-white">
+                Color
               </th>
               <th className="min-w-[10px] py-4 px-4 font-medium text-black dark:text-white">
                 Action
@@ -37,86 +33,41 @@ const TableOrganization = ({ data, handleDelete }) => {
           <tbody>
             {data &&
               data.map((item) => (
-                <tr key={item._id}>
+                <tr key={item?._id}>
                   <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                     <h5 className="font-medium text-black dark:text-white">
-                      {item._id}
+                      {item?._id}
                     </h5>
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <p className="text-black dark:text-white">
                       {item.children.length > 0
                         ? item.children.map((child) => (
-                            <div key={child._id} className='border-2 rounded-xl mb-2'>
-                              {child.title}- &gt;{child.faculty.name}
+                            <div
+                              key={child._id}
+                              className="border-2 rounded-xl mb-2"
+                            >
+                              {child.title}- &gt;{child.link}
                             </div>
                           ))
                         : 'No children'}
                     </p>
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                    <p className="text-black dark:text-white">
-                      {item.title}
+                    <p className="text-black dark:text-white">{item.title}</p>
+                  </td>
+                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                    <p className="text-black dark:text-white" type="button">
+                      {item?.link}
                     </p>
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                    <div className="relative inline-block text-left">
-                      <button
-                        id={`dropdownButton-${item._id}`}
-                        onClick={() => toggleDropdown(item._id)}
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        type="button"
-                      >
-                        {item.faculty?._id}
-                        <svg
-                          className="w-2.5 h-2.5 ms-3"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 10 6"
-                        >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="m1 1 4 4 4-4"
-                          />
-                        </svg>
-                      </button>
-
-                      {openDropdowns[item._id] && (
-                        <div
-                          id={`dropdown-${item._id}`}
-                          className="z-10 absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-                        >
-                          <ul
-                            className="py-2 text-sm text-gray-700 dark:text-gray-200"
-                            aria-labelledby={`dropdownButton-${item._id}`}
-                          >
-                            <li>
-                              <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                {item.faculty?.name}
-                              </p>
-                            </li>
-                            <li>
-                              <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                {item.faculty?.email}
-                              </p>
-                            </li>
-                            <li>
-                              <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                {item?.faculty?.department}
-                              </p>
-                            </li>
-                          </ul>
-                        </div>
-                      )}
+                    <div style={{background: `#${item?.color}`}} className='w-6 h-5'>
                     </div>
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">
-                    <Link
+                      <Link
                         to={`/organisation/${item._id}`}
                         className="hover:text-primary"
                       >

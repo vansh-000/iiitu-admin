@@ -15,14 +15,15 @@ const OrganizationEdit = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const titleRef = useRef();
-  const facultyRef=useRef();
+  const linkRef=useRef();
   const childrenRef=useRef();
+  const refColor=useRef();
  
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/orgStr/${id}`);
     setData(response.data[0]);
-    console.log(response.data[0].children.toString());
+    // console.log(response.data[0].children.toString());
     
     
 
@@ -40,15 +41,16 @@ const OrganizationEdit = () => {
   const handleEdit = async (e) => {
     e.preventDefault();
     const title = titleRef.current.value;
-    const faculty=facultyRef.current.value;
+    const link=linkRef.current.value;
     const children=childrenRef.current.value;
 
     const data2={
         'title':title,
-        'faculty':faculty,
-        'children':children.split(',')
+        'link':link,
+        'children':children.length>0?children.split(','):[],
+        'color':refColor.current.value.substring(1)
       }
-      console.log(data2);
+      (data2);
       
       
     try {
@@ -87,19 +89,29 @@ const OrganizationEdit = () => {
           />
         </div>
         <div className="mt-4">
-        <label htmlFor='facultyID' className="mb-3 block text-black dark:text-white">Faculty Id</label>
+        <label htmlFor='linkID' className="mb-3 block text-black dark:text-white">link Id</label>
           <input
             name="title"
-            id='facultyID'
+            id='linkID'
             type="text"
-            ref={facultyRef}
-            defaultValue={data?.faculty._id}
-            placeholder="Faculty ID"
+            ref={linkRef}
+            defaultValue={data?.link}
+            placeholder="link ID"
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
       </div>
+      <div className='mt-4'>
+          <label className="mb-3 flex content-center gap-x-2 text-black dark:text-white">
+            Color
+          <input
+            name="color"
+            type="color"
+            ref={refColor}
+            defaultValue={`#${data?.color}`}
+          /></label>
+        </div>
       <div className="mt-4">
-        <label htmlFor='children' className="mb-3 block text-black dark:text-white">|Children</label>
+        <label htmlFor='children' className="mb-3 block text-black dark:text-white">Children</label>
           <input
             name="title"
             id='children'

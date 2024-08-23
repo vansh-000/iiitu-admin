@@ -158,7 +158,7 @@ const SignIn = () => {
                     to="/forgot"
                     className="text-primary hover:text-blue-500"
                   >
-                    Forgot your Password?
+                    Forgot Password?
                   </Link>
                 </div>
 

@@ -18,7 +18,7 @@ const FacultyAllEdit = () => {
   const [education, setEducation] = useState([]);
   const [research, setResearch] = useState([]);
   const [award, setAward] = useState([]);
-  // const [project, setProject] = useState([]);
+  const [project, setProject] = useState([]);
   const refProFileImg = React.useRef();
   const refResume = React.useRef();
   const refName = React.useRef();
@@ -26,9 +26,9 @@ const FacultyAllEdit = () => {
   const refResearchInterest = React.useRef();
   const refLinkedin = React.useRef();
   const refGoogleScholar = React.useRef();
-  const refDesignation=React.useRef();
+  const refDesignation = React.useRef();
   const refOrcid = React.useRef();
-  const refWebsite=React.useRef();
+  const refWebsite = React.useRef();
   const [profileIMG, setProfileIMG] = React.useState();
   const fetchFaculty = async () => {
     try {
@@ -114,7 +114,6 @@ const FacultyAllEdit = () => {
       }
     } catch (err) {
       console.log(err);
-      
       if (err?.response?.status === 401) {
         return navigate('/signin');
       }
@@ -131,7 +130,7 @@ const FacultyAllEdit = () => {
               <div className="relative drop-shadow-2">
                 {faculty && faculty.profileImage && (
                   <img
-                    src={profileImage ?profileImage: profileIMG}
+                    src={profileImage ? profileImage : profileIMG}
                     alt="profile"
                     className="h-full w-full rounded-tl-sm rounded-tr-sm object-cover object-center max-h-40"
                   />

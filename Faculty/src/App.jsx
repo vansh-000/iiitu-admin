@@ -11,6 +11,8 @@ import VerifyOTP from './pages/Authentication/VerifyOTP.jsx';
 import Reset from './pages/Authentication/Reset.jsx';
 import Events from './pages/components/Events/Events.jsx';
 import EventsPage from './pages/components/Events/EventsPage.jsx';
+import PublicationEdit from './pages/components/PublicationType/PublicationEdit.jsx';
+import ProjectEdit from './pages/components/Project/ProjectEdit.jsx';
 function App() {
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
@@ -46,6 +48,20 @@ function App() {
             </>
           }
         />
+        <Route
+        path='/dashboard/publication/:id'
+        element={<>
+          <PageTitle title="Publication-Edit | Faculty Dashboard"/>
+          <PublicationEdit/>
+          </>
+        }/>
+        <Route
+        path='/dashboard/Project/:id'
+        element={<>
+          <PageTitle title="Project-Edit | Faculty Dashboard"/>
+          <ProjectEdit/>
+          </>
+        }/>
      <Route
           path="/events/:id"
           element={

@@ -1,7 +1,6 @@
 import React from 'react'
 
 function ProjectView({data}) {
-    console.log(data);
     
   return (
     <div className="p-4 md:p-5 space-y-4 transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary max-h-[60vh] overflow-y-scroll">

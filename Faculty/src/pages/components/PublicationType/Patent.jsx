@@ -8,7 +8,12 @@ function Patent({
   refTitle,
   refUrl,
   refVol,
-}) {
+})
+
+{
+
+  console.log(setDate);
+  
   return (
     <div className="px-5 py-2">
       <label className="mb-3 contents text-black dark:text-white">Title:</label>

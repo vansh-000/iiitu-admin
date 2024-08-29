@@ -16,6 +16,7 @@ import { useRef } from 'react';
 import toast from 'react-hot-toast';
 import TablePublications from '../components/Tables/TablePublications';
 import TableProjects from '../components/Tables/TableProjects';
+import TableOther from '../components/Tables/TableOther';
 
 const Profile = () => {
   const nevigat = useNavigate();
@@ -24,6 +25,7 @@ const Profile = () => {
   const [editable, setEditable] = useState(false);
   const [profileImage, setProfileImage] = useState('');
   const [education, setEducation] = useState([]);
+  const [other,setOther]=useState([]);
   const [award, setAward] = useState([]);
   const [publication, setPublication] = useState([]);
   // const [journal, setJournal] = useState([]);
@@ -59,6 +61,7 @@ const Profile = () => {
         setPublication(response.data.Publications);
         setResearch(response.data.Research);
         setProject(response.data.Projects);
+        setOther(response.data.other)
       }
     } catch (err) {
       console.log('Error', err);
@@ -96,8 +99,9 @@ const Profile = () => {
       const newEducation = education.filter((edu) => edu.description !== '');
       const newAward = award.filter((awa) => awa !== '');
       // const newJournal = journal.filter((jor) => jor !== '');
-      const newProject = project.filter((pro) => pro.Title !== '');
+      // const newProject = project.filter((pro) => pro.Title !== '');
       const newResearch = research.filter((res) => res !== '');
+      const newOther=other.filter((oth)=>oth!=='');
       const userID = JSON.parse(localStorage.getItem('user')).id;
       const data = {
         name: refName.current.value,
@@ -113,7 +117,8 @@ const Profile = () => {
         Research: newResearch,
         AwardAndHonours: newAward,
         Education: newEducation,
-        designation:refDesignation.current.value
+        designation:refDesignation.current.value,
+        other:newOther
         // Journals: newJournal,
         // Journals: newJournal,
         // Projects: newProject,
@@ -269,7 +274,7 @@ const Profile = () => {
                   to={faculty.resume}
                   className="w-fit flex flex-col items-center justify-center gap-1 text-[1.1rem] text-black dark:text-white px-4 dark:border-stroke border-strokedark xsm:flex-row"
                 >
-                  Resume
+                  Resume 
                 </Link>
               )
             )}
@@ -386,7 +391,7 @@ const Profile = () => {
                   )}
                 </li>
                 <li className="text-[1.1rem]">
-                  Phone: +91
+                  Phone: +91-
                   {editable ? (
                     <input
                       name="title"
@@ -401,7 +406,7 @@ const Profile = () => {
                   )}
                 </li>
                 <li className="text-[1.1rem]">
-                  Designation
+                  Designation: 
                   {editable ? (
                     <input
                       name="Designation"
@@ -449,6 +454,13 @@ const Profile = () => {
           edit={editable}
           Project={project}
           setProject={setProject}
+        />
+      )}
+      {other && (
+        <TableOther
+          edit={editable}
+          Other={other}
+          setOther={setOther}
         />
       )}
     </DefaultLayout>

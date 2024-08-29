@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useRef } from 'react';
 import { IoMdAddCircleOutline } from 'react-icons/io';
-import { RiDeleteBin5Fill } from 'react-icons/ri';
 import ProjectAdd from '../../pages/components/Project/ProjectAdd';
 import axios from 'axios'
 import { API } from '../../utils/apiURl';
 import ProjectView from '../../pages/components/Project/ProjectView';
+import { Link } from 'react-router-dom';
 const TableProjects = ({ edit, Project, setProject }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState();
@@ -18,12 +18,6 @@ const TableProjects = ({ edit, Project, setProject }) => {
   const refAmount = useRef();
   const [status, setStatus] = useState();
   const [type, setType] = useState();
-  // const handleEdit = (index, field, value) => {
-  //   const updatedProject = [...Project];
-  //   updatedProject[index][field] = value;
-  //   setProject(updatedProject);
-  // };
-  console.log(Project);
   
   const handleAddProjectLink = async () => {
     try {
@@ -147,6 +141,12 @@ const TableProjects = ({ edit, Project, setProject }) => {
                 >
                   Cancel
                 </button>
+                <Link
+                  to={`project/${data?._id}`}
+                  className="py-2.5 px-5 ms-3 text-sm font-medium text-white focus:outline-none bg-blue-800 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                >
+                  Edit
+                </Link>
               </div>
             </div>
           </div>

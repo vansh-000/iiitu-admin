@@ -17,6 +17,9 @@ const TYPE = ['Journal', 'Conference', 'Book', 'Chapter', 'Patent'];
 
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import JournalView2 from '../../pages/components/PublicationType/JournalView2';
+import JournalView3 from '../../pages/components/PublicationType/JournalView3';
+import PublicationProvider from './PublicationProvider';
 
 const TablePublications = ({ edit, Publication, setPublication }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -118,17 +121,21 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
               </tr>
             </thead>
             <tbody>
+            {/* <JournalView2/> */}
+            
               {Publication.map((pub, index) => (
                 <tr key={index}>
                   <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                     <h5 className="font-medium text-black dark:text-white">
-                      <button
+                      <PublicationProvider data={pub} handleDelete={handleDelete}/>
+                      {/* <JournalView3 data={pub}/> */}
+                      {/* <button
                         onClick={() => handleViewPublication(pub)}
                         className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         type="button"
                       >
                         View Publication
-                      </button>
+                      </button> */}
                     </h5>
                   </td>
                 </tr>
@@ -145,14 +152,15 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
           )}
         </div>
       </div>
-      {isOpenView && (
+      {/* {isOpenView && (
         <div className="fixed inset-0 z-99999 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
           <div className="relative p-4 w-full max-w-2xl max-h-full">
             <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
               <div className="flex items-center justify-center text-black text-xl text-center p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                 {data?.type}
               </div>
-
+              
+            
               {data?.type === 'Journal' && <JournalView data={data} />}
               {data?.type === 'Conference' && <ConferenceView data={data} />}
               {data?.type === 'Chapter' && <ChapterView data={data} />}
@@ -183,7 +191,7 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
       {isOpen && (
         <div className="fixed inset-0 z-99999 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
           <div className="relative p-4 w-full max-w-2xl max-h-full ">

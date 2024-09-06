@@ -6,6 +6,7 @@ import axios from 'axios'
 import { API } from '../../utils/apiURl';
 import ProjectView from '../../pages/components/Project/ProjectView';
 import { Link } from 'react-router-dom';
+import ProjectView2 from '../../pages/components/Project/ProjectView2';
 const TableProjects = ({ edit, Project, setProject }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState();
@@ -94,13 +95,14 @@ const TableProjects = ({ edit, Project, setProject }) => {
               {Project.map((pro, index) => (
                 <tr key={index}>
                   <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                    <button
+                    <ProjectView2 data={pro} handleDelete={handleDelete}/>
+                    {/* <button
                       onClick={() => handleViewProject(pro)}
                       className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                       type="button"
                     >
                       View Project
-                    </button>
+                    </button> */}
                   </td>
                 </tr>
               ))}
@@ -116,7 +118,7 @@ const TableProjects = ({ edit, Project, setProject }) => {
           )}
         </div>
       </div>
-      {isOpenView && (
+      {/* {isOpenView && (
         <div className="fixed inset-0 z-99999 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
           <div className="relative p-4 w-full max-w-2xl max-h-full">
             <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -151,7 +153,7 @@ const TableProjects = ({ edit, Project, setProject }) => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
       {isOpen && (
         <div className="fixed inset-0 z-99999 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
           <div className="relative p-4 w-full max-w-2xl max-h-full ">

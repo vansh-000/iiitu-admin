@@ -31,7 +31,7 @@ import Forms from './pages/Forms.jsx';
 import Calendar from './pages/Calendar.jsx';
 import Organization from './pages/Organisation.jsx';
 import OrganizationEdit from './pages/OrganizationEdit.jsx';
-
+import Carousel from './pages/Carousel.jsx';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -53,6 +53,15 @@ function App() {
           path="/"
           element={
             <>
+              <PageTitle title="Carousel | IIITU - Admin" />
+              <Carousel />
+            </>
+          }
+        />
+        <Route
+          path="/gallery"
+          element={
+            <>
               <PageTitle title="Gallery | IIITU - Admin" />
               <Gallery />
             </>
@@ -67,7 +76,7 @@ function App() {
             </>
           }
         />
-        
+
         <Route
           path="/clubs/:id"
           element={
@@ -268,7 +277,7 @@ function App() {
             </>
           }
         />
-          <Route
+        <Route
           path="/minutes"
           element={
             <>
@@ -277,12 +286,12 @@ function App() {
             </>
           }
         />
-          <Route
+        <Route
           path="/forms"
           element={
             <>
               <PageTitle title="Forms | Forms DashBoard" />
-              <Forms/>
+              <Forms />
             </>
           }
         />
@@ -291,43 +300,47 @@ function App() {
           element={
             <>
               <PageTitle title="Calendar | Calendar DashBoard" />
-              <Calendar/>
+              <Calendar />
             </>
           }
         />
         <Route
-        path='/organisation'
-        element={
-          <>
-            <PageTitle title='Organisation | IIITU - Admin' />
-            <Organization />
-          </>
-        } />
+          path="/organisation"
+          element={
+            <>
+              <PageTitle title="Organisation | IIITU - Admin" />
+              <Organization />
+            </>
+          }
+        />
         <Route
-        path='/organisation/:id'
-        element={
-          <>
-            <PageTitle title='Organisation Edit | IIITU - Admin' />
-            <OrganizationEdit />
-          </>
-        } />
+          path="/organisation/:id"
+          element={
+            <>
+              <PageTitle title="Organisation Edit | IIITU - Admin" />
+              <OrganizationEdit />
+            </>
+          }
+        />
 
         <Route
-          path='/verifyOTP'
+          path="/verifyOTP"
           element={
             <>
-              <PageTitle title='Verify OTP | Faculty Login' />
+              <PageTitle title="Verify OTP | Faculty Login" />
               <VerifyOTP />
             </>
-          } />
+          }
+        />
         <Route
-          path='/reset'
+          path="/reset"
           element={
             <>
-              <PageTitle title='Reset Password | Faculty Login' />
-              <Reset/>
+              <PageTitle title="Reset Password | Faculty Login" />
+              <Reset />
             </>
-          } />
+          }
+        />
       </Routes>
     </>
   );

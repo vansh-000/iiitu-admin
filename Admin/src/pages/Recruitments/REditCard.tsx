@@ -5,7 +5,7 @@ import axios from 'axios';
 import DatePickerOne from '../../components/Forms/DatePicker/DatePickerOne';
 import toast from 'react-hot-toast';
 
-const REditCard = ({ recruitment, fetchData  }) => {
+const REditCard = ({ recruitment, fetchData }) => {
   const [editable, setEditable] = useState(false);
   const [editedData, setEditedData] = useState({});
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const REditCard = ({ recruitment, fetchData  }) => {
       const startDate = startDateRefs.current?.value || editedData.startDate;
       const endDate = endDateRefs.current?.value || editedData.endDate;
       const RecruitmentDoc = refRecruitmentDoc.current?.files[0];
-      const ApplicationDoc=refAppForm.current?.files[0];
+      const ApplicationDoc = refAppForm.current?.files[0];
 
       const response = await axios.put(
         `${API}/recruitment/${editedData._id}`,
@@ -105,62 +105,64 @@ const REditCard = ({ recruitment, fetchData  }) => {
           End Date:{formatDate(recruitment.endDate)}{' '}
           {editable && <DatePickerOne refDate={endDateRefs} />}
         </p>
-        <p className="leading-relaxed text-[#D0915C]">
-          <div>
-            {editable ? (
-              <>
-                <label
-                  htmlFor="description"
-                  className="mb-3 block text-black dark:text-white"
+        <div className='flex flex-row flex-wrap gap-x-2'>
+          <p className="leading-relaxed text-[#D0915C]">
+            <div>
+              {editable ? (
+                <>
+                  <label
+                    htmlFor="description"
+                    className="mb-3 block text-black dark:text-white"
+                  >
+                    Application Form
+                  </label>
+                  <input
+                    id="description"
+                    accept=".pdf"
+                    type="file"
+                    ref={refAppForm}
+                    className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
+                  />
+                </>
+              ) : (
+                <Link
+                  to={recruitment.ApplicationForm}
+                  className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
                 >
                   Application Form
-                </label>
-                <input
-              id="description"
-              accept=".pdf"
-              type="file"
-              ref={refAppForm}
-              className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-            />
-              </>
-            ) : (
-              <Link
-                to={recruitment.ApplicationForm}
-                className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-              >
-                Application Form
-              </Link>
-            )}
-          </div>
-        </p>
-        <p className="leading-relaxed text-[#D0915C]">
-          <div>
-            {editable ? (
-              <>
-                <label
-                  htmlFor="description"
-                  className="mb-3 block text-black dark:text-white"
+                </Link>
+              )}
+            </div>
+          </p>
+          <p className="leading-relaxed text-[#D0915C]">
+            <div>
+              {editable ? (
+                <>
+                  <label
+                    htmlFor="description"
+                    className="mb-3 block text-black dark:text-white"
+                  >
+                    Application Link
+                  </label>
+                  <input
+                    id="description"
+                    type="text"
+                    defaultValue={recruitment.ApplicationLink}
+                    ref={refAppLink}
+                    className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
+                  />
+                </>
+              ) : (
+                <Link
+                  to={recruitment.ApplicationLink}
+                  className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
                 >
                   Application Link
-                </label>
-                <input
-                  id="description"
-                  type="text"
-                  defaultValue={recruitment.ApplicationLink}
-                  ref={refAppLink}
-                  className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
-                />
-              </>
-            ) : (
-              <Link
-                to={recruitment.ApplicationLink}
-                className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-              >
-                Application Link
-              </Link>
-            )}
-          </div>
-        </p>
+                </Link>
+              )}
+            </div>
+          </p>
+        </div>
         {editable ? (
           <>
             <label
@@ -179,22 +181,21 @@ const REditCard = ({ recruitment, fetchData  }) => {
           </>
         ) : (
           <Link
-            to={ recruitment.RecruitmentDoc }
-            className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+            to={recruitment.RecruitmentDoc}
+            className="inline-flex mt-2 items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
           >
             Recruitment Doc
           </Link>
         )}
-
         <button
-          className="inline-flex items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+          className="inline-flex ml-2 items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
           onClick={editable ? handleSave : () => handleEdit(recruitment)}
         >
           {editable ? 'Save' : 'Edit'}
         </button>
         <button
           onClick={() => handleDelete(recruitment._id)}
-          className="inline-flex items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+          className="inline-flex ml-2 items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
         >
           Delete
         </button>

@@ -13,14 +13,14 @@ import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import Images from './Images';
 import { STATIC_FILES } from '../../utils/apiURl';
 
-function GallerySlides({images, handleDelete}) {
+function GallerySlides({ images, handleDelete }) {
   const [index, setIndex] = useState(-1);
-  const modifiedImages = images.map(image => ({
+  const modifiedImages = images.map((image) => ({
     ...image,
-    src: image.image 
+    src: image.image,
   }));
 
-  modifiedImages.forEach(image => {
+  modifiedImages.forEach((image) => {
     delete image.image;
   });
 

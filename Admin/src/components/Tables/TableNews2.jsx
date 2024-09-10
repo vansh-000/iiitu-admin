@@ -16,6 +16,9 @@ function TableNews2({data, handleDelete}) {
                   <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                     Description
                   </th>
+                  <th className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white">
+                    Link
+                  </th>
                   <th className="min-w-[10px] py-4 px-4 font-medium text-black dark:text-white">
                     Action
                   </th>

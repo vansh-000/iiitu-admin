@@ -176,7 +176,7 @@ const Events = () => {
           </div>
         </div>
 
-        <div className="mt-4">
+       {selectedDepartment==="college" &&<div className="mt-4">
           <label className="mb-3 block text-black dark:text-white">
             Select Type (If organizer is institute)
           </label>
@@ -225,9 +225,9 @@ const Events = () => {
               </svg>
             </span>
           </div>
-        </div>
+        </div>}
 
-        <div className="mt-4">
+        {selectedDepartment==="club"&&<div className="mt-4">
           <label className="mb-3 block text-black dark:text-white">
             Select Club (If organizer is club)
           </label>
@@ -278,7 +278,7 @@ const Events = () => {
             </span>
           </div>
         </div>
-
+}
         <div className="mt-4">
           <label className="mb-3 block text-black dark:text-white">
             Event Name

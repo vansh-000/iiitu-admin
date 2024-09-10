@@ -91,7 +91,7 @@ function App() {
           path="/curriculum/:id"
           element={
             <>
-              <PageTitle title="Events-Page | Events Dashboard" />
+              <PageTitle title="Curriculum-Page | Curriculum Dashboard" />
               <CurriculumPage />
             </>
           }

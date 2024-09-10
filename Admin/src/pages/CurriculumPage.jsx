@@ -30,7 +30,7 @@ const CurriculumPage = () => {
 
   const batchRef = useRef();
 
-  const handleAdd = async (e) => {
+  const handleEdit = async (e) => {
     e.preventDefault();
     const batch = batchRef.current.value;
     const data2={
@@ -51,6 +51,7 @@ const CurriculumPage = () => {
     
     if(response.status===200){
         toast.success(`Curriculum updated successfully!`);
+        return navigate('/curriculum');
     }
     } catch (err) {
       if(err.response.status===401){
@@ -65,7 +66,7 @@ const CurriculumPage = () => {
     <DefaultLayout>
       <Breadcrumb pageName={`Edit Events Details`} />
       <Toaster />
-      <form onSubmit={handleAdd}>
+      <form onSubmit={handleEdit}>
         <div>
           <label className="mb-3 block text-black dark:text-white">Batch/Year</label>
           {data&&data.title&&<input

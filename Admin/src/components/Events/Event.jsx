@@ -11,13 +11,14 @@ import {
 import 'yet-another-react-lightbox/plugins/captions.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import Poster from './Poster';
+import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 
 function EventSlides({ data, handleDelete }) {
   const [index, setIndex] = useState(-1);
 
   const modifiedEvents = data?.map((d) => ({
     ...d,
-    src: d?.image,
+    src: StaticLinkProvider(d?.image),
   }));
 
   modifiedEvents?.forEach((d) => {

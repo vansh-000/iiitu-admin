@@ -12,16 +12,18 @@ import 'yet-another-react-lightbox/plugins/captions.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import Images from './Images';
 import { STATIC_FILES } from '../../utils/apiURl';
+import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 
 function GallerySlides({images, handleDelete}) {
   const [index, setIndex] = useState(-1);
+  
   const modifiedImages = images.map(image => ({
     ...image,
-    src: image.image 
+    src: StaticLinkProvider(image.image) 
   }));
 
   modifiedImages.forEach(image => {
-    delete image.image;
+    delete StaticLinkProvider(image.image);
   });
 
   return (

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import { API } from "../../utils/apiURl";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { StaticLinkProvider } from "../../utils/StaticLinkProvider";
 
 function NewsComp({handleDelete,item}) {
      
@@ -39,6 +40,11 @@ function NewsComp({handleDelete,item}) {
                         </p>
                       </td>
                       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                        <p className="text-black dark:text-white">
+                          {item.Link}
+                        </p>
+                      </td>
+                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                         <div className="flex items-center space-x-3.5">
                         <div className="mt-4">
           <label className="mb-3 text-black dark:text-white flex flex-row items-center gap-1">
@@ -52,7 +58,7 @@ function NewsComp({handleDelete,item}) {
           </label>
         </div>
                           {item?.image&&<Link
-                            to={item.image}
+                            to={StaticLinkProvider(item.image)}
                             className="hover:text-primary"
                           >
                             <svg
@@ -74,7 +80,7 @@ function NewsComp({handleDelete,item}) {
                             </svg>
                           </Link>}
                           {item?.doc&&<Link
-                            to={item.doc}
+                            to={StaticLinkProvider(item.doc)}
                             className="hover:text-primary"
                           >
                             <BsFiletypeDoc/>

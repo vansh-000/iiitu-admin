@@ -1,39 +1,40 @@
-import RecruitmentEditCard from "./RecruitmentEditCard"
-import { API } from "../../utils/apiURl";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import DefaultLayout from "../../layout/DefaultLayout";
-import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
-import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import RecruitmentEditCard from './RecruitmentEditCard';
+import { API } from '../../utils/apiURl';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import DefaultLayout from '../../layout/DefaultLayout';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 const RecruitmentEdits = () => {
   const navigate = useNavigate();
-  const token=localStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
-  useEffect(()=>{
-    if(!token){
-      return navigate('/signin');}
-    const {Allow}=jwtDecode(token);
-    if(!Allow?.[10]){
-    navigate('/minutes');
-  }},[]);
+  useEffect(() => {
+    if (!token) {
+      return navigate('/signin');
+    }
+    const { Allow } = jwtDecode(token);
+    if (!Allow?.[10]) {
+      navigate('/minutes');
+    }
+  }, []);
   const [data, setData] = useState([]);
   const fetchRecruitment = async () => {
     try {
-    
       let response = await axios.get(`${API}/recruitment`);
       if (response.status === 200) {
         setData(response.data);
       }
       //   setFetchDone(true);
     } catch (err) {
-      console.error("Error in Recruitment", err);
+      console.error('Error in Recruitment', err);
       //   setFetchDone(false);
     }
   };
   useEffect(() => {
     fetchRecruitment();
-  }, [])
+  }, []);
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Edit Recruitment" />
@@ -43,7 +44,7 @@ const RecruitmentEdits = () => {
         </div>
       </div>
     </DefaultLayout>
-  )
-}
+  );
+};
 
 export default RecruitmentEdits;

@@ -14,7 +14,7 @@ import Images from './Images';
 import { STATIC_FILES } from '../../utils/apiURl';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 
-function GallerySlides({images, handleDelete}) {
+function GallerySlides({ images, handleDelete }) {
   const [index, setIndex] = useState(-1);
   
   const modifiedImages = images.map(image => ({

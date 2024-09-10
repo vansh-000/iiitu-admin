@@ -6,7 +6,7 @@ import axios from 'axios';
 import TableEditFile from "../../components/Tables/TableEditFile.jsx"
 import toast from 'react-hot-toast';
 
-const REditCard = ({ recruitment, fetchData  }) => {
+const REditCard = ({ recruitment, fetchData }) => {
   const [editable, setEditable] = useState(false);
   // const [editedData, setEditedData] = useState({});
   const [date,setDate]=useState(recruitment?.Date);
@@ -216,8 +216,8 @@ const REditCard = ({ recruitment, fetchData  }) => {
           </>
         ) : (
           <Link
-            to={ recruitment.RecruitmentDoc }
-            className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+            to={recruitment.RecruitmentDoc}
+            className="inline-flex mt-2 items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
           >
             Recruitment Doc
           </Link>
@@ -231,7 +231,7 @@ const REditCard = ({ recruitment, fetchData  }) => {
         </button> */}
         <button
           onClick={() => handleDelete(recruitment._id)}
-          className="inline-flex items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+          className="inline-flex ml-2 items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
         >
           Delete
         </button>

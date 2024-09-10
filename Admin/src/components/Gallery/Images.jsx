@@ -5,11 +5,11 @@ import { MdDelete } from "react-icons/md";
 import { StaticLinkProvider } from "../../utils/StaticLinkProvider";
 
 const Images = (props) => {
-    const { data, onClick, handleDelete } = props;
+  const { data, onClick, handleDelete } = props;
 
-    const handleClickImage = (index) => {
-        onClick(index);
-    };
+  const handleClickImage = (index) => {
+    onClick(index);
+  };
 
     return (
         <div className={styles.container}>

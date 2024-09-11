@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { Link ,useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
-import axios from "axios";
+import axios from 'axios';
 import { API } from '../../utils/apiURl';
 import toast from 'react-hot-toast';
 
@@ -23,24 +23,22 @@ const Forgot = () => {
       if (response.status === 200) {
         const response2 = await axios.get(`${API}/sendOTP?email=${email}`);
         if (response2.status === 200) {
-          toast.success("OTP sent successfully");
+          toast.success('OTP sent successfully');
         }
-        localStorage.setItem("email", email);
-        navigate("/verifyOTP");
+        localStorage.setItem('email', email);
+        navigate('/verifyOTP');
       }
-
     } catch (error) {
       if (error.response.status === 404) {
-        toast.error("User does Not Found!");
+        toast.error('User does Not Found!');
         setLoading(false);
-      }
-      else if (error.response && error.response.status === 400) {
-        toast.error("Internal Server Error!");
+      } else if (error.response && error.response.status === 400) {
+        toast.error('Internal Server Error!');
         setLoading(false);
       }
     }
   };
-  
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Forgot Password" />
@@ -98,11 +96,13 @@ const Forgot = () => {
 
                 <div className="mb-5">
                   <button
+                    disabled={loading}
                     type="submit"
-                    className="w-full h-16 cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                    value="Sign In"
+                    className="w-full h-14 cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                   >
                     {loading ? (
-                      <div className="inline-block h-7 w-7 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                      <div className="inline-block h-6 w-6 animate-spin rounded-full border-[3px] border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
                     ) : (
                       <span>Send OTP</span>
                     )}

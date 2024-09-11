@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link ,useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
-import axios from "axios";
+import axios from 'axios';
 import { API } from '../../utils/apiURl';
 import toast from 'react-hot-toast';
 
@@ -11,34 +11,34 @@ const VerifyOTP = () => {
   const [otp, setOTP] = useState('');
   const navigate = useNavigate();
 
-  const email = localStorage.getItem("email");
+  const email = localStorage.getItem('email');
 
   const handleVerifyOTP = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.get(`${API}/verifyOTP?email=${email}&otp=${otp}`);
+      const response = await axios.get(
+        `${API}/verifyOTP?email=${email}&otp=${otp}`,
+      );
       if (response.status === 200) {
-        toast.success("OTP Verified!");
+        toast.success('OTP Verified!');
         localStorage.setItem('verifyToken', response.data.verifyToken);
-        navigate("/reset");
+        navigate('/reset');
       }
-
     } catch (error) {
       if (error.response.status === 500) {
-        toast.error("Internal Server Error!");
+        toast.error('Internal Server Error!');
         setLoading(false);
-      }
-      else if (error.response && error.response.status === 400) {
-        toast.error("Invalid OTP!");
+      } else if (error.response && error.response.status === 400) {
+        toast.error('Invalid OTP!');
         setLoading(false);
       }
     }
-  }
+  };
 
   useEffect(() => {
     if (!email) {
-      navigate("/dashboard");
+      navigate('/dashboard');
     }
   }, []);
 
@@ -70,7 +70,7 @@ const VerifyOTP = () => {
 
     return () => clearInterval(timer);
   }, []);
-  
+
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
@@ -90,22 +90,20 @@ const VerifyOTP = () => {
           localStorage.setItem('otpSentTime', Math.floor(Date.now() / 1000));
           setTimeLeft(600);
           setIsButtonEnabled(false);
-          toast.success("OTP sent successfully");
+          toast.success('OTP sent successfully');
         }
-        localStorage.setItem("email", email);
-        navigate("/verifyOTP");
+        localStorage.setItem('email', email);
+        navigate('/verifyOTP');
       }
-
     } catch (error) {
       if (error.response.status === 404) {
-        toast.error("User does Not Found!");
-      }
-      else if (error.response && error.response.status === 400) {
-        toast.error("Internal Server Error!");
+        toast.error('User does Not Found!');
+      } else if (error.response && error.response.status === 400) {
+        toast.error('Internal Server Error!');
       }
     }
   };
-  
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Forgot Password" />
@@ -180,11 +178,13 @@ const VerifyOTP = () => {
                 </div>
                 <div className="mb-5">
                   <button
+                    disabled={loading}
                     type="submit"
-                    className="w-full h-16 cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                    value="Sign In"
+                    className="w-full h-14 cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                   >
                     {loading ? (
-                      <div className="inline-block h-7 w-7 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                      <div className="inline-block h-6 w-6 animate-spin rounded-full border-[3px] border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
                     ) : (
                       <span>Verify OTP</span>
                     )}

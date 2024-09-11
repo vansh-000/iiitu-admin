@@ -162,6 +162,7 @@ const SignUpAdmin = () => {
 
                 <div className="mb-5">
                   <button
+                    disabled={loading}
                     type="submit"
                     value="Sign In"
                     className="w-full h-14 cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"

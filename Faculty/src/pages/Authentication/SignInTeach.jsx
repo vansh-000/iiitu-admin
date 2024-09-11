@@ -9,16 +9,16 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 const SignIn = () => {
-  useEffect(()=>{
-    const token=localStorage.getItem('token');
-    if(token){
-      const {exp}=jwtDecode(token);
-      if(exp*1000>Date.now()){
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const { exp } = jwtDecode(token);
+      if (exp * 1000 > Date.now()) {
         localStorage.removeItem('token');
-        navigator('/')
+        navigator('/');
       }
     }
-  })
+  });
   const [loading, setLoading] = useState(false);
 
   const refEmail = useRef();
@@ -164,11 +164,13 @@ const SignIn = () => {
 
                 <div className="mb-5">
                   <button
+                    disabled={loading}
                     type="submit"
-                    className="w-full h-16 cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                    value="Sign In"
+                    className="w-full h-14 cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                   >
                     {loading ? (
-                      <div className="inline-block h-7 w-7 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                      <div className="inline-block h-6 w-6 animate-spin rounded-full border-[3px] border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
                     ) : (
                       <span>Sign In</span>
                     )}

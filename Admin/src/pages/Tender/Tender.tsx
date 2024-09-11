@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import axios from 'axios';
 import { API } from '../../utils/apiURl';
 import DatePickerOne from '../../components/Forms/DatePicker/DatePickerOne';
@@ -15,19 +15,21 @@ function Tender(): JSX.Element {
   const refTenderDoc = React.useRef<HTMLInputElement>();
   const refAnnexure = React.useRef<HTMLInputElement>();
   const navigate = useNavigate();
-  const token=localStorage.getItem('token');
-  useEffect(()=>{
-    if(!token){
+  const token = localStorage.getItem('token');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!token) {
       return navigate('/signin');
     }
-    const {Allow}=jwtDecode(token);
-    if(!Allow?.[8]){
+    const { Allow } = jwtDecode(token);
+    if (!Allow?.[8]) {
       navigate('/research/add');
     }
-  },[])
- 
- 
+  }, []);
+
   const handleSubmit = async (e: FormEvent) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -46,11 +48,13 @@ function Tender(): JSX.Element {
           },
         },
       );
+      setLoading(false);
       toast.success(response.data.message);
     } catch (err) {
       if (err.response.status === 401) {
         return navigate('/signin');
       }
+      setLoading(false);
       toast.error(`Error: ${err}`);
     }
   };
@@ -132,13 +136,17 @@ function Tender(): JSX.Element {
               />
             </div>
             <div>
-            <button
-              type="submit"
-              className="inline-flex items-center mt-4 justify-center rounded-full bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-            >
-              Add Tender
+              <button
+                disabled={loading}
+                className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+              >
+                {loading ? (
+                  <div className="inline-block h-5 w-5 animate-spin rounded-full border-[0.2rem] border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                ) : (
+                  <span>Add Tender</span>
+                )}
               </button>
-              </div>
+            </div>
           </div>
         </div>
       </form>

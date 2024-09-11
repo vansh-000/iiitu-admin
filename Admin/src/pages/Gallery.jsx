@@ -91,7 +91,7 @@ const Gallery = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.success('Album Deleted!');
+      toast.error('Album Deleted!');
       fetchAlbums();
     } catch (err) {
       if (err.response.status === 401) {
@@ -109,7 +109,7 @@ const Gallery = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.success('Image Deleted!');
+      toast.error('Image Deleted!');
       fetchAlbums();
     } catch (err) {
       if (err.response.status === 401) {
@@ -175,6 +175,7 @@ const Gallery = () => {
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black dark:border-form-strokedark dark:bg-form-input dark:text-white"
             value={selectedAlbum}
             onChange={(e) => setSelectedAlbum(e.target.value)}
+            required
           >
             <option value="">Select Album</option>
             {albums?.map((album) => (
@@ -200,7 +201,10 @@ const Gallery = () => {
             required
           />
         </div>
-        <button className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
+        <button
+          disabled={loading}
+          className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+        >
           {loading ? (
             <div className="inline-block h-5 w-5 animate-spin rounded-full border-[0.2rem] border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
           ) : (

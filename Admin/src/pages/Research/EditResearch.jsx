@@ -1,25 +1,30 @@
-import { API } from "../../utils/apiURl";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import DefaultLayout from "../../layout/DefaultLayout";
-import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
-import ResearchCardProvider from "./ResearchCardProvider";
-import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { API } from '../../utils/apiURl';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import DefaultLayout from '../../layout/DefaultLayout';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import ResearchCardProvider from './ResearchCardProvider';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+
 const EditResearch = () => {
-  const navigate=useNavigate();
-  const token=localStorage.getItem('token');
-  useEffect(()=>{
-    if(!token){
-      return navigate('/signin');}
-    const {Allow}=jwtDecode(token);
-    if(!Allow?.[9]){
-    navigate('/recruitment/edit');
-  }},[]);
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    if (!token) {
+      return navigate('/signin');
+    }
+    const { Allow } = jwtDecode(token);
+    if (!Allow?.[9]) {
+      navigate('/recruitment/edit');
+    }
+  }, []);
+
   const [data, setData] = useState([]);
+
   const fetchResearch = async () => {
     try {
-    
       let response = await axios.get(`${API}/research`);
       if (response.status === 200) {
         // console.log(response.data.research);
@@ -27,13 +32,15 @@ const EditResearch = () => {
       }
       //   setFetchDone(true);
     } catch (err) {
-      console.error("Error in research", err);
+      console.error('Error in research', err);
       //   setFetchDone(false);
     }
   };
+
   useEffect(() => {
     fetchResearch();
-  }, [])
+  }, []);
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Edit Research" />
@@ -43,7 +50,7 @@ const EditResearch = () => {
         </div>
       </div>
     </DefaultLayout>
-  )
-}
+  );
+};
 
 export default EditResearch;

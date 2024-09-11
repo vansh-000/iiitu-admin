@@ -101,7 +101,7 @@ const Admissions = () => {
           Authorization: `Brear ${token}`,
         },
       });
-      toast.success('Data Deleted!');
+      toast.error('Data Deleted!');
       fetchData();
     } catch (err) {
       if (err.response.status === 401) {
@@ -338,7 +338,10 @@ const Admissions = () => {
           </label>
         </div>
 
-        <button className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
+        <button
+          disabled={loading}
+          className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+        >
           {loading ? (
             <div className="inline-block h-7 w-7 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
           ) : (

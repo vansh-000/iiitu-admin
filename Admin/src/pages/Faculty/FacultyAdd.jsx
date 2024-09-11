@@ -15,7 +15,7 @@ import { useEffect } from 'react';
 function FacultyAdd() {
   const refName = useRef('');
   const refEmail = useRef('');
-  const refWebsite=useRef('');
+  const refWebsite = useRef('');
   const [education, setEducation] = useState([]);
   const [research, setResearch] = useState([]);
   const [award, setAward] = useState([]);
@@ -24,12 +24,14 @@ function FacultyAdd() {
   const refResearchInterest = useRef('');
   const refLinkedin = useRef('');
   const refOrcid = useRef('');
-  const refDesignation=useRef('');
+  const refDesignation = useRef('');
   const refGoogleScholar = useRef('');
   const refResume = useRef(null);
   const refProfileImage = useRef(null);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (!token) {
       return navigate('/signin');
@@ -41,6 +43,7 @@ function FacultyAdd() {
   }, []);
 
   const handleOnSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       // Parsing and appending education data
@@ -76,13 +79,13 @@ function FacultyAdd() {
           password: '123',
           department: selectedDepartment,
           mobile: refMobile.current.value,
-          designation:refDesignation.current.value,
+          designation: refDesignation.current.value,
           researchInterest: refResearchInterest.current.value,
           socialLink: [
             { social: 'Linkedin', link: refLinkedin.current.value },
             { social: 'GoogleScholar', link: refGoogleScholar.current.value },
             { social: 'Orcid', link: refOrcid.current.value },
-            { social:'Website',link: refWebsite.current.value}
+            { social: 'Website', link: refWebsite.current.value },
           ],
           resume: refResume.current.files[0],
           profileImage: refProfileImage.current.files[0],
@@ -98,7 +101,7 @@ function FacultyAdd() {
           },
         },
       );
-
+      setLoading(false);
       toast.success(response.data.message);
     } catch (err) {
       if (err.response.status === 401) {
@@ -107,9 +110,11 @@ function FacultyAdd() {
       if (err.response.status >= 410 && err.response.status <= 430) {
         return toast.error(err.response.data.message);
       }
+      setLoading(true);
       toast.error(`Error: ${err}`);
     }
   };
+
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [isOptionSelected, setIsOptionSelected] = useState(false);
 
@@ -357,7 +362,7 @@ function FacultyAdd() {
                 name="Orcid"
                 ref={refOrcid}
               />
-<label
+              <label
                 className="mb-3 block text-black dark:text-white"
                 htmlFor="Website"
               >
@@ -443,11 +448,16 @@ function FacultyAdd() {
               )} */}
 
               <div>
-                <input
-                  className="inline-flex items-center mt-4 justify-center rounded-full bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 hover:cursor-pointer"
-                  type="Submit"
-                  value="Add Faculty"
-                />
+                <button
+                  disabled={loading}
+                  className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+                >
+                  {loading ? (
+                    <div className="inline-block h-5 w-5 animate-spin rounded-full border-[0.2rem] border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                  ) : (
+                    <span>Add Faculty</span>
+                  )}
+                </button>
               </div>
             </div>
           </div>

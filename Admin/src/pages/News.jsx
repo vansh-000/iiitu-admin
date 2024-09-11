@@ -13,6 +13,8 @@ const News = () => {
   const [isLatest, setIsLatest] = useState(false);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (!token) {
       return navigate('/signin');
@@ -22,8 +24,14 @@ const News = () => {
       navigate('/printmedia');
     }
   }, []);
+
   const refImg = useRef();
   const refDoc = useRef();
+  const headingRef = useRef();
+  const descriptionRef = useRef();
+  const startDateRef = useRef();
+  const endDateRef = useRef();
+
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/news`);
@@ -37,11 +45,8 @@ const News = () => {
     fetchData();
   }, []);
 
-  const headingRef = useRef();
-  const descriptionRef = useRef();
-  const startDateRef = useRef();
-  const endDateRef = useRef();
   const handleAdd = async (e) => {
+    setLoading(true);
     e.preventDefault();
     const heading = headingRef.current.value;
     const description = descriptionRef.current.value;
@@ -73,13 +78,14 @@ const News = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-
+      setLoading(false);
       toast.success('News Uploaded!');
       fetchData();
     } catch (err) {
       if (err.response.status === 401) {
         return navigate('/signin');
       }
+      setLoading(false);
       toast.error(`Error: ${err}`);
     }
   };
@@ -91,7 +97,7 @@ const News = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.success('News Deleted!');
+      toast.error('News Deleted!');
       fetchData();
     } catch (err) {
       if (err.response.status === 401) {
@@ -194,8 +200,15 @@ const News = () => {
             />
           </label>
         </div>
-        <button className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
-          Add News
+        <button
+          disabled={loading}
+          className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+        >
+          {loading ? (
+            <div className="inline-block h-5 w-5 animate-spin rounded-full border-[0.2rem] border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+          ) : (
+            <span>Add News</span>
+          )}
         </button>
       </form>
       <div className="flex flex-col gap-10 mt-5">

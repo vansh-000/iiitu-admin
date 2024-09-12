@@ -17,6 +17,7 @@ import toast from 'react-hot-toast';
 import TablePublications from '../components/Tables/TablePublications';
 import TableProjects from '../components/Tables/TableProjects';
 import TableOther from '../components/Tables/TableOther';
+import { StaticLinkProvider } from '../utils/StaticLinkProvider';
 
 const Profile = () => {
   const nevigat = useNavigate();
@@ -186,7 +187,7 @@ const Profile = () => {
             <div className="relative drop-shadow-2">
               {faculty && faculty?.profileImage && (
                 <img
-                  src={profileImage ? profileImage : faculty?.profileImage}
+                  src={profileImage ? profileImage : StaticLinkProvider(faculty?.profileImage)}
                   className="w-[200px]"
                   alt="profile"
                 />
@@ -271,7 +272,7 @@ const Profile = () => {
             ) : (
               faculty.resume && (
                 <Link
-                  to={faculty.resume}
+                  to={StaticLinkProvider(faculty.resume)}
                   className="w-fit flex flex-col items-center justify-center gap-1 text-[1.1rem] text-black dark:text-white px-4 dark:border-stroke border-strokedark xsm:flex-row"
                 >
                   Resume 

@@ -4,6 +4,7 @@ import { STATIC_FILES } from '../../utils/apiURl';
 import { MdDelete } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { FcEditImage } from 'react-icons/fc';
+import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 const Poster = (props) => {
   const { data, onClick, handleDelete } = props;
 
@@ -20,7 +21,7 @@ const Poster = (props) => {
               onClick={() => handleClickImage(index)}
               className={styles.image}
             >
-              <img src={slide.image} alt="" />
+              <img src={StaticLinkProvider(slide.image)} alt="" />
             </div>
             <p className={styles.event}>{slide.name}</p>
             <div className="flex items-center justify-center -mt-12">

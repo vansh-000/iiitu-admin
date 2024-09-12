@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { STATIC_FILES } from '../../utils/apiURl';
 import { useState } from 'react';
+import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 
 const TableAdmissions = ({
   data,
@@ -67,7 +68,7 @@ const TableAdmissions = ({
                         </label>
                       </div>
 
-                      <Link to={item.doc} className="hover:text-primary">
+                      <Link to={StaticLinkProvider(item.doc)} target='_blank' className="hover:text-primary">
                         <svg
                           className="fill-current"
                           width="18"

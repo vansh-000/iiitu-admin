@@ -9,6 +9,7 @@ import TableEducation from '../../components/Tables/TableEducation';
 import TableResearch from '../../components/Tables/TableResearch';
 import TableAwards from '../../components/Tables/TableAwards';
 import TableProjects from '../../components/Tables/TableProjects';
+import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 
 const FacultyAllEdit = () => {
   const idd = useParams();
@@ -130,7 +131,7 @@ const FacultyAllEdit = () => {
               <div className="relative drop-shadow-2">
                 {faculty && faculty.profileImage && (
                   <img
-                    src={profileImage ? profileImage : profileIMG}
+                    src={profileImage ? (profileImage) : StaticLinkProvider(profileIMG)}
                     alt="profile"
                     className="h-full w-full rounded-tl-sm rounded-tr-sm object-cover object-center max-h-40"
                   />

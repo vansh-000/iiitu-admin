@@ -3,6 +3,7 @@ import { API, STATIC_FILES } from '../../utils/apiURl';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 
 const FacultyEditCard = ({ faculty, fetchData }) => {
   const navigate=useNavigate();
@@ -30,7 +31,7 @@ const FacultyEditCard = ({ faculty, fetchData }) => {
       <div key={faculty._id} className="flex w-full border-l-6 border-[#34D399] bg-[#34D399] bg-opacity-[15%] px-7 py-8 shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-9">
         <div className="mr-5 flex h-[100px] w-[100px] items-center justify-center rounded-lg bg-[#34D399]">
           <img
-            src={faculty.profileImage}
+            src={StaticLinkProvider(faculty.profileImage)}
             alt="profile pic"
             className="h-full w-full object-cover rounded-lg"
           />

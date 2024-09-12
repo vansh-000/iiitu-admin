@@ -11,6 +11,7 @@ import {
 import 'yet-another-react-lightbox/plugins/captions.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import Poster from './Poster';
+import { StaticLinkProvider } from '../../../utils/StaticLinkProvider';
 // import { STATIC_FILES } from '../../utils/apiURl';
 
 function EventSlides({data, handleDelete}) {
@@ -18,7 +19,7 @@ function EventSlides({data, handleDelete}) {
 
   const modifiedEvents = data?.map(d => ({
     ...d,
-    src: d?.image // Append uploads/server/ to the image path
+    src: StaticLinkProvider(d?.image) // Append uploads/server/ to the image path
   }));
 
   modifiedEvents?.forEach(d => {

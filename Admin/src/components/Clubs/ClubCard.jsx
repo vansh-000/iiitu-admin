@@ -9,6 +9,7 @@ import {
   FaGithub,
   FaYoutube,
 } from 'react-icons/fa';
+import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 
 const ClubsCard = (props) => {
   const { data, handleDelete } = props;
@@ -32,7 +33,7 @@ const ClubsCard = (props) => {
                   <div className={styles.imgcont}>
                     <img
                       className={styles.img}
-                      src={slide?.Logo}
+                      src={StaticLinkProvider(slide?.Logo)}
                       alt={`${slide.Name} Image`}
                     />
                   </div>

@@ -45,6 +45,11 @@ const News = () => {
     fetchData();
   }, []);
 
+  const headingRef = useRef();
+  const descriptionRef = useRef();
+  const startDateRef = useRef();
+  const endDateRef = useRef();
+  const linkRef=useRef();
   const handleAdd = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -52,6 +57,7 @@ const News = () => {
     const description = descriptionRef.current.value;
     const startDate = startDateRef.current.value;
     const endDate = endDateRef.current.value;
+    const link=linkRef.current.value;
 
     try {
       if (!refDoc.current?.files[0] && !refImg.current?.files[0]) {
@@ -64,6 +70,7 @@ const News = () => {
       formData.append('startDate', startDate);
       formData.append('endDate', endDate);
       formData.append('isLatest', isLatest);
+      formData.append('Link',link);
 
       if (refDoc.current?.files[0]) {
         formData.append('doc', refDoc.current.files[0]);
@@ -133,6 +140,19 @@ const News = () => {
             ref={descriptionRef}
             type="text"
             placeholder="Description"
+            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+          />
+        </div>
+        <div className="mt-4">
+          <label className="mb-3 block text-black dark:text-white">
+            Link
+          </label>
+          <input
+            name="Link"
+            ref={linkRef}
+            type="text"
+            required 
+            placeholder="Eg. admission, club/avessh"
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
         </div>

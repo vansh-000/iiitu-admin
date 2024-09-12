@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { STATIC_FILES } from '../../utils/apiURl';
+import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 
 const TableCurriculum = ({ data, handleDelete }) => {
   return (
@@ -36,7 +37,7 @@ const TableCurriculum = ({ data, handleDelete }) => {
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">
                       <Link
-                        to={item.coursePdf}
+                        to={StaticLinkProvider(item.coursePdf)}
                         className="hover:text-primary"
                       >
                         <svg

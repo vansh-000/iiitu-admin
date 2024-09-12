@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 
 const TableForms = ({ data, handleDelete }) => {
   return (
@@ -35,7 +36,7 @@ const TableForms = ({ data, handleDelete }) => {
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">
                       <Link
-                        to={item.Doc}
+                        to={StaticLinkProvider(item.Doc)}
                         className="hover:text-primary"
                       >
                         <svg

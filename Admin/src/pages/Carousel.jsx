@@ -20,7 +20,7 @@ const Carousel = () => {
       return navigate('/signin');
     }
     const { Allow } = jwtDecode(token);
-    if (!Allow?.[7]) {
+    if (!Allow?.[15]) {
       navigate('/curriculum');
     }
   }, []);

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { API } from '../../utils/apiURl';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 
 const ResearchEditCard = ({ research, fetchData, index }) => {
   const [editable, setEditable] = useState(false);
@@ -212,7 +213,7 @@ const ResearchEditCard = ({ research, fetchData, index }) => {
             </>
           ) : (
             <Link
-              to={research.file}
+              to={StaticLinkProvider(research.file)}
               className="inline-flex h-fit items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
             >
               File
@@ -239,7 +240,7 @@ const ResearchEditCard = ({ research, fetchData, index }) => {
             </>
           ) : (
             <img
-              src={research.universityImage}
+              src={StaticLinkProvider(research.universityImage)}
               alt={research.universityImage}
               className="h-[25%] w-[25%] inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
             />

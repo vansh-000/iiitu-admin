@@ -2,7 +2,7 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import axios from 'axios';
 import { API } from '../../utils/apiURl';
 import TableDate from "../../components/Tables/TableDate.jsx"
-import TableFile from "../../components/Tables/TableFile.jsx"
+// import TableFile from "../../components/Tables/TableFile.jsx"
 import TableLink from "../../components/Tables/TableLink.jsx"
 import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
@@ -36,31 +36,20 @@ function Tender(): JSX.Element {
       // Append service and other text data
       formData.append('service', refDesc.current!.value);
   
-      // Append files for Docs and DocName
-      file.forEach((item) => {
-        if (item && item.Docs && item.DocName) {
-          if (item.Docs instanceof File) {
-            formData.append('Docs', item.Docs);
-          }
-          formData.append('DocName', item.DocName);
-        }
-      });
+
   
       // Append date information directly as objects, not as a string
       const sendDate = date.filter((dat) => dat.DateName !== '' && dat.Date !== null);
       const LinkList=linkList.filter((link)=>link.URL!==''&&link.LinkName!=='');
       
-      sendDate.forEach((dat, index) => {
-        formData.append(`Date[${index}][DateName]`, dat.DateName);
-        formData.append(`Date[${index}][Date]`, new Date(dat.Date).toISOString()); // Send Date as ISO string
-      });
-      LinkList.forEach((link, index) => {
-        formData.append(`LinkList[${index}][LinkName]`, link.LinkName);
-        formData.append(`LinkList[${index}][URL]`, link.URL);
-        });
+      const data={
+        service:refDesc.current!.value,
+        Date:sendDate,
+        LinkList:LinkList
+      }
       const response = await axios.post(
         `${API}/tender`,
-        formData,
+        data,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -68,11 +57,17 @@ function Tender(): JSX.Element {
           },
         },
       );
-      toast.success(response.data.message);
+      if(response.status===201)
+        {
+        toast.success(response.data.message);
+        navigate('/tender/edit');
+      }
     } catch (err) {
-      if (err.response.status === 401) {
+      if (err.response?.status === 401) {
         return navigate('/signin');
       }
+      console.error(err);
+      
       toast.error(`Error: ${err}`);
     }
   };
@@ -101,11 +96,11 @@ function Tender(): JSX.Element {
             </div>
             <TableDate Date={date} setDate={setDate}/>
 
-
+{/* 
             <div>
             <TableFile File={file} setFile={setFile}/>
 
-            </div>
+            </div> */}
             <TableLink Link={linkList} setLink={setLinkList}/>
             {/* <div>
               <label

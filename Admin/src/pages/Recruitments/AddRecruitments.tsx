@@ -34,49 +34,39 @@ const AddRecruitments = () => {
     e.preventDefault();
   
     try {
-      const formData = new FormData();
-  
-      // Append service and other text data
-      formData.append('service', refDesc.current!.value);
-  
-      // Append files for Docs and DocName
-      file.forEach((item) => {
-        if (item && item.Docs && item.DocName) {
-          if (item.Docs instanceof File) {
-            formData.append('Docs', item.Docs);
-          }
-          formData.append('DocName', item.DocName);
-        }
-      });
-  
-      // Append date information directly as objects, not as a string
-      const sendDate = date.filter((dat) => dat.DateName !== '' && dat.Date !== null);
-      const LinkList=linkList.filter((link)=>link.URL!==''&&link.LinkName!=='');
 
-      sendDate.forEach((dat, index) => {
-        formData.append(`Date[${index}][DateName]`, dat.DateName);
-        formData.append(`Date[${index}][Date]`, new Date(dat.Date).toISOString()); // Send Date as ISO string
-      });
-      LinkList.forEach((link, index) => {
-        formData.append(`LinkList[${index}][LinkName]`, link.LinkName);
-        formData.append(`LinkList[${index}][URL]`, link.URL);
-        });
-      // Append application link
-            // Submit the form data to the backend
+      
+      // Append the service description to the formData
+      // formData.append('service', refDesc.current!.value);
+      
+      // Filter and append Date and LinkList as JSON strings (since FormData doesn't accept objects directly)
+      const sendDate = date.filter((dat) => dat.DateName !== '' && dat.Date !== null);
+      // formData.append('Date', JSON.stringify(sendDate));
+  
+      const LinkList = linkList.filter((link) => link.URL !== '' && link.LinkName !== '');
+  const data={
+    service:refDesc.current!.value,
+    Date:sendDate,
+    LinkList:LinkList
+  }
+      // Make the POST request
       const response = await axios.post(
         `${API}/recruitment`,
-        formData,
+        data, // Send formData directly
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'multipart/form-data',
+            // 'Content-Type': 'multipart/form-data'  // No need to set this manually
           },
-        },
+        }
       );
   
-      console.log(response);
+      if(response.status===201)
+      {
       toast.success(response.data.message);
-    } catch (err) {
+      navigate('/recruitment/edit');
+    }
+    } catch (err: any) {
       if (err.response?.status === 401) {
         return navigate('/signin');
       }
@@ -84,6 +74,7 @@ const AddRecruitments = () => {
       toast.error(`Error: ${err.message || 'Something went wrong'}`);
     }
   };
+  
   
   
   
@@ -134,7 +125,7 @@ const AddRecruitments = () => {
               </div> */}
             {/* </div> */}
             <div>
-              <TableFile File={file} setFile={setFile}/>
+              {/* <TableFile File={file} setFile={setFile}/> */}
               {/* <label
                htmlFor="description"
                className="mb-3 block text-black dark:text-white"

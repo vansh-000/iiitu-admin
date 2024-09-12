@@ -3,20 +3,24 @@ import { Link, useNavigate } from 'react-router-dom';
 import { API, STATIC_FILES } from '../../utils/apiURl';
 import axios from 'axios';
 // import TableDate from "../../components/Tables/TableDate.jsx"
-import TableEditFile from "../../components/Tables/TableEditFile.jsx"
+import TableEditFile from '../../components/Tables/TableEditFile.jsx';
 import toast from 'react-hot-toast';
+import { StaticLinkProvider } from '../../utils/StaticLinkProvider.jsx';
 
 const REditCard = ({ recruitment, fetchData }) => {
   const [editable, setEditable] = useState(false);
-  // const [editedData, setEditedData] = useState({});
-  const [date,setDate]=useState(recruitment?.Date);
-  const [file,setFile]=useState(recruitment?.Docs);
-  const [link,setLink]=useState(recruitment?.Link);
+  const [editedData, setEditedData] = useState({});
+  const [addFile, setAddFile] = useState(false);
+  // console.log(recruitment);
+
+  const [date, setDate] = useState(recruitment?.Date);
+  const [file, setFile] = useState(recruitment?.Docs);
+  const [link, setLink] = useState(recruitment?.Link);
 
   const navigate = useNavigate();
   const refDesc = useRef<HTMLInputElement>(null);
   // const refRecruitmentDoc = useRef<HTMLInputElement>(null);
-  const refAppLink = React.useRef<HTMLInputElement>(null);
+  // const refAppLink = React.useRef<HTMLInputElement>(null);
   // const refAppForm = React.useRef();
   // const startDateRefs = useRef(null);
   // const endDateRefs = useRef({});
@@ -31,60 +35,58 @@ const REditCard = ({ recruitment, fetchData }) => {
     return `${formattedDay}-${formattedMonth}-${year}`;
   };
 
-  // const handleEdit = (recruitment) => {
-  //   setEditedData(recruitment);
-  //   setEditable(true);
-  // };
+  const handleEdit = (recruitment) => {
+    setEditedData(recruitment);
+    setEditable(true);
+  };
 
-//   const handleSave = async () => {
-//     try {
-//       const formData = new FormData();
-  
-//       // Append service and other text data
-//       formData.append('service', refDesc.current!.value);
-  
-//       // Append files for Docs and DocName
-//       file.forEach((item) => {
-//         if (item && item.Docs && item.DocName) {
-//           if (item.Docs instanceof File) {
-//             formData.append('Docs', item.Docs);
-//           }
-//           formData.append('DocName', item.DocName);
-//         }
-//       });
-  
-//       // Append date information directly as objects, not as a string
-//       const sendDate = date.filter((dat) => dat.DateName !== '' && dat.Date !== null);
-      
-//       sendDate.forEach((dat, index) => {
-//         formData.append(`Date[${index}][DateName]`, dat.DateName);
-//         formData.append(`Date[${index}][Date]`, new Date(dat.Date).toISOString()); // Send Date as ISO string
-//       });
-  
-//       // Append application link
-//       formData.append('ApplicationLink', refAppLink?.current?.value);
-  
-// // console.log(file)
-//       // const response = await axios.put(
-//       //   `${API}/recruitment/${editedData._id}`,
-//       //   formData,
-//       //   {
-//       //     headers: {
-//       //       Authorization: `Bearer ${localStorage.getItem('token')}`,
-//       //       'Content-Type': 'multipart/form-data',
-//       //     },
-//       //   },
-//       // );
-//       // toast.success(response.data.message);
-//       fetchData();
-//     } catch (err) {
-//       if (err?.response?.status === 401) {
-//         return navigate('/signin');
-//       }
-//       toast.error(`Error: ${err}`);
-//     }
-//     setEditable(false);
-//   };
+  const handleSave = async () => {
+    try {
+      // Append files for Docs and DocName
+      // file.forEach((item) => {
+      //   if (item && item.Docs && item.DocName) {
+      //     if (item.Docs instanceof File) {
+      //       formData.append('Docs', item.Docs);
+      //     }
+      //     formData.append('DocName', item.DocName);
+      //   }
+      // });
+
+      // Append date information directly as objects, not as a string
+      const sendDate = date.filter(
+        (dat) => dat.DateName !== '' && dat.Date !== null,
+      );
+      const LinkList = link.filter(
+        (link) => link.URL !== '' && link.LinkName !== '',
+      );
+      const data = {
+        service: refDesc.current!.value,
+        Date: sendDate,
+        LinkList: LinkList,
+      };
+
+      // Append application link
+      // formData.append('ApplicationLink', refAppLink?.current?.value);
+
+      const response = await axios.put(
+        `${API}/recruitment/${editedData._id}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        },
+      );
+      toast.success(response.data.message);
+      fetchData();
+    } catch (err) {
+      if (err?.response?.status === 401) {
+        return navigate('/signin');
+      }
+      toast.error(`Error: ${err}`);
+    }
+    setEditable(false);
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -99,9 +101,11 @@ const REditCard = ({ recruitment, fetchData }) => {
       console.error(err);
       if (err.response.status === 401) {
         return navigate('/signin');
-    }
+      }
+      toast.error(`Error: ${err}`);
     }
   };
+  const handleAddFile = async () => {};
 
   return (
     <div
@@ -121,13 +125,14 @@ const REditCard = ({ recruitment, fetchData }) => {
           )}
         </h5>
         <p className="leading-relaxed text-[#D0915C]">
-          
           {/* Start Date:{formatDate(recruitment.startDate)} */}
           {/* {editable ?  <TableDate Date={date} setDate={setDate}/>: */}
           {/* <> */}
-          {date.map(date=>(
+          {date.map((date) => (
             <div className="flex gap-2">
-              <p>{date?.DateName} : {formatDate(date?.Date)}</p>
+              <p>
+                {date?.DateName} : {formatDate(date?.Date)}
+              </p>
             </div>
           ))}
           {/* </>} */}
@@ -137,39 +142,37 @@ const REditCard = ({ recruitment, fetchData }) => {
           {editable && <DatePickerOne refDate={endDateRefs} />}
         </p> */}
         <p className="leading-relaxed text-[#D0915C]">
-          <div>
-            {editable ? (<>
-             <TableEditFile File={file} setFile={setFile}/>
-              <span className='text-red-700 text-2lg'>*Choose File To Change the Original File</span>
-            </>
-            ) : (
-              <>
-              {file.map((file)=>(
+          <>
+            {!addFile &&
+              file?.map((file) => (
                 <Link
-                to={`${STATIC_FILES}/${file?.DocPath?.replace('/\/g','/')}`}
-                target='_blank'
-                className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-              >
-                {file?.DocName}
-              </Link>
+                  to={StaticLinkProvider(file?.DocPath)}
+                  target="_blank"
+                  className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+                >
+                  {file?.DocName}
+                </Link>
               ))}
-              </>
-            )}
-          </div>
+          </>
         </p>
         <>
-              {
-                link?.map((li)=>(
-                    <Link
-                to={li.URL}
-                target='_blank'
-                className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-              >
-                {li.LinkName}
-              </Link>
-                ))
-              }
-              </>
+          {link?.map((li) => (
+            <Link
+              to={li.URL}
+              target="_blank"
+              className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+              {li.LinkName}
+            </Link>
+          ))}
+        </>
+        {addFile && (
+          <TableEditFile
+            File={file}
+            setFile={setFile}
+            recId={recruitment._id}
+          />
+        )}
         {/* <p className="leading-relaxed text-[#D0915C]">
           <div>
             {editable ? (
@@ -223,17 +226,29 @@ const REditCard = ({ recruitment, fetchData }) => {
           </Link>
         )} */}
 
-        {/* <button
+        <button
           className="inline-flex items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
           onClick={editable ? handleSave : () => handleEdit(recruitment)}
         >
           {editable ? 'Save' : 'Edit'}
-        </button> */}
+        </button>
         <button
           onClick={() => handleDelete(recruitment._id)}
           className="inline-flex ml-2 items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
         >
           Delete
+        </button>
+        <button
+          onClick={() => {
+            setAddFile((prev) => !prev);
+
+            if (addFile === true) {
+              fetchData();
+            }
+          }}
+          className="inline-flex ml-2 items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+        >
+          {addFile ? 'Done' : 'Add File'}
         </button>
       </div>
     </div>

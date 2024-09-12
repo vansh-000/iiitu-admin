@@ -21,6 +21,7 @@ const Images = (props) => {
                     >
                         <img src={StaticLinkProvider(slide.image)} alt={slide.description} />
                     </div>
+                    <p className="text-center">{slide?.title}</p>
                     <div className="flex flex-row items-center gap-1 mt-2">
                         <button className="text-xl text-black dark:text-white" onClick={() => handleDelete(slide._id)}>Delete</button><MdDelete className="text-[rgb(220,0,0)] text-xl" />
                     </div>

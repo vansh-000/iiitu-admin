@@ -3,8 +3,9 @@ import { API, STATIC_FILES } from '../../utils/apiURl';
 import { Link } from 'react-router-dom';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
-const TableFile = ({ File, setFile, recId }) => {
+const TableEditTenderFile = ({ File, setFile, tenTd }) => {
   const handleEdit = (index, field, value) => {
     const updatedFile = [...File];
     updatedFile[index][field] = value;
@@ -29,12 +30,12 @@ const TableFile = ({ File, setFile, recId }) => {
     const updatedFile = [...File];
     
     // Make the delete request with correct configuration
-    const response = await axios.delete(`${API}/recruitmentDoc/${updatedFile[index]._id}`, {
+    const response = await axios.delete(`${API}/tenderDoc/${updatedFile[index]._id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
       data: {
-        recruitmentId: recId,  // Send recruitmentId in the data field
+        tenderId: tenTd,  // Send tenderId in the data field
       },
     });
 
@@ -55,11 +56,11 @@ const TableFile = ({ File, setFile, recId }) => {
       const formData = new FormData();
       formData.append('DocName', updatedFile[index].DocName);
       formData.append('Docs', updatedFile[index].Docs);
-      formData.append('recruitmentId', recId);
+      formData.append('tenderId', tenTd);
 
       if (!updatedFile[index]?._id) {
         // POST for new document
-        const response=await axios.post(`${API}/recruitmentDoc`, formData, {
+        const response=await axios.post(`${API}/tenderDoc`, formData, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'multipart/form-data',
@@ -68,10 +69,11 @@ const TableFile = ({ File, setFile, recId }) => {
         if(response.status===201){
             toast.success("File is Saved")
         }
+        // console.log(response);
         
       } else {
         // PUT for existing document update
-       const response= await axios.put(`${API}/recruitmentDoc/${updatedFile[index]._id}`, formData, {
+       const response= await axios.put(`${API}/tenderDoc/${updatedFile[index]._id}`, formData, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'multipart/form-data',
@@ -80,6 +82,7 @@ const TableFile = ({ File, setFile, recId }) => {
         if(response.status===201){
             toast.success("File is Saved")
         }
+        // console.log(response);
         
       }
     } catch (err) {
@@ -165,4 +168,4 @@ const TableFile = ({ File, setFile, recId }) => {
   );
 };
 
-export default TableFile;
+export default TableEditTenderFile;

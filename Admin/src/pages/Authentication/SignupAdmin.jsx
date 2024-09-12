@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
@@ -11,7 +11,10 @@ const SignUpAdmin = () => {
   const refEmail = useRef();
   const refPassword = useRef();
   const navigator = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   const handleOnSubmit = async (e) => {
+    setLoading(true);
     const email = refEmail.current.value;
     const password = refPassword.current.value;
     e.preventDefault();
@@ -21,11 +24,13 @@ const SignUpAdmin = () => {
         password: password,
       });
       if (response.status === 200) {
+        setLoading(false);
         toast.success('Successfully Logged In!');
         localStorage.setItem('token', response.data.token);
         navigator('/');
       }
     } catch (error) {
+      setLoading(false);
       if (error.response.status === 409) {
         toast.error('User does Not Found!');
       } else if (error.response && error.response.status === 401) {
@@ -35,16 +40,17 @@ const SignUpAdmin = () => {
       }
     }
   };
-  useEffect(()=>{
-    const token=localStorage.getItem('token');
-    if(token){
-      const {exp}=jwtDecode(token);
-      if(exp*1000>Date.now()){
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const { exp } = jwtDecode(token);
+      if (exp * 1000 > Date.now()) {
         localStorage.removeItem('token');
-        navigator('/')
+        navigator('/');
       }
     }
-  })
+  });
 
   return (
     <DefaultLayout>
@@ -84,6 +90,7 @@ const SignUpAdmin = () => {
                       type="email"
                       placeholder="Enter your email"
                       ref={refEmail}
+                      required
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -116,6 +123,7 @@ const SignUpAdmin = () => {
                       type="password"
                       ref={refPassword}
                       placeholder="Enter your Password"
+                      required
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -153,11 +161,18 @@ const SignUpAdmin = () => {
                 </div>
 
                 <div className="mb-5">
-                  <input
+                  <button
+                    disabled={loading}
                     type="submit"
                     value="Sign In"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                  />
+                    className="w-full h-14 cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                  >
+                    {loading ? (
+                      <div className="inline-block h-6 w-6 animate-spin rounded-full border-[3px] border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                    ) : (
+                      <span>Sign In</span>
+                    )}
+                  </button>
                 </div>
               </form>
             </div>

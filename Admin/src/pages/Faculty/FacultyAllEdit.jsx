@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { API, STATIC_FILES } from '../../utils/apiURl';
 import axios from 'axios';
@@ -31,6 +31,8 @@ const FacultyAllEdit = () => {
   const refOrcid = React.useRef();
   const refWebsite = React.useRef();
   const [profileIMG, setProfileIMG] = React.useState();
+  const [loading, setLoading] = useState(false);
+
   const fetchFaculty = async () => {
     try {
       const response = await axios.get(`${API}/faculty/${idd.id}`);
@@ -45,43 +47,51 @@ const FacultyAllEdit = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchFaculty();
   }, []);
+
   const handleProfileImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setProfileImage(URL.createObjectURL(file));
     }
   };
+
   const handleOnSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
-            const newEducation = education.length === 0 ? [] : education.filter((edu) => edu.description !== '');
-            const newAward = award.length === 0 ? [] : award.filter((awa) => awa !== '');
-            // const newPublication = publication.length === 0 ? [] : publication.filter((pub) => pub !== '');    
-            // const newJournal = journal.length === 0 ? [] : journal.filter((jor) => jor !== '');
-            // const newProject = project.length === 0 ? [] : project.filter((pro) => pro.Title !== '');
-            const newResearch = research.length === 0 ? [] : research.filter((res) => res !== '');  
-            const data2={
-              name: refName.current.value,
-    
-              mobile: refPhone.current.value,
-              researchInterest: refResearchInterest.current.value,
-              designation:refDesignation.current.value,
-              socialLink: [
-                { social: 'Linkedin', link: refLinkedin.current.value },
-                { social: 'GoogleScholar', link: refGoogleScholar.current.value },
-                { social: 'Orcid', link: refOrcid.current.value },{ social:'Website',link: refWebsite.current.value}
-    
-              ],
-              AwardAndHonours: newAward,
-              Education: newEducation,
-              // Projects: newProject,
-              Research: newResearch,
-            };
-            (data2);
-             
+      const newEducation =
+        education.length === 0
+          ? []
+          : education.filter((edu) => edu.description !== '');
+      const newAward =
+        award.length === 0 ? [] : award.filter((awa) => awa !== '');
+      // const newPublication = publication.length === 0 ? [] : publication.filter((pub) => pub !== '');
+      // const newJournal = journal.length === 0 ? [] : journal.filter((jor) => jor !== '');
+      // const newProject = project.length === 0 ? [] : project.filter((pro) => pro.Title !== '');
+      const newResearch =
+        research.length === 0 ? [] : research.filter((res) => res !== '');
+      const data2 = {
+        name: refName.current.value,
+
+        mobile: refPhone.current.value,
+        researchInterest: refResearchInterest.current.value,
+        designation: refDesignation.current.value,
+        socialLink: [
+          { social: 'Linkedin', link: refLinkedin.current.value },
+          { social: 'GoogleScholar', link: refGoogleScholar.current.value },
+          { social: 'Orcid', link: refOrcid.current.value },
+          { social: 'Website', link: refWebsite.current.value },
+        ],
+        AwardAndHonours: newAward,
+        Education: newEducation,
+        // Projects: newProject,
+        Research: newResearch,
+      };
+      data2;
+
       const response = await axios.put(
         `${API}/faculty/editDetails/${idd.id}`,
         data2,
@@ -91,8 +101,9 @@ const FacultyAllEdit = () => {
           },
         },
       );
-
+      setLoading(false);
       toast.success(`${response.data.message}`);
+      navigate('/faculty/edit');
       if (refResume.current.files[0] || refProFileImg.current.files[0]) {
         const data = {
           profileImage: refProFileImg.current.files[0],
@@ -118,9 +129,11 @@ const FacultyAllEdit = () => {
       if (err?.response?.status === 401) {
         return navigate('/signin');
       }
+      setLoading(false);
       toast.error(`Error: ${err}`);
     }
   };
+
   return (
     <>
       <DefaultLayout>
@@ -349,11 +362,16 @@ const FacultyAllEdit = () => {
               <TableProjects Project={project} setProject={setProject} />
             )} */}
             <div>
-              <input
-                className="inline-flex items-center mt-4 justify-center rounded-full bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 hover:cursor-pointer"
-                type="Submit"
-                value="Save"
-              />
+              <button
+                disabled={loading}
+                className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+              >
+                {loading ? (
+                  <div className="inline-block h-5 w-5 animate-spin rounded-full border-[0.2rem] border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                ) : (
+                  <span>Save</span>
+                )}
+              </button>
             </div>
           </div>
         </form>

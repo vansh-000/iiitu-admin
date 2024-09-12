@@ -1,39 +1,45 @@
-import TenderEditCard from "./TenderEditCard"
-import { API } from "../../utils/apiURl";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import DefaultLayout from "../../layout/DefaultLayout";
-import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
-import { jwtDecode } from "jwt-decode";
-import { useNavigate } from "react-router-dom";
+import TenderEditCard from './TenderEditCard';
+import { API } from '../../utils/apiURl';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import DefaultLayout from '../../layout/DefaultLayout';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
+
 const TenderEdits = () => {
-  const navigate=useNavigate();
-  const token=localStorage.getItem('token');
-  useEffect(()=>{
-    if(!token){
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    if (!token) {
       return navigate('/signin');
     }
-    const {Allow}=jwtDecode(token);
-    if(!Allow?.[8]){
-    navigate('/research/add');
-  }},[]);
+    const { Allow } = jwtDecode(token);
+    if (!Allow?.[8]) {
+      navigate('/research/add');
+    }
+  }, []);
+
   const [data, setData] = useState([]);
+
   const fetchTender = async () => {
     try {
-    
       let response = await axios.get(`${API}/tender`);
       if (response.status === 200) {
         setData(response.data);
       }
       //   setFetchDone(true);
     } catch (err) {
-      console.error("Error in Tender", err);
+      console.error('Error in Tender', err);
       //   setFetchDone(false);
     }
   };
+
   useEffect(() => {
     fetchTender();
-  }, [])
+  }, []);
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Edit Tender" />
@@ -43,7 +49,7 @@ const TenderEdits = () => {
         </div>
       </div>
     </DefaultLayout>
-  )
-}
+  );
+};
 
 export default TenderEdits;

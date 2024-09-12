@@ -6,29 +6,33 @@ import toast from 'react-hot-toast';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 
 const FacultyEditCard = ({ faculty, fetchData }) => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API}/faculty/delete/${id}`,{
+      await axios.delete(`${API}/faculty/delete/${id}`, {
         headers: {
-           Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       });
-      toast.success("Faculty is Deleted");
+      toast.error('Faculty Deleted!');
       fetchData();
     } catch (err) {
       console.log(err);
-      
+
       if (err?.response?.status === 401) {
         return navigate('/signin');
       }
       toast.error(`Error: ${err}`);
     }
   };
+
   return (
     <>
-      
-      <div key={faculty._id} className="flex w-full border-l-6 border-[#34D399] bg-[#34D399] bg-opacity-[15%] px-7 py-8 shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-9">
+      <div
+        key={faculty._id}
+        className="flex w-full border-l-6 border-[#34D399] bg-[#34D399] bg-opacity-[15%] px-7 py-8 shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-9"
+      >
         <div className="mr-5 flex h-[100px] w-[100px] items-center justify-center rounded-lg bg-[#34D399]">
           <img
             src={StaticLinkProvider(faculty.profileImage)}
@@ -62,7 +66,6 @@ const FacultyEditCard = ({ faculty, fetchData }) => {
           </button>
         </div>
       </div>
-      
     </>
   );
 };

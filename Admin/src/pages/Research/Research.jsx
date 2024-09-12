@@ -17,6 +17,8 @@ function Research() {
   const refUniversityLink = useRef();
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (!token) {
       return navigate('/signin');
@@ -28,6 +30,7 @@ function Research() {
   }, []);
 
   const handleOnSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const data = {
@@ -47,6 +50,7 @@ function Research() {
         },
       });
       if (response.status === 201) {
+        setLoading(false);
         toast.success(response.data.message);
       }
     } catch (err) {
@@ -56,14 +60,18 @@ function Research() {
       if (err.response.status >= 410 && err.response.status <= 430) {
         return toast.error(err.response.data.message);
       }
+      setLoading(false);
       toast.error(`Error: ${err}`);
     }
   };
+
   const [selectedType, setSelectedType] = useState('');
   const [isOptionSelected, setIsOptionSelected] = useState(false);
+
   const changeTextColor = () => {
     setIsOptionSelected(true);
   };
+
   return (
     <>
       <DefaultLayout>
@@ -258,11 +266,16 @@ function Research() {
                 ref={refFile}
               />
               <div>
-                <input
-                  className="inline-flex items-center mt-4 justify-center rounded-full bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 hover:cursor-pointer"
-                  type="Submit"
-                  value="Add Research"
-                />
+                <button
+                  disabled={loading}
+                  className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+                >
+                  {loading ? (
+                    <div className="inline-block h-5 w-5 animate-spin rounded-full border-[0.2rem] border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                  ) : (
+                    <span>Add Research</span>
+                  )}
+                </button>
               </div>
             </div>
           </div>

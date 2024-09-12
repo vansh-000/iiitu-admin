@@ -71,7 +71,7 @@ const ResearchEditCard = ({ research, fetchData, index }) => {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      toast.success(response.data.message);
+      toast.error(response.data.message);
       fetchData();
     } catch (err) {
       console.error(err);

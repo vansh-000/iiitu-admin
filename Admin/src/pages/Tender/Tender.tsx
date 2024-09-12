@@ -1,10 +1,9 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import React, { FormEvent, useEffect, useState } from 'react';
 import axios from 'axios';
 import { API } from '../../utils/apiURl';
-import TableDate from "../../components/Tables/TableDate.jsx"
+import TableDate from '../../components/Tables/TableDate.jsx';
 // import TableFile from "../../components/Tables/TableFile.jsx"
-import TableLink from "../../components/Tables/TableLink.jsx"
+import TableLink from '../../components/Tables/TableLink.jsx';
 import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import toast from 'react-hot-toast';
@@ -12,14 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 function Tender(): JSX.Element {
-  const [date,setDate]=useState([]);
-  const [file,setFile]=useState([]);
-  const [linkList,setLinkList]=useState([]);
-    const refDesc = React.useRef<HTMLInputElement>();
-   const navigate = useNavigate();
-  const token=localStorage.getItem('token');
-  useEffect(()=>{
-    if(!token){
   const startDateRef = React.useRef<HTMLInputElement>(null);
   const endDateRef = React.useRef<HTMLInputElement>(null);
   const refDesc = React.useRef<HTMLInputElement>();
@@ -44,45 +35,41 @@ function Tender(): JSX.Element {
     e.preventDefault();
     try {
       const formData = new FormData();
-  
+
       // Append service and other text data
       formData.append('service', refDesc.current!.value);
-  
 
-  
       // Append date information directly as objects, not as a string
-      const sendDate = date.filter((dat) => dat.DateName !== '' && dat.Date !== null);
-      const LinkList=linkList.filter((link)=>link.URL!==''&&link.LinkName!=='');
-      
-      const data={
-        service:refDesc.current!.value,
-        Date:sendDate,
-        LinkList:LinkList
-      }
-      const response = await axios.post(
-        `${API}/tender`,
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data',
-          },
-        },
+      const sendDate = date.filter(
+        (dat) => dat.DateName !== '' && dat.Date !== null,
       );
-      if(response.status===201)
-        {
+      const LinkList = linkList.filter(
+        (link) => link.URL !== '' && link.LinkName !== '',
+      );
+
+      const data = {
+        service: refDesc.current!.value,
+        Date: sendDate,
+        LinkList: LinkList,
+      };
+      const response = await axios.post(`${API}/tender`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setLoading(false);
+      toast.success(response.data.message);
+      if (response.status === 201) {
         toast.success(response.data.message);
         navigate('/tender/edit');
       }
-      setLoading(false);
-      toast.success(response.data.message);
     } catch (err) {
       if (err.response?.status === 401) {
         return navigate('/signin');
       }
-      console.error(err);
-      
       setLoading(false);
+      console.error(err);
       toast.error(`Error: ${err}`);
     }
   };
@@ -109,14 +96,14 @@ function Tender(): JSX.Element {
                 className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
               />
             </div>
-            <TableDate Date={date} setDate={setDate}/>
+            <TableDate Date={date} setDate={setDate} />
 
-{/* 
+            {/* 
             <div>
             <TableFile File={file} setFile={setFile}/>
 
             </div> */}
-            <TableLink Link={linkList} setLink={setLinkList}/>
+            <TableLink Link={linkList} setLink={setLinkList} />
             {/* <div>
               <label
                 htmlFor="annexure"

@@ -11,15 +11,12 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 function Tender(): JSX.Element {
-  const startDateRef = React.useRef<HTMLInputElement>(null);
-  const endDateRef = React.useRef<HTMLInputElement>(null);
   const refDesc = React.useRef<HTMLInputElement>();
-  const refTenderDoc = React.useRef<HTMLInputElement>();
-  const refAnnexure = React.useRef<HTMLInputElement>();
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const [loading, setLoading] = useState(false);
-
+  const [date,setDate]=useState([]);
+  const [linkList,setLinkList]=useState([]);
   useEffect(() => {
     if (!token) {
       return navigate('/signin');
@@ -55,7 +52,7 @@ function Tender(): JSX.Element {
       const response = await axios.post(`${API}/tender`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
+          // 'Content-Type': 'multipart/form-data',
         },
       });
       setLoading(false);

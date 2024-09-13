@@ -6,6 +6,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import TableEditTenderFile from '../../components/Tables/TableEditTenderFile.jsx';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider.jsx';
+
 const TEditCard = ({ tender, fetchData }) => {
   const [editable, setEditable] = useState(false);
   const [editedData, setEditedData] = useState({});
@@ -180,9 +181,12 @@ const TEditCard = ({ tender, fetchData }) => {
 
           {/* Edit and Delete buttons */}
           {/* <div className="flex gap-4 mt-4"> */}
-          <button className="w-[170px] inline-flex items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10" onClick={editable ? handleSave : () => handleEdit(tender)}>
-                        {editable ? 'Save' : 'Edit'}
-                    </button>
+          <button
+            className="w-[170px] inline-flex items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+            onClick={editable ? handleSave : () => handleEdit(tender)}
+          >
+            {editable ? 'Save' : 'Edit'}
+          </button>
           <button
             onClick={() => handleDelete(tender._id)}
             className="w-[170px] inline-flex items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"

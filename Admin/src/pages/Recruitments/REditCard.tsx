@@ -105,7 +105,6 @@ const REditCard = ({ recruitment, fetchData }) => {
       toast.error(`Error: ${err}`);
     }
   };
-  const handleAddFile = async () => {};
 
   return (
     <div
@@ -141,20 +140,18 @@ const REditCard = ({ recruitment, fetchData }) => {
           End Date:{formatDate(recruitment.endDate)}{' '}
           {editable && <DatePickerOne refDate={endDateRefs} />}
         </p> */}
-        <p className="leading-relaxed text-[#D0915C]">
-          <>
-            {!addFile &&
-              file?.map((file) => (
-                <Link
-                  to={StaticLinkProvider(file?.DocPath)}
-                  target="_blank"
-                  className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-                >
-                  {file?.DocName}
-                </Link>
-              ))}
-          </>
-        </p>
+        <div className='flex flex-row flex-wrap gap-2 mb-2'>
+          {!addFile &&
+            file?.map((file) => (
+              <Link
+                to={StaticLinkProvider(file?.DocPath)}
+                target="_blank"
+                className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+              >
+                {file?.DocName}
+              </Link>
+            ))}
+        </div>
         <>
           {link?.map((li) => (
             <Link

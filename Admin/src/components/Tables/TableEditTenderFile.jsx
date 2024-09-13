@@ -25,30 +25,32 @@ const TableEditTenderFile = ({ File, setFile, tenTd }) => {
     }
   };
 
- const handleDelete = async (index) => {
-  try {
-    const updatedFile = [...File];
-    
-    // Make the delete request with correct configuration
-    const response = await axios.delete(`${API}/tenderDoc/${updatedFile[index]._id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      data: {
-        tenderId: tenTd,  // Send tenderId in the data field
-      },
-    });
+  const handleDelete = async (index) => {
+    try {
+      const updatedFile = [...File];
 
-    console.log(response);
+      // Make the delete request with correct configuration
+      const response = await axios.delete(
+        `${API}/tenderDoc/${updatedFile[index]._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+          data: {
+            tenderId: tenTd, // Send tenderId in the data field
+          },
+        },
+      );
 
-    // Remove file from state after successful deletion
-    updatedFile.splice(index, 1);
-    setFile(updatedFile);
-  } catch (err) {
-    console.error(err);
-  }
-};
+      console.log(response);
 
+      // Remove file from state after successful deletion
+      updatedFile.splice(index, 1);
+      setFile(updatedFile);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const handleSave = async (index) => {
     try {
@@ -60,30 +62,32 @@ const TableEditTenderFile = ({ File, setFile, tenTd }) => {
 
       if (!updatedFile[index]?._id) {
         // POST for new document
-        const response=await axios.post(`${API}/tenderDoc`, formData, {
+        const response = await axios.post(`${API}/tenderDoc`, formData, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'multipart/form-data',
           },
         });
-        if(response.status===201){
-            toast.success("File is Saved")
+        if (response.status === 201) {
+          toast.success('File is Saved');
         }
         // console.log(response);
-        
       } else {
         // PUT for existing document update
-       const response= await axios.put(`${API}/tenderDoc/${updatedFile[index]._id}`, formData, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'multipart/form-data',
+        const response = await axios.put(
+          `${API}/tenderDoc/${updatedFile[index]._id}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              'Content-Type': 'multipart/form-data',
+            },
           },
-        });
-        if(response.status===201){
-            toast.success("File is Saved")
+        );
+        if (response.status === 201) {
+          toast.success('File is Saved');
         }
         // console.log(response);
-        
       }
     } catch (err) {
       console.log(err);
@@ -93,13 +97,21 @@ const TableEditTenderFile = ({ File, setFile, tenTd }) => {
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
-        <h1 className="text-center text-xl font-bold mb-4 text-black dark:text-white">File</h1>
+        <h1 className="text-center text-xl font-bold mb-4 text-black dark:text-white">
+          File
+        </h1>
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-200 text-left dark:bg-meta-4">
-              <th className="py-4 px-4 font-medium text-black dark:text-white xl:pl-11">File</th>
-              <th className="py-4 px-4 font-medium text-center text-black dark:text-white">File Name</th>
-              <th className="py-4 px-4 font-medium text-center text-black dark:text-white">Action</th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                File
+              </th>
+              <th className="py-4 px-4 font-medium text-center text-black dark:text-white">
+                File Name
+              </th>
+              <th className="py-4 px-4 font-medium text-center text-black dark:text-white">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -133,7 +145,9 @@ const TableEditTenderFile = ({ File, setFile, tenTd }) => {
                       type="text"
                       value={file.DocName}
                       placeholder="University"
-                      onChange={(e) => handleEdit(index, 'DocName', e.target.value)}
+                      onChange={(e) =>
+                        handleEdit(index, 'DocName', e.target.value)
+                      }
                       className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-white dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
                   </td>
@@ -155,10 +169,9 @@ const TableEditTenderFile = ({ File, setFile, tenTd }) => {
               ))}
           </tbody>
         </table>
-
         <button
           onClick={handleAddFile}
-          className="mt-4 inline-block rounded bg-primary px-4 py-2 text-white hover:bg-primary-dark transition"
+          className="mt-4 mr-4 mb-4 inline-block rounded bg-primary px-4 py-2 text-white hover:bg-primary-dark transition"
         >
           Add File
         </button>

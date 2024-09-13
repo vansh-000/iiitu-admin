@@ -3,27 +3,28 @@ import axios from 'axios';
 import { API } from '../../utils/apiURl';
 import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import TableDate from "../../components/Tables/TableDate.jsx"
-import TableFile from "../../components/Tables/TableFile.jsx"
-import TableLink from "../../components/Tables/TableLink.jsx"
+import TableDate from '../../components/Tables/TableDate.jsx';
+import TableLink from '../../components/Tables/TableLink.jsx';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { jwtDecode } from 'jwt-decode';
+
 const AddRecruitments = () => {
   const navigate = useNavigate();
-  const token=localStorage.getItem('token');
-  const [date,setDate]=useState([]);
-  const [file,setFile]=useState([]);
-  const [linkList,setLinkList]=useState([]);
+  const token = localStorage.getItem('token');
+  const [date, setDate] = useState([]);
+  const [file, setFile] = useState([]);
+  const [linkList, setLinkList] = useState([]);
 
-  useEffect(()=>{
-    if(!token){
-      return navigate("/signin");}
-    const {Allow}=jwtDecode(token);
-    if(!Allow?.[10]){
+  useEffect(() => {
+    if (!token) {
+      return navigate('/signin');
+    }
+    const { Allow } = jwtDecode(token);
+    if (!Allow?.[10]) {
       navigate('/minutes');
     }
-  },[]);
+  }, []);
 
   const refDesc = React.useRef<HTMLInputElement>();
   // const refAppLink = React.useRef();
@@ -32,23 +33,25 @@ const AddRecruitments = () => {
   // const refApplicationDoc = React.useRef<HTMLInputElement>();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-  
-    try {
 
-      
+    try {
       // Append the service description to the formData
       // formData.append('service', refDesc.current!.value);
-      
+
       // Filter and append Date and LinkList as JSON strings (since FormData doesn't accept objects directly)
-      const sendDate = date.filter((dat) => dat.DateName !== '' && dat.Date !== null);
+      const sendDate = date.filter(
+        (dat) => dat.DateName !== '' && dat.Date !== null,
+      );
       // formData.append('Date', JSON.stringify(sendDate));
-  
-      const LinkList = linkList.filter((link) => link.URL !== '' && link.LinkName !== '');
-  const data={
-    service:refDesc.current!.value,
-    Date:sendDate,
-    LinkList:LinkList
-  }
+
+      const LinkList = linkList.filter(
+        (link) => link.URL !== '' && link.LinkName !== '',
+      );
+      const data = {
+        service: refDesc.current!.value,
+        Date: sendDate,
+        LinkList: LinkList,
+      };
       // Make the POST request
       const response = await axios.post(
         `${API}/recruitment`,
@@ -58,14 +61,13 @@ const AddRecruitments = () => {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
             // 'Content-Type': 'multipart/form-data'  // No need to set this manually
           },
-        }
+        },
       );
-  
-      if(response.status===201)
-      {
-      toast.success(response.data.message);
-      navigate('/recruitment/edit');
-    }
+
+      if (response.status === 201) {
+        toast.success(response.data.message);
+        navigate('/recruitment/edit');
+      }
     } catch (err: any) {
       if (err.response?.status === 401) {
         return navigate('/signin');
@@ -74,10 +76,6 @@ const AddRecruitments = () => {
       toast.error(`Error: ${err.message || 'Something went wrong'}`);
     }
   };
-  
-  
-  
-  
 
   return (
     <DefaultLayout>
@@ -102,8 +100,8 @@ const AddRecruitments = () => {
               />
             </div>
             {/* <div className=""> */}
-              <TableDate Date={date} setDate={setDate}/>
-              {/* <div className="w-fit">
+            <TableDate Date={date} setDate={setDate} />
+            {/* <div className="w-fit">
                 <label
                   htmlFor="description"
                   className="mb-3 block text-black dark:text-white"
@@ -113,7 +111,7 @@ const AddRecruitments = () => {
 
                 <DatePickerOne refDate={startDateRef} />
               </div> */}
-              {/* <div className="w-fit">
+            {/* <div className="w-fit">
                 <label
                   htmlFor="description"
                   className="mb-3 block text-black dark:text-white"
@@ -140,7 +138,7 @@ const AddRecruitments = () => {
                 className="w-fit cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
               /> */}
             </div>
-            <TableLink Link={linkList} setLink={setLinkList}/>
+            <TableLink Link={linkList} setLink={setLinkList} />
 
             {/* <div>
               <label

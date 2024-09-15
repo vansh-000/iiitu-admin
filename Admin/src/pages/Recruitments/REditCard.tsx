@@ -128,7 +128,7 @@ const REditCard = ({ recruitment, fetchData }) => {
           {/* Start Date:{formatDate(recruitment.startDate)} */}
           {/* {editable ?  <TableDate Date={date} setDate={setDate}/>: */}
           {/* <> */}
-          {date.map((date) => (
+          {date?.map((date) => (
             <div className="flex gap-2">
               <p>
                 {date?.DateName} : {formatDate(date?.Date)}

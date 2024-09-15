@@ -1,6 +1,8 @@
 import React from 'react';
+import { FaStarOfLife } from 'react-icons/fa';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
+import { RxCross1 } from 'react-icons/rx';
 
 const TableResearch = ({ edit, Research, setResearch }) => {
   const handleEdit = (index, value) => {
@@ -33,8 +35,8 @@ const TableResearch = ({ edit, Research, setResearch }) => {
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
                     {edit ? (<>
-                      <button className='mr-5' onClick={()=>handleDelete(index)}><RiDeleteBin5Fill className='text-red-700'/></button>
-
+                     
+                      <FaStarOfLife className='text-red-600' />
                       <input
                         type="text"
                         value={rech}
@@ -47,6 +49,13 @@ const TableResearch = ({ edit, Research, setResearch }) => {
                     )}
                   </h5>
                 </td>
+                {edit && (
+                  <td className="text-center border-b border-[#eee] py-3 px-1 dark:border-strokedark">
+                    <button onClick={()=>handleDelete(index)} className="text-red-600 dark:text-red-500">
+                      <RxCross1/>
+                    </button>
+                  </td>
+                )}  
               </tr>
             ))}
           </tbody>

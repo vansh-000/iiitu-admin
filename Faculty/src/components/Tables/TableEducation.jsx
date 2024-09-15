@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import { RxCross1, RxCross2 } from "react-icons/rx";
+import { FaStarOfLife } from "react-icons/fa";
 const TableThree = ({ edit, Education, setEducation }) => {
   const handleEdit = (index, field, value) => {
     const updatedEducation = [...Education];
@@ -42,7 +44,7 @@ const TableThree = ({ edit, Education, setEducation }) => {
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   {edit ? (
                     <>
-                    <button className='mr-5' onClick={()=>handleDelete(index)}><RiDeleteBin5Fill className='text-red-700'/></button>
+                    
                       <input
                         type="text"
                         value={edu.dateOfStart}
@@ -61,7 +63,7 @@ const TableThree = ({ edit, Education, setEducation }) => {
                         onChange={(e) =>
                           handleEdit(index, 'dateOfEnd', e.target.value)
                         }
-                      />
+                      /> 
                     </>
                   ) : (<>
                     <h5 className="font-medium text-black dark:text-white">
@@ -70,7 +72,8 @@ const TableThree = ({ edit, Education, setEducation }) => {
                   )}
                 </td>
                 <td className="text-center border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  {edit ? (
+                  {edit ? (<>
+                    <FaStarOfLife className='text-red-600' />
                     <input
                       type="text"
                       value={edu.description}
@@ -80,12 +83,20 @@ const TableThree = ({ edit, Education, setEducation }) => {
                       }
                       className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
+                    </>
                   ) : (
                     <p className="text-black dark:text-white">
                       {edu.description}
                     </p>
                   )}
                 </td>
+                {edit && (
+                  <td className="text-center border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                    <button onClick={()=>handleDelete(index)} className="text-red-600 dark:text-red-500">
+                      <RxCross1/>
+                    </button>
+                  </td>
+                )}  
               </tr>
             ))}
           </tbody>

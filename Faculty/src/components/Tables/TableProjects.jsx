@@ -4,12 +4,11 @@ import { IoMdAddCircleOutline } from 'react-icons/io';
 import ProjectAdd from '../../pages/components/Project/ProjectAdd';
 import axios from 'axios'
 import { API } from '../../utils/apiURl';
-import ProjectView from '../../pages/components/Project/ProjectView';
-import { Link } from 'react-router-dom';
+
 import ProjectView2 from '../../pages/components/Project/ProjectView2';
 const TableProjects = ({ edit, Project, setProject }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [data, setData] = useState();
+  // const [data, setData] = useState();
   const [isOpenView, setIsOpenView] = useState(false);
   const refTitle = useRef();
   const refInvestigator = useRef();
@@ -20,8 +19,9 @@ const TableProjects = ({ edit, Project, setProject }) => {
   const [status, setStatus] = useState();
   const [type, setType] = useState();
   
-  const handleAddProjectLink = async () => {
+  const handleAddProjectLink = async (e) => {
     try {
+      e.preventDefault()
       const invest = refInvestigator?.current?.value;
       const coInvest = refCoInvestigator?.current?.value;
       const investigator = invest.split(';');
@@ -52,9 +52,9 @@ const TableProjects = ({ edit, Project, setProject }) => {
       console.error(err);
     }
   };
-  const handleClose = () => {
-    setIsOpenView(!isOpenView);
-  };
+  // const handleClose = () => {
+  //   setIsOpenView(!isOpenView);
+  // };
   const handleAddProject = () => {
     setIsOpen(!isOpen);
   };
@@ -75,10 +75,10 @@ const TableProjects = ({ edit, Project, setProject }) => {
       console.error(err);
     }
   };
-  const handleViewProject = (pro) => {
-    setData(pro);
-    setIsOpenView(!isOpenView);
-  };
+  // const handleViewProject = (pro) => {
+  //   setData(pro);
+  //   setIsOpenView(!isOpenView);
+  // };
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -157,7 +157,7 @@ const TableProjects = ({ edit, Project, setProject }) => {
       {isOpen && (
         <div className="fixed inset-0 z-99999 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
           <div className="relative p-4 w-full max-w-2xl max-h-full ">
-            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <form onSubmit={handleAddProjectLink} className="relative bg-white rounded-lg shadow dark:bg-gray-700">
               <ProjectAdd
                 refTitle={refTitle}
                 refInvestigator={refInvestigator}
@@ -171,9 +171,9 @@ const TableProjects = ({ edit, Project, setProject }) => {
 
               <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary max-h-[60vh] overflow-y-scroll">
                 <button
-                  onClick={handleAddProjectLink}
+                  // onClick={}
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  type="button"
+                  type="submit"
                 >
                   Add
                 </button>
@@ -185,7 +185,7 @@ const TableProjects = ({ edit, Project, setProject }) => {
                   Cancel
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       )}

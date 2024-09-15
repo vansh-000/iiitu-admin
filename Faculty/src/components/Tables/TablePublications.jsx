@@ -23,7 +23,7 @@ import PublicationProvider from './PublicationProvider';
 
 const TablePublications = ({ edit, Publication, setPublication }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [data, setData] = useState();
+  // const [data, setData] = useState();
   const [isOpenView, setIsOpenView] = useState(false);
   const refTitle = useRef();
   const refAuthors = useRef();
@@ -52,14 +52,15 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
       console.error(err);
     }
   };
-  const handleClose = () => {
-    setIsOpenView(!isOpenView);
-  };
+  // const handleClose = () => {
+  //   setIsOpenView(!isOpenView);
+  // };
   const handleAddPublication = () => {
     setIsOpen(!isOpen);
   };
-  const handleAddPublicationLink = async () => {
+  const handleAddPublicationLink = async (e) => {
     try {
+      e.preventDefault()
       const heading = refTitle?.current?.value;
       const authors = refAuthors?.current?.value;
       const vol = refVol?.current?.value;
@@ -100,14 +101,14 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
     }
   };
 
-  const handleViewPublication = async (pub) => {
-    try {
-      setIsOpenView(!isOpenView);
-      setData(pub);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  // const handleViewPublication = async (pub) => {
+  //   try {
+  //     setIsOpenView(!isOpenView);
+  //     setData(pub);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -195,7 +196,7 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
       {isOpen && (
         <div className="fixed inset-0 z-99999 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
           <div className="relative p-4 w-full max-w-2xl max-h-full ">
-            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <form onSubmit={handleAddPublicationLink} className="relative bg-white rounded-lg shadow dark:bg-gray-700">
               <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                 {/* <div className="flex flex-wrap p-1.5 w-72 rounded-lg bg-gray-200 shadow-sm text-sm"> */}
                 {TYPE.map((ty, index) => (
@@ -286,9 +287,9 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
               )}
               <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <button
-                  onClick={handleAddPublicationLink}
+                  // onClick={handleAddPublicationLink}
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  type="button"
+                  type="submit"
                 >
                   Add
                 </button>
@@ -300,7 +301,7 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
                   Cancel
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       )}

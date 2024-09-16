@@ -1,4 +1,5 @@
 import React from 'react'
+import { FaStarOfLife } from 'react-icons/fa';
 const STATUS=["Ongoing", "Completed"];
 const TYPE=["Research", "Consultancy"];
 function ProjectAdd({
@@ -27,10 +28,11 @@ function ProjectAdd({
     <>
     <div className="p-4 md:p-5 space-y-4 transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary max-h-[60vh] overflow-y-scroll">
       <label className="mb-3 block text-black dark:text-white">
-        Title:
+      <FaStarOfLife className='inline text-red-600 text-[10px]'/>Title:
         <input
           name="title"
           type="text"
+          required
           ref={refTitle}
           placeholder="Title"
           className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -38,12 +40,13 @@ function ProjectAdd({
       </label>
 
       <label className="mb-3 block text-black dark:text-white">
-        Investigator (For Multiple Investigator use ; to separate):
+      <FaStarOfLife className='inline text-red-600 text-[10px]'/>Investigator (For Multiple Investigator use ; to separate):
         <input
           name="Investigator"
           type="text"
+          required
           ref={refInvestigator}
-          placeholder="eg: Rishvant; Anurag; Pundir"
+          placeholder="eg: Rishvant; Singh; Pundir"
           className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
         />
       </label>
@@ -53,7 +56,7 @@ function ProjectAdd({
           name="Co-Investigator"
           type="text"
           ref={refCoInvestigator}
-          placeholder="eg: Rishvant; Anurag; Pundir"
+          placeholder="eg: Rishvant; Singh; Pundir"
           className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
         />
       </label>
@@ -91,9 +94,10 @@ function ProjectAdd({
       </label>
 
       <label className="mb-3 block text-black dark:text-white">
-        Status
+      <FaStarOfLife className='inline text-red-600 text-[10px]'/>Status
         <select
           value={selectedStatus}
+          required
           onChange={handleStatusChange}
           className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-8 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
             selectedStatus ? 'text-black dark:text-white' : ''
@@ -111,9 +115,10 @@ function ProjectAdd({
       </label>
 
       <label className="mb-3 block text-black dark:text-white">
-        Type
+      <FaStarOfLife className='inline text-red-600 text-[10px]'/> Type
         <select
           value={selectedType}
+          required
           onChange={handleTypeChange}
           className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-8 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
             selectedType ? 'text-black dark:text-white' : ''

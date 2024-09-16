@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -62,7 +63,7 @@ const DropdownUser = () => {
             {userData && (
               <img
                 className="h-12 w-12 rounded-full"
-                src={userData?.profileImg}
+                src={StaticLinkProvider(userData?.profileImg)}
                 alt="User"
               />
             )}

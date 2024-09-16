@@ -46,17 +46,19 @@ function ProjectView2({ data,handleDelete }) {
         aria-labelledby="accordion-collapse-heading-1"
       >
         <div className="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-          <p className="mb-2 text-gray-500 dark:text-gray-400">
-          Investigator:
-            {data?.investigator?.map((aut, index) => (
-              <span
-                key={index}
-                className="font-medium text-black dark:text-white"
-              >
-                {aut},
-              </span>
-            ))}
-          </p>
+        <p className="mb-2 text-gray-500 dark:text-gray-400">
+  Investigator:
+  {data?.investigator?.map((aut, index) => (
+    <span
+      key={index}
+      className="font-medium text-black dark:text-white"
+    >
+      {aut}
+      {index < data.investigator.length - 1 && ", "}
+    </span>
+  ))}
+</p>
+
           <p className="mb-2 text-gray-500 dark:text-gray-400">
           Co-Investigator:
             {data?.coInvestigator?.map((coIn, index) => (
@@ -64,7 +66,7 @@ function ProjectView2({ data,handleDelete }) {
                 key={index}
                 className="font-medium text-black dark:text-white"
               >
-                {coIn},
+                {coIn} {index < data.coInvestigator.length - 1 && ", "}
               </span>
             ))}
           </p>

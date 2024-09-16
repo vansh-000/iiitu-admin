@@ -16,7 +16,7 @@ function JournalView3({ data }) {
           aria-expanded={activeIndex === 1}
           aria-controls="accordion-collapse-body-1"
         >
-          <span>{data?.type} =&gt; {data?.heading}</span>
+          <span className='bg-yellow-300 rounded-lg p-2 text-black'>{data?.type} </span> <span className='font-satoshi font-extrabold text-[1.5rem]'>{data?.heading}</span>
           <svg
             data-accordion-icon
             className={`w-3 h-3 ${

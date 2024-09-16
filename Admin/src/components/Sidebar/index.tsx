@@ -10,7 +10,11 @@ import { LuPartyPopper } from 'react-icons/lu';
 import { ImNewspaper } from 'react-icons/im';
 import { jwtDecode } from 'jwt-decode';
 import { TiGroup } from 'react-icons/ti';
-import { BsPersonVcardFill, BsPersonWorkspace } from 'react-icons/bs';
+import {
+  BsPersonVcardFill,
+  BsPersonWorkspace,
+  BsFillFileEarmarkRuledFill,
+} from 'react-icons/bs';
 import { IoCalendar } from 'react-icons/io5';
 import { MdOutlineViewCarousel } from 'react-icons/md';
 
@@ -664,6 +668,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     >
                       <GiOrganigram />
                       Organisation
+                    </NavLink>
+                  </li>
+                )}
+                {Allow?.[16] && (
+                  <li>
+                    <NavLink
+                      to="/policies"
+                      className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                        pathname.includes('policies') &&
+                        'bg-graydark dark:bg-meta-4'
+                      }`}
+                    >
+                      <BsFillFileEarmarkRuledFill />
+                      Policies
                     </NavLink>
                   </li>
                 )}

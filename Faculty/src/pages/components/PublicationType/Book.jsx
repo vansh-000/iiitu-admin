@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import DatePickerCustom from '../../../components/DatePickerCoustom';
-const INDEXING = ["SCOPUS", "SCI/SCIE", "ESCI", "WEWOS", "UGC-CARE", "OTHERS"];
+const INDEXING = ["SCOPUS", "SCI/SCIE", "ESCI", "WS", "UGC-CARE", "OTHERS"];
 
 function Book({
   refAuthors,

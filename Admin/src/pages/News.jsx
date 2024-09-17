@@ -35,7 +35,11 @@ const News = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/news`);
-      setData(response.data.data);
+      setData(
+        response.data.data?.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+        ),
+      );
     } catch (err) {
       console.log(err);
     }
@@ -56,10 +60,6 @@ const News = () => {
     const link = linkRef.current.value;
 
     try {
-      if (!refDoc.current?.files[0] && !refImg.current?.files[0]) {
-        return toast.error('Please add at least an image or document');
-      }
-
       let formData = new FormData();
       formData.append('heading', heading);
       formData.append('description', description);

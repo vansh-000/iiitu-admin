@@ -84,10 +84,11 @@ const title= refTitle?.current?.value;
             Authorization: `Bearer ${token}`,
           },
         });
-  console.log(response);
+  // console.log(response);
   
         if (response.status === 200) {
           toast.success(`Publication updated successfully!`);
+          return navigate('/dashboard');
         }
       } catch (err) {
         if (err.response.status === 401) {

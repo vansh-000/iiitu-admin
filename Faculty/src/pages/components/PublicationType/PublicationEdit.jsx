@@ -80,6 +80,7 @@ const PublicationEdit = () => {
 
       if (response.status === 200) {
         toast.success(`Publication updated successfully!`);
+        return navigate('/dashboard');
       }
     } catch (err) {
       if (err.response.status === 401) {

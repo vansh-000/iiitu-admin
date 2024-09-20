@@ -116,7 +116,7 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                <th className="py-4 px-4 font-medium text-center text-black dark:text-white">
+                <th className="py-4 px-4 font-bold text-[1.5rem] text-center text-black dark:text-white">
                   Publications
                 </th>
               </tr>

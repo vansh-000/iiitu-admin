@@ -6,10 +6,12 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 import NewsModal from './NewsModal';
+import { MdEdit } from 'react-icons/md';
 
-function NewsComp({ handleDelete, item }) {
+function NewsComp({ handleDelete, item, fetchData }) {
   const [isLatest, setIsLatest] = useState(item.isLatest);
   const [modal, setModal] = useState(false);
+  const [editData, setEditData] = useState(null);
 
   const handleSetLatest = async () => {
     try {
@@ -91,6 +93,13 @@ function NewsComp({ handleDelete, item }) {
                 <BsFiletypeDoc />
               </Link>
             )}
+            <MdEdit
+              className="text-blue-500 text-xl cursor-pointer"
+              onClick={() => {
+                setEditData(item);
+                setModal(true);
+              }}
+            />
             <button
               onClick={() => handleDelete(item._id)}
               className="hover:text-primary"
@@ -124,7 +133,9 @@ function NewsComp({ handleDelete, item }) {
           </div>
         </td>
       </tr>
-      {modal && <NewsModal setModal={setModal} />}
+      {modal && (
+        <NewsModal data={editData} setModal={setModal} fetchData={fetchData} />
+      )}
     </>
   );
 }

@@ -226,7 +226,11 @@ const News = () => {
         </button>
       </form>
       <div className="flex flex-col gap-10 mt-5">
-        <TableNews2 data={data} handleDelete={handleDelete} />
+        <TableNews2
+          data={data}
+          handleDelete={handleDelete}
+          fetchData={fetchData}
+        />
       </div>
     </DefaultLayout>
   );

@@ -1,7 +1,19 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { IoCloseCircleOutline } from 'react-icons/io5';
+import { API } from '../../utils/apiURl';
 
-const NewsModal = ({ setModal, onSubmit }) => {
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+const NewsModal = ({ setModal, data, fetchData }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     heading: '',
     image: '',
@@ -21,10 +33,42 @@ const NewsModal = ({ setModal, onSubmit }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    setIsSubmitting(true);
+    try {
+      const response = await axios.put(`${API}/news/${data._id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      if (response.status === 200) {
+        toast.success('News updated successfully!');
+        setModal(false);
+        fetchData();
+      }
+    } catch (error) {
+      console.error('Error updating news:', error);
+      toast.error('Failed to update news. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  useEffect(() => {
+    if (data) {
+      setFormData({
+        heading: data.heading || '',
+        image: data.image || '',
+        doc: data.doc || '',
+        description: data.description || '',
+        startDate: data.startDate ? formatDate(data.startDate) : '',
+        endDate: data.endDate ? formatDate(data.endDate) : '',
+        Link: data.Link || '',
+        isLatest: data.isLatest || false,
+      });
+    }
+  }, [data]);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-[1001] bg-opacity-50">
@@ -55,7 +99,7 @@ const NewsModal = ({ setModal, onSubmit }) => {
               className="w-full text-[0.9rem] sm:text-[1rem] px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-themeblue1 transition-shadow"
             />
           </div>
-          <div className="mb-5">
+          {/* <div className="mb-5">
             <label
               htmlFor="image"
               className="block text-md sm:text-lg font-medium text-gray-700 mb-2"
@@ -70,8 +114,8 @@ const NewsModal = ({ setModal, onSubmit }) => {
               onChange={handleChange}
               className="w-full text-[0.9rem] sm:text-[1rem] px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-themeblue1 transition-shadow"
             />
-          </div>
-          <div className="mb-5">
+          </div> */}
+          {/* <div className="mb-5">
             <label
               htmlFor="doc"
               className="block text-md sm:text-lg font-medium text-gray-700 mb-2"
@@ -86,7 +130,7 @@ const NewsModal = ({ setModal, onSubmit }) => {
               onChange={handleChange}
               className="w-full text-[0.9rem] sm:text-[1rem] px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-themeblue1 transition-shadow"
             />
-          </div>
+          </div> */}
           <div className="mb-6">
             <label
               htmlFor="description"
@@ -166,9 +210,10 @@ const NewsModal = ({ setModal, onSubmit }) => {
           </div>
           <button
             type="submit"
-            className="bg-themered1 text-white font-medium text-md sm:text-lg px-4 py-3 rounded-lg w-full hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 transition-transform transform hover:scale-[1.02]"
+            className="bg-blue-700 text-white font-medium text-md sm:text-lg px-4 py-3 rounded-lg w-full hover:bg-blue-700/80 transition-transform transform hover:scale-[1.02]"
+            disabled={isSubmitting}
           >
-            Submit
+            Save
           </button>
         </form>
       </div>

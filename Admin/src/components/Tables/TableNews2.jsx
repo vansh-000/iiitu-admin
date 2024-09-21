@@ -4,7 +4,7 @@ import { STATIC_FILES } from '../../utils/apiURl';
 import { BsFiletypeDoc } from 'react-icons/bs';
 import NewsComp from './NewsComp';
 
-function TableNews2({ data, handleDelete }) {
+function TableNews2({ data, handleDelete, fetchData }) {
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -28,7 +28,11 @@ function TableNews2({ data, handleDelete }) {
           <tbody>
             {data &&
               data.map((item) => (
-                <NewsComp item={item} handleDelete={handleDelete} />
+                <NewsComp
+                  item={item}
+                  handleDelete={handleDelete}
+                  fetchData={fetchData}
+                />
               ))}
           </tbody>
         </table>

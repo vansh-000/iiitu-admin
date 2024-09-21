@@ -6,14 +6,17 @@ import toast from 'react-hot-toast';
 import { API } from '../utils/apiURl';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import TableCalendar from '../components/Tables/TableCalendar.jsx';
-const TYPE = ['Odd', 'Even'];
-const Calendar = () => {
+import TablePolicy from '../components/Tables/TablePolicy.jsx';
+
+const TYPE = ['Ordinance', 'Institute Policy'];
+
+const Policy = () => {
   const [data, setData] = useState();
   const [selectedType, setSelectedType] = useState('');
   const [isOptionSelected, setIsOptionSelected] = useState(false);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!token) {
       return navigate('/signin');
@@ -26,7 +29,7 @@ const Calendar = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${API}/calendar`);
+      const response = await axios.get(`${API}/policy`);
       setData(response.data.Docs);
     } catch (err) {
       console.log(err);
@@ -60,14 +63,14 @@ const Calendar = () => {
         formData.append('Doc', Doc);
       });
       formData.append('title', title);
-      formData.append('semester', type);
-      await axios.post(`${API}/calendar`, formData, {
+      formData.append('type', type);
+      await axios.post(`${API}/policy`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
         },
       });
-      toast.success('Docs Uploaded!');
+      toast.success('File Uploaded!');
       fetchData();
     } catch (err) {
       if (err?.response?.status === 401) {
@@ -79,12 +82,12 @@ const Calendar = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API}/calendar/${id}`, {
+      await axios.delete(`${API}/policy/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.success('Doc Deleted!');
+      toast.success('File Deleted!');
       fetchData();
     } catch (err) {
       if (err.response.status === 401) {
@@ -96,7 +99,7 @@ const Calendar = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Calendar" />
+      <Breadcrumb pageName="Policies" />
       <form onSubmit={handleAdd}>
         <div>
           <label className="mb-3 block text-black dark:text-white">Title</label>
@@ -110,7 +113,7 @@ const Calendar = () => {
         </div>
         <div className="mt-4">
           <label className="mb-3 block text-black dark:text-white">
-            Semester
+            Type of Policy
           </label>
 
           <div className="relative z-20 bg-white dark:bg-form-input">
@@ -130,7 +133,7 @@ const Calendar = () => {
                 disabled
                 className="text-body dark:text-bodydark"
               >
-                Select Semester
+                Select Policy
               </option>
               {TYPE.map((ty, index) => (
                 <option
@@ -179,14 +182,14 @@ const Calendar = () => {
           />
         </div>
         <button className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
-          Add Calendar
+          Add Policy
         </button>
       </form>
       <div className="flex flex-col gap-10 mt-5">
-        <TableCalendar data={data} handleDelete={handleDelete} />
+        <TablePolicy data={data} handleDelete={handleDelete} />
       </div>
     </DefaultLayout>
   );
 };
 
-export default Calendar;
+export default Policy;

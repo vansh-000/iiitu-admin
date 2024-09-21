@@ -13,17 +13,18 @@ import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import Poster from './Poster';
 import { STATIC_FILES } from '../../utils/apiURl';
 
-function NewsSlides({data, handleDelete}) {
+function NewsSlides({ data, handleDelete }) {
   const [index, setIndex] = useState(-1);
 
-  const modifiedNews = data?.map(d => ({
+  const modifiedNews = data?.map((d) => ({
     ...d,
-    src: `${STATIC_FILES}/${d?.image?.replace(/\\/g, '/')}` 
+    src: `${STATIC_FILES}/${d?.image?.replace(/\\/g, '/')}`,
   }));
 
-  modifiedNews?.forEach(d => {
+  modifiedNews?.forEach((d) => {
     delete d.d;
   });
+
   return (
     <>
       <Poster

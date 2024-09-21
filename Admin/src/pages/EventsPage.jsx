@@ -24,6 +24,7 @@ const EventsPage = () => {
     const formattedMonth = month < 10 ? '0' + month : month;
     return `${formattedDay}-${formattedMonth}-${year}`;
   };
+
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/event/${id}`);
@@ -33,13 +34,16 @@ const EventsPage = () => {
       console.error('error in edit event', err);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
+
   const nameRef = useRef();
   const startDateRef = useRef();
   const endDateRef = useRef();
   const descriptionRef = useRef();
+
   const handleAdd = async (e) => {
     e.preventDefault();
     const name = nameRef.current.value;

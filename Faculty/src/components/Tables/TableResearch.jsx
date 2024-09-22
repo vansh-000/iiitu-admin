@@ -1,7 +1,6 @@
 import React from 'react';
 import { FaStarOfLife } from 'react-icons/fa';
 import { IoMdAddCircleOutline } from 'react-icons/io';
-import { RiDeleteBin5Fill } from 'react-icons/ri';
 import { RxCross1 } from 'react-icons/rx';
 
 const TableResearch = ({ edit, Research, setResearch }) => {

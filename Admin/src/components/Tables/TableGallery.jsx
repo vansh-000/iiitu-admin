@@ -80,7 +80,7 @@ const TableGallery = ({
           </button>
         </div>
         {data?.length > 0 ? (
-          <GallerySlides images={data} handleDelete={handleDelete} />
+          <GallerySlides page="gallery" images={data} handleDelete={handleDelete} />
         ) : (
           <h1 className="mt-2">No Images!</h1>
         )}

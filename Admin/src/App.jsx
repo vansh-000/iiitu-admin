@@ -32,6 +32,7 @@ import Calendar from './pages/Calendar.jsx';
 import Organization from './pages/Organisation.jsx';
 import OrganizationEdit from './pages/OrganizationEdit.jsx';
 import Carousel from './pages/Carousel.jsx';
+import Policy from './pages/Policies.jsx';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -281,7 +282,7 @@ function App() {
           path="/minutes"
           element={
             <>
-              <PageTitle title="Minutes | Minutes DashBoard" />
+              <PageTitle title="Minutes | Minutes Dashboard" />
               <Minutes />
             </>
           }
@@ -290,7 +291,7 @@ function App() {
           path="/forms"
           element={
             <>
-              <PageTitle title="Forms | Forms DashBoard" />
+              <PageTitle title="Forms | Forms Dashboard" />
               <Forms />
             </>
           }
@@ -299,7 +300,7 @@ function App() {
           path="/calendar"
           element={
             <>
-              <PageTitle title="Calendar | Calendar DashBoard" />
+              <PageTitle title="Calendar | Calendar Dashboard" />
               <Calendar />
             </>
           }
@@ -322,7 +323,15 @@ function App() {
             </>
           }
         />
-
+        <Route
+          path="/policies"
+          element={
+            <>
+              <PageTitle title="Policies | IIITU - Admin" />
+              <Policy />
+            </>
+          }
+        />
         <Route
           path="/verifyOTP"
           element={

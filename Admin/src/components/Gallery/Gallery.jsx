@@ -14,15 +14,15 @@ import Images from './Images';
 import { STATIC_FILES } from '../../utils/apiURl';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 
-function GallerySlides({ images, handleDelete }) {
+function GallerySlides({ images, handleDelete, handleEdit, page }) {
   const [index, setIndex] = useState(-1);
-  
-  const modifiedImages = images.map(image => ({
+
+  const modifiedImages = images.map((image) => ({
     ...image,
-    src: StaticLinkProvider(image.image) 
+    src: StaticLinkProvider(image.image),
   }));
 
-  modifiedImages.forEach(image => {
+  modifiedImages.forEach((image) => {
     delete StaticLinkProvider(image.image);
   });
 
@@ -32,6 +32,8 @@ function GallerySlides({ images, handleDelete }) {
         data={images}
         onClick={(currentIndex) => setIndex(currentIndex)}
         handleDelete={handleDelete}
+        handleEdit={handleEdit}
+        page={page}
       />
 
       <Lightbox

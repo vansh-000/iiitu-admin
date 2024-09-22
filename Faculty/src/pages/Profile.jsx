@@ -26,7 +26,7 @@ const Profile = () => {
   const [editable, setEditable] = useState(false);
   const [profileImage, setProfileImage] = useState('');
   const [education, setEducation] = useState([]);
-  const [other,setOther]=useState([]);
+  const [other, setOther] = useState([]);
   const [award, setAward] = useState([]);
   const [publication, setPublication] = useState([]);
   // const [journal, setJournal] = useState([]);
@@ -37,7 +37,7 @@ const Profile = () => {
   const refResume = useRef();
   const refName = useRef();
   const refPhone = useRef();
-  const refDesignation=useRef();
+  const refDesignation = useRef();
   const refResearchInterest = useRef();
   const refLinkedin = useRef();
   const refGoogleScholar = useRef();
@@ -62,7 +62,7 @@ const Profile = () => {
         setPublication(response.data.Publications);
         setResearch(response.data.Research);
         setProject(response.data.Projects);
-        setOther(response.data.other)
+        setOther(response.data.other);
       }
     } catch (err) {
       console.log('Error', err);
@@ -102,7 +102,7 @@ const Profile = () => {
       // const newJournal = journal.filter((jor) => jor !== '');
       // const newProject = project.filter((pro) => pro.Title !== '');
       const newResearch = research.filter((res) => res !== '');
-      const newOther=other.filter((oth)=>oth!=='');
+      const newOther = other.filter((oth) => oth !== '');
       const userID = JSON.parse(localStorage.getItem('user')).id;
       const data = {
         name: refName.current.value,
@@ -118,7 +118,7 @@ const Profile = () => {
         Research: newResearch,
         AwardAndHonours: newAward,
         Education: newEducation,
-        other:newOther
+        other: newOther,
         // Journals: newJournal,
         // Journals: newJournal,
         // Projects: newProject,
@@ -174,22 +174,27 @@ const Profile = () => {
     <DefaultLayout>
       <Breadcrumb pageName="Profile" />
       <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      <button
-  onClick={editable ? handleSave : () => handleEdit()}
-  className={`${
-    editable ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'
-  } text-white hover:bg-opacity-90 absolute mx-2 my-2 p-1 rounded sm:p-2 sm:mx-4 sm:my-4`}
->
-  {editable ? 'Save' : 'Edit'}
-</button>
-
+        <button
+          onClick={editable ? handleSave : () => handleEdit()}
+          className={`${
+            editable
+              ? 'bg-green-500 hover:bg-green-600'
+              : 'bg-blue-500 hover:bg-blue-600'
+          } text-white hover:bg-opacity-90 absolute mx-2 my-2 p-1 rounded sm:p-2 sm:mx-4 sm:my-4`}
+        >
+          {editable ? 'Save' : 'Edit'}
+        </button>
 
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           <div className="relative z-30 mx-auto h-30 w-full max-w-30 rounded-full p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
             <div className="relative drop-shadow-2">
               {faculty && faculty?.profileImage && (
                 <img
-                  src={profileImage ? profileImage : StaticLinkProvider(faculty?.profileImage)}
+                  src={
+                    profileImage
+                      ? profileImage
+                      : StaticLinkProvider(faculty?.profileImage)
+                  }
                   className="w-[200px]"
                   alt="profile"
                 />
@@ -260,7 +265,14 @@ const Profile = () => {
             {editable ? (
               <div>
                 <label className="block text-black dark:text-white text-start text-[1rem] mt-2 mb-1">
-                  For Change Resume      <Link to={StaticLinkProvider(faculty.resume)} target='_blanck' className='text-blue-500 cursor-pointer '>Exiting Resume</Link>
+                  For Change Resume{' '}
+                  <Link
+                    to={StaticLinkProvider(faculty.resume)}
+                    target="_blanck"
+                    className="text-blue-500 cursor-pointer "
+                  >
+                    Exiting Resume
+                  </Link>
                 </label>
                 <input
                   className="w-auto cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
@@ -277,7 +289,7 @@ const Profile = () => {
                   to={StaticLinkProvider(faculty.resume)}
                   className="w-fit flex flex-col items-center justify-center gap-1 text-[1.1rem] text-black dark:text-white px-4 dark:border-stroke border-strokedark xsm:flex-row"
                 >
-                  Resume 
+                  Resume
                 </Link>
               )
             )}
@@ -379,45 +391,43 @@ const Profile = () => {
             <div className="mx-auto max-w-180">
               <ul className="mt-4.5 text-black dark:text-white">
                 <li className="text-[1.1rem]  flex items-center h-auto max-h-max">
-                 <span className='text-nowrap'>Research Intrest:</span> 
+                  <span className="text-nowrap">Research Intrest:</span>
                   {editable ? (
-                 <textarea
-                 name="Research"
-                 ref={refResearchInterest}
-                 placeholder="Research Interest"
-                 defaultValue={faculty.researchInterest}
-                 className="ml-2 h-34 text-wrap w-full max-w-90 rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary resize-none"
-                 rows="4"
-               ></textarea>
-               
+                    <textarea
+                      name="Research"
+                      ref={refResearchInterest}
+                      placeholder="Research Interest"
+                      defaultValue={faculty.researchInterest}
+                      className="ml-2 h-34 text-wrap w-full max-w-90 rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary resize-none"
+                      rows="4"
+                    ></textarea>
                   ) : (
-                    <span className='pl-3'>{faculty.researchInterest}</span>
+                    <span className="pl-3">{faculty.researchInterest}</span>
                   )}
                 </li>
                 <li className="text-[1.1rem] mt-2">
                   Phone: +91-
                   {editable ? (
-                <input
-                name="title"
-                type="number"
-                ref={refPhone}
-                placeholder="Phone Number (e.g., 7352xxxx)"
-
-                defaultValue={faculty.mobile}
-                className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-      
-              />
-              
+                    <input
+                      name="title"
+                      type="number"
+                      ref={refPhone}
+                      placeholder="Phone Number (e.g., 7352xxxx)"
+                      defaultValue={faculty.mobile}
+                      className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    />
                   ) : (
                     faculty.mobile
                   )}
                 </li>
                 <li className="text-[1.1rem] mt-2">
-                  {!editable&& <> Designation: 
-              
-  
-                    <span className='pl-3'>{faculty?.designation}</span></>}
-            
+                  {!editable && (
+                    <>
+                      {' '}
+                      Designation:
+                      <span className="pl-3">{faculty?.designation}</span>
+                    </>
+                  )}
                 </li>
               </ul>
             </div>
@@ -456,20 +466,20 @@ const Profile = () => {
         />
       )}
       {other && (
-        <TableOther
-          edit={editable}
-          Other={other}
-          setOther={setOther}
-        />
-      )}{editable&&
-       <button
+        <TableOther edit={editable} Other={other} setOther={setOther} />
+      )}
+      {editable && (
+        <button
           onClick={editable ? handleSave : () => handleEdit()}
           className={`${
-            editable ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'
-          } text-white right-0 hover:bg-opacity-90 absolute   p-2 m-4 md:m-6 2xl:m-10 rounded sm:p-4 `}
+            editable
+              ? 'bg-green-500 hover:bg-green-600'
+              : 'bg-blue-500 hover:bg-blue-600'
+          } text-white right-0 hover:bg-opacity-90 absolute p-2 m-4 md:m-6 2xl:mt-5 2xl:mr-10 rounded sm:px-5 sm:py-2`}
         >
           {editable ? 'Save' : 'Edit'}
-        </button>}
+        </button>
+      )}
     </DefaultLayout>
   );
 };

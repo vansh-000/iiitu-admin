@@ -114,7 +114,6 @@ const REditCard = ({ recruitment, fetchData }) => {
       toast.error(`Error: ${err}`);
     }
   };
-  const handleAddFile = async () => {};
 
   return (
     <div

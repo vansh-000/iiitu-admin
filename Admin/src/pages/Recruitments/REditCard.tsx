@@ -6,6 +6,8 @@ import axios from 'axios';
 import TableEditFile from '../../components/Tables/TableEditFile.jsx';
 import toast from 'react-hot-toast';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider.jsx';
+import TableDate from '../../components/Tables/TableDate.jsx';
+import TableLink from '../../components/Tables/TableLink.jsx'
 
 const REditCard = ({ recruitment, fetchData }) => {
   const [editable, setEditable] = useState(false);
@@ -70,6 +72,8 @@ const REditCard = ({ recruitment, fetchData }) => {
         LinkList: LinkList,
       };
 
+      
+
       // Append application link
       // formData.append('ApplicationLink', refAppLink?.current?.value);
 
@@ -133,7 +137,10 @@ const REditCard = ({ recruitment, fetchData }) => {
           {/* Start Date:{formatDate(recruitment.startDate)} */}
           {/* {editable ?  <TableDate Date={date} setDate={setDate}/>: */}
           {/* <> */}
-          {date?.map((date,key) => (
+          {editable? <>
+            <TableDate Date={date} setDate={setDate}/>
+          
+          </>     :date?.map((date,key) => (
             <div className="flex gap-2" key={key}>
               <p>
                 {date?.DateName} : {formatDate(date?.Date)}
@@ -142,6 +149,21 @@ const REditCard = ({ recruitment, fetchData }) => {
           ))}
           {/* </>} */}
         </p>
+        <>
+          {editable?<TableLink Link={link} setLink={setLink} />: link?.map((li,index) => (
+            <Link
+              to={li.URL}
+              target="_blank"
+              key={index}
+              className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+              {li.LinkName}
+            </Link>
+          ))}
+        </>
+
+
+
         {/* <p className="leading-relaxed text-[#D0915C]">
           End Date:{formatDate(recruitment.endDate)}{' '}
           {editable && <DatePickerOne refDate={endDateRefs} />}
@@ -161,18 +183,7 @@ const REditCard = ({ recruitment, fetchData }) => {
               ))}
           </>
         </p>
-        <>
-          {link?.map((li,index) => (
-            <Link
-              to={li.URL}
-              target="_blank"
-              key={index}
-              className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-            >
-              {li.LinkName}
-            </Link>
-          ))}
-        </>
+     
         {addFile && (
           <TableEditFile
             File={file}

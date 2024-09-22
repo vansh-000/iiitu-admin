@@ -6,7 +6,8 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import TableEditTenderFile from '../../components/Tables/TableEditTenderFile.jsx';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider.jsx';
-
+import TableDate from '../../components/Tables/TableDate.jsx';
+import TableLink from '../../components/Tables/TableLink.jsx';
 const TEditCard = ({ tender, fetchData }) => {
   const [editable, setEditable] = useState(false);
   const [editedData, setEditedData] = useState({});
@@ -62,7 +63,7 @@ const TEditCard = ({ tender, fetchData }) => {
       toast.success(response.data.message);
       fetchData();
     } catch (err) {
-      if (err.response.status === 401) {
+      if (err?.response?.status === 401) {
         return navigate('/signin');
       }
       toast.error(`Error: ${err}`);
@@ -102,8 +103,11 @@ const TEditCard = ({ tender, fetchData }) => {
           )}
         </h5>
         <p className="leading-relaxed text-[#D0915C] mt-4">
-          {date?.map((date) => (
-            <div className="flex gap-2">
+        {editable? <>
+            <TableDate Date={date} setDate={setDate}/>
+          
+          </>     :date?.map((date,key) => (
+            <div className="flex gap-2" key={key}>
               <p>
                 {date?.DateName} : {formatDate(date?.Date)}
               </p>
@@ -115,6 +119,18 @@ const TEditCard = ({ tender, fetchData }) => {
                         <DatePickerOne refDate={startDateRefs} />
                     )} */}
         </p>
+        <>
+          {editable?<TableLink Link={link} setLink={setLink} />: link?.map((li,index) => (
+            <Link
+              to={li.URL}
+              target="_blank"
+              key={index}
+              className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+              {li.LinkName}
+            </Link>
+          ))}
+        </>
         <p className="leading-relaxed text-[#D0915C]">
           <>
             {!addFile &&
@@ -129,17 +145,7 @@ const TEditCard = ({ tender, fetchData }) => {
               ))}
           </>
         </p>
-        <>
-          {link?.map((li) => (
-            <Link
-              to={li.URL}
-              target="_blank"
-              className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-            >
-              {li.LinkName}
-            </Link>
-          ))}
-        </>
+     
         {addFile && (
           <TableEditTenderFile
             File={file}

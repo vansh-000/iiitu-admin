@@ -36,9 +36,9 @@ const DatePickerCustomDefault = ({ setDate, Date }) => {
   };
 
   return (
-    <div className="flex items-center justify-center p-4 bg-white rounded-lg shadow-md">
+    <div className="flex items-center justify-center dark:bg-form-input p-4 bg-white dark:bg-gray-800 dark:border-form-strokedark rounded-lg shadow-md">
       <select
-        className="w-full p-2 pl-10 text-sm text-gray-700 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+        className="w-full p-2 pl-10 text-sm text-gray-700 dark:border-form-strokedark dark:text-gray-300 bg-white dark:bg-form-input rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400"
         value={month}
         onChange={handleMonthChange}
       >
@@ -53,7 +53,7 @@ const DatePickerCustomDefault = ({ setDate, Date }) => {
       </select>
       <input
         type="number"
-        className="w-full p-2 pl-10 text-sm text-gray-700 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+        className="w-full p-2 pl-10 text-sm text-gray-700 dark:text-white bg-white dark:bg-form-input rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400"
         value={year}
         placeholder="Year eg.(2024)"
         onChange={handleYearChange}

@@ -30,10 +30,15 @@ const REditCard = ({ recruitment, fetchData }) => {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear().toString().slice(-2);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
     const formattedDay = day < 10 ? '0' + day : day;
     const formattedMonth = month < 10 ? '0' + month : month;
-    return `${formattedDay}-${formattedMonth}-${year}`;
+    const formattedHours = hours < 10 ? '0' + hours : hours;
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+    return `${formattedDay}-${formattedMonth}-${year} ${formattedHours}:${formattedMinutes}`;
   };
+  
 
   const handleEdit = (recruitment) => {
     setEditedData(recruitment);
@@ -128,8 +133,8 @@ const REditCard = ({ recruitment, fetchData }) => {
           {/* Start Date:{formatDate(recruitment.startDate)} */}
           {/* {editable ?  <TableDate Date={date} setDate={setDate}/>: */}
           {/* <> */}
-          {date?.map((date) => (
-            <div className="flex gap-2">
+          {date?.map((date,key) => (
+            <div className="flex gap-2" key={key}>
               <p>
                 {date?.DateName} : {formatDate(date?.Date)}
               </p>
@@ -144,10 +149,11 @@ const REditCard = ({ recruitment, fetchData }) => {
         <p className="leading-relaxed text-[#D0915C]">
           <>
             {!addFile &&
-              file?.map((file) => (
+              file?.map((file,index) => (
                 <Link
                   to={StaticLinkProvider(file?.DocPath)}
                   target="_blank"
+                  key={index}
                   className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
                 >
                   {file?.DocName}
@@ -156,10 +162,11 @@ const REditCard = ({ recruitment, fetchData }) => {
           </>
         </p>
         <>
-          {link?.map((li) => (
+          {link?.map((li,index) => (
             <Link
               to={li.URL}
               target="_blank"
+              key={index}
               className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
             >
               {li.LinkName}

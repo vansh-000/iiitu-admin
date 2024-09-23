@@ -8,6 +8,9 @@ import TableEditTenderFile from '../../components/Tables/TableEditTenderFile.jsx
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider.jsx';
 import TableDate from '../../components/Tables/TableDate.jsx';
 import TableLink from '../../components/Tables/TableLink.jsx';
+import ConfirmationModal from '../../utils/ConfirmationModal.jsx';
+
+
 const TEditCard = ({ tender, fetchData }) => {
   const [editable, setEditable] = useState(false);
   const [editedData, setEditedData] = useState({});
@@ -88,7 +91,24 @@ const TEditCard = ({ tender, fetchData }) => {
       toast.error(`Error: ${err}`);
     }
   };
-
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [tenderId, setTenderId] = useState(null);
+  const openModal = (id) => {
+    setIsModalOpen(true);
+    setTenderId(id);
+  };
+  const confirmDelete = () => {
+    if(tenderId){
+      handleDelete(tenderId);
+      setIsModalOpen(false);
+    }
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setTenderId(null);
+  };
+  
   return (
     <div
       className="flex mx-2 w-full border-l-6 border-warning bg-warning bg-opacity-[15%] px-7 py-8 shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-9"
@@ -198,7 +218,7 @@ const TEditCard = ({ tender, fetchData }) => {
             {editable ? 'Save' : 'Edit'}
           </button>
           <button
-            onClick={() => handleDelete(tender._id)}
+            onClick={() => openModal(tender._id)}
             className="w-[170px] inline-flex items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
           >
             Delete
@@ -217,7 +237,15 @@ const TEditCard = ({ tender, fetchData }) => {
           </button>
         </div>
       </div>
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={confirmDelete}
+        title="Delete Tender"
+        message="Are you sure you want to delete this tender? This action cannot be undone."
+      />
     </div>
+
   );
 };
 

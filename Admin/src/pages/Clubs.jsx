@@ -163,7 +163,7 @@ const Clubs = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.error('Club Deleted!');
+      toast.success('Club Deleted!');
       fetchData();
     } catch (err) {
       if (err.response.status === 401) {

@@ -83,7 +83,7 @@ const PrintMedia = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.error('Image Deleted!');
+      toast.success('Image Deleted!');
       fetchData();
     } catch (err) {
       if (err.response.status === 401) {

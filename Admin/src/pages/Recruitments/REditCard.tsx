@@ -8,11 +8,15 @@ import toast from 'react-hot-toast';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider.jsx';
 import TableDate from '../../components/Tables/TableDate.jsx';
 import TableLink from '../../components/Tables/TableLink.jsx'
+import ConfirmationModal from '../../utils/ConfirmationModal.jsx';
 
 const REditCard = ({ recruitment, fetchData }) => {
   const [editable, setEditable] = useState(false);
   const [editedData, setEditedData] = useState({});
   const [addFile, setAddFile] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [recId, setRecId] = useState(null);
+
   // console.log(recruitment);
 
   const [date, setDate] = useState(recruitment?.Date);
@@ -113,6 +117,20 @@ const REditCard = ({ recruitment, fetchData }) => {
       }
       toast.error(`Error: ${err}`);
     }
+  };
+
+  const openModal = (id) => {
+    setIsModalOpen(true);
+    setRecId(id);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const confirmDelete = () => {
+    handleDelete(recId);
+    setIsModalOpen(false);
   };
 
   return (
@@ -250,7 +268,7 @@ const REditCard = ({ recruitment, fetchData }) => {
           {editable ? 'Save' : 'Edit'}
         </button>
         <button
-          onClick={() => handleDelete(recruitment._id)}
+          onClick={() => openModal(recruitment._id)}
           className="inline-flex ml-2 items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
         >
           Delete
@@ -268,6 +286,13 @@ const REditCard = ({ recruitment, fetchData }) => {
           {addFile ? 'Done' : 'Add File'}
         </button>
       </div>
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={confirmDelete}
+        title="Delete Recruitment"
+        message="Are you sure you want to delete this recruitment? This action cannot be undone."
+      />
     </div>
   );
 };

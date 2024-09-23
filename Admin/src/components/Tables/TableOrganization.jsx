@@ -1,8 +1,25 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import ConfirmationModal from '../../utils/ConfirmationModal';
 
 const TableOrganization = ({ data, handleDelete }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
+  const openModal = (id) => {
+    setSelectedId(id);
+    setIsModalOpen(true);
+  }
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedId(null);
+  }
+  const confirmDelete = () => {
+    if (selectedId) {
+      handleDelete(selectedId);
+      closeModal();
+    }
+  }
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -88,7 +105,7 @@ const TableOrganization = ({ data, handleDelete }) => {
                         </svg>
                       </Link>
                       <button
-                        onClick={() => handleDelete(item._id)}
+                        onClick={() => openModal(item._id)}
                         className="hover:text-primary"
                       >
                         <svg
@@ -124,6 +141,13 @@ const TableOrganization = ({ data, handleDelete }) => {
           </tbody>
         </table>
       </div>
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={confirmDelete}
+        title="Delete Organization"
+        message="Are you sure you want to delete this organization? This action cannot be undone."
+      />
     </div>
   );
 };

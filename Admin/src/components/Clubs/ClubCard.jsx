@@ -1,6 +1,7 @@
 import styles from './clubs.module.css';
 import { MdDelete } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import {
   FaFacebookF,
   FaTwitter,
@@ -10,9 +11,27 @@ import {
   FaYoutube,
 } from 'react-icons/fa';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
+import ConfirmationModal from '../../utils/ConfirmationModal';
 
 const ClubsCard = (props) => {
   const { data, handleDelete } = props;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedClubId, setSelectedClubId] = useState(null);
+
+  const openModal = (id) => {
+    setSelectedClubId(id);
+    setIsModalOpen(true);
+  }
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedClubId(null);
+  }
+  const confirmDelete = () => {
+    if (selectedClubId) {
+      handleDelete(selectedClubId);
+      closeModal();
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -67,7 +86,7 @@ const ClubsCard = (props) => {
               <div className="flex items-center justify-center">
                 <button
                   className="text-xl text-black dark:text-white"
-                  onClick={() => handleDelete(slide._id)}
+                  onClick={() => openModal(slide._id)}
                 >
                   Delete
                 </button>
@@ -76,6 +95,13 @@ const ClubsCard = (props) => {
             </div>
           </div>
         ))}
+        <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={confirmDelete}
+        title="Delete Club"
+        message="Are you sure you want to delete this club? This action cannot be undone."
+      />
     </div>
   );
 };

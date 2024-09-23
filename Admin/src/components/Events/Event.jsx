@@ -31,7 +31,7 @@ function EventSlides({ data, handleDelete }) {
         onClick={(currentIndex) => setIndex(currentIndex)}
         handleDelete={handleDelete}
       />
-
+      
       <Lightbox
         plugins={[Captions, Download, Fullscreen, Zoom, Thumbnails]}
         captions={{

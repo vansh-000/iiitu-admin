@@ -34,6 +34,9 @@ const TablePolicy = ({ data, handleDelete }) => {
               <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                 Type
               </th>
+              <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                Section
+              </th>
               <th className="min-w-[10px] py-4 px-4 font-medium text-black dark:text-white">
                 Action
               </th>
@@ -49,9 +52,10 @@ const TablePolicy = ({ data, handleDelete }) => {
                     </h5>
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                    <p className="text-black dark:text-white">
-                      {item.type}
-                    </p>
+                    <p className="text-black dark:text-white">{item.type}</p>
+                  </td>
+                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                    <p className="text-black dark:text-white">{item.section}</p>
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">

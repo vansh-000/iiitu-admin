@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 const months = [
   'January',
@@ -15,8 +16,8 @@ const months = [
   'December',
 ];
 
-const DatePickerCustomDefault = ({ setDate, Date }) => {
-  const [yearDefault, monthDefault] = Date?.split('-').map(Number);
+const DatePickerCustomDefault = ({ setDate, Dat }) => {
+  const [yearDefault, monthDefault] = Dat?.split('-').map(Number);
   const [month, setMonth] = useState(monthDefault ?? new Date().getMonth());
   const [year, setYear] = useState(yearDefault ?? new Date().getFullYear());
 
@@ -32,7 +33,14 @@ const DatePickerCustomDefault = ({ setDate, Date }) => {
   };
 
   const handleYearChange = (e) => {
-    setYear(parseInt(e.target.value, 10));
+    const currentYear=new Date().getFullYear();
+    const enteredYear = parseInt(e.target.value, 10);
+    // setYear(parseInt(e.target.value, 10));
+    if (enteredYear > currentYear) {
+     return  toast.error(`Year cannot exceed ${currentYear}`);
+    } else {
+      setYear(enteredYear);
+    }
   };
 
   return (

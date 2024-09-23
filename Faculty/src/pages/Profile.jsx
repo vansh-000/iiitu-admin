@@ -170,7 +170,16 @@ const Profile = () => {
   const handleClubEvents = () => {
     nevigat('/events');
   };
-
+  const handlePhoneNumberChange = (e) => {
+    const phoneNumber = e.target.value;
+    const phoneRegex = /^\d{10}$/; // Regex for 10-digit phone number
+  
+    if (!phoneRegex.test(phoneNumber)) {
+     return  toast.error("Invalid phone number. Please enter a 10-digit phone number.");
+      // You can display an error message or disable form submission here
+    }
+  };
+  
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Profile" />
@@ -419,14 +428,16 @@ const Profile = () => {
                 <li className="text-[1.1rem] mt-2">
                   Phone: +91-
                   {editable ? (
-                    <input
-                      name="title"
-                      type="number"
-                      ref={refPhone}
-                      placeholder="Phone Number (e.g., 7352xxxx)"
-                      defaultValue={faculty.mobile}
-                      className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                    />
+                  <input
+                  name="title"
+                  type="text"
+                  ref={refPhone}
+                  placeholder="e.g., 7352xxxx"
+                  defaultValue={faculty.mobile}
+                  pattern="^\d{10}$" 
+                  title="Please enter a valid 10-digit phone number."
+                  className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                />
                   ) : (
                     faculty.mobile
                   )}

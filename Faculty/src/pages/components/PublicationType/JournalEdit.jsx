@@ -70,14 +70,14 @@ function JournalEdit({data,handleEdit,refAuthors,
           type="text"
           ref={refAuthors}
           defaultValue={Autors}
-          placeholder="eg: Rishvant; Anurag; Pundir"
+          placeholder="eg: Shatrughan; Anurag; Mrityunjay"
           className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
         />
       </label>
       </div>
       <div className="mt-4">
       <label className="mb-3 block text-black dark:text-white">
-      Year<DatePickerCustomDefault setDate={setDate} Date={data?.date} />
+      Year<DatePickerCustomDefault setDate={setDate} Dat={data?.date} />
       </label>
       </div>
       <div>

@@ -4,12 +4,15 @@ import { API } from '../../utils/apiURl';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
+import ConfirmationModal from '../../utils/ConfirmationModal';
 
 const ResearchEditCard = ({ research, fetchData, index }) => {
   const [editable, setEditable] = useState(false);
   const [editedData, setEditedData] = useState({});
   const [selectedType, setSelectedType] = useState(research.type);
   const [isOptionSelected, setIsOptionSelected] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
   const navigate = useNavigate();
   const refTitle = useRef();
@@ -71,12 +74,27 @@ const ResearchEditCard = ({ research, fetchData, index }) => {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      toast.error(response.data.message);
+      toast.success(response.data.message);
       fetchData();
     } catch (err) {
       console.error(err);
     }
   };
+
+  const openModal = (id) => {
+    setSelectedId(id);
+    setIsModalOpen(true);
+  }
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedId(null);
+  }
+  const confirmDelete = () => {
+    if (selectedId) {
+      handleDelete(selectedId);
+      closeModal();
+    }
+  }
 
   return (
     <div
@@ -253,13 +271,20 @@ const ResearchEditCard = ({ research, fetchData, index }) => {
             {editable ? 'Save' : 'Edit'}
           </button>
           <button
-            onClick={() => handleDelete(research._id)}
+            onClick={() => openModal(research._id)}
             className="inline-flex h-fit items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
           >
             Delete
           </button>
         </div>
       </div>
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={confirmDelete}
+        title="Delete Faculty"
+        message="Are you sure you want to delete this faculty? This action cannot be undone."
+      />
     </div>
   );
 };

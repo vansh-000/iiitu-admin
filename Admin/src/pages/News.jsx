@@ -100,7 +100,7 @@ const News = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.error('News Deleted!');
+      toast.success('News Deleted!');
       fetchData();
     } catch (err) {
       if (err.response.status === 401) {

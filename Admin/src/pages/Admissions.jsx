@@ -101,7 +101,7 @@ const Admissions = () => {
           Authorization: `Brear ${token}`,
         },
       });
-      toast.error('Data Deleted!');
+      toast.success('Data Deleted!');
       fetchData();
     } catch (err) {
       if (err.response.status === 401) {

@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 import { useState } from 'react';
+import ConfirmationModal from '../../utils/ConfirmationModal';
 
 const TableForms = ({ data, handleDelete, handleUpdate }) => {
   const [editId, setEditId] = useState(null); // Track which row is being edited
   const [formValues, setFormValues] = useState({ title: '', type: '' }); // Track current form values
-
+  const [isModalOpen, setIsModalOpen] = useState(false); // Track modal state
+  const [selectedId, setSelectedId] = useState(null); // Track selected row id
   // Handle edit mode
   const startEdit = (item) => {
     setEditId(item._id);
@@ -28,6 +30,24 @@ const TableForms = ({ data, handleDelete, handleUpdate }) => {
   const handleCancel = () => {
     setEditId(null); // Exit edit mode without saving
   };
+
+  const openModal = (id) => {
+    setSelectedId(id);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedId(null);
+  };
+
+  const confirmDelete = () => {
+    if (selectedId) {
+      handleDelete(selectedId);
+      closeModal();
+    }
+  };
+
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -149,7 +169,7 @@ const TableForms = ({ data, handleDelete, handleUpdate }) => {
                               </svg>
                             </Link>
                             <button
-                              onClick={() => handleDelete(item._id)}
+                              onClick={() => openModal(item._id)}
                               className="hover:text-primary"
                             >
                               <svg
@@ -208,6 +228,13 @@ const TableForms = ({ data, handleDelete, handleUpdate }) => {
           </tbody>
         </table>
       </div>
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={confirmDelete}
+        title="Delete Form"
+        message="Are you sure you want to delete this form? This action cannot be undone."
+      />
     </div>
   );
 };

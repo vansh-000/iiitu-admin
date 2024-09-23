@@ -119,7 +119,7 @@ const Events = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.error('Event Deleted!');
+      toast.success('Event Deleted!');
       fetchData();
     } catch (err) {
       console.error(err);

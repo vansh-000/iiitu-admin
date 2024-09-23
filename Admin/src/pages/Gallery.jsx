@@ -109,7 +109,7 @@ const Gallery = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.error('Image Deleted!');
+      toast.success('Image Deleted!');
       fetchAlbums();
     } catch (err) {
       if (err.response.status === 401) {

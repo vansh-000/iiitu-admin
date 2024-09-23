@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import TableCarousel from '../components/Tables/TableCarousel';
 
+
 const Carousel = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();

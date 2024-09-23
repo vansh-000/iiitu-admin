@@ -7,11 +7,14 @@ import toast from 'react-hot-toast';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 import NewsModal from './NewsModal';
 import { MdEdit } from 'react-icons/md';
+import ConfirmationModal from '../../utils/ConfirmationModal';
 
 function NewsComp({ handleDelete, item, fetchData }) {
   const [isLatest, setIsLatest] = useState(item.isLatest);
   const [modal, setModal] = useState(false);
   const [editData, setEditData] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedNewsId, setSelectedNewsId] = useState(null);
 
   const handleSetLatest = async () => {
     try {
@@ -33,6 +36,21 @@ function NewsComp({ handleDelete, item, fetchData }) {
       console.log(error);
     }
   };
+
+  const openModal = (id) => {
+    setSelectedNewsId(id);
+    setIsModalOpen(true);
+  }
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedNewsId(null);
+  }
+  const confirmDelete = () => {
+    if (selectedNewsId) {
+      handleDelete(selectedNewsId);
+      closeModal();
+    }
+  }
 
   return (
     <>
@@ -101,7 +119,7 @@ function NewsComp({ handleDelete, item, fetchData }) {
               }}
             />
             <button
-              onClick={() => handleDelete(item._id)}
+              onClick={() => openModal(item._id)}
               className="hover:text-primary"
             >
               <svg
@@ -136,6 +154,13 @@ function NewsComp({ handleDelete, item, fetchData }) {
       {modal && (
         <NewsModal data={editData} setModal={setModal} fetchData={fetchData} />
       )}
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={confirmDelete}
+        title="Delete News"
+        message="Are you sure you want to delete this news? This action cannot be undone."
+      />
     </>
   );
 }

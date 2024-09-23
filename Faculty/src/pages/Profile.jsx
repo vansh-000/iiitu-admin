@@ -294,7 +294,7 @@ const Profile = () => {
               faculty.resume && (
                 <Link
                   to={StaticLinkProvider(faculty.resume)}
-                  className="w-fit flex flex-col items-center justify-center gap-1 text-[1.1rem] text-[#0000EE] underline text-black dark:text-white px-4 dark:border-stroke border-strokedark xsm:flex-row"
+                  className="w-fit flex flex-col items-center justify-center gap-1 text-[1.1rem] text-[#0000EE] underline px-4 dark:border-stroke border-strokedark xsm:flex-row"
                 >
                   View Resume
                 </Link>

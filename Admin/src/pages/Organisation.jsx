@@ -24,7 +24,7 @@ const Organization = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API}/orgStr`);
-      console.log(response.data);
+      // console.log(response.data);
       
       setData(response.data);
     }

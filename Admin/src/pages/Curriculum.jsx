@@ -84,7 +84,7 @@ const Curriculum = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.error('Curriculum Deleted!');
+      toast.success('Curriculum Deleted!');
       fetchData();
     } catch (err) {
       if (err.response.status === 401) {

@@ -6,11 +6,17 @@ import axios from 'axios';
 import TableEditFile from '../../components/Tables/TableEditFile.jsx';
 import toast from 'react-hot-toast';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider.jsx';
+import TableDate from '../../components/Tables/TableDate.jsx';
+import TableLink from '../../components/Tables/TableLink.jsx'
+import ConfirmationModal from '../../utils/ConfirmationModal.jsx';
 
 const REditCard = ({ recruitment, fetchData }) => {
   const [editable, setEditable] = useState(false);
   const [editedData, setEditedData] = useState({});
   const [addFile, setAddFile] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [recId, setRecId] = useState(null);
+
   // console.log(recruitment);
 
   const [date, setDate] = useState(recruitment?.Date);
@@ -30,10 +36,15 @@ const REditCard = ({ recruitment, fetchData }) => {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear().toString().slice(-2);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
     const formattedDay = day < 10 ? '0' + day : day;
     const formattedMonth = month < 10 ? '0' + month : month;
-    return `${formattedDay}-${formattedMonth}-${year}`;
+    const formattedHours = hours < 10 ? '0' + hours : hours;
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+    return `${formattedDay}-${formattedMonth}-${year} ${formattedHours}:${formattedMinutes}`;
   };
+  
 
   const handleEdit = (recruitment) => {
     setEditedData(recruitment);
@@ -64,6 +75,8 @@ const REditCard = ({ recruitment, fetchData }) => {
         Date: sendDate,
         LinkList: LinkList,
       };
+
+      
 
       // Append application link
       // formData.append('ApplicationLink', refAppLink?.current?.value);
@@ -106,6 +119,20 @@ const REditCard = ({ recruitment, fetchData }) => {
     }
   };
 
+  const openModal = (id) => {
+    setIsModalOpen(true);
+    setRecId(id);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const confirmDelete = () => {
+    handleDelete(recId);
+    setIsModalOpen(false);
+  };
+
   return (
     <div
       className="flex mx-2 w-full border-l-6 border-warning bg-warning bg-opacity-[15%] px-7 py-8 shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-9"
@@ -127,8 +154,11 @@ const REditCard = ({ recruitment, fetchData }) => {
           {/* Start Date:{formatDate(recruitment.startDate)} */}
           {/* {editable ?  <TableDate Date={date} setDate={setDate}/>: */}
           {/* <> */}
-          {date?.map((date) => (
-            <div className="flex gap-2">
+          {editable? <>
+            <TableDate Date={date} setDate={setDate}/>
+          
+          </>     :date?.map((date,key) => (
+            <div className="flex gap-2" key={key}>
               <p>
                 {date?.DateName} : {formatDate(date?.Date)}
               </p>
@@ -136,33 +166,41 @@ const REditCard = ({ recruitment, fetchData }) => {
           ))}
           {/* </>} */}
         </p>
-        {/* <p className="leading-relaxed text-[#D0915C]">
-          End Date:{formatDate(recruitment.endDate)}{' '}
-          {editable && <DatePickerOne refDate={endDateRefs} />}
-        </p> */}
-        <div className='flex flex-row flex-wrap gap-2 mb-2'>
-          {!addFile &&
-            file?.map((file) => (
-              <Link
-                to={StaticLinkProvider(file?.DocPath)}
-                target="_blank"
-                className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-              >
-                {file?.DocName}
-              </Link>
-            ))}
-        </div>
         <>
-          {link?.map((li) => (
+          {editable?<TableLink Link={link} setLink={setLink} />: link?.map((li,index) => (
             <Link
               to={li.URL}
               target="_blank"
+              key={index}
               className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
             >
               {li.LinkName}
             </Link>
           ))}
         </>
+
+
+
+        {/* <p className="leading-relaxed text-[#D0915C]">
+          End Date:{formatDate(recruitment.endDate)}{' '}
+          {editable && <DatePickerOne refDate={endDateRefs} />}
+        </p> */}
+        <p className="leading-relaxed text-[#D0915C]">
+          <>
+            {!addFile &&
+              file?.map((file,index) => (
+                <Link
+                  to={StaticLinkProvider(file?.DocPath)}
+                  target="_blank"
+                  key={index}
+                  className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+                >
+                  {file?.DocName}
+                </Link>
+              ))}
+          </>
+        </p>
+     
         {addFile && (
           <TableEditFile
             File={file}
@@ -230,7 +268,7 @@ const REditCard = ({ recruitment, fetchData }) => {
           {editable ? 'Save' : 'Edit'}
         </button>
         <button
-          onClick={() => handleDelete(recruitment._id)}
+          onClick={() => openModal(recruitment._id)}
           className="inline-flex ml-2 items-center justify-center rounded-md bg-danger py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
         >
           Delete
@@ -248,6 +286,13 @@ const REditCard = ({ recruitment, fetchData }) => {
           {addFile ? 'Done' : 'Add File'}
         </button>
       </div>
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={confirmDelete}
+        title="Delete Recruitment"
+        message="Are you sure you want to delete this recruitment? This action cannot be undone."
+      />
     </div>
   );
 };

@@ -1,12 +1,15 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { API, STATIC_FILES } from '../../utils/apiURl';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
+import ConfirmationModal from '../../utils/ConfirmationModal';
 
 const FacultyEditCard = ({ faculty, fetchData }) => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedFacultyId, setSelectedFacultyId] = useState(null);
 
   const handleDelete = async (id) => {
     try {
@@ -15,7 +18,7 @@ const FacultyEditCard = ({ faculty, fetchData }) => {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      toast.error('Faculty Deleted!');
+      toast.success('Faculty Deleted!');
       fetchData();
     } catch (err) {
       console.log(err);
@@ -24,6 +27,23 @@ const FacultyEditCard = ({ faculty, fetchData }) => {
         return navigate('/signin');
       }
       toast.error(`Error: ${err}`);
+    }
+  };
+
+  const openModal = (id) => {
+    setSelectedFacultyId(id);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedFacultyId(null);
+  };
+
+  const confirmDelete = () => {
+    if (selectedFacultyId) {
+      handleDelete(selectedFacultyId);
+      closeModal();
     }
   };
 
@@ -59,13 +79,20 @@ const FacultyEditCard = ({ faculty, fetchData }) => {
             Edit
           </Link>
           <button
-            onClick={() => handleDelete(faculty._id)}
+            onClick={() => openModal(faculty._id)}
             className="inline-flex items-center justify-center rounded-md bg-danger py-2 px-2 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
           >
             Delete
           </button>
         </div>
       </div>
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={confirmDelete}
+        title="Delete Faculty"
+        message="Are you sure you want to delete this faculty? This action cannot be undone."
+      />
     </>
   );
 };

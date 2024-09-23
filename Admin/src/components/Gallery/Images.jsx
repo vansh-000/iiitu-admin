@@ -4,6 +4,7 @@ import { STATIC_FILES } from '../../utils/apiURl';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 import { useState } from 'react';
+import ConfirmationModal from '../../utils/ConfirmationModal';
 
 const Images = (props) => {
   const { data, onClick, handleDelete, handleEdit, page } = props;
@@ -23,6 +24,24 @@ const Images = (props) => {
     handleEdit(id, editedTitle);
     setIsEditing(null);
   };
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+
+  const openModal = (id) => {
+    setSelectedId(id);
+    setIsModalOpen(true);
+  }
+  const closeModal = () => {
+    setSelectedId(null);
+    setIsModalOpen(false);
+  }
+  const confirmDelete = () => {
+    if (selectedId) {
+      handleDelete(selectedId);
+      closeModal();
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -73,7 +92,7 @@ const Images = (props) => {
               )}
               <button
                 className="text-xl text-black dark:text-white"
-                onClick={() => handleDelete(slide._id)}
+                onClick={() => openModal(slide._id)}
               >
                 Delete
               </button>
@@ -81,6 +100,13 @@ const Images = (props) => {
             </div>
           </div>
         ))}
+        <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={confirmDelete}
+        title="Delete Image"
+        message="Are you sure you want to delete this carousel image? This action cannot be undone."
+      />
     </div>
   );
 };

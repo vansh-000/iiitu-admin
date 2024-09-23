@@ -38,16 +38,19 @@ const EventsPage = () => {
     fetchData();
   }, []);
   const nameRef = useRef();
-  const dateRef = useRef();
+  const endDateRef=useRef();
+  const startDateRef=useRef()
   const descriptionRef = useRef();
   const handleAdd = async (e) => {
     e.preventDefault();
     const name = nameRef.current.value;
     const description = descriptionRef.current.value;
-    const date = dateRef.current.value || data.date;
+    const startDate = startDateRef.current.value;
+    const endDate = endDateRef.current.value;
     const data2 = {
       name: name,
-      date: date,
+      startDate:startDate,
+      endDate:endDate,
       description: description,
       image: refImage.current?.files[0],
       OldImage: null,
@@ -109,13 +112,24 @@ const EventsPage = () => {
           />
         </div>
         <div className="mt-4">
-          {data && data.name && (
+          {data && data.endDate && (
             <>
               <label className="mb-3 block text-black dark:text-white">
-                Date {formatDate(data.date)}
+                End Date {formatDate(data.endDate)}
               </label>
 
-              <DatePickerOne refDate={dateRef} />
+              <DatePickerOne refDate={endDateRef} />
+            </>
+          )}
+        </div>
+        <div className="mt-4">
+          {data && data.startDate && (
+            <>
+              <label className="mb-3 block text-black dark:text-white">
+                End Date {formatDate(data.startDate)}
+              </label>
+
+              <DatePickerOne refDate={startDateRef} />
             </>
           )}
         </div>

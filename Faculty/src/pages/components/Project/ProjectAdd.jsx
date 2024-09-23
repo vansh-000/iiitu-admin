@@ -46,8 +46,8 @@ function ProjectAdd({
           type="text"
           required
           ref={refInvestigator}
-          placeholder="eg: Rishvant; Singh; Pundir"
-          className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+          placeholder="eg: Shatrughan; Ashwini; Mrityunjay"
+          className="ml-2 mt-2 w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
         />
       </label>
       <label className="mb-3 block text-black dark:text-white">
@@ -56,8 +56,8 @@ function ProjectAdd({
           name="Co-Investigator"
           type="text"
           ref={refCoInvestigator}
-          placeholder="eg: Rishvant; Singh; Pundir"
-          className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+          placeholder="eg: Shatrughan; Ashwini; Mrityunjay"
+          className="ml-2 mt-2 w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
         />
       </label>
 

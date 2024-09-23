@@ -57,13 +57,13 @@ const Profile = () => {
         },
       );
       if (response.status === 200) {
-        setFaculty(response.data);
-        setEducation(response.data.Education);
-        setAward(response.data.AwardAndHonours);
-        setPublication(response.data.Publications);
-        setResearch(response.data.Research);
-        setProject(response.data.Projects);
-        setOther(response.data.other);
+        setFaculty(response?.data);
+        setEducation(response?.data?.Education);
+        setAward(response?.data?.AwardAndHonours);
+        setPublication(response?.data?.Publications);
+        setResearch(response?.data?.Research);
+        setProject(response?.data?.Projects);
+        setOther(response?.data?.other);
       }
     } catch (err) {
       console.log('Error', err);
@@ -178,15 +178,15 @@ const Profile = () => {
         {/* Save and edit buttons */}
         <div className="flex flex-row gap-4 absolute">
           <button
-            onClick={editable ? handleSave : () => handleEdit()}
-            className={`${
+            onClick={editable ? handleSave : handleEdit}
+            className={`w-20 text-white ml-2 my-2 p-1 rounded sm:p-2 sm:ml-4 sm:my-4 ${
               editable
                 ? 'bg-green-500 hover:bg-green-600'
                 : 'bg-blue-500 hover:bg-blue-600'
-            } w-20 text-white hover:bg-opacity-90 ml-2 my-2 p-1 rounded sm:p-2 sm:ml-4 sm:my-4`}
+            }`}
           >
             {editable ? (
-              ` Save`
+              'Save'
             ) : (
               <span className="flex items-center justify-center gap-1">
                 <FaRegEdit />
@@ -198,7 +198,7 @@ const Profile = () => {
           {editable && (
             <button
               onClick={() => setEditable(false)}
-              className={`w-20 bg-red-500 hover:bg-red-600 text-white hover:bg-opacity-90 my-2 p-1 rounded sm:p-2 sm:my-4`}
+              className="w-20 bg-red-500 hover:bg-red-600 text-white my-2 p-1 rounded sm:p-2 sm:my-4"
             >
               Cancel
             </button>
@@ -208,44 +208,46 @@ const Profile = () => {
         {/* Profile section */}
         <div className="md:flex md:flex-row md:gap-20 md:pl-36 md:pt-8 px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           {/* Profile Image */}
-          <div className="relative mx-auto md:mx-0 w-32 h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 mt-10 rounded-full border-4 border-white overflow-hidden shadow-lg">
-            {faculty?.profileImage && (
-              <img
-                src={profileImage || StaticLinkProvider(faculty?.profileImage)}
-                alt="profile"
-                className="w-full h-full object-cover"
-              />
-            )}
-            {editable && (
-              <label
-                htmlFor="profile"
-                className="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full cursor-pointer z-20"
-                style={{ bottom: '5%', right: '5%' }}
-              >
-                <svg
-                  className="fill-current"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M4.76464 1.42638C4.87283 1.2641 5.05496 1.16663 5.25 1.16663H8.75C8.94504 1.16663 9.12717 1.2641 9.23536 1.42638L10.2289 2.91663H12.25C12.7141 2.91663 13.1592 3.101 13.4874 3.42919C13.8156 3.75738 14 4.2025 14 4.66663V11.0833C14 11.5474 13.8156 11.9925 13.4874 12.3207C13.1592 12.6489 12.7141 12.8333 12.25 12.8333H1.75C1.28587 12.8333 0.840752 12.6489 0.512563 12.3207C0.184375 11.9925 0 11.5474 0 11.0833V4.66663C0 4.2025 0.184374 3.75738 0.512563 3.42919C0.840752 3.101 1.28587 2.91663 1.75 2.91663H3.77114L4.76464 1.42638Z"
-                    fill="currentColor"
-                  />
-                </svg>
-                <input
-                  type="file"
-                  id="profile"
-                  name="profile"
-                  accept="image/*"
-                  className="sr-only"
-                  ref={refProFileImg}
-                  onChange={handleProfileImageChange}
-                />
-              </label>
-            )}
-          </div>
+          <div className="relative mx-auto md:mx-0">
+  {faculty?.profileImage && (
+    <img
+      src={profileImage || StaticLinkProvider(faculty?.profileImage)}
+      alt="profile"
+      className="object-cover mx-auto w-32 h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 mt-10 rounded-full border-4 border-white shadow-lg"
+    />
+  )}
+
+  {editable && (
+    <label
+      htmlFor="profile"
+      className="absolute bottom-2 right-[40%] md:bottom-[60%] md:right-4 bg-primary text-white p-2 rounded-full cursor-pointer z-20 flex items-center justify-center shadow-lg transition-all hover:bg-primary-dark"
+    >
+      <svg
+        className="fill-current"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M4.76464 1.42638C4.87283 1.2641 5.05496 1.16663 5.25 1.16663H8.75C8.94504 1.16663 9.12717 1.2641 9.23536 1.42638L10.2289 2.91663H12.25C12.7141 2.91663 13.1592 3.101 13.4874 3.42919C13.8156 3.75738 14 4.2025 14 4.66663V11.0833C14 11.5474 13.8156 11.9925 13.4874 12.3207C13.1592 12.6489 12.7141 12.8333 12.25 12.8333H1.75C1.28587 12.8333 0.840752 12.6489 0.512563 12.3207C0.184375 11.9925 0 11.5474 0 11.0833V4.66663C0 4.2025 0.184374 3.75738 0.512563 3.42919C0.840752 3.101 1.28587 2.91663 1.75 2.91663H3.77114L4.76464 1.42638Z"
+          fill="currentColor"
+        />
+      </svg>
+      <input
+        type="file"
+        id="profile"
+        name="profile"
+        accept="image/*"
+        className="sr-only"
+        ref={refProFileImg}
+        onChange={handleProfileImageChange}
+      />
+    </label>
+  )}
+</div>
+
+
           <div className="mt-14 flex flex-col items-center">
             {ClubName && (
               <button
@@ -271,16 +273,18 @@ const Profile = () => {
             </h3>
             {editable ? (
               <div>
-                <label className="block text-black dark:text-white text-start text-[1rem] mt-2 mb-1">
-                  For Change Resume{' '}
-                  <Link
-                    to={StaticLinkProvider(faculty.resume)}
-                    target="_blanck"
-                    className="text-blue-500 cursor-pointer "
-                  >
-                    Exiting Resume
-                  </Link>
-                </label>
+                {faculty.resume && (
+                  <label className="block text-black dark:text-white text-start text-[1rem] mt-2 mb-1">
+                    For Change Resume{' '}
+                    <Link
+                      to={StaticLinkProvider(faculty.resume)}
+                      target="_blanck"
+                      className="text-blue-500 cursor-pointer "
+                    >
+                      Exiting Resume
+                    </Link>
+                  </label>
+                )}
                 <input
                   className="w-auto cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
                   type="file"

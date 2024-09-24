@@ -18,11 +18,11 @@ function PublicationProvider({ data, handleDelete }) {
       <div className="flex  items-center gap-x-4 p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
         <button
           onClick={(e) => handleDelete(e, data?._id)}
-          class="group relative flex h-10 w-10 flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-red-800 bg-red-500 hover:bg-red-600"
+          className="group relative flex h-10 w-10 flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-red-800 bg-red-500 hover:bg-red-600"
         >
           <svg
             viewBox="0 0 1.625 1.625"
-            class="absolute -top-7 fill-white delay-100 group-hover:top-6 group-hover:animate-[spin_1.4s] group-hover:duration-1000"
+            className="absolute -top-7 fill-white delay-100 group-hover:top-6 group-hover:animate-[spin_1.4s] group-hover:duration-1000"
             height="15"
             width="15"
           >
@@ -34,11 +34,11 @@ function PublicationProvider({ data, handleDelete }) {
             width="16"
             fill="none"
             viewBox="0 0 39 7"
-            class="origin-right duration-500 group-hover:rotate-90"
+            className="origin-right duration-500 group-hover:rotate-90"
           >
-            <line stroke-width="4" stroke="white" y2="5" x2="39" y1="5"></line>
+            <line strokeWidth="4" stroke="white" y2="5" x2="39" y1="5"></line>
             <line
-              stroke-width="3"
+              strokeWidth="3"
               stroke="white"
               y2="1.5"
               x2="26.0357"
@@ -46,7 +46,7 @@ function PublicationProvider({ data, handleDelete }) {
               x1="12"
             ></line>
           </svg>
-          <svg width="16" fill="none" viewBox="0 0 33 39" class="">
+          <svg width="16" fill="none" viewBox="0 0 33 39" className="">
             <mask fill="white" id="path-1-inside-1_8_19">
               <path d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"></path>
             </mask>
@@ -55,8 +55,8 @@ function PublicationProvider({ data, handleDelete }) {
               fill="white"
               d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
             ></path>
-            <path stroke-width="4" stroke="white" d="M12 6L12 29"></path>
-            <path stroke-width="4" stroke="white" d="M21 6V29"></path>
+            <path strokeWidth="4" stroke="white" d="M12 6L12 29"></path>
+            <path strokeWidth="4" stroke="white" d="M21 6V29"></path>
           </svg>
         </button>
 

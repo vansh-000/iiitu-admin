@@ -17,7 +17,7 @@ function PublicationProvider({ data, handleDelete }) {
 
       <div className="flex  items-center gap-x-4 p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
         <button
-          onClick={() => handleDelete(data?._id)}
+          onClick={(e) => handleDelete(e, data?._id)}
           class="group relative flex h-10 w-10 flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-red-800 bg-red-500 hover:bg-red-600"
         >
           <svg

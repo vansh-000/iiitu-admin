@@ -27,6 +27,7 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
   const [indexing, setIndexing] = useState();
   const refUrl = useRef();
   const [selected, setSelected] = useState('Journal');
+  
   const handleDelete = async (e,id) => {
     e.preventDefault();
     try {

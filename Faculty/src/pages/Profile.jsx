@@ -19,6 +19,7 @@ import TableProjects from '../components/Tables/TableProjects';
 import TableOther from '../components/Tables/TableOther';
 import { StaticLinkProvider } from '../utils/StaticLinkProvider';
 import { FaRegEdit } from 'react-icons/fa';
+import TableExperience from '../components/Tables/TableExperience';
 
 const Profile = () => {
   const nevigat = useNavigate();
@@ -34,6 +35,11 @@ const Profile = () => {
   // const [journal, setJournal] = useState([]);
   const [project, setProject] = useState([]);
   const [research, setResearch] = useState([]);
+
+  const [experience, setExperience] = useState([]);
+  const [workshop, setWorkshop] = useState([]);
+  const [supervision, setSupervision] = useState([]);
+
   const refProFileImg = useRef();
   const refResume = useRef();
   const refName = useRef();
@@ -46,6 +52,8 @@ const Profile = () => {
   const refWeb = useRef();
   const userData = JSON.parse(localStorage.getItem('user'));
   const ClubName = localStorage.getItem('ClubName');
+
+
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -57,6 +65,7 @@ const Profile = () => {
         },
       );
       if (response.status === 200) {
+        console.log(response.data);
         setFaculty(response?.data);
         setEducation(response?.data?.Education);
         setAward(response?.data?.AwardAndHonours);
@@ -64,6 +73,12 @@ const Profile = () => {
         setResearch(response?.data?.Research);
         setProject(response?.data?.Projects);
         setOther(response?.data?.other);
+        setExperience(response?.data?.Experience);
+        setWorkshop(response?.data?.Workshop),
+        setSupervision(response?.data?.Supervision)
+
+        console.warn("------------------", experience);
+
       }
     } catch (err) {
       console.log('Error', err);
@@ -77,6 +92,7 @@ const Profile = () => {
       }
     }
   };
+
   const fetchClub = async () => {
     try {
       const response = await axios.get(`${API}/clubs/faculty/${userData?.id}`);
@@ -88,10 +104,12 @@ const Profile = () => {
       }
     }
   };
+
   useEffect(() => {
     fetchData();
     fetchClub();
   }, []);
+
   const handleEdit = () => {
     setEditable(true);
   };
@@ -99,6 +117,7 @@ const Profile = () => {
   const handleSave = async () => {
     try {
       const newEducation = education.filter((edu) => edu.description !== '');
+      const newExperience = experience.filter((edu) => edu.organisation !== '' || edu.position !== '');
       const newAward = award.filter((awa) => awa !== '');
       // const newJournal = journal.filter((jor) => jor !== '');
       // const newProject = project.filter((pro) => pro.Title !== '');
@@ -119,6 +138,7 @@ const Profile = () => {
         Research: newResearch,
         AwardAndHonours: newAward,
         Education: newEducation,
+        Experience: newExperience,
         other: newOther,
         // Journals: newJournal,
         // Journals: newJournal,
@@ -463,6 +483,14 @@ const Profile = () => {
           setEducation={setEducation}
         />
       )}
+
+      {experience && (
+        <TableExperience
+          edit={editable}
+          experience={experience}
+          setExperience={setExperience}/>
+      )}
+
       {research && (
         <TableResearch
           edit={editable}

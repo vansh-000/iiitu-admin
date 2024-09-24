@@ -30,55 +30,57 @@ const TableExperience = ({ edit, experience, setExperience }) => {
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
-              <th className="py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+              <th className="py-4 font-medium text-black dark:text-white text-center w-[25%]">
                 Position
               </th>
-              <th className="py-4 px-4 font-medium text-black dark:text-white text-center">
-                University/College
+              <th className="py-4 px-4 font-medium text-black dark:text-white text-center w-[50%]">
+                Organisation
               </th>
-              <th className="py-4 px-4 font-medium text-black dark:text-white text-center">
+              <th className="py-4 px-4 font-medium text-black dark:text-white text-center w-[20%]">
                 Years
               </th>
-              {edit && <th className="py-4 px-4 text-black dark:text-white"></th>}
+              {edit && (
+                <th className="py-4 px-4 text-black dark:text-white w-[5%]"></th>
+              )}
             </tr>
           </thead>
           <tbody>
             {experience.length > 0 &&
               experience.map((edu, index) => (
                 <tr key={index}>
-                  <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center w-[25%]">
                     {edit ? (
                       <input
                         type="text"
                         value={edu.position}
                         placeholder="Position"
-                        className="max-w-[150px] rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         onChange={(e) => handleEdit(index, 'position', e.target.value)}
                       />
                     ) : (
                       <h5 className="font-medium text-black dark:text-white">{edu.position}</h5>
                     )}
                   </td>
-                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center">
+                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center w-[50%]">
                     {edit ? (
                       <input
                         type="text"
                         value={edu.organisation}
-                        placeholder="College Name"
-                        className="max-w-[150px] rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                        placeholder="Organisation Name"
+                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         onChange={(e) => handleEdit(index, 'organisation', e.target.value)}
                       />
                     ) : (
                       <p className="text-black dark:text-white">{edu.organisation}</p>
                     )}
                   </td>
-                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center">
+                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center w-[20%]">
                     {edit ? (
                       <input
                         type="number"
                         value={edu.years}
-                        placeholder="Years of Experience"
-                        className="max-w-[150px] rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                        placeholder="Years"
+                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         onChange={(e) => handleEdit(index, 'years', e.target.value)}
                       />
                     ) : (
@@ -86,7 +88,7 @@ const TableExperience = ({ edit, experience, setExperience }) => {
                     )}
                   </td>
                   {edit && (
-                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center">
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center w-[5%]">
                       <IoClose
                         onClick={() => handleDelete(index)}
                         className="text-[1.5rem] text-red-600 dark:text-red-500 cursor-pointer"

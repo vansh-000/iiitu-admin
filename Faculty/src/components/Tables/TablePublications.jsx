@@ -8,18 +8,10 @@ import Book from '../../pages/components/PublicationType/Book';
 import Patent from '../../pages/components/PublicationType/Patent';
 import { API } from '../../utils/apiURl';
 import axios from 'axios';
-import JournalView from '../../pages/components/PublicationType/JournalView';
-import ConferenceView from '../../pages/components/PublicationType/ConferenceView';
-import ChapterView from '../../pages/components/PublicationType/ChapterView';
-import BookView from '../../pages/components/PublicationType/BookView';
-import PaitentView from '../../pages/components/PublicationType/PaitentView';
-const TYPE = ['Journal', 'Conference', 'Book', 'Chapter', 'Patent'];
-
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
-import JournalView2 from '../../pages/components/PublicationType/JournalView2';
-import JournalView3 from '../../pages/components/PublicationType/JournalView3';
 import PublicationProvider from './PublicationProvider';
+
+const TYPE = ['Journal', 'Conference', 'Book', 'Chapter', 'Patent'];
 
 const TablePublications = ({ edit, Publication, setPublication }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,6 +27,7 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
   const [indexing, setIndexing] = useState();
   const refUrl = useRef();
   const [selected, setSelected] = useState('Journal');
+  
   const handleDelete = async (e,id) => {
     e.preventDefault();
     try {
@@ -53,15 +46,18 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
       console.error(err);
     }
   };
+
   // const handleClose = () => {
   //   setIsOpenView(!isOpenView);
   // };
+
   const handleAddPublication = () => {
     setIsOpen(!isOpen);
   };
+
   const handleAddPublicationLink = async (e) => {
     try {
-      e.preventDefault()
+      e.preventDefault();
       const heading = refTitle?.current?.value;
       const authors = refAuthors?.current?.value;
       const vol = refVol?.current?.value;
@@ -110,6 +106,7 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
   //     console.error(err);
   //   }
   // };
+
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -117,19 +114,22 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                <th className="py-4 px-4 font-bold text-[1.5rem] text-center text-black dark:text-white">
+                <th className="py-4 px-4 font-bold text-[1.2rem] text-center text-black dark:text-white">
                   Publications
                 </th>
               </tr>
             </thead>
             <tbody>
-            {/* <JournalView2/> */}
-            
+              {/* <JournalView2/> */}
+
               {Publication.map((pub, index) => (
                 <tr key={index}>
                   <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                     <h5 className="font-medium text-black dark:text-white">
-                      <PublicationProvider data={pub} handleDelete={handleDelete}/>
+                      <PublicationProvider
+                        data={pub}
+                        handleDelete={handleDelete}
+                      />
                       {/* <JournalView3 data={pub}/> */}
                       {/* <button
                         onClick={() => handleViewPublication(pub)}
@@ -197,7 +197,10 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
       {isOpen && (
         <div className="fixed inset-0 z-99999 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
           <div className="relative p-4 w-full max-w-2xl max-h-full ">
-            <form onSubmit={handleAddPublicationLink} className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <form
+              onSubmit={handleAddPublicationLink}
+              className="relative bg-white rounded-lg shadow dark:bg-gray-700"
+            >
               <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                 {/* <div className="flex flex-wrap p-1.5 w-72 rounded-lg bg-gray-200 shadow-sm text-sm"> */}
                 {TYPE.map((ty, index) => (
@@ -289,7 +292,7 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
               <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <button
                   // onClick={handleAddPublicationLink}
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  className="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   type="submit"
                 >
                   Add

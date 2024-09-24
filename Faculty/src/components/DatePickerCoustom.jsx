@@ -43,10 +43,9 @@ const DatePickerCustom = ({ setDate }) => {
     }
   };
   return (
-    
-    <div className="flex items-center justify-center dark:bg-form-input p-4 bg-white dark:bg-gray-800 dark:border-form-strokedark rounded-lg shadow-md">
+    <div className="flex items-center gap-5 justify-center dark:bg-form-input p-4 bg-white dark:bg-gray-800 dark:border-form-strokedark rounded-lg shadow-md">
       <select
-        className="w-full p-2 pl-10 text-sm text-gray-700 dark:border-form-strokedark dark:text-gray-300 bg-white dark:bg-form-input rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400"
+        className="w-full p-2 pl-4 text-sm text-gray-700 dark:border-form-strokedark dark:text-gray-300 bg-gray dark:bg-form-input rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400"
         value={month}
         onChange={handleMonthChange}
       >
@@ -61,12 +60,12 @@ const DatePickerCustom = ({ setDate }) => {
       </select>
       <input
         type="number"
-        className="w-full p-2 pl-10 text-sm text-gray-700 dark:text-white bg-white dark:bg-form-input rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400"
+        className="w-full p-2 pl-4 text-sm text-gray-700 dark:text-white bg-gray dark:bg-form-input rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400"
         value={year}
-        placeholder="Year eg. 2024"
+        placeholder="e.g. 2024"
         onChange={handleYearChange}
       />
-       {/* {yearError && <span className="text-red-500 text-xs mt-1">{yearError}</span>} */}
+      {/* {yearError && <span className="text-red-500 text-xs mt-1">{yearError}</span>} */}
     </div>
   );
 };

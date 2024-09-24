@@ -6,6 +6,7 @@ function JournalView3({ data }) {
   const toggleAccordion = (index) => {
     setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
   };
+  
   return (
     <>
       <h2 id="accordion-collapse-heading-1" key={data._id}>
@@ -16,11 +17,16 @@ function JournalView3({ data }) {
           aria-expanded={activeIndex === 1}
           aria-controls="accordion-collapse-body-1"
         >
-          <span className='bg-yellow-300 rounded-lg p-2 text-black'>{data?.type} </span> <span className='font-satoshi font-extrabold text-[1.5rem]'>{data?.heading}</span>
+          <span className="bg-yellow-300 rounded-lg p-2 text-black">
+            {data?.type}{' '}
+          </span>{' '}
+          <span className="font-satoshi font-extrabold text-[1.1rem]">
+            {data?.heading}
+          </span>
           <svg
             data-accordion-icon
             className={`w-3 h-3 ${
-              activeIndex === 1 ? 'rotate-180' : ''
+              activeIndex === 1 ? '' : 'rotate-180'
             } shrink-0`}
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +64,7 @@ function JournalView3({ data }) {
             {data?.date && <>Year {data.date}</>}
             {data?.vol && <>Vol {data.vol}</>}
             {data?.Page && <>Page {data.Page}</>}
-            {data?.publisher&&(<>Publisher {data.publisher}</>)}
+            {data?.publisher && <>Publisher {data.publisher}</>}
           </p>
 
           <p className="text-gray-500 dark:text-gray-400">

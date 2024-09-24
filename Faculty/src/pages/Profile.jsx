@@ -20,6 +20,7 @@ import TableOther from '../components/Tables/TableOther';
 import { StaticLinkProvider } from '../utils/StaticLinkProvider';
 import { FaRegEdit } from 'react-icons/fa';
 import TableExperience from '../components/Tables/TableExperience';
+import TableSupervision from '../components/Tables/TableSupervision';
 
 const Profile = () => {
   const nevigat = useNavigate();
@@ -53,7 +54,6 @@ const Profile = () => {
   const userData = JSON.parse(localStorage.getItem('user'));
   const ClubName = localStorage.getItem('ClubName');
 
-
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -75,10 +75,9 @@ const Profile = () => {
         setOther(response?.data?.other);
         setExperience(response?.data?.Experience);
         setWorkshop(response?.data?.Workshop),
-        setSupervision(response?.data?.Supervision)
+          setSupervision(response?.data?.Supervision);
 
-        console.warn("------------------", experience);
-
+        console.warn('------------------', experience);
       }
     } catch (err) {
       console.log('Error', err);
@@ -117,7 +116,12 @@ const Profile = () => {
   const handleSave = async () => {
     try {
       const newEducation = education.filter((edu) => edu.description !== '');
-      const newExperience = experience.filter((edu) => edu.organisation !== '' || edu.position !== '');
+      const newExperience = experience.filter(
+        (edu) => edu.organisation !== '' || edu.position !== '',
+      );
+      const newSupervision = supervision.filter(
+        (e) => e.program !== '' || e.topic !== '' || e.scholar !== ''
+      )
       const newAward = award.filter((awa) => awa !== '');
       // const newJournal = journal.filter((jor) => jor !== '');
       // const newProject = project.filter((pro) => pro.Title !== '');
@@ -139,6 +143,7 @@ const Profile = () => {
         AwardAndHonours: newAward,
         Education: newEducation,
         Experience: newExperience,
+        Supervision: newSupervision,
         other: newOther,
         // Journals: newJournal,
         // Journals: newJournal,
@@ -193,13 +198,15 @@ const Profile = () => {
   const handlePhoneNumberChange = (e) => {
     const phoneNumber = e.target.value;
     const phoneRegex = /^\d{10}$/; // Regex for 10-digit phone number
-  
+
     if (!phoneRegex.test(phoneNumber)) {
-     return  toast.error("Invalid phone number. Please enter a 10-digit phone number.");
+      return toast.error(
+        'Invalid phone number. Please enter a 10-digit phone number.',
+      );
       // You can display an error message or disable form submission here
     }
   };
-  
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Profile" />
@@ -238,44 +245,43 @@ const Profile = () => {
         <div className="md:flex md:flex-row md:gap-20 md:pl-36 md:pt-8 px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           {/* Profile Image */}
           <div className="relative mx-auto md:mx-0">
-  {faculty?.profileImage && (
-    <img
-      src={profileImage || StaticLinkProvider(faculty?.profileImage)}
-      alt="profile"
-      className="object-cover mx-auto w-32 h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 mt-10 rounded-full border-4 border-white shadow-lg"
-    />
-  )}
+            {faculty?.profileImage && (
+              <img
+                src={profileImage || StaticLinkProvider(faculty?.profileImage)}
+                alt="profile"
+                className="object-cover mx-auto w-32 h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 mt-10 rounded-full border-4 border-white shadow-lg"
+              />
+            )}
 
-  {editable && (
-    <label
-      htmlFor="profile"
-      className="absolute bottom-2 right-[40%] md:bottom-[60%] md:right-4 bg-primary text-white p-2 rounded-full cursor-pointer z-20 flex items-center justify-center shadow-lg transition-all hover:bg-primary-dark"
-    >
-      <svg
-        className="fill-current"
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M4.76464 1.42638C4.87283 1.2641 5.05496 1.16663 5.25 1.16663H8.75C8.94504 1.16663 9.12717 1.2641 9.23536 1.42638L10.2289 2.91663H12.25C12.7141 2.91663 13.1592 3.101 13.4874 3.42919C13.8156 3.75738 14 4.2025 14 4.66663V11.0833C14 11.5474 13.8156 11.9925 13.4874 12.3207C13.1592 12.6489 12.7141 12.8333 12.25 12.8333H1.75C1.28587 12.8333 0.840752 12.6489 0.512563 12.3207C0.184375 11.9925 0 11.5474 0 11.0833V4.66663C0 4.2025 0.184374 3.75738 0.512563 3.42919C0.840752 3.101 1.28587 2.91663 1.75 2.91663H3.77114L4.76464 1.42638Z"
-          fill="currentColor"
-        />
-      </svg>
-      <input
-        type="file"
-        id="profile"
-        name="profile"
-        accept="image/*"
-        className="sr-only"
-        ref={refProFileImg}
-        onChange={handleProfileImageChange}
-      />
-    </label>
-  )}
-</div>
-
+            {editable && (
+              <label
+                htmlFor="profile"
+                className="absolute bottom-2 right-[40%] md:bottom-[60%] md:right-4 bg-primary text-white p-2 rounded-full cursor-pointer z-20 flex items-center justify-center shadow-lg transition-all hover:bg-primary-dark"
+              >
+                <svg
+                  className="fill-current"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M4.76464 1.42638C4.87283 1.2641 5.05496 1.16663 5.25 1.16663H8.75C8.94504 1.16663 9.12717 1.2641 9.23536 1.42638L10.2289 2.91663H12.25C12.7141 2.91663 13.1592 3.101 13.4874 3.42919C13.8156 3.75738 14 4.2025 14 4.66663V11.0833C14 11.5474 13.8156 11.9925 13.4874 12.3207C13.1592 12.6489 12.7141 12.8333 12.25 12.8333H1.75C1.28587 12.8333 0.840752 12.6489 0.512563 12.3207C0.184375 11.9925 0 11.5474 0 11.0833V4.66663C0 4.2025 0.184374 3.75738 0.512563 3.42919C0.840752 3.101 1.28587 2.91663 1.75 2.91663H3.77114L4.76464 1.42638Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <input
+                  type="file"
+                  id="profile"
+                  name="profile"
+                  accept="image/*"
+                  className="sr-only"
+                  ref={refProFileImg}
+                  onChange={handleProfileImageChange}
+                />
+              </label>
+            )}
+          </div>
 
           <div className="mt-14 flex flex-col items-center">
             {ClubName && (
@@ -448,16 +454,16 @@ const Profile = () => {
                 <li className="text-[1.1rem] mt-2">
                   Phone: +91-
                   {editable ? (
-                  <input
-                  name="title"
-                  type="text"
-                  ref={refPhone}
-                  placeholder="e.g., 7352xxxx"
-                  defaultValue={faculty.mobile}
-                  pattern="^\d{10}$" 
-                  title="Please enter a valid 10-digit phone number."
-                  className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                />
+                    <input
+                      name="title"
+                      type="text"
+                      ref={refPhone}
+                      placeholder="e.g., 7352xxxx"
+                      defaultValue={faculty.mobile}
+                      pattern="^\d{10}$"
+                      title="Please enter a valid 10-digit phone number."
+                      className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    />
                   ) : (
                     faculty.mobile
                   )}
@@ -488,7 +494,8 @@ const Profile = () => {
         <TableExperience
           edit={editable}
           experience={experience}
-          setExperience={setExperience}/>
+          setExperience={setExperience}
+        />
       )}
 
       {research && (
@@ -496,6 +503,14 @@ const Profile = () => {
           edit={editable}
           Research={research}
           setResearch={setResearch}
+        />
+      )}
+
+      {supervision && (
+        <TableSupervision
+          edit ={editable}
+          Supervision= {supervision}
+          setSupervision={setSupervision}
         />
       )}
       {award && (

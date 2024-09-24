@@ -39,7 +39,6 @@ const DatePickerCustom = ({ setDate }) => {
     if (enteredYear > currentYear) {
       toast.error(`Year cannot exceed ${currentYear}`);
     } else {
-      // setYearError(''); // Clear error if valid
       setYear(enteredYear);
     }
   };

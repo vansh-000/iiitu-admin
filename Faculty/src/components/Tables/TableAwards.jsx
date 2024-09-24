@@ -1,5 +1,6 @@
 import { FaStarOfLife } from 'react-icons/fa';
 import { IoMdAddCircleOutline } from 'react-icons/io';
+import { IoClose } from 'react-icons/io5';
 import { RxCross1 } from 'react-icons/rx';
 
 const TableAwards = ({ edit, Award, setAward }) => {
@@ -22,7 +23,7 @@ const TableAwards = ({ edit, Award, setAward }) => {
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
-              <th className="py-4 px-4 font-bold text-[1.5rem] text-center text-black dark:text-white">
+              <th className="py-4 px-4 font-bold text-[1.2rem] text-center text-black dark:text-white">
                 Awards and Honours
               </th>
             </tr>
@@ -30,29 +31,31 @@ const TableAwards = ({ edit, Award, setAward }) => {
           <tbody>
             {Award.map((awd, index) => (
               <tr key={index}>
-                <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                  <h5 className="font-medium text-black dark:text-white">
-                    {edit ? (<>
-                      <FaStarOfLife className='text-red-600' />
-                       <input
-                        type="text"
-                        value={awd}
-                        placeholder="Awards and Honours"
-                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        onChange={(e) => handleEdit(index, e.target.value)}
-                      /></>
+                <td className="w-full flex border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+                  <h5 className="w-full font-medium text-black dark:text-white">
+                    {edit ? (
+                      <div className='flex'>
+                        <input
+                          type="text"
+                          value={awd}
+                          placeholder="Awards and Honours"
+                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          onChange={(e) => handleEdit(index, e.target.value)}
+                        />
+                      </div>
                     ) : (
                       awd
                     )}
                   </h5>
+                  {edit && (
+                    <div className="text-center border-b border-[#eee] py-3 px-1 dark:border-strokedark">
+                        <IoClose
+                          onClick={() => handleDelete(index)}
+                          className="text-[1.5rem] text-red-600 dark:text-red-500 cursor-pointer"
+                        />
+                    </div>
+                  )}
                 </td>
-                {edit && (
-                  <td className="text-center border-b border-[#eee] py-3 px-1 dark:border-strokedark">
-                    <button onClick={()=>handleDelete(index)} className="text-red-600 dark:text-red-500">
-                      <RxCross1/>
-                    </button>
-                  </td>
-                )}  
               </tr>
             ))}
           </tbody>

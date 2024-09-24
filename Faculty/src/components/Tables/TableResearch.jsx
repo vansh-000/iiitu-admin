@@ -1,7 +1,6 @@
 import React from 'react';
-import { FaStarOfLife } from 'react-icons/fa';
 import { IoMdAddCircleOutline } from 'react-icons/io';
-import { RxCross1 } from 'react-icons/rx';
+import { IoClose } from 'react-icons/io5';
 
 const TableResearch = ({ edit, Research, setResearch }) => {
   const handleEdit = (index, value) => {
@@ -23,19 +22,18 @@ const TableResearch = ({ edit, Research, setResearch }) => {
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
-              <th className="py-4 px-4 font-bold text-[1.5rem] text-center text-black dark:text-white">
+              <th className="py-4 px-4 font-bold text-[1.2rem] text-center text-black dark:text-white">
                 Teaching Interest
               </th>
             </tr>
           </thead>
           <tbody>
             {Research.map((rech, index) => (
-              <tr key={index}>
-                <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                  <h5 className="font-medium text-black dark:text-white">
+              <tr className="w-full" key={index}>
+                <td className="w-full flex flex-row border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl">
+                  <h5 className="w-full font-medium text-black dark:text-white">
                     {edit ? (
                       <div className="flex">
-                        <FaStarOfLife className="text-red-600 text-[0.7rem]" />
                         <input
                           type="text"
                           value={rech}
@@ -48,17 +46,15 @@ const TableResearch = ({ edit, Research, setResearch }) => {
                       rech
                     )}
                   </h5>
+                  {edit && (
+                    <div className="text-center border-b border-[#eee] py-3 px-1 dark:border-strokedark">
+                      <IoClose
+                        onClick={() => handleDelete(index)}
+                        className="text-[1.5rem] text-red-600 dark:text-red-500 cursor-pointer"
+                      />
+                    </div>
+                  )}
                 </td>
-                {edit && (
-                  <td className="text-center border-b border-[#eee] py-3 px-1 dark:border-strokedark">
-                    <button
-                      onClick={() => handleDelete(index)}
-                      className="text-red-600 dark:text-red-500"
-                    >
-                      <RxCross1 />
-                    </button>
-                  </td>
-                )}
               </tr>
             ))}
           </tbody>

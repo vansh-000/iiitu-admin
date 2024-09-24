@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DatePickerCustom from '../../../components/DatePickerCoustom';
 import { FaStarOfLife } from 'react-icons/fa';
 
-const INDEXING = ["SCOPUS", "SCI/SCIE", "ESCI", "WS", "UGC-CARE", "OTHERS"];
+const INDEXING = ['SCOPUS', 'SCI/SCIE', 'ESCI', 'WS', 'UGC-CARE', 'OTHERS'];
 
 function Journal({
   refAuthors,
@@ -13,7 +13,7 @@ function Journal({
   refTitle,
   refUrl,
   refVol,
-  refOther
+  refOther,
 }) {
   const [selectedIndexing, setSelectedIndexing] = useState('');
   const [otherIndexing, setOtherIndexing] = useState('');
@@ -21,13 +21,11 @@ function Journal({
   const handleIndexingChange = (e) => {
     const value = e.target.value;
 
-    
     setSelectedIndexing(value);
-    if (value !== "OTHERS") {
+    if (value !== 'OTHERS') {
       setIndexing(value);
-    }
-    else{
-      setIndexing(()=>"")
+    } else {
+      setIndexing(() => '');
     }
   };
 
@@ -40,7 +38,8 @@ function Journal({
   return (
     <div className="p-4 md:p-5 space-y-4 transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary max-h-[60vh] overflow-y-scroll">
       <label className="mb-3 block text-black dark:text-white">
-      <FaStarOfLife className='inline text-red-600 text-[10px]'/>Title:
+        <FaStarOfLife className="inline mb-2 text-red-600 text-[0.4rem]" />{' '}
+        Title:
         <input
           name="title"
           type="text"
@@ -51,23 +50,24 @@ function Journal({
         />
       </label>
 
-      <label className="mb-3 flex items-center text-black dark:text-white">
-        <div className="block text-xs">
-        <FaStarOfLife className='inline text-red-600 text-[10px]'/> Authors(For Multiple Authors use ; to seperate):
+      <label className="mb-3 flex flex-col text-black dark:text-white">
+        <div className="block text-md">
+          <FaStarOfLife className="inline mb-2 text-red-600 text-[0.4rem]" />{' '}
+          Authors (For Multiple Authors use ; to seperate):
         </div>
         <input
           name="title"
           type="text"
           required
           ref={refAuthors}
-          placeholder="e.g., Rishvant; Singh; Pundir"
+          placeholder="e.g. Manish; Rohan; Ashwini"
           className="ml-2 mt-2 w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
         />
       </label>
 
-
       <label className="mb-3 block text-black dark:text-white">
-        Year:<DatePickerCustom setDate={setDate}/>
+        Month/Year:
+        <DatePickerCustom setDate={setDate} />
         {/* <input
           name="year"
           type="text"
@@ -77,7 +77,8 @@ function Journal({
         /> */}
       </label>
       <label className="mb-3 block text-black dark:text-white">
-      <FaStarOfLife className='inline text-red-600 text-[10px]'/>Journal Name:
+        <FaStarOfLife className="inline mb-2 text-red-600 text-[0.4rem]" />{' '}
+        Journal Name:
         <input
           name="Journal Name"
           type="text"
@@ -94,7 +95,7 @@ function Journal({
           name="volume"
           type="text"
           ref={refVol}
-          placeholder="eg. 0.1, 1.2, 3"
+          placeholder="e.g. 0.1, 1.2, 3"
           className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
         />
       </label>
@@ -105,13 +106,14 @@ function Journal({
           name="pages"
           type="text"
           ref={refPage}
-          placeholder="eg. 22-33, 24"
+          placeholder="e.g. 22-33, 24"
           className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
         />
       </label>
 
       <label className="mb-3 block text-black dark:text-white">
-      <FaStarOfLife className='inline text-red-600 text-[10px]'/>Publisher:
+        <FaStarOfLife className="inline mb-2 text-red-600 text-[0.4rem]" />{' '}
+        Publisher:
         <input
           name="publisher"
           type="text"
@@ -123,26 +125,30 @@ function Journal({
       </label>
 
       <label className="mb-3 block text-black dark:text-white">
-      <FaStarOfLife className='inline text-red-600 text-[10px]'/>Indexing:
+        <FaStarOfLife className="inline mb-2 text-red-600 text-[0.4rem]" />{' '}
+        Indexing:
         <select
           value={selectedIndexing}
           onChange={handleIndexingChange}
           required
-          className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-8 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
+          className={`relative z-20 w-full mt-2 rounded border border-stroke bg-transparent py-3 px-8 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
             selectedIndexing ? 'text-black dark:text-white' : ''
           }`}
         >
           <option value="" className="text-body dark:text-bodydark">
-          Select Indexing
+            Select Indexing
           </option>
           {INDEXING.map((idx, index) => (
-            <option key={index} value={idx} className="text-body dark:text-bodydark">
+            <option
+              key={index}
+              value={idx}
+              className="text-body dark:text-bodydark"
+            >
               {idx}
             </option>
           ))}
         </select>
-
-        {selectedIndexing === "OTHERS" && (
+        {selectedIndexing === 'OTHERS' && (
           <input
             name="otherIndexing"
             type="text"
@@ -160,7 +166,7 @@ function Journal({
           name="url"
           type="text"
           ref={refUrl}
-          placeholder="eg: https://googleScholar/hkjh"
+          placeholder="e.g. https://googleScholar/hkjh"
           className="ml-2 mt-2 w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
         />
       </label>

@@ -1,7 +1,9 @@
 import React from 'react';
 import { IoMdAddCircleOutline } from 'react-icons/io';
-import { RxCross1, RxCross2 } from "react-icons/rx";
-import { FaStarOfLife } from "react-icons/fa";
+import { RxCross1, RxCross2 } from 'react-icons/rx';
+import { FaStarOfLife } from 'react-icons/fa';
+import { IoClose } from 'react-icons/io5';
+
 const TableThree = ({ edit, Education, setEducation }) => {
   const handleEdit = (index, field, value) => {
     const updatedEducation = [...Education];
@@ -15,15 +17,15 @@ const TableThree = ({ edit, Education, setEducation }) => {
       { dateOfStart: '', dateOfEnd: '', description: '' },
     ]);
   };
-  const handleDelete=(index)=>{
-    const updatedEducation = Education.filter((_,ind)=>(ind!=index));
+  const handleDelete = (index) => {
+    const updatedEducation = Education.filter((_, ind) => ind != index);
     setEducation(updatedEducation);
-  }
+  };
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
-        <h1 className="text-center text-xl font-bold mb-4 text-black dark:text-white">
+        <h1 className="text-center text-[1.2rem] font-bold mb-4 text-black dark:text-white">
           Education
         </h1>
         <table className="w-full table-auto">
@@ -43,7 +45,6 @@ const TableThree = ({ edit, Education, setEducation }) => {
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   {edit ? (
                     <>
-                    
                       <input
                         type="text"
                         value={edu.dateOfStart}
@@ -62,40 +63,44 @@ const TableThree = ({ edit, Education, setEducation }) => {
                         onChange={(e) =>
                           handleEdit(index, 'dateOfEnd', e.target.value)
                         }
-                      /> 
-                    </>
-                  ) : (<>
-                    <h5 className="font-medium text-black dark:text-white">
-                      {edu.dateOfStart}-{edu.dateOfEnd}
-                    </h5></>
-                  )}
-                </td>
-                <td className="text-center border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  {edit ? (<>
-                    <FaStarOfLife className='text-red-600' />
-                    <input
-                      type="text"
-                      value={edu.description}
-                      placeholder="University"
-                      onChange={(e) =>
-                        handleEdit(index, 'description', e.target.value)
-                      }
-                      className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                    />
+                      />
                     </>
                   ) : (
-                    <p className="text-black dark:text-white">
+                    <>
+                      <h5 className="font-medium text-black dark:text-white">
+                        {edu.dateOfStart}-{edu.dateOfEnd}
+                      </h5>
+                    </>
+                  )}
+                </td>
+                <td className="w-full flex text-center border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  {edit ? (
+                    <div className="w-full flex gap-1">
+                      <FaStarOfLife className="text-[0.5rem] text-red-600" />
+                      <input
+                        type="text"
+                        value={edu.description}
+                        placeholder="University (e.g. IIIT Una)"
+                        onChange={(e) =>
+                          handleEdit(index, 'description', e.target.value)
+                        }
+                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      />
+                    </div>
+                  ) : (
+                    <p className="w-full text-black dark:text-white">
                       {edu.description}
                     </p>
                   )}
+                  {edit && (
+                    <div className="text-center border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <IoClose
+                        onClick={() => handleDelete(index)}
+                        className="text-[1.5rem] text-red-600 dark:text-red-500 cursor-pointer"
+                      />
+                    </div>
+                  )}
                 </td>
-                {edit && (
-                  <td className="text-center border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                    <button onClick={()=>handleDelete(index)} className="text-red-600 dark:text-red-500">
-                      <RxCross1/>
-                    </button>
-                  </td>
-                )}  
               </tr>
             ))}
           </tbody>

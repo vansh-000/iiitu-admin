@@ -47,12 +47,12 @@ const ResetPassword = () => {
         oldPassword: oldPassword,
         newPassword: newPassword
       });
-      console.log("======", response);
+      // console.log("======", response);
       if (response.status === 200) {
         toast.success('Password changed successfully!');
-        localStorage.setItem('token', response.data.accessToken);
-        localStorage.setItem('user', JSON.stringify(response.data.userInfo));
-        navigate('/dashboard');
+        // localStorage.setItem('token', response.data.accessToken);
+        // localStorage.setItem('user', JSON.stringify(response.data.userInfo));
+        navigate('/');
       }
     } catch (error) {
       console.warn(error);

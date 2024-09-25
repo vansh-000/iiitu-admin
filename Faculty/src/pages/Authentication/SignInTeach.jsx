@@ -25,49 +25,50 @@ const SignIn = () => {
   const refPassword = useRef();
   const navigator = useNavigate();
 
-
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     const email = refEmail.current.value;
     const password = refPassword.current.value;
 
+    setLoading(true);
+    // console.log(`${API}/faculty/login`, 'hl00000'); // Log the API URL
+    // console.log("Email:", email);
+    // console.log("Password:", password);
+    try {
+      const response = await axios.post(`${API}/faculty/login`, {
+        email: email,
+        password: password,
+      });
+      if (response.status === 200) {
+        const id = response?.data?.userInfo?.id;
+        // console.log(response?.data?.userInfo?.id, id)
 
-      setLoading(true);
-      // console.log(`${API}/faculty/login`, 'hl00000'); // Log the API URL
-      // console.log("Email:", email);
-      // console.log("Password:", password);
-      try {
-        const response = await axios.post(`${API}/faculty/login`, {
-          email: email,
-          password: password,
-        });
-        if (response.status === 200) {
-          const id = response?.data?.userInfo?.id;
-          // console.log(response?.data?.userInfo?.id, id)
-
-          if (password === '123') {
-            navigator(`/ResetPassword/${id}`);
-          }else{
-            toast.success('Successfully Logged In!');
-            localStorage.setItem('token', response.data.accessToken);
-            localStorage.setItem('user', JSON.stringify(response.data.userInfo));
-            navigator('/dashboard');
-          }
+        if (password === '123') {
+          toast.error('Please change your password!');
+          navigator(`/ResetPassword/${id}`);
+        } else {
+          toast.success('Successfully Logged In!');
+          localStorage.setItem('token', response.data.accessToken);
+          localStorage.setItem('user', JSON.stringify(response.data.userInfo));
+          navigator('/dashboard');
         }
-      } catch (error) {
-        if (error.response.status === 409) {
-          toast.error('User does Not Found!');
-          setLoading(false);
-        } else if (error.response && error.response.status === 403) {
-          toast.error('Incorrect Password!');
-          setLoading(false);
-        } else if (error.response?.status === 400 || error.response?.status === 500) {
-          toast.error('Internal Server Error!');
-        }
-
-        // console.log(error);
-        
       }
+    } catch (error) {
+      if (error.response.status === 409) {
+        toast.error('User does Not Found!');
+        setLoading(false);
+      } else if (error.response && error.response.status === 403) {
+        toast.error('Incorrect Password!');
+        setLoading(false);
+      } else if (
+        error.response?.status === 400 ||
+        error.response?.status === 500
+      ) {
+        toast.error('Internal Server Error!');
+      }
+
+      // console.log(error);
+    }
   };
 
   return (

@@ -21,6 +21,7 @@ import { StaticLinkProvider } from '../utils/StaticLinkProvider';
 import { FaRegEdit } from 'react-icons/fa';
 import TableExperience from '../components/Tables/TableExperience';
 import TableSupervision from '../components/Tables/TableSupervision';
+import TableWorkshop from '../components/Tables/TableWorkshop';
 
 const Profile = () => {
   const nevigat = useNavigate();
@@ -75,9 +76,8 @@ const Profile = () => {
         setOther(response?.data?.other);
         setExperience(response?.data?.Experience);
         setWorkshop(response?.data?.Workshop),
-          setSupervision(response?.data?.Supervision);
+        setSupervision(response?.data?.Supervision);
 
-        console.warn('------------------', experience);
       }
     } catch (err) {
       console.log('Error', err);
@@ -121,6 +121,9 @@ const Profile = () => {
       );
       const newSupervision = supervision.filter(
         (e) => e.program !== '' || e.topic !== '' || e.scholar !== ''
+      );
+      const newWorkshop = workshop.filter(
+        (e)=> e.title !== '' || e.type !== '' || e.venue !== ''
       )
       const newAward = award.filter((awa) => awa !== '');
       // const newJournal = journal.filter((jor) => jor !== '');
@@ -144,6 +147,7 @@ const Profile = () => {
         Education: newEducation,
         Experience: newExperience,
         Supervision: newSupervision,
+        Workshop: newWorkshop,
         other: newOther,
         // Journals: newJournal,
         // Journals: newJournal,
@@ -530,6 +534,17 @@ const Profile = () => {
           setProject={setProject}
         />
       )}
+
+      {
+        workshop &&
+        (
+          <TableWorkshop
+            edit={editable}
+            Workshop={workshop}
+            setWorkshop={setWorkshop}
+          />
+        )
+      }
       {other && (
         <TableOther edit={editable} Other={other} setOther={setOther} />
       )}

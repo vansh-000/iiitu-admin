@@ -13,6 +13,7 @@ import Events from './pages/components/Events/Events.jsx';
 import EventsPage from './pages/components/Events/EventsPage.jsx';
 import PublicationEdit from './pages/components/PublicationType/PublicationEdit.jsx';
 import ProjectEdit from './pages/components/Project/ProjectEdit.jsx';
+import ResetPassword from './pages/Authentication/ResetPassword.jsx';
 // import ErrorBoundary from './ErrorBoundary.jsx'
 function App() {
   const [loading, setLoading] = useState(true);
@@ -117,6 +118,15 @@ function App() {
             <>
               <PageTitle title="Reset Password | Faculty Login" />
               <Reset />
+            </>
+          }
+        />
+        <Route
+          path="/ResetPassword/:id"
+          element={
+            <>
+              <PageTitle title="Reset Password | Faculty Login" />
+              <ResetPassword />
             </>
           }
         />

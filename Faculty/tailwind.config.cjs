@@ -248,6 +248,16 @@ module.exports = {
         'spin-2': 'spin 2s linear infinite',
         'spin-3': 'spin 3s linear infinite',
       },
+
+      keyframes: {
+        fall: {
+          '0%': { transform: 'translateY(-60%)', opacity: '0.5' }, // Start off-screen (top)
+          '100%': { transform: 'translateY(0)', opacity: '1' },    // End at its original position
+        },
+      },
+      animation: {
+        fall: 'fall 0.8s ease-out', // Set duration and easing for a smooth fall
+      },
     },
   },
   plugins: [],

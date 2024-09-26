@@ -22,6 +22,8 @@ import { FaRegEdit } from 'react-icons/fa';
 import TableExperience from '../components/Tables/TableExperience';
 import TableSupervision from '../components/Tables/TableSupervision';
 import TableWorkshop from '../components/Tables/TableWorkshop';
+import ResetPassword from './Authentication/ResetPassword.jsx'
+import { IoClose } from 'react-icons/io5';
 
 const Profile = () => {
   const nevigat = useNavigate();
@@ -54,6 +56,8 @@ const Profile = () => {
   const refWeb = useRef();
   const userData = JSON.parse(localStorage.getItem('user'));
   const ClubName = localStorage.getItem('ClubName');
+
+  const [flag, setFlag] = useState(localStorage.getItem('flag') === 'true');
 
   const fetchData = async () => {
     try {
@@ -211,9 +215,29 @@ const Profile = () => {
     }
   };
 
+
+  const handleFlag = () => {
+    localStorage.setItem('flag', false);
+    setFlag(false);  // This will trigger a re-render
+  };
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Profile" />
+
+
+      {flag && (
+        <div className='w-[95%] h-[100vh] z-10 fixed top-25 animate-fall'>
+          <IoClose
+            onClick={() => handleFlag()}
+            className="text-[4.5rem] text-red-600 dark:text-red-500 cursor-pointer absolute top-10 right-10 z-20"
+          />
+
+          <ResetPassword />
+        </div>
+      )}
+
+
       <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         {/* Save and edit buttons */}
         <div className="flex flex-row gap-4 absolute">

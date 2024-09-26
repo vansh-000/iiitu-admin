@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { RiLockPasswordLine } from "react-icons/ri";
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider';
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -118,6 +119,15 @@ const DropdownUser = () => {
                   />
                 </svg>
                 My Profile
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={`/ResetPassword/${userData.id}`}
+                className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+              >
+                <RiLockPasswordLine />
+                Reset Password
               </Link>
             </li>
           </ul>

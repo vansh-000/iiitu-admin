@@ -9,7 +9,6 @@ import { jwtDecode } from 'jwt-decode';
 import { IoClose } from 'react-icons/io5';
 
 const ResetPassword = () => {
-  // console.log('-----------------iNSIDE RESET PASSWOERD', id);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,7 +62,7 @@ const ResetPassword = () => {
         toast.success('Password changed successfully!');
         // localStorage.setItem('token', response.data.accessToken);
         // localStorage.setItem('user', JSON.stringify(response.data.userInfo));
-        navigate('/');
+        navigate('/dashboard');
       }
     } catch (error) {
       console.warn(error);
@@ -81,7 +80,7 @@ const ResetPassword = () => {
 
 
   return (
-    <div>
+    <div className='my-auto'>
       {/* <Breadcrumb pageName="Reset Password" /> */}
 
       <div className=" rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">

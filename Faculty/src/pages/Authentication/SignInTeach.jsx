@@ -15,10 +15,9 @@ const SignIn = () => {
       const { exp } = jwtDecode(token);
       if (exp * 1000 > Date.now()) {
         localStorage.removeItem('token');
-        localStorage.removeItem('user')
+        localStorage.removeItem('user');
         navigator('/');
-      }
-      else{
+      } else {
         navigator('/dashboard');
       }
     }
@@ -74,8 +73,7 @@ const SignIn = () => {
 
       // console.log(error);
     }
-      // console.log(error);
-    }
+    // console.log(error);
   };
 
   return (

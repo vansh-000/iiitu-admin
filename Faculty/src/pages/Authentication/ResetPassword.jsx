@@ -25,7 +25,7 @@ const ResetPassword = () => {
   }, [navigate]);
 
 
-  const id = JSON.parse(localStorage.getItem('user')).id;
+  const id = JSON.parse(localStorage.getItem('user'))?.id;
   // console.warn(id);
 
   const [loading, setLoading] = useState(false);

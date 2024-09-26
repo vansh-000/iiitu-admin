@@ -24,9 +24,22 @@ import TableSupervision from '../components/Tables/TableSupervision';
 import TableWorkshop from '../components/Tables/TableWorkshop';
 import ResetPassword from './Authentication/ResetPassword.jsx'
 import { IoClose } from 'react-icons/io5';
-
+import { jwtDecode } from 'jwt-decode';
 const Profile = () => {
   const nevigat = useNavigate();
+  useEffect(()=>{
+  const token = localStorage?.getItem('token');
+  if (token) {
+    const { exp } = jwtDecode(token);
+    if (exp * 1000 < Date.now()) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user')
+      nevigat('/');
+    }
+  }
+  else{
+    nevigat('/');
+  }})
   const [faculty, setFaculty] = useState({});
   const [clubName, setClubName] = useState();
   const [editable, setEditable] = useState(false);
@@ -35,8 +48,6 @@ const Profile = () => {
   const [other, setOther] = useState([]);
   const [award, setAward] = useState([]);
   const [publication, setPublication] = useState([]);
-  // const [journal, setJournal] = useState([]);
-  // const [journal, setJournal] = useState([]);
   const [project, setProject] = useState([]);
   const [research, setResearch] = useState([]);
 
@@ -227,7 +238,8 @@ const Profile = () => {
 
 
       {flag && (
-        <div className='w-[95%] h-[100vh] z-10 fixed top-25 animate-fall'>
+        // < className='max-w-screen-2xl   '>
+        <div className='w-[90%] max-w-screen-2xl   h-[100vh] z-10 fixed top-25 animate-fall'>
           <IoClose
             onClick={() => handleFlag()}
             className="text-[4.5rem] text-red-600 dark:text-red-500 cursor-pointer absolute top-10 right-10 z-20"

@@ -15,11 +15,16 @@ const SignIn = () => {
       const { exp } = jwtDecode(token);
       if (exp * 1000 > Date.now()) {
         localStorage.removeItem('token');
+        localStorage.removeItem('user')
         navigator('/');
+      }
+      else{
+        navigator('/dashboard');
       }
     }
   });
   const [loading, setLoading] = useState(false);
+  localStorage.setItem('flag', false);
 
   const refEmail = useRef();
   const refPassword = useRef();
@@ -67,6 +72,8 @@ const SignIn = () => {
         toast.error('Internal Server Error!');
       }
 
+      // console.log(error);
+    }
       // console.log(error);
     }
   };

@@ -22,9 +22,24 @@ import { FaRegEdit } from 'react-icons/fa';
 import TableExperience from '../components/Tables/TableExperience';
 import TableSupervision from '../components/Tables/TableSupervision';
 import TableWorkshop from '../components/Tables/TableWorkshop';
-
+import ResetPassword from './Authentication/ResetPassword.jsx'
+import { IoClose } from 'react-icons/io5';
+import { jwtDecode } from 'jwt-decode';
 const Profile = () => {
   const nevigat = useNavigate();
+  useEffect(()=>{
+  const token = localStorage?.getItem('token');
+  if (token) {
+    const { exp } = jwtDecode(token);
+    if (exp * 1000 < Date.now()) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user')
+      nevigat('/');
+    }
+  }
+  else{
+    nevigat('/');
+  }})
   const [faculty, setFaculty] = useState({});
   const [clubName, setClubName] = useState();
   const [editable, setEditable] = useState(false);
@@ -33,8 +48,6 @@ const Profile = () => {
   const [other, setOther] = useState([]);
   const [award, setAward] = useState([]);
   const [publication, setPublication] = useState([]);
-  // const [journal, setJournal] = useState([]);
-  // const [journal, setJournal] = useState([]);
   const [project, setProject] = useState([]);
   const [research, setResearch] = useState([]);
 
@@ -54,6 +67,8 @@ const Profile = () => {
   const refWeb = useRef();
   const userData = JSON.parse(localStorage.getItem('user'));
   const ClubName = localStorage.getItem('ClubName');
+
+  const [flag, setFlag] = useState(localStorage.getItem('flag') === 'true');
 
   const fetchData = async () => {
     try {
@@ -211,9 +226,30 @@ const Profile = () => {
     }
   };
 
+
+  const handleFlag = () => {
+    localStorage.setItem('flag', false);
+    setFlag(false);  // This will trigger a re-render
+  };
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Profile" />
+
+
+      {flag && (
+        // < className='max-w-screen-2xl   '>
+        <div className='w-[90%] max-w-screen-2xl   h-[100vh] z-10 fixed top-25 animate-fall'>
+          <IoClose
+            onClick={() => handleFlag()}
+            className="text-[4.5rem] text-red-600 dark:text-red-500 cursor-pointer absolute top-10 right-10 z-20"
+          />
+
+          <ResetPassword />
+        </div>
+      )}
+
+
       <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         {/* Save and edit buttons */}
         <div className="flex flex-row gap-4 absolute">

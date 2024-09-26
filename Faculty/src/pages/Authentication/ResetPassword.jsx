@@ -5,13 +5,12 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import axios from 'axios';
 import { API } from '../../utils/apiURl';
 import toast from 'react-hot-toast';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
+import { IoClose } from 'react-icons/io5';
 
 const ResetPassword = () => {
-  const { id } = useParams();
-  // console.log('-----------------iNSIDE RESET PASSWOERD', id);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -20,8 +19,14 @@ const ResetPassword = () => {
         localStorage.removeItem('token');
         navigate('/');
       }
+    } else {
+      navigate('/');
     }
   }, [navigate]);
+
+
+  const id = JSON.parse(localStorage.getItem('user'))?.id;
+  // console.warn(id);
 
   const [loading, setLoading] = useState(false);
 
@@ -40,19 +45,24 @@ const ResetPassword = () => {
       toast.error('Passwords do not match!');
       return;
     }
+    
+    if(newPassword === oldPassword){
+      toast.error('Old and New Password can\'t be same.')
+      return;
+    }
 
     setLoading(true);
     try {
       const response = await axios.put(`${API}/faculty/change-Password/${id}`, {
         oldPassword: oldPassword,
-        newPassword: newPassword
+        newPassword: newPassword,
       });
       // console.log("======", response);
       if (response.status === 200) {
         toast.success('Password changed successfully!');
         // localStorage.setItem('token', response.data.accessToken);
         // localStorage.setItem('user', JSON.stringify(response.data.userInfo));
-        navigate('/');
+        navigate('/dashboard');
       }
     } catch (error) {
       console.warn(error);
@@ -68,17 +78,23 @@ const ResetPassword = () => {
     }
   };
 
-  return (
-    <DefaultLayout>
-      <Breadcrumb pageName="Reset Password" />
 
-      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="flex flex-wrap items-center">
+  return (
+    <div className='my-auto'>
+      {/* <Breadcrumb pageName="Reset Password" /> */}
+
+      <div className=" rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="flex flex-wrap items-center relative">
+          
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="p-10">
               <Link className="mb-5.5 inline-block" to="/"></Link>
               <div className="flex flex-col items-center">
-                <img src="/iiitu-logo.png" className="w-40 h-40" alt="IIIT Una Logo" />
+                <img
+                  src="/iiitu-logo.png"
+                  className="w-40 h-40"
+                  alt="IIIT Una Logo"
+                />
 
                 <p className="2xl:px-10 mt-10 text-black font-semibold dark:text-white">
                   Indian Institute of Information Technology Una
@@ -145,7 +161,8 @@ const ResetPassword = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="mt-4 w-full rounded-lg bg-primary p-4 text-white hover:bg-primary-dark transition">
+                  className="mt-4 w-full rounded-lg bg-primary p-4 text-white hover:bg-primary-dark transition"
+                >
                   {loading ? 'Resetting...' : 'Reset Password'}
                 </button>
               </form>
@@ -153,7 +170,7 @@ const ResetPassword = () => {
           </div>
         </div>
       </div>
-    </DefaultLayout>
+    </div>
   );
 };
 

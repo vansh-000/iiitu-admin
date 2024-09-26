@@ -45,6 +45,7 @@ const Policy = () => {
   const [Docs, setDocs] = useState([]);
   const titleRef = useRef();
   const typeRef = useRef();
+  const numberRef = useRef();
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
@@ -58,6 +59,7 @@ const Policy = () => {
   const handleAdd = async (e) => {
     e.preventDefault();
     const title = titleRef.current.value;
+    const number = numberRef.current.value;
     const section = selectedSection;
     const type = selectedType;
     try {
@@ -68,6 +70,7 @@ const Policy = () => {
       formData.append('title', title);
       formData.append('section', section);
       formData.append('type', type);
+      formData.append('number', number);
       await axios.post(`${API}/policy`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -112,6 +115,16 @@ const Policy = () => {
             type="text"
             ref={titleRef}
             placeholder="Title"
+            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+          />
+        </div>
+        <div>
+          <label className="mb-3 mt-3 block text-black dark:text-white">Policy/Ordinance Number</label>
+          <input
+            name="number"
+            type="text"
+            ref={numberRef}
+            placeholder="Policy/Ordinance Number"
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
         </div>

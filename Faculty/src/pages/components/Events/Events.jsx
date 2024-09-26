@@ -14,7 +14,7 @@ const Events = () => {
   const clubId = localStorage.getItem('ClubName'); // Ensure this is valid
   const token = localStorage.getItem('token'); // Ensure token is valid
 
-  const clubRef = useRef();
+  // const clubRef = useRef();
   const descriptionRef = useRef();
   const startDateRef = useRef();
   const endDateRef = useRef();
@@ -24,8 +24,8 @@ const Events = () => {
     try {
       const response = await axios.get(`${API}/events/${clubId}`, {
         headers: {
-          "Authorization": `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       setData(response.data.events);
     } catch (err) {
@@ -45,8 +45,6 @@ const Events = () => {
     setImages(files);
   };
 
-
-
   const handleAdd = async (e) => {
     e.preventDefault();
 
@@ -58,33 +56,33 @@ const Events = () => {
     try {
       const formData = new FormData();
       images.forEach((image) => {
-        formData.append("image", image);
+        formData.append('image', image);
       });
-      formData.append("club", clubId);
+      formData.append('club', clubId);
       formData.append('startDate', startDate);
       formData.append('endDate', endDate);
-      formData.append("name", name);
-      formData.append("description", description);
-      formData.append('department','club')
+      formData.append('name', name);
+      formData.append('description', description);
+      formData.append('department', 'club');
 
       const response = await axios.post(`${API}/event`, formData, {
         headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "multipart/form-data"
-        }
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
       });
-      
 
-    //   handleEmpty();
-        if(response.status===201){
-            toast.success("Event Uploaded!");}
+      //   handleEmpty();
+      if (response.status === 201) {
+        toast.success('Event Uploaded!');
+      }
       fetchData();
     } catch (err) {
       if (err.response?.status === 401) {
         return navigate('/');
       }
       console.log(err);
-      
+
       toast.error(`Error: ${err.message || err}`);
     }
   };
@@ -93,10 +91,10 @@ const Events = () => {
     try {
       await axios.delete(`${API}/event/${id}`, {
         headers: {
-          "Authorization": `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-      toast.success("Event Deleted!");
+      toast.success('Event Deleted!');
       fetchData();
     } catch (err) {
       if (err.response?.status === 401) {
@@ -111,7 +109,9 @@ const Events = () => {
       <Breadcrumb pageName="Events" />
       <form onSubmit={handleAdd}>
         <div>
-          <label className="mb-3 block text-black dark:text-white">Event Name</label>
+          <label className="mb-3 block text-black dark:text-white">
+            Event Name
+          </label>
           <input
             name="name"
             type="text"
@@ -122,7 +122,9 @@ const Events = () => {
           />
         </div>
         <div className="mt-4">
-          <label className="mb-3 block text-black dark:text-white">Start Date</label>
+          <label className="mb-3 block text-black dark:text-white">
+            Start Date
+          </label>
           <input
             name="startDate"
             ref={startDateRef}
@@ -133,7 +135,9 @@ const Events = () => {
           />
         </div>
         <div className="mt-4">
-          <label className="mb-3 block text-black dark:text-white">End Date</label>
+          <label className="mb-3 block text-black dark:text-white">
+            End Date
+          </label>
           <input
             name="endDate"
             ref={endDateRef}
@@ -143,8 +147,10 @@ const Events = () => {
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
         </div>
-        <div className='mt-4'>
-          <label className="mb-3 block text-black dark:text-white">Description</label>
+        <div className="mt-4">
+          <label className="mb-3 block text-black dark:text-white">
+            Description
+          </label>
           <input
             name="description"
             ref={descriptionRef}
@@ -155,7 +161,9 @@ const Events = () => {
           />
         </div>
         <div className="mt-4">
-          <label className="mb-3 block text-black dark:text-white">Attach file</label>
+          <label className="mb-3 block text-black dark:text-white">
+            Attach file
+          </label>
           <input
             type="file"
             className="w-1/2 cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
@@ -166,9 +174,7 @@ const Events = () => {
             required
           />
         </div>
-        <button
-          className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-        >
+        <button className="inline-flex items-center justify-center rounded-full bg-black mt-2 py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
           Add Event
         </button>
       </form>

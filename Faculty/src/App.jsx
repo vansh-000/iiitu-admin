@@ -122,7 +122,7 @@ function App() {
           }
         />
         <Route
-          path="/ResetPassword/:id"
+          path="/ResetPassword"
           element={
             <>
               <PageTitle title="Reset Password | Faculty Login" />

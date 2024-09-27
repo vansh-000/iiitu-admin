@@ -14,10 +14,13 @@
     "url": "https://tailadmin.com"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.0.0",
     "apexcharts": "^3.41.0",
     "axios": "^1.6.8",
     "flatpickr": "^4.6.13",
     "headlessui": "^0.0.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.2",
     "jsvectormap": "^1.5.3",
     "jwt-decode": "^4.0.0",
     "lightbox.js-react": "^1.0.9",

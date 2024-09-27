@@ -22,24 +22,26 @@ import { FaRegEdit } from 'react-icons/fa';
 import TableExperience from '../components/Tables/TableExperience';
 import TableSupervision from '../components/Tables/TableSupervision';
 import TableWorkshop from '../components/Tables/TableWorkshop';
-import ResetPassword from './Authentication/ResetPassword.jsx'
+import ResetPassword from './Authentication/ResetPassword.jsx';
 import { IoClose } from 'react-icons/io5';
 import { jwtDecode } from 'jwt-decode';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import ResumePdf from '../utils/ResumePdf.jsx';
 const Profile = () => {
   const nevigat = useNavigate();
-  useEffect(()=>{
-  const token = localStorage?.getItem('token');
-  if (token) {
-    const { exp } = jwtDecode(token);
-    if (exp * 1000 < Date.now()) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user')
+  useEffect(() => {
+    const token = localStorage?.getItem('token');
+    if (token) {
+      const { exp } = jwtDecode(token);
+      if (exp * 1000 < Date.now()) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        nevigat('/');
+      }
+    } else {
       nevigat('/');
     }
-  }
-  else{
-    nevigat('/');
-  }})
+  });
   const [faculty, setFaculty] = useState({});
   const [clubName, setClubName] = useState();
   const [editable, setEditable] = useState(false);
@@ -91,8 +93,7 @@ const Profile = () => {
         setOther(response?.data?.other);
         setExperience(response?.data?.Experience);
         setWorkshop(response?.data?.Workshop),
-        setSupervision(response?.data?.Supervision);
-
+          setSupervision(response?.data?.Supervision);
       }
     } catch (err) {
       console.log('Error', err);
@@ -135,11 +136,11 @@ const Profile = () => {
         (edu) => edu.organisation !== '' || edu.position !== '',
       );
       const newSupervision = supervision.filter(
-        (e) => e.program !== '' || e.topic !== '' || e.scholar !== ''
+        (e) => e.program !== '' || e.topic !== '' || e.scholar !== '',
       );
       const newWorkshop = workshop.filter(
-        (e)=> e.title !== '' || e.type !== '' || e.venue !== ''
-      )
+        (e) => e.title !== '' || e.type !== '' || e.venue !== '',
+      );
       const newAward = award.filter((awa) => awa !== '');
       // const newJournal = journal.filter((jor) => jor !== '');
       // const newProject = project.filter((pro) => pro.Title !== '');
@@ -226,20 +227,18 @@ const Profile = () => {
     }
   };
 
-
   const handleFlag = () => {
     localStorage.setItem('flag', false);
-    setFlag(false);  // This will trigger a re-render
+    setFlag(false); // This will trigger a re-render
   };
 
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Profile" />
 
-
       {flag && (
         // < className='max-w-screen-2xl   '>
-        <div className='w-[90%] max-w-screen-2xl   h-[100vh] z-10 fixed top-25 animate-fall'>
+        <div className="w-[90%] max-w-screen-2xl   h-[100vh] z-10 fixed top-25 animate-fall">
           <IoClose
             onClick={() => handleFlag()}
             className="text-[4.5rem] text-red-600 dark:text-red-500 cursor-pointer absolute top-10 right-10 z-20"
@@ -248,7 +247,6 @@ const Profile = () => {
           <ResetPassword />
         </div>
       )}
-
 
       <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         {/* Save and edit buttons */}
@@ -346,38 +344,16 @@ const Profile = () => {
                 faculty.name
               )}
             </h3>
-            {editable ? (
-              <div>
-                {faculty.resume && (
-                  <label className="block text-black dark:text-white text-start text-[1rem] mt-2 mb-1">
-                    For Change Resume{' '}
-                    <Link
-                      to={StaticLinkProvider(faculty.resume)}
-                      target="_blanck"
-                      className="text-blue-500 cursor-pointer "
-                    >
-                      Exiting Resume
-                    </Link>
-                  </label>
-                )}
-                <input
-                  className="w-auto cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-                  type="file"
-                  id="resume"
-                  name="resume"
-                  accept=".pdf"
-                  ref={refResume}
-                />
-              </div>
-            ) : (
-              faculty.resume && (
-                <Link
-                  to={StaticLinkProvider(faculty.resume)}
-                  className="w-fit flex flex-col items-center justify-center gap-1 text-[1.1rem] text-[#0000EE] underline px-4 dark:border-stroke border-strokedark xsm:flex-row"
-                >
-                  View Resume
-                </Link>
-              )
+            {!editable && (
+              <PDFDownloadLink
+                document={<ResumePdf faculty={faculty} />}
+                fileName={`${faculty?.name}_Resume.pdf`}
+                className="w-fit flex flex-col items-center justify-center gap-1 text-[1.1rem] text-[#0000EE] underline px-4 dark:border-stroke border-strokedark xsm:flex-row"
+              >
+                {({ loading }) =>
+                  loading ? 'Loading document...' : 'Download Resume'
+                }
+              </PDFDownloadLink>
             )}
             <div className="mx-auto mt-4.5 mb-5.5 grid max-w-[300px] sm:max-w-[500px] grid-cols-4 gap-2 rounded-md border border-stroke p-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
               {editable ? (
@@ -548,8 +524,8 @@ const Profile = () => {
 
       {supervision && (
         <TableSupervision
-          edit ={editable}
-          Supervision= {supervision}
+          edit={editable}
+          Supervision={supervision}
           setSupervision={setSupervision}
         />
       )}
@@ -571,16 +547,13 @@ const Profile = () => {
         />
       )}
 
-      {
-        workshop &&
-        (
-          <TableWorkshop
-            edit={editable}
-            Workshop={workshop}
-            setWorkshop={setWorkshop}
-          />
-        )
-      }
+      {workshop && (
+        <TableWorkshop
+          edit={editable}
+          Workshop={workshop}
+          setWorkshop={setWorkshop}
+        />
+      )}
       {other && (
         <TableOther edit={editable} Other={other} setOther={setOther} />
       )}

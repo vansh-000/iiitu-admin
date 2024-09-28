@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
+
 const SignIn = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -22,6 +23,7 @@ const SignIn = () => {
       }
     }
   });
+
   const [loading, setLoading] = useState(false);
   localStorage.setItem('flag', false);
 
@@ -49,6 +51,8 @@ const SignIn = () => {
 
         if (password === '123') {
           toast.error('Please change your password!');
+          localStorage.setItem('token', response.data.accessToken);
+          localStorage.setItem('user', JSON.stringify(response.data.userInfo));
           navigator(`/ResetPassword/${id}`);
         } else {
           toast.success('Successfully Logged In!');

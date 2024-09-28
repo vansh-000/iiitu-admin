@@ -24,7 +24,6 @@ const ResetPassword = () => {
     }
   }, [navigate]);
 
-
   const id = JSON.parse(localStorage.getItem('user'))?.id;
   // console.warn(id);
 
@@ -45,9 +44,9 @@ const ResetPassword = () => {
       toast.error('Passwords do not match!');
       return;
     }
-    
-    if(newPassword === oldPassword){
-      toast.error('Old and New Password can\'t be same.')
+
+    if (newPassword === oldPassword) {
+      toast.error("Old and New Password can't be same.");
       return;
     }
 
@@ -78,14 +77,12 @@ const ResetPassword = () => {
     }
   };
 
-
   return (
-    <div className='my-auto'>
+    <div className="my-auto">
       {/* <Breadcrumb pageName="Reset Password" /> */}
 
       <div className=" rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center relative">
-          
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="p-10">
               <Link className="mb-5.5 inline-block" to="/"></Link>

@@ -46,33 +46,36 @@ function App() {
           element={
             <>
               <PageTitle title="Profile | Faculty Dashboard" />
-              
+
               <Profile />
             </>
           }
         />
         <Route
-        path='/dashboard/publication/:id'
-        element={<>
-          <PageTitle title="Publication-Edit | Faculty Dashboard"/>
-        
-          <PublicationEdit/>
-         
-          </>
-        }/>
+          path="/dashboard/publication/:id"
+          element={
+            <>
+              <PageTitle title="Publication-Edit | Faculty Dashboard" />
+
+              <PublicationEdit />
+            </>
+          }
+        />
         <Route
-        path='/dashboard/Project/:id'
-        element={<>
-          <PageTitle title="Project-Edit | Faculty Dashboard"/>
-          <ProjectEdit/>
-          </>
-        }/>
-     <Route
+          path="/dashboard/Project/:id"
+          element={
+            <>
+              <PageTitle title="Project-Edit | Faculty Dashboard" />
+              <ProjectEdit />
+            </>
+          }
+        />
+        <Route
           path="/events/:id"
           element={
             <>
               <PageTitle title="Events-Page | Events Dashboard" />
-              <EventsPage/>
+              <EventsPage />
             </>
           }
         />
@@ -123,6 +126,15 @@ function App() {
         />
         <Route
           path="/ResetPassword"
+          element={
+            <>
+              <PageTitle title="Reset Password | Faculty Login" />
+              <ResetPassword />
+            </>
+          }
+        />
+        <Route
+          path="/ResetPassword/:id"
           element={
             <>
               <PageTitle title="Reset Password | Faculty Login" />

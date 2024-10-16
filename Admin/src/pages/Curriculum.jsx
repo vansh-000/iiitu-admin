@@ -102,7 +102,9 @@ const Curriculum = () => {
       <Breadcrumb pageName="Curriculum" />
       <form onSubmit={handleAdd}>
         <div>
-          <label className="mb-3 block text-black dark:text-white">Batch</label>
+          <label className="mb-3 block text-black dark:text-white">
+            Curriculum Number
+          </label>
           <input
             name="curriculumNo"
             type="text"

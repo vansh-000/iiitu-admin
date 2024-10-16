@@ -42,6 +42,7 @@ const Curriculum = () => {
   const [pdf, setPdf] = useState([]);
   const batchRef = useRef();
   const branchRef = useRef();
+  const curriculumNoRef = useRef();
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
     setPdf(files);
@@ -52,6 +53,7 @@ const Curriculum = () => {
     e.preventDefault();
     const batch = batchRef.current.value;
     const branch = branchRef.current.value;
+    const curriculumNo = curriculumNoRef.current.value;
     try {
       const formData = new FormData();
       pdf.forEach((doc) => {
@@ -59,6 +61,7 @@ const Curriculum = () => {
       });
       formData.append('title', batch);
       formData.append('description', branch);
+      formData.append('curriculumNo', curriculumNo);
       await axios.post(`${API}/courses`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -99,6 +102,17 @@ const Curriculum = () => {
       <Breadcrumb pageName="Curriculum" />
       <form onSubmit={handleAdd}>
         <div>
+          <label className="mb-3 block text-black dark:text-white">Batch</label>
+          <input
+            name="curriculumNo"
+            type="text"
+            ref={curriculumNoRef}
+            placeholder="Curriculum Number (e.g. IIITUGCSE22)"
+            required
+            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+          />
+        </div>
+        <div className="mt-4">
           <label className="mb-3 block text-black dark:text-white">Batch</label>
           <input
             name="title"

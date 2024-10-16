@@ -70,7 +70,7 @@ const ResetPassword = () => {
       } else if (error.response?.status === 403) {
         toast.error('Incorrect old password!');
       } else {
-        toast.error('Internal Server Error!');
+        toast.error(error.response.data.message);
       }
     } finally {
       setLoading(false);
@@ -78,7 +78,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="my-auto">
+    <div className="my-auto p-5">
       {/* <Breadcrumb pageName="Reset Password" /> */}
 
       <div className=" rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -106,7 +106,7 @@ const ResetPassword = () => {
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Reset Your Password
+                Change Your Password
               </h2>
 
               <form onSubmit={handleOnSubmit}>
@@ -160,7 +160,7 @@ const ResetPassword = () => {
                   disabled={loading}
                   className="mt-4 w-full rounded-lg bg-primary p-4 text-white hover:bg-primary-dark transition"
                 >
-                  {loading ? 'Resetting...' : 'Reset Password'}
+                  {loading ? 'Changing...' : 'Change Password'}
                 </button>
               </form>
             </div>

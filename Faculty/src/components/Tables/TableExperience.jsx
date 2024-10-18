@@ -143,11 +143,11 @@ const TableExperience = ({ edit, experience, setExperience }) => {
                         <div className="flex items-center gap-1 justify-center mt-1">
                           <input
                             type="checkbox"
-                            checked={edu.endDate}
+                            checked={edu.endDate === 'Present' ? true : false}
                             onChange={() => handleCheckboxChange(index)}
                             className="cursor-pointer size-4"
                           />
-                          <span>Going on</span>
+                          <span className="text-nowrap">Going on</span>
                         </div>
                       </>
                     ) : (

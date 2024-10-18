@@ -4,8 +4,6 @@ import { IoMdAddCircleOutline } from 'react-icons/io';
 import { IoClose } from 'react-icons/io5';
 
 const TableExperience = ({ edit, experience, setExperience }) => {
-  const [isPresent, setIsPresent] = useState(false);
-
   const handleEdit = (index, field, value) => {
     const updatedExperience = [...experience];
     updatedExperience[index][field] = value;
@@ -20,6 +18,7 @@ const TableExperience = ({ edit, experience, setExperience }) => {
         organisation: '',
         startDate: '',
         endDate: '',
+        isPresent: false,
       },
     ]);
   };
@@ -31,11 +30,11 @@ const TableExperience = ({ edit, experience, setExperience }) => {
 
   const handleCheckboxChange = (index) => {
     const updatedExperience = [...experience];
-    setIsPresent(!isPresent);
-    if (isPresent) {
-      updatedExperience[index].endDate = '';
-    } else {
+    updatedExperience[index].isPresent = !updatedExperience[index].isPresent;
+    if (updatedExperience[index].isPresent) {
       updatedExperience[index].endDate = 'Present';
+    } else {
+      updatedExperience[index].endDate = '';
     }
     setExperience(updatedExperience);
   };
@@ -131,7 +130,7 @@ const TableExperience = ({ edit, experience, setExperience }) => {
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center w-[20%]">
                     {edit ? (
                       <>
-                        {!isPresent && (
+                        {!edu.isPresent && (
                           <input
                             type="month"
                             value={edu.endDate}
@@ -144,7 +143,7 @@ const TableExperience = ({ edit, experience, setExperience }) => {
                         <div className="flex items-center gap-1 justify-center mt-1">
                           <input
                             type="checkbox"
-                            checked={isPresent}
+                            checked={edu.endDate}
                             onChange={() => handleCheckboxChange(index)}
                             className="cursor-pointer size-4"
                           />

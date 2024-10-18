@@ -15,6 +15,7 @@ const TableProjects = ({ edit, Project, setProject }) => {
   const refCoInvestigator = useRef();
   const refFundingAgency = useRef();
   const refDuration = useRef();
+  const refYearOfGrant = useRef();
   const refAmount = useRef();
   const [status, setStatus] = useState();
   const [type, setType] = useState();
@@ -33,6 +34,7 @@ const TableProjects = ({ edit, Project, setProject }) => {
         coInvestigator: coInvestigator,
         fundingAgency: refFundingAgency?.current?.value,
         duration: refDuration?.current?.value,
+        yearOfGrant: refYearOfGrant?.current?.value,
         amount: refAmount?.current?.value,
         status: status,
         type: type,
@@ -172,6 +174,7 @@ const TableProjects = ({ edit, Project, setProject }) => {
                 refCoInvestigator={refCoInvestigator}
                 refFundingAgency={refFundingAgency}
                 refDuration={refDuration}
+                refYearOfGrant={refYearOfGrant}
                 refAmount={refAmount}
                 setStatus={setStatus}
                 setType={setType}

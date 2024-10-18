@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IoMdAddCircleOutline } from 'react-icons/io';
-import { RxCross1, RxCross2 } from 'react-icons/rx';
-import { FaStarOfLife } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
+import { FaStarOfLife } from 'react-icons/fa';
+import { EDUCATION_DEGREE_OPTIONS } from '../../utils/constants';
 
 const TableThree = ({ edit, Education, setEducation }) => {
+  const [customInputVisible, setCustomInputVisible] = useState(
+    Array(Education.length).fill(false),
+  );
+
   const handleEdit = (index, field, value) => {
     const updatedEducation = [...Education];
     updatedEducation[index][field] = value;
@@ -14,12 +18,29 @@ const TableThree = ({ edit, Education, setEducation }) => {
   const handleAddEducation = () => {
     setEducation([
       ...Education,
-      { dateOfStart: '', dateOfEnd: '', description: '' },
+      { yearOfCompletion: '', degree: '', specialisation: '', description: '' },
     ]);
+    setCustomInputVisible([...customInputVisible, false]);
   };
+
   const handleDelete = (index) => {
-    const updatedEducation = Education.filter((_, ind) => ind != index);
+    const updatedEducation = Education.filter((_, ind) => ind !== index);
     setEducation(updatedEducation);
+    setCustomInputVisible(customInputVisible.filter((_, ind) => ind !== index));
+  };
+
+  const handleDegreeChange = (index, value) => {
+    if (value === 'Other') {
+      const updatedVisibility = [...customInputVisible];
+      updatedVisibility[index] = true;
+      setCustomInputVisible(updatedVisibility);
+      handleEdit(index, 'degree', '');
+    } else {
+      const updatedVisibility = [...customInputVisible];
+      updatedVisibility[index] = false;
+      setCustomInputVisible(updatedVisibility);
+      handleEdit(index, 'degree', value);
+    }
   };
 
   return (
@@ -32,7 +53,13 @@ const TableThree = ({ edit, Education, setEducation }) => {
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
               <th className="py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                Year
+                Degree
+              </th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                Specialisation
+              </th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                Year of Completion
               </th>
               <th className="py-4 px-4 font-medium text-center text-black dark:text-white">
                 University/College
@@ -42,38 +69,81 @@ const TableThree = ({ edit, Education, setEducation }) => {
           <tbody>
             {Education.map((edu, index) => (
               <tr key={index}>
-                <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   {edit ? (
                     <>
-                      <input
-                        type="text"
-                        value={edu.dateOfStart}
-                        placeholder="Date of Start"
-                        className="max-w-[150px] rounded-lg border-[1.5px] mr-1 border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      <FaStarOfLife className="text-[0.5rem] text-red-600" />
+                      <select
+                        value={edu.degree}
+                        className="max-w-[180px] rounded-lg border-[1.5px] mr-1 border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         onChange={(e) =>
-                          handleEdit(index, 'dateOfStart', e.target.value)
+                          handleDegreeChange(index, e.target.value)
                         }
-                      />
-                      -
-                      <input
-                        type="text"
-                        value={edu.dateOfEnd}
-                        placeholder="Date of End"
-                        className="max-w-[150px] rounded-lg border-[1.5px] ml-1 border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        onChange={(e) =>
-                          handleEdit(index, 'dateOfEnd', e.target.value)
-                        }
-                      />
+                        required
+                      >
+                        <option value="" disabled>
+                          Select Degree
+                        </option>
+                        {EDUCATION_DEGREE_OPTIONS.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                        <option value="Other">Other</option>
+                      </select>
+                      {customInputVisible[index] && (
+                        <input
+                          type="text"
+                          value={edu.degree}
+                          placeholder="Enter degree"
+                          className="max-w-[180px] mt-2 rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          onChange={(e) =>
+                            handleEdit(index, 'degree', e.target.value)
+                          }
+                        />
+                      )}
                     </>
                   ) : (
-                    <>
-                      <h5 className="font-medium text-black dark:text-white">
-                        {edu.dateOfStart}-{edu.dateOfEnd}
-                      </h5>
-                    </>
+                    <h5 className="font-medium text-black dark:text-white">
+                      {edu.degree}
+                    </h5>
                   )}
                 </td>
-                <td className="w-full flex text-center border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  {edit ? (
+                    <input
+                      type="text"
+                      value={edu.specialisation}
+                      placeholder="Specialisation"
+                      className="max-w-[180px] rounded-lg border-[1.5px] mr-1 border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      onChange={(e) =>
+                        handleEdit(index, 'specialisation', e.target.value)
+                      }
+                    />
+                  ) : (
+                    <h5 className="font-medium text-black dark:text-white">
+                      {edu.specialisation}
+                    </h5>
+                  )}
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  {edit ? (
+                    <input
+                      type="text"
+                      value={edu.yearOfCompletion}
+                      placeholder="Year of Completion"
+                      className="max-w-[200px] rounded-lg border-[1.5px] mr-1 border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      onChange={(e) =>
+                        handleEdit(index, 'yearOfCompletion', e.target.value)
+                      }
+                    />
+                  ) : (
+                    <h5 className="font-medium text-black dark:text-white">
+                      {edu.yearOfCompletion}
+                    </h5>
+                  )}
+                </td>
+                <td className="w-full flex items-center text-center border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   {edit ? (
                     <div className="w-full flex gap-1">
                       <FaStarOfLife className="text-[0.5rem] text-red-600" />
@@ -84,7 +154,7 @@ const TableThree = ({ edit, Education, setEducation }) => {
                         onChange={(e) =>
                           handleEdit(index, 'description', e.target.value)
                         }
-                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                        className="w-full rounded-lg border-[1.5px] mr-1 border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       />
                     </div>
                   ) : (
@@ -93,7 +163,7 @@ const TableThree = ({ edit, Education, setEducation }) => {
                     </p>
                   )}
                   {edit && (
-                    <div className="text-center border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                    <div className="text-center border-b border-[#eee] dark:border-strokedark">
                       <IoClose
                         onClick={() => handleDelete(index)}
                         className="text-[1.5rem] text-red-600 dark:text-red-500 cursor-pointer"

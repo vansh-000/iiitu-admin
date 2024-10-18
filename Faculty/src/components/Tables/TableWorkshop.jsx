@@ -25,6 +25,8 @@ const TableWorkshop = ({ edit, Workshop, setWorkshop }) => {
     setWorkshop([
       ...Workshop,
       {
+        level: '',
+        event: '',
         title: '',
         venue: '',
         from: '',
@@ -158,7 +160,7 @@ const TableWorkshop = ({ edit, Workshop, setWorkshop }) => {
                         )}
                       </>
                     ) : (
-                      <p className="text-black dark:text-white">{edu.title}</p>
+                      <p className="text-black dark:text-white">{edu.event}</p>
                     )}
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 text-center dark:border-strokedark">

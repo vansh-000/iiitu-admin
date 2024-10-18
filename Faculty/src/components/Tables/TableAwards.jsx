@@ -71,7 +71,7 @@ const TableAwards = ({ edit, Award, setAward }) => {
                   {edit ? (
                     <input
                       type="text"
-                      value={awd.title}
+                      value={awd.year}
                       placeholder="Year of Award"
                       className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       onChange={(e) =>

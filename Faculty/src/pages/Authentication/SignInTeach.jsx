@@ -58,6 +58,7 @@ const SignIn = () => {
           toast.success('Successfully Logged In!');
           localStorage.setItem('token', response.data.accessToken);
           localStorage.setItem('user', JSON.stringify(response.data.userInfo));
+          localStorage.setItem('isLoggedIn', true);
           navigator('/dashboard');
         }
       }

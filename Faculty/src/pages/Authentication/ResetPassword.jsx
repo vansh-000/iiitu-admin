@@ -155,6 +155,17 @@ const ResetPassword = () => {
                   </div>
                 </div>
 
+                {localStorage.getItem('isLoggedIn') && (
+                  <div className="mb-7 text-end">
+                    <Link
+                      to="/dashboard"
+                      className="text-primary hover:text-blue-500"
+                    >
+                      Go to Dashboard
+                    </Link>
+                  </div>
+                )}
+
                 <button
                   type="submit"
                   disabled={loading}

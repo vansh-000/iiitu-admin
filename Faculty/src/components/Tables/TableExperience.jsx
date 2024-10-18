@@ -111,7 +111,7 @@ const TableExperience = ({ edit, experience, setExperience }) => {
                       </p>
                     )}
                   </td>
-                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center w-[20%]">
+                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center w-[20%] text-nowrap">
                     {edit ? (
                       <input
                         type="month"
@@ -127,7 +127,7 @@ const TableExperience = ({ edit, experience, setExperience }) => {
                       </h5>
                     )}
                   </td>
-                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center w-[20%]">
+                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center w-[20%] text-nowrap">
                     {edit ? (
                       <>
                         {!edu.isPresent && (

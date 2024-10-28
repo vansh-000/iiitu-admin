@@ -27,6 +27,7 @@ import { IoClose } from 'react-icons/io5';
 import { jwtDecode } from 'jwt-decode';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import ResumePdf from '../utils/ResumePdf.jsx';
+import TableExpertTalks from '../components/Tables/TableExpertTalks.jsx';
 const Profile = () => {
   const nevigat = useNavigate();
   useEffect(() => {
@@ -55,6 +56,7 @@ const Profile = () => {
 
   const [experience, setExperience] = useState([]);
   const [workshop, setWorkshop] = useState([]);
+  const [expertTalk, setExpertTalk] = useState([]);
   const [supervision, setSupervision] = useState([]);
 
   const refProFileImg = useRef();
@@ -92,8 +94,9 @@ const Profile = () => {
         setProject(response?.data?.Projects);
         setOther(response?.data?.other);
         setExperience(response?.data?.Experience);
-        setWorkshop(response?.data?.Workshop),
-          setSupervision(response?.data?.Supervision);
+        setWorkshop(response?.data?.Workshop);
+        setExpertTalk(response?.data?.ExpertTalk);
+        setSupervision(response?.data?.Supervision);
       }
     } catch (err) {
       console.log('Error', err);
@@ -141,6 +144,9 @@ const Profile = () => {
       const newWorkshop = workshop.filter(
         (e) => e.title !== '' || e.type !== '' || e.venue !== '',
       );
+      const newExpertTalk = expertTalk.filter(
+        (e) => e.title !== '' || e.type !== '' || e.venue !== '',
+      );
       const newAward = award.filter((awa) => awa !== '');
       // const newJournal = journal.filter((jor) => jor !== '');
       // const newProject = project.filter((pro) => pro.Title !== '');
@@ -164,6 +170,7 @@ const Profile = () => {
         Experience: newExperience,
         Supervision: newSupervision,
         Workshop: newWorkshop,
+        ExpertTalk: newExpertTalk,
         other: newOther,
         // Journals: newJournal,
         // Journals: newJournal,
@@ -553,6 +560,14 @@ const Profile = () => {
           edit={editable}
           Workshop={workshop}
           setWorkshop={setWorkshop}
+        />
+      )}
+
+      {expertTalk && (
+        <TableExpertTalks
+          edit={editable}
+          ExpertTalk={expertTalk}
+          setExpertTalk={setExpertTalk}
         />
       )}
       {other && (

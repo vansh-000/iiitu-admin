@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { FaStarOfLife } from 'react-icons/fa';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import { IoClose } from 'react-icons/io5';
 
@@ -12,12 +13,29 @@ const TableExperience = ({ edit, experience, setExperience }) => {
   const handleAddExperience = () => {
     setExperience([
       ...experience,
-      { position: '', organisation: '', years: 0 },
+      {
+        position: '',
+        organisation: '',
+        startDate: '',
+        endDate: '',
+        isPresent: false,
+      },
     ]);
   };
 
   const handleDelete = (index) => {
     const updatedExperience = experience.filter((_, ind) => ind !== index);
+    setExperience(updatedExperience);
+  };
+
+  const handleCheckboxChange = (index) => {
+    const updatedExperience = [...experience];
+    updatedExperience[index].isPresent = !updatedExperience[index].isPresent;
+    if (updatedExperience[index].isPresent) {
+      updatedExperience[index].endDate = 'Present';
+    } else {
+      updatedExperience[index].endDate = '';
+    }
     setExperience(updatedExperience);
   };
 
@@ -37,7 +55,10 @@ const TableExperience = ({ edit, experience, setExperience }) => {
                 Organisation
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white text-center w-[20%]">
-                Years
+                Start Date
+              </th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white text-center w-[20%]">
+                End Date
               </th>
               {edit && (
                 <th className="py-4 px-4 text-black dark:text-white w-[5%]"></th>
@@ -50,41 +71,89 @@ const TableExperience = ({ edit, experience, setExperience }) => {
                 <tr key={index}>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center w-[25%]">
                     {edit ? (
-                      <input
-                        type="text"
-                        value={edu.position}
-                        placeholder="Position"
-                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        onChange={(e) => handleEdit(index, 'position', e.target.value)}
-                      />
+                      <>
+                        <FaStarOfLife className="text-[0.5rem] text-red-600" />
+                        <input
+                          type="text"
+                          value={edu.position}
+                          placeholder="Position"
+                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          onChange={(e) =>
+                            handleEdit(index, 'position', e.target.value)
+                          }
+                          required
+                        />
+                      </>
                     ) : (
-                      <h5 className="font-medium text-black dark:text-white">{edu.position}</h5>
+                      <h5 className="font-medium text-black dark:text-white">
+                        {edu.position}
+                      </h5>
                     )}
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center w-[50%]">
                     {edit ? (
-                      <input
-                        type="text"
-                        value={edu.organisation}
-                        placeholder="Organisation Name"
-                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        onChange={(e) => handleEdit(index, 'organisation', e.target.value)}
-                      />
+                      <>
+                        <FaStarOfLife className="text-[0.5rem] text-red-600" />
+                        <input
+                          type="text"
+                          value={edu.organisation}
+                          placeholder="Organisation Name"
+                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          onChange={(e) =>
+                            handleEdit(index, 'organisation', e.target.value)
+                          }
+                          required
+                        />
+                      </>
                     ) : (
-                      <p className="text-black dark:text-white">{edu.organisation}</p>
+                      <p className="text-black dark:text-white">
+                        {edu.organisation}
+                      </p>
                     )}
                   </td>
-                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center w-[20%]">
+                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center w-[20%] text-nowrap">
                     {edit ? (
                       <input
-                        type="number"
-                        value={edu.years}
-                        placeholder="Years"
+                        type="month"
+                        value={edu.startDate}
                         className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        onChange={(e) => handleEdit(index, 'years', e.target.value)}
+                        onChange={(e) =>
+                          handleEdit(index, 'startDate', e.target.value)
+                        }
                       />
                     ) : (
-                      <h5 className="text-black dark:text-white">{edu.years}</h5>
+                      <h5 className="text-black dark:text-white">
+                        {edu.startDate}
+                      </h5>
+                    )}
+                  </td>
+                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center w-[20%] text-nowrap">
+                    {edit ? (
+                      <>
+                        {!edu.isPresent && (
+                          <input
+                            type="month"
+                            value={edu.endDate}
+                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            onChange={(e) =>
+                              handleEdit(index, 'endDate', e.target.value)
+                            }
+                          />
+                        )}
+                        <div className="flex items-center gap-1 justify-center mt-1">
+                          <input
+                            type="checkbox"
+                            checked={edu.endDate === 'Present' ? true : false}
+                            onChange={() => handleCheckboxChange(index)}
+                            className="cursor-pointer size-4"
+                          />
+                          <span className="text-nowrap">Going on</span>
+                        </div>
+                      </>
+                    ) : (
+                      <h5 className="text-black dark:text-white">
+                        {edu.endDate}
+                      </h5>
                     )}
                   </td>
                   {edit && (

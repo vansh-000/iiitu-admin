@@ -22,24 +22,27 @@ import { FaRegEdit } from 'react-icons/fa';
 import TableExperience from '../components/Tables/TableExperience';
 import TableSupervision from '../components/Tables/TableSupervision';
 import TableWorkshop from '../components/Tables/TableWorkshop';
-import ResetPassword from './Authentication/ResetPassword.jsx'
+import ResetPassword from './Authentication/ResetPassword.jsx';
 import { IoClose } from 'react-icons/io5';
 import { jwtDecode } from 'jwt-decode';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import ResumePdf from '../utils/ResumePdf.jsx';
+import TableExpertTalks from '../components/Tables/TableExpertTalks.jsx';
 const Profile = () => {
   const nevigat = useNavigate();
-  useEffect(()=>{
-  const token = localStorage?.getItem('token');
-  if (token) {
-    const { exp } = jwtDecode(token);
-    if (exp * 1000 < Date.now()) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user')
+  useEffect(() => {
+    const token = localStorage?.getItem('token');
+    if (token) {
+      const { exp } = jwtDecode(token);
+      if (exp * 1000 < Date.now()) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        nevigat('/');
+      }
+    } else {
       nevigat('/');
     }
-  }
-  else{
-    nevigat('/');
-  }})
+  });
   const [faculty, setFaculty] = useState({});
   const [clubName, setClubName] = useState();
   const [editable, setEditable] = useState(false);
@@ -53,6 +56,7 @@ const Profile = () => {
 
   const [experience, setExperience] = useState([]);
   const [workshop, setWorkshop] = useState([]);
+  const [expertTalk, setExpertTalk] = useState([]);
   const [supervision, setSupervision] = useState([]);
 
   const refProFileImg = useRef();
@@ -90,9 +94,9 @@ const Profile = () => {
         setProject(response?.data?.Projects);
         setOther(response?.data?.other);
         setExperience(response?.data?.Experience);
-        setWorkshop(response?.data?.Workshop),
+        setWorkshop(response?.data?.Workshop);
+        setExpertTalk(response?.data?.ExpertTalk);
         setSupervision(response?.data?.Supervision);
-
       }
     } catch (err) {
       console.log('Error', err);
@@ -135,11 +139,14 @@ const Profile = () => {
         (edu) => edu.organisation !== '' || edu.position !== '',
       );
       const newSupervision = supervision.filter(
-        (e) => e.program !== '' || e.topic !== '' || e.scholar !== ''
+        (e) => e.program !== '' || e.topic !== '' || e.scholar !== '',
       );
       const newWorkshop = workshop.filter(
-        (e)=> e.title !== '' || e.type !== '' || e.venue !== ''
-      )
+        (e) => e.title !== '' || e.type !== '' || e.venue !== '',
+      );
+      const newExpertTalk = expertTalk.filter(
+        (e) => e.title !== '' || e.type !== '' || e.venue !== '',
+      );
       const newAward = award.filter((awa) => awa !== '');
       // const newJournal = journal.filter((jor) => jor !== '');
       // const newProject = project.filter((pro) => pro.Title !== '');
@@ -163,6 +170,7 @@ const Profile = () => {
         Experience: newExperience,
         Supervision: newSupervision,
         Workshop: newWorkshop,
+        ExpertTalk: newExpertTalk,
         other: newOther,
         // Journals: newJournal,
         // Journals: newJournal,
@@ -226,20 +234,18 @@ const Profile = () => {
     }
   };
 
-
   const handleFlag = () => {
     localStorage.setItem('flag', false);
-    setFlag(false);  // This will trigger a re-render
+    setFlag(false); // This will trigger a re-render
   };
 
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Profile" />
 
-
       {flag && (
         // < className='max-w-screen-2xl   '>
-        <div className='w-[90%] max-w-screen-2xl   h-[100vh] z-10 fixed top-25 animate-fall'>
+        <div className="w-[90%] max-w-screen-2xl   h-[100vh] z-10 fixed top-25 animate-fall">
           <IoClose
             onClick={() => handleFlag()}
             className="text-[4.5rem] text-red-600 dark:text-red-500 cursor-pointer absolute top-10 right-10 z-20"
@@ -248,7 +254,6 @@ const Profile = () => {
           <ResetPassword />
         </div>
       )}
-
 
       <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         {/* Save and edit buttons */}
@@ -332,192 +337,171 @@ const Profile = () => {
                 {clubName} Events
               </button>
             )}
-            <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-              {editable ? (
-                <input
-                  name="name"
-                  type="text"
-                  ref={refName}
-                  defaultValue={faculty.name}
-                  placeholder="Enter Name"
-                  className="w-[90%] mx-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                />
-              ) : (
-                faculty.name
-              )}
-            </h3>
-            {editable ? (
-              <div>
-                {faculty.resume && (
-                  <label className="block text-black dark:text-white text-start text-[1rem] mt-2 mb-1">
-                    For Change Resume{' '}
-                    <Link
-                      to={StaticLinkProvider(faculty.resume)}
-                      target="_blanck"
-                      className="text-blue-500 cursor-pointer "
-                    >
-                      Exiting Resume
-                    </Link>
-                  </label>
-                )}
-                <input
-                  className="w-auto cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-                  type="file"
-                  id="resume"
-                  name="resume"
-                  accept=".pdf"
-                  ref={refResume}
-                />
-              </div>
-            ) : (
-              faculty.resume && (
-                <Link
-                  to={StaticLinkProvider(faculty.resume)}
-                  className="w-fit flex flex-col items-center justify-center gap-1 text-[1.1rem] text-[#0000EE] underline px-4 dark:border-stroke border-strokedark xsm:flex-row"
-                >
-                  View Resume
-                </Link>
-              )
-            )}
-            <div className="mx-auto mt-4.5 mb-5.5 grid max-w-[300px] sm:max-w-[500px] grid-cols-4 gap-2 rounded-md border border-stroke p-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
-              {editable ? (
-                <input
-                  name="title"
-                  type="text"
-                  ref={refLinkedin}
-                  placeholder="Linkedin Link"
-                  defaultValue={
-                    faculty.socialLink && faculty.socialLink[0]
-                      ? faculty.socialLink[0].link
-                      : ''
-                  }
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                />
-              ) : (
-                faculty.socialLink && (
-                  <Link
-                    to={faculty.socialLink[0]?.link}
-                    className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row"
-                  >
-                    <FaLinkedin className="text-2xl" />
-                  </Link>
-                )
-              )}
-              {editable ? (
-                <input
-                  name="title"
-                  type="text"
-                  ref={refGoogleScholar}
-                  placeholder="Google Scholar Link"
-                  defaultValue={
-                    faculty.socialLink && faculty?.socialLink[1]
-                      ? faculty.socialLink[1].link
-                      : ''
-                  }
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                />
-              ) : (
-                faculty.socialLink && (
-                  <Link
-                    to={faculty.socialLink[1]?.link}
-                    className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row"
-                  >
-                    <SiGooglescholar className="text-2xl" />
-                  </Link>
-                )
-              )}
-              {editable ? (
-                <input
-                  name="title"
-                  type="text"
-                  ref={refOrcid}
-                  placeholder="Orcid Link"
-                  defaultValue={
-                    faculty.socialLink && faculty?.socialLink[2]
-                      ? faculty.socialLink[2].link
-                      : ''
-                  }
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                />
-              ) : (
-                faculty.socialLink && (
-                  <Link
-                    to={faculty?.socialLink[2]?.link}
-                    className="flex flex-col items-center justify-center gap-2 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row"
-                  >
-                    <FaOrcid className="text-2xl" />
-                  </Link>
-                )
-              )}
-              {editable ? (
-                <input
-                  name="title"
-                  type="text"
-                  ref={refWeb}
-                  placeholder="Website Link"
-                  defaultValue={
-                    faculty.socialLink && faculty?.socialLink[3]
-                      ? faculty.socialLink[3].link
-                      : ''
-                  }
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                />
-              ) : (
-                faculty.socialLink && (
-                  <Link
-                    to={faculty?.socialLink[3]?.link}
-                    className="flex flex-col items-center justify-center gap-2 px-4 xsm:flex-row"
-                  >
-                    <BsGlobe2 className="text-2xl" />
-                  </Link>
-                )
-              )}
-            </div>
-
-            <div className="mx-auto max-w-180">
-              <ul className="mt-4.5 text-black dark:text-white">
-                <li className="text-[1.1rem]  flex items-center h-auto max-h-max">
-                  <span className="text-nowrap">Research Intrest:</span>
-                  {editable ? (
-                    <textarea
-                      name="Research"
-                      ref={refResearchInterest}
-                      placeholder="Research Interest"
-                      defaultValue={faculty.researchInterest}
-                      className="ml-2 h-34 text-wrap w-full max-w-90 rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary resize-none"
-                      rows="4"
-                    ></textarea>
-                  ) : (
-                    <span className="pl-3">{faculty.researchInterest}</span>
-                  )}
-                </li>
-                <li className="text-[1.1rem] mt-2">
-                  Phone: +91-
+            {/* {!editable && (
+              <PDFDownloadLink
+                document={<ResumePdf faculty={faculty} />}
+                fileName={`${faculty?.name}_Resume.pdf`}
+                className="w-fit flex flex-col items-center justify-center gap-1 text-[1.1rem] text-[#0000EE] underline px-4 dark:border-stroke border-strokedark xsm:flex-row"
+              >
+                {({ loading }) =>
+                  loading ? 'Loading document...' : 'Download Resume'
+                }
+              </PDFDownloadLink>
+            )} */}
+            <div className="flex flex-row gap-24">
+              <div className="mx-auto max-w-180">
+                <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
                   {editable ? (
                     <input
-                      name="title"
+                      name="name"
                       type="text"
-                      ref={refPhone}
-                      placeholder="e.g., 7352xxxx"
-                      defaultValue={faculty.mobile}
-                      pattern="^\d{10}$"
-                      title="Please enter a valid 10-digit phone number."
-                      className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      ref={refName}
+                      defaultValue={faculty.name}
+                      placeholder="Enter Name"
+                      className="w-full mx-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
                   ) : (
-                    faculty.mobile
+                    faculty.name
                   )}
-                </li>
-                <li className="text-[1.1rem] mt-2">
-                  {!editable && (
-                    <>
-                      {' '}
-                      Designation:
-                      <span className="pl-3">{faculty?.designation}</span>
-                    </>
-                  )}
-                </li>
-              </ul>
+                </h3>
+                <ul className="mt-4.5 text-black dark:text-white">
+                  <li className="text-[1.1rem]  flex items-center h-auto max-h-max">
+                    <span className="text-nowrap">Research Intrest:</span>
+                    {editable ? (
+                      <textarea
+                        name="Research"
+                        ref={refResearchInterest}
+                        placeholder="Research Interest"
+                        defaultValue={faculty.researchInterest}
+                        className="ml-2 h-34 text-wrap w-full max-w-90 rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary resize-none"
+                        rows="4"
+                      ></textarea>
+                    ) : (
+                      <span className="pl-3">{faculty.researchInterest}</span>
+                    )}
+                  </li>
+                  <li className="text-[1.1rem] mt-2">
+                    Phone: +91-
+                    {editable ? (
+                      <input
+                        name="title"
+                        type="text"
+                        ref={refPhone}
+                        placeholder="e.g., 7352xxxx"
+                        defaultValue={faculty.mobile}
+                        pattern="^\d{10}$"
+                        title="Please enter a valid 10-digit phone number."
+                        className="ml-2 mt-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      />
+                    ) : (
+                      faculty.mobile
+                    )}
+                  </li>
+                  <li className="text-[1.1rem] mt-2">
+                    {!editable && (
+                      <>
+                        {' '}
+                        Designation:
+                        <span className="pl-3">{faculty?.designation}</span>
+                      </>
+                    )}
+                  </li>
+                </ul>
+              </div>
+              <div className="mx-auto mt-4.5 mb-5.5 grid max-w-[300px] sm:max-w-[500px] grid-cols-1 gap-2 rounded-md border border-stroke p-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
+                {editable ? (
+                  <input
+                    name="title"
+                    type="text"
+                    ref={refLinkedin}
+                    placeholder="Linkedin Link"
+                    defaultValue={
+                      faculty.socialLink && faculty.socialLink[0]
+                        ? faculty.socialLink[0].link
+                        : ''
+                    }
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  />
+                ) : (
+                  faculty.socialLink && (
+                    <Link
+                      to={faculty.socialLink[0]?.link}
+                      className="flex flex-col items-center justify-center gap-1 px-4 xsm:flex-row"
+                    >
+                      <FaLinkedin className="text-2xl" />
+                    </Link>
+                  )
+                )}
+                {editable ? (
+                  <input
+                    name="title"
+                    type="text"
+                    ref={refGoogleScholar}
+                    placeholder="Google Scholar Link"
+                    defaultValue={
+                      faculty.socialLink && faculty?.socialLink[1]
+                        ? faculty.socialLink[1].link
+                        : ''
+                    }
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  />
+                ) : (
+                  faculty.socialLink && (
+                    <Link
+                      to={faculty.socialLink[1]?.link}
+                      className="flex flex-col items-center justify-center gap-1 px-4 xsm:flex-row"
+                    >
+                      <SiGooglescholar className="text-2xl" />
+                    </Link>
+                  )
+                )}
+                {editable ? (
+                  <input
+                    name="title"
+                    type="text"
+                    ref={refOrcid}
+                    placeholder="Orcid Link"
+                    defaultValue={
+                      faculty.socialLink && faculty?.socialLink[2]
+                        ? faculty.socialLink[2].link
+                        : ''
+                    }
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  />
+                ) : (
+                  faculty.socialLink && (
+                    <Link
+                      to={faculty?.socialLink[2]?.link}
+                      className="flex flex-col items-center justify-center gap-2 px-4 xsm:flex-row"
+                    >
+                      <FaOrcid className="text-2xl" />
+                    </Link>
+                  )
+                )}
+                {editable ? (
+                  <input
+                    name="title"
+                    type="text"
+                    ref={refWeb}
+                    placeholder="Website Link"
+                    defaultValue={
+                      faculty.socialLink && faculty?.socialLink[3]
+                        ? faculty.socialLink[3].link
+                        : ''
+                    }
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  />
+                ) : (
+                  faculty.socialLink && (
+                    <Link
+                      to={faculty?.socialLink[3]?.link}
+                      className="flex flex-col items-center justify-center gap-2 px-4 xsm:flex-row"
+                    >
+                      <BsGlobe2 className="text-2xl" />
+                    </Link>
+                  )
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -548,8 +532,8 @@ const Profile = () => {
 
       {supervision && (
         <TableSupervision
-          edit ={editable}
-          Supervision= {supervision}
+          edit={editable}
+          Supervision={supervision}
           setSupervision={setSupervision}
         />
       )}
@@ -571,16 +555,21 @@ const Profile = () => {
         />
       )}
 
-      {
-        workshop &&
-        (
-          <TableWorkshop
-            edit={editable}
-            Workshop={workshop}
-            setWorkshop={setWorkshop}
-          />
-        )
-      }
+      {workshop && (
+        <TableWorkshop
+          edit={editable}
+          Workshop={workshop}
+          setWorkshop={setWorkshop}
+        />
+      )}
+
+      {expertTalk && (
+        <TableExpertTalks
+          edit={editable}
+          ExpertTalk={expertTalk}
+          setExpertTalk={setExpertTalk}
+        />
+      )}
       {other && (
         <TableOther edit={editable} Other={other} setOther={setOther} />
       )}

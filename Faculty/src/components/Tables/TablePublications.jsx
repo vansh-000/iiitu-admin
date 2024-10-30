@@ -27,9 +27,11 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
   const [indexing, setIndexing] = useState();
   const refUrl = useRef();
   const [selected, setSelected] = useState('Journal');
-  
-  const handleDelete = async (e,id) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleDelete = async (e, id) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.delete(`${API}/publication/${id}`, {
         headers: {
@@ -38,18 +40,16 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
         },
       });
       if (response.status === 200) {
+        setLoading(false);
         const updatedPublication = Publication.filter((pub) => pub._id !== id);
         setPublication(updatedPublication);
         setIsOpenView(!isOpenView);
       }
     } catch (err) {
+      setLoading(false);
       console.error(err);
     }
   };
-
-  // const handleClose = () => {
-  //   setIsOpenView(!isOpenView);
-  // };
 
   const handleAddPublication = () => {
     setIsOpen(!isOpen);
@@ -294,8 +294,13 @@ const TablePublications = ({ edit, Publication, setPublication }) => {
                   // onClick={handleAddPublicationLink}
                   className="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   type="submit"
+                  disabled={loading}
                 >
-                  Add
+                  {loading ? (
+                    <div className="inline-block h-5 w-5 animate-spin rounded-full border-[3px] border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                  ) : (
+                    <span>Add</span>
+                  )}
                 </button>
                 <button
                   onClick={handleAddPublication}

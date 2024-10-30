@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
+
 const SignIn = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -15,14 +16,14 @@ const SignIn = () => {
       const { exp } = jwtDecode(token);
       if (exp * 1000 > Date.now()) {
         localStorage.removeItem('token');
-        localStorage.removeItem('user')
+        localStorage.removeItem('user');
         navigator('/');
-      }
-      else{
+      } else {
         navigator('/dashboard');
       }
     }
   });
+
   const [loading, setLoading] = useState(false);
   localStorage.setItem('flag', false);
 
@@ -45,14 +46,21 @@ const SignIn = () => {
         password: password,
       });
       if (response.status === 200) {
+        const id = response?.data?.userInfo?.id;
+        // console.log(response?.data?.userInfo?.id, id)
 
         if (password === '123') {
-          localStorage.setItem('flag', true);
+          toast.error('Please change your password!');
+          localStorage.setItem('token', response.data.accessToken);
+          localStorage.setItem('user', JSON.stringify(response.data.userInfo));
+          navigator(`/ResetPassword/${id}`);
+        } else {
+          toast.success('Successfully Logged In!');
+          localStorage.setItem('token', response.data.accessToken);
+          localStorage.setItem('user', JSON.stringify(response.data.userInfo));
+          localStorage.setItem('isLoggedIn', true);
+          navigator('/dashboard');
         }
-        toast.success('Successfully Logged In!');
-        localStorage.setItem('token', response.data.accessToken);
-        localStorage.setItem('user', JSON.stringify(response.data.userInfo));
-        navigator('/dashboard');
       }
     } catch (error) {
       if (error.response.status === 409) {
@@ -70,6 +78,7 @@ const SignIn = () => {
 
       // console.log(error);
     }
+    // console.log(error);
   };
 
   return (

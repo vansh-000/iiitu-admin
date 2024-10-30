@@ -2,6 +2,10 @@ import React from 'react';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import { FaStarOfLife } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
+import {
+  SUPERVISION_DEGREE_OPTIONS,
+  SUPERVISION_STATUS_OPTIONS,
+} from '../../utils/constants';
 
 const TableSupervision = ({ edit, Supervision, setSupervision }) => {
   const handleEdit = (index, field, value) => {
@@ -51,14 +55,11 @@ const TableSupervision = ({ edit, Supervision, setSupervision }) => {
                 Status
               </th>
               <th className="py-4 px-2 font-medium text-black dark:text-white text-center w-[10%]">
-                Year
+                Year of Completion
               </th>
               <th className="py-4 px-2 font-medium text-black dark:text-white text-center w-[15%]">
                 Co-Supervisors
               </th>
-              {edit && (
-                <th className="py-4 px-4 text-black dark:text-white w-[10%]"></th>
-              )}
             </tr>
           </thead>
 
@@ -70,15 +71,23 @@ const TableSupervision = ({ edit, Supervision, setSupervision }) => {
                     {edit ? (
                       <>
                         <FaStarOfLife className="text-[0.5rem] text-red-600" />
-                        <input
-                          type="text"
+                        <select
                           value={edu.program}
-                          placeholder="P.hd"
-                          className="w-full max-w-[150px] rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          className="max-w-[180px] rounded-lg border-[1.5px] mr-1 border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                           onChange={(e) =>
                             handleEdit(index, 'program', e.target.value)
                           }
-                        />
+                          required
+                        >
+                          <option value="" disabled>
+                            Select Program
+                          </option>
+                          {SUPERVISION_DEGREE_OPTIONS.map((option) => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </select>
                       </>
                     ) : (
                       <h5 className="font-medium text-black dark:text-white">
@@ -128,15 +137,22 @@ const TableSupervision = ({ edit, Supervision, setSupervision }) => {
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 text-center dark:border-strokedark">
                     {edit ? (
-                      <input
-                        type="text"
+                      <select
                         value={edu.status}
-                        placeholder="Complete"
-                        className="w-full max-w-[150px] rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                        className="max-w-[180px] rounded-lg border-[1.5px] mr-1 border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         onChange={(e) =>
                           handleEdit(index, 'status', e.target.value)
                         }
-                      />
+                      >
+                        <option value="" disabled>
+                          Select Status
+                        </option>
+                        {SUPERVISION_STATUS_OPTIONS.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
                     ) : (
                       <h5 className="text-black dark:text-white">
                         {edu.status}
@@ -193,7 +209,7 @@ const TableSupervision = ({ edit, Supervision, setSupervision }) => {
             className="mt-2 flex items-center gap-1 bg-primary text-white rounded-md px-4 py-2"
             onClick={handleAddSupervisors}
           >
-            Add People <IoMdAddCircleOutline />
+            Add Supervision <IoMdAddCircleOutline />
           </button>
         )}
       </div>

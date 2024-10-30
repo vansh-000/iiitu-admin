@@ -24,7 +24,6 @@ const ResetPassword = () => {
     }
   }, [navigate]);
 
-
   const id = JSON.parse(localStorage.getItem('user'))?.id;
   // console.warn(id);
 
@@ -45,9 +44,9 @@ const ResetPassword = () => {
       toast.error('Passwords do not match!');
       return;
     }
-    
-    if(newPassword === oldPassword){
-      toast.error('Old and New Password can\'t be same.')
+
+    if (newPassword === oldPassword) {
+      toast.error("Old and New Password can't be same.");
       return;
     }
 
@@ -71,21 +70,19 @@ const ResetPassword = () => {
       } else if (error.response?.status === 403) {
         toast.error('Incorrect old password!');
       } else {
-        toast.error('Internal Server Error!');
+        toast.error(error.response.data.message);
       }
     } finally {
       setLoading(false);
     }
   };
 
-
   return (
-    <div className='my-auto'>
+    <div className="my-auto p-5">
       {/* <Breadcrumb pageName="Reset Password" /> */}
 
       <div className=" rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center relative">
-          
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="p-10">
               <Link className="mb-5.5 inline-block" to="/"></Link>
@@ -109,7 +106,7 @@ const ResetPassword = () => {
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Reset Your Password
+                Change Your Password
               </h2>
 
               <form onSubmit={handleOnSubmit}>
@@ -158,12 +155,23 @@ const ResetPassword = () => {
                   </div>
                 </div>
 
+                {localStorage.getItem('isLoggedIn') && (
+                  <div className="mb-7 text-end">
+                    <Link
+                      to="/dashboard"
+                      className="text-primary hover:text-blue-500"
+                    >
+                      Go to Dashboard
+                    </Link>
+                  </div>
+                )}
+
                 <button
                   type="submit"
                   disabled={loading}
                   className="mt-4 w-full rounded-lg bg-primary p-4 text-white hover:bg-primary-dark transition"
                 >
-                  {loading ? 'Resetting...' : 'Reset Password'}
+                  {loading ? 'Changing...' : 'Change Password'}
                 </button>
               </form>
             </div>

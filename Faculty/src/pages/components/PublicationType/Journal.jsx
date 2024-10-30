@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DatePickerCustom from '../../../components/DatePickerCoustom';
 import { FaStarOfLife } from 'react-icons/fa';
 
-const INDEXING = ['SCOPUS', 'SCI/SCIE', 'ESCI', 'WS', 'UGC-CARE', 'OTHERS'];
+const INDEXING = ['SCOPUS', 'SCI/SCIE/ESCI', 'UGC-CARE', 'OTHERS'];
 
 function Journal({
   refAuthors,

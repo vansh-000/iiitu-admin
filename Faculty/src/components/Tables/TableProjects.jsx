@@ -8,20 +8,22 @@ import { API } from '../../utils/apiURl';
 import ProjectView2 from '../../pages/components/Project/ProjectView2';
 const TableProjects = ({ edit, Project, setProject }) => {
   const [isOpen, setIsOpen] = useState(false);
-  // const [data, setData] = useState();
   const [isOpenView, setIsOpenView] = useState(false);
   const refTitle = useRef();
   const refInvestigator = useRef();
   const refCoInvestigator = useRef();
   const refFundingAgency = useRef();
   const refDuration = useRef();
+  const refYearOfGrant = useRef();
   const refAmount = useRef();
   const [status, setStatus] = useState();
   const [type, setType] = useState();
+  const [loading, setLoading] = useState(false);
 
   const handleAddProjectLink = async (e) => {
     try {
       e.preventDefault();
+      setLoading(true);
       const invest = refInvestigator?.current?.value;
       const coInvest = refCoInvestigator?.current?.value;
       const investigator = invest.split(';');
@@ -33,6 +35,7 @@ const TableProjects = ({ edit, Project, setProject }) => {
         coInvestigator: coInvestigator,
         fundingAgency: refFundingAgency?.current?.value,
         duration: refDuration?.current?.value,
+        yearOfGrant: refYearOfGrant?.current?.value,
         amount: refAmount?.current?.value,
         status: status,
         type: type,
@@ -44,18 +47,14 @@ const TableProjects = ({ edit, Project, setProject }) => {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      console.log(response);
-
+      setLoading(false);
       setProject([...Project, response.data.Project]);
       setIsOpen(!isOpen);
     } catch (err) {
+      setLoading(false);
       console.error(err);
     }
   };
-
-  // const handleClose = () => {
-  //   setIsOpenView(!isOpenView);
-  // };
 
   const handleAddProject = () => {
     setIsOpen(!isOpen);
@@ -172,6 +171,7 @@ const TableProjects = ({ edit, Project, setProject }) => {
                 refCoInvestigator={refCoInvestigator}
                 refFundingAgency={refFundingAgency}
                 refDuration={refDuration}
+                refYearOfGrant={refYearOfGrant}
                 refAmount={refAmount}
                 setStatus={setStatus}
                 setType={setType}
@@ -182,8 +182,13 @@ const TableProjects = ({ edit, Project, setProject }) => {
                   // onClick={}
                   className="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   type="submit"
+                  disabled={loading}
                 >
-                  Add
+                  {loading ? (
+                    <div className="inline-block h-5 w-5 animate-spin rounded-full border-[3px] border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                  ) : (
+                    <span>Add</span>
+                  )}
                 </button>
                 <button
                   onClick={handleAddProject}

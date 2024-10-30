@@ -43,11 +43,13 @@ const EventsPage = () => {
   const startDateRef = useRef();
   const endDateRef = useRef();
   const descriptionRef = useRef();
+  const linkRef = useRef();
 
   const handleAdd = async (e) => {
     e.preventDefault();
     const name = nameRef.current.value;
     const description = descriptionRef.current.value;
+    const link = linkRef.current.value;
     const startDate = startDateRef.current.value || data.startDate;
     const endDate = endDateRef.current.value || data.endDate;
     const data2 = {
@@ -55,6 +57,7 @@ const EventsPage = () => {
       startDate: startDate,
       endDate: endDate,
       description: description,
+      link: link,
       image: refImage.current?.files[0],
       OldImage: null,
       isLatest: isLatest,
@@ -153,6 +156,21 @@ const EventsPage = () => {
               defaultValue={data.description}
               type="text"
               placeholder="Description"
+              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+            />
+          )}
+        </div>
+        <div className="mt-4">
+          <label className="mb-3 block text-black dark:text-white">
+            Link (If any)
+          </label>
+          {data && data.link && (
+            <input
+              name="link"
+              ref={linkRef}
+              defaultValue={data.link}
+              type="text"
+              placeholder="Link"
               className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
             />
           )}

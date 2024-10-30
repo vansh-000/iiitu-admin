@@ -10,17 +10,17 @@ const TableCurriculum = ({ data, handleDelete }) => {
   const openModal = (id) => {
     setSelectedId(id);
     setIsModalOpen(true);
-  }
+  };
   const closeModal = () => {
     setSelectedId(null);
     setIsModalOpen(false);
-  }
+  };
   const confirmDelete = () => {
     if (selectedId) {
       handleDelete(selectedId);
       closeModal();
     }
-  }
+  };
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -28,6 +28,9 @@ const TableCurriculum = ({ data, handleDelete }) => {
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
+              <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                Curriculum No.
+              </th>
               <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                 Batch/Year
               </th>
@@ -43,6 +46,11 @@ const TableCurriculum = ({ data, handleDelete }) => {
             {data &&
               data.map((item) => (
                 <tr key={item._id}>
+                  <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+                    <h5 className="font-medium text-black dark:text-white">
+                      {item.curriculumNo}
+                    </h5>
+                  </td>
                   <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                     <h5 className="font-medium text-black dark:text-white">
                       {item.title}

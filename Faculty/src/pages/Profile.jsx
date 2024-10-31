@@ -28,6 +28,7 @@ import { jwtDecode } from 'jwt-decode';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import ResumePdf from '../utils/ResumePdf.jsx';
 import TableExpertTalks from '../components/Tables/TableExpertTalks.jsx';
+import TableAdminRes from '../components/Tables/TableAdminRes.jsx';
 const Profile = () => {
   const nevigat = useNavigate();
   useEffect(() => {
@@ -55,6 +56,7 @@ const Profile = () => {
   const [research, setResearch] = useState([]);
 
   const [experience, setExperience] = useState([]);
+  const [adminRes,setAdminRes]=useState([]);
   const [workshop, setWorkshop] = useState([]);
   const [expertTalk, setExpertTalk] = useState([]);
   const [supervision, setSupervision] = useState([]);
@@ -63,7 +65,7 @@ const Profile = () => {
   const refResume = useRef();
   const refName = useRef();
   const refPhone = useRef();
-  const refDesignation = useRef();
+  // const refDesignation = useRef();
   const refResearchInterest = useRef();
   const refLinkedin = useRef();
   const refGoogleScholar = useRef();
@@ -97,6 +99,7 @@ const Profile = () => {
         setWorkshop(response?.data?.Workshop);
         setExpertTalk(response?.data?.ExpertTalk);
         setSupervision(response?.data?.Supervision);
+        setAdminRes(response?.data?.AdminRespons);
       }
     } catch (err) {
       console.log('Error', err);
@@ -144,12 +147,14 @@ const Profile = () => {
       const newWorkshop = workshop.filter(
         (e) => e.title !== '' || e.type !== '' || e.venue !== '',
       );
-      const newExpertTalk = expertTalk.filter(
+      const newExpertTalk = expertTalk?.filter(
         (e) => e.title !== '' || e.type !== '' || e.venue !== '',
       );
-      const newAward = award.filter((awa) => awa !== '');
-      // const newJournal = journal.filter((jor) => jor !== '');
-      // const newProject = project.filter((pro) => pro.Title !== '');
+      console.log(adminRes)
+      const newAdminRes=adminRes.filter(
+        (e) => e.organisation !== '' || e.position !== '' 
+      )
+      const newAward = award.filter((awa) => awa.title !== '');
       const newResearch = research.filter((res) => res !== '');
       const newOther = other.filter((oth) => oth !== '');
       const userID = JSON.parse(localStorage.getItem('user')).id;
@@ -171,6 +176,7 @@ const Profile = () => {
         Supervision: newSupervision,
         Workshop: newWorkshop,
         ExpertTalk: newExpertTalk,
+        AdminRespons:newAdminRes,
         other: newOther,
         // Journals: newJournal,
         // Journals: newJournal,
@@ -521,6 +527,11 @@ const Profile = () => {
           setExperience={setExperience}
         />
       )}
+      {
+        adminRes&&(
+          <TableAdminRes edit={editable} AdminRes={adminRes} setAdminRes={setAdminRes}/>
+        )
+      }
 
       {research && (
         <TableResearch

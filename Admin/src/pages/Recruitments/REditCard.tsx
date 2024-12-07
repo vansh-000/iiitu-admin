@@ -7,7 +7,7 @@ import TableEditFile from '../../components/Tables/TableEditFile.jsx';
 import toast from 'react-hot-toast';
 import { StaticLinkProvider } from '../../utils/StaticLinkProvider.jsx';
 import TableDate from '../../components/Tables/TableDate.jsx';
-import TableLink from '../../components/Tables/TableLink.jsx'
+import TableLink from '../../components/Tables/TableLink.jsx';
 import ConfirmationModal from '../../utils/ConfirmationModal.jsx';
 
 const REditCard = ({ recruitment, fetchData }) => {
@@ -16,6 +16,7 @@ const REditCard = ({ recruitment, fetchData }) => {
   const [addFile, setAddFile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [recId, setRecId] = useState(null);
+  const [isActive, setIsActive] = useState(recruitment?.isActive);
 
   // console.log(recruitment);
 
@@ -44,11 +45,32 @@ const REditCard = ({ recruitment, fetchData }) => {
     const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
     return `${formattedDay}-${formattedMonth}-${year} ${formattedHours}:${formattedMinutes}`;
   };
-  
 
   const handleEdit = (recruitment) => {
     setEditedData(recruitment);
     setEditable(true);
+  };
+
+  const handleActive = async (id) => {
+    const data = {
+      isActive: !isActive,
+    };
+    try {
+      const response = await axios.put(`${API}/recruitment/${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      setIsActive(!isActive);
+      toast.success(response.data.message);
+      fetchData();
+    } catch (err) {
+      if (err?.response?.status === 401) {
+        return navigate('/signin');
+      }
+      toast.error(`Error: ${err}`);
+    }
+    setEditable(false);
   };
 
   const handleSave = async () => {
@@ -74,9 +96,8 @@ const REditCard = ({ recruitment, fetchData }) => {
         service: refDesc.current!.value,
         Date: sendDate,
         LinkList: LinkList,
+        isActive,
       };
-
-      
 
       // Append application link
       // formData.append('ApplicationLink', refAppLink?.current?.value);
@@ -154,32 +175,37 @@ const REditCard = ({ recruitment, fetchData }) => {
           {/* Start Date:{formatDate(recruitment.startDate)} */}
           {/* {editable ?  <TableDate Date={date} setDate={setDate}/>: */}
           {/* <> */}
-          {editable? <>
-            <TableDate Date={date} setDate={setDate}/>
-          
-          </>     :date?.map((date,key) => (
-            <div className="flex gap-2" key={key}>
-              <p>
-                {date?.DateName} : {formatDate(date?.Date)}
-              </p>
-            </div>
-          ))}
+          {editable ? (
+            <>
+              <TableDate Date={date} setDate={setDate} />
+            </>
+          ) : (
+            date?.map((date, key) => (
+              <div className="flex gap-2" key={key}>
+                <p>
+                  {date?.DateName} : {formatDate(date?.Date)}
+                </p>
+              </div>
+            ))
+          )}
           {/* </>} */}
         </p>
         <>
-          {editable?<TableLink Link={link} setLink={setLink} />: link?.map((li,index) => (
-            <Link
-              to={li.URL}
-              target="_blank"
-              key={index}
-              className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-            >
-              {li.LinkName}
-            </Link>
-          ))}
+          {editable ? (
+            <TableLink Link={link} setLink={setLink} />
+          ) : (
+            link?.map((li, index) => (
+              <Link
+                to={li.URL}
+                target="_blank"
+                key={index}
+                className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+              >
+                {li.LinkName}
+              </Link>
+            ))
+          )}
         </>
-
-
 
         {/* <p className="leading-relaxed text-[#D0915C]">
           End Date:{formatDate(recruitment.endDate)}{' '}
@@ -188,7 +214,7 @@ const REditCard = ({ recruitment, fetchData }) => {
         <p className="leading-relaxed text-[#D0915C]">
           <>
             {!addFile &&
-              file?.map((file,index) => (
+              file?.map((file, index) => (
                 <Link
                   to={StaticLinkProvider(file?.DocPath)}
                   target="_blank"
@@ -200,7 +226,7 @@ const REditCard = ({ recruitment, fetchData }) => {
               ))}
           </>
         </p>
-     
+
         {addFile && (
           <TableEditFile
             File={file}
@@ -285,6 +311,15 @@ const REditCard = ({ recruitment, fetchData }) => {
         >
           {addFile ? 'Done' : 'Add File'}
         </button>
+        <label className="mb-3 block text-black dark:text-white flex flex-row items-center gap-1">
+          Is Active:
+          <input
+            className="size-4"
+            type="checkbox"
+            checked={isActive}
+            onChange={() => handleActive(recruitment._id)}
+          />
+        </label>
       </div>
       <ConfirmationModal
         isOpen={isModalOpen}

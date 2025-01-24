@@ -15,6 +15,7 @@ const AddRecruitments = () => {
   const [date, setDate] = useState([]);
   const [file, setFile] = useState([]);
   const [linkList, setLinkList] = useState([]);
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     if (!token) {
@@ -139,6 +140,16 @@ const AddRecruitments = () => {
               /> */}
             </div>
             <TableLink Link={linkList} setLink={setLinkList} />
+
+            <label className="mb-3 block text-black dark:text-white flex flex-row items-center gap-1">
+              Is Active:
+              <input
+                className="size-4"
+                type="checkbox"
+                checked={isActive}
+                onChange={(e) => setIsActive(e.target.checked)}
+              />
+            </label>
 
             {/* <div>
               <label

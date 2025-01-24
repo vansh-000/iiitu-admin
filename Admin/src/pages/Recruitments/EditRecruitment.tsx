@@ -35,6 +35,9 @@ const RecruitmentEdits = () => {
   useEffect(() => {
     fetchRecruitment();
   }, []);
+
+  console.log(data);
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Edit Recruitment" />

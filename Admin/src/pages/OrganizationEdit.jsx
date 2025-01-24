@@ -5,11 +5,12 @@ import { Children, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import { API } from '../utils/apiURl';
+import TableOrg from '../components/Tables/TableOrg';
 const OrganizationEdit = () => {
   const { id } = useParams();
 
   const [data, setData] = useState();
-
+  const [desc,setDesc]=useState([]);
 //   const refCoursePdf=useRef();
 
   const navigate = useNavigate();
@@ -23,6 +24,9 @@ const OrganizationEdit = () => {
     try {
       const response = await axios.get(`${API}/orgStr/${id}`);
     setData(response.data[0]);
+
+    console.log(response.data[0])
+    setDesc(response.data[0].description);
     // console.log(response.data[0].children.toString());
     
     
@@ -43,14 +47,16 @@ const OrganizationEdit = () => {
     const title = titleRef.current.value;
     const link=linkRef.current.value;
     const children=childrenRef.current.value;
+    const newDesc = desc.filter(des => des.desc !== '' && des.desc !== '');
 
     const data2={
         'title':title,
         'link':link,
         'children':children.length>0?children.split(','):[],
-        'color':refColor.current.value.substring(1)
+        'color':refColor.current.value.substring(1),
+        'descArray':newDesc
       }
-      (data2);
+      // (data2);
       
       
     try {
@@ -110,6 +116,7 @@ const OrganizationEdit = () => {
             defaultValue={`#${data?.color}`}
           /></label>
         </div>
+        <TableOrg OrgDesc={desc} setOrgDesc={setDesc}/>
       <div className="mt-4">
         <label htmlFor='children' className="mb-3 block text-black dark:text-white">Children</label>
           <input

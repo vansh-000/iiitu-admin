@@ -1,5 +1,4 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
-import TableGallery from '../components/Tables/TableGallery';
 import DefaultLayout from '../layout/DefaultLayout';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
@@ -19,6 +18,7 @@ const Admissions = () => {
   const [isOptionSelected, setIsOptionSelected] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
+  const [links, setLinks] = useState([{ name: '', url: '' }]);
 
   useEffect(() => {
     if (!token) {
@@ -57,6 +57,21 @@ const Admissions = () => {
     setDoc(files);
   };
 
+  const handleLinkChange = (index, field, value) => {
+    const newLinks = [...links];
+    newLinks[index][field] = value;
+    setLinks(newLinks);
+  };
+
+  const addLinkField = () => {
+    setLinks([...links, { name: '', url: '' }]);
+  };
+
+  const removeLinkField = (index) => {
+    const newLinks = links.filter((_, i) => i !== index);
+    setLinks(newLinks);
+  };
+
   const handleAdd = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -64,6 +79,10 @@ const Admissions = () => {
     const description = descriptionRef.current.value;
     const batch = batchRef.current.value;
     const year = yearRef.current.value;
+
+    // Filter out any empty links
+    const validLinks = links.filter((link) => link.name && link.url);
+
     try {
       const formData = new FormData();
       doc.forEach((doc) => {
@@ -76,6 +95,9 @@ const Admissions = () => {
       formData.append('year', year);
       formData.append('type', selectedType);
       formData.append('isLatest', isLatest);
+      // Send links as a stringified array of objects
+      formData.append('links', JSON.stringify(validLinks));
+
       await axios.post(`${API}/admission`, formData, {
         headers: {
           Authorization: `Brear ${token}`,
@@ -308,6 +330,46 @@ const Admissions = () => {
               </span>
             </div>
           </div>
+        </div>
+
+        <div className="mt-4">
+          <label className="mb-3 block text-black dark:text-white">Links</label>
+          {links.map((link, index) => (
+            <div key={index} className="flex gap-4 mb-2">
+              <input
+                type="text"
+                placeholder="Link Name"
+                value={link.name}
+                onChange={(e) =>
+                  handleLinkChange(index, 'name', e.target.value)
+                }
+                className="w-1/3 rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+              />
+              <input
+                type="url"
+                placeholder="URL"
+                value={link.url}
+                onChange={(e) => handleLinkChange(index, 'url', e.target.value)}
+                className="w-1/2 rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+              />
+              {links.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => removeLinkField(index)}
+                  className="px-3 py-1 bg-danger text-white rounded-md text-sm"
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={addLinkField}
+            className="mt-2 px-3 py-1 bg-primary text-white rounded-md text-sm"
+          >
+            Add Link
+          </button>
         </div>
 
         <div className="mt-4">

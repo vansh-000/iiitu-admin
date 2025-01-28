@@ -124,12 +124,12 @@ const FacultyEditCard = ({ faculty, fetchData }) => {
               onChange={() => handleToggle(faculty._id)}
             />
             <div
-              className={`relative w-11 h-6 rounded-full transition-all ${
+              className={`relative w-11 border border-2 border-black h-6 rounded-full transition-all ${
                 faculty.isActive ? 'bg-danger' : 'bg-gray-200'
               } peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800`}
             >
               <span
-                className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full transition-transform bg-white ${
+                className={`flex items-center justify-center h-5 w-5 rounded-full transition-transform bg-white ${
                   faculty.isActive ? 'translate-x-full' : 'translate-x-0'
                 }`}
               />

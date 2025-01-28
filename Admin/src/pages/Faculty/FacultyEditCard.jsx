@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { API, STATIC_FILES } from '../../utils/apiURl';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -10,6 +10,38 @@ const FacultyEditCard = ({ faculty, fetchData }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFacultyId, setSelectedFacultyId] = useState(null);
+  const [isActive, setIsActive] = useState(faculty.isActive);
+
+  const handleToggle = async (id) => {
+    setIsActive((prev) => !prev);
+    try {
+      const response = await axios.put(
+        `${API}/faculty/isActive/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        },
+      );
+
+      if (response.data.success) {
+        toast.success('Faculty Status Updated!');
+        fetchData();
+      } else {
+        toast.error('Failed to update status. Please try again.');
+      }
+    } catch (err) {
+      console.error(err);
+
+      if (err?.response?.status === 401) {
+        return navigate('/signin');
+      }
+      toast.error(
+        err?.response?.data?.error || 'An error occurred. Please try again.',
+      );
+    }
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -84,6 +116,28 @@ const FacultyEditCard = ({ faculty, fetchData }) => {
           >
             Delete
           </button>
+          <label className="inline-flex items-center p-5  me-5 cursor-pointer">
+            <input
+              type="checkbox"
+              className="sr-only peer"
+              checked={faculty.isActive}
+              onChange={() => handleToggle(faculty._id)}
+            />
+            <div
+              className={`relative w-11 h-6 rounded-full transition-all ${
+                faculty.isActive ? 'bg-danger' : 'bg-gray-200'
+              } peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800`}
+            >
+              <span
+                className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full transition-transform bg-white ${
+                  faculty.isActive ? 'translate-x-full' : 'translate-x-0'
+                }`}
+              />
+            </div>
+            <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+              {faculty.isActive ? 'Active' : 'Inactive'}
+            </span>
+          </label>
         </div>
       </div>
       <ConfirmationModal
